@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Mapping
 {
-    [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
+    [AdminCommand(AdminFlags.Mapping)]
     sealed class MappingCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;

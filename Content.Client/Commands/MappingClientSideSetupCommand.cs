@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System;
 using Content.Client.Markers;
+using Content.Shared.Administration;
 using Robust.Client.Graphics;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -12,6 +13,7 @@ namespace Content.Client.Commands;
 /// This is because the debug commands for some of these options are on toggles.
 /// </summary>
 [UsedImplicitly]
+[AnyCommand]
 internal sealed class MappingClientSideSetupCommand : IConsoleCommand
 {
     // ReSharper disable once StringLiteralTypo

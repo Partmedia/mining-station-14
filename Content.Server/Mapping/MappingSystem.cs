@@ -130,7 +130,7 @@ public sealed class MappingSystem : EntitySystem
 
     #region Commands
 
-    [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
+    [AdminCommand(AdminFlags.Mapping)]
     private void ToggleAutosaveCommand(IConsoleShell shell, string argstr, string[] args)
     {
         if (args.Length != 1 && args.Length != 2)
