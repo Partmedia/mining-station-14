@@ -14,7 +14,7 @@
   - extended
   - shittersafari
   name: extended-title
-  showInVote: false #2boring2vote
+  showInVote: true
   description: extended-description
   rules:
   - BasicStationEventScheduler
@@ -47,7 +47,7 @@
     - traitor
   name: traitor-title
   description: traitor-description
-  showInVote: false
+  showInVote: true
   rules:
     - Traitor
     - BasicStationEventScheduler
@@ -59,6 +59,7 @@
     - sus
   name: suspicion-title
   description: suspicion-description
+  showInVote: true
   rules:
     - Suspicion
 
@@ -89,7 +90,7 @@
     - nukeops
   name: nukeops-title
   description: nukeops-description
-  showInVote: false
+  showInVote: true
   rules:
     - Nukeops
     - BasicStationEventScheduler
@@ -104,7 +105,7 @@
     - zomber
   name: zombie-title
   description: zombie-description
-  showInVote: false
+  showInVote: true
   rules:
     - Zombie
     - BasicStationEventScheduler
@@ -115,7 +116,7 @@
     - pirates
   name: pirates-title
   description: pirates-description
-  showInVote: false
+  showInVote: true
   rules:
     - Pirates
     - BasicStationEventScheduler
