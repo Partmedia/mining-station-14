@@ -7,6 +7,7 @@
   components:
   - type: HumanoidAppearance
     species: Skeleton
+  - type: Carriable
   - type: Icon
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: full

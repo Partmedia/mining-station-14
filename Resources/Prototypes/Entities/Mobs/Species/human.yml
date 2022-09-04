@@ -5,6 +5,7 @@
   id: BaseMobHuman
   abstract: true
   components:
+  - type: Carriable
   - type: Hunger
   - type: Thirst
   - type: Perishable

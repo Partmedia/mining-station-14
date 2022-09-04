@@ -22,6 +22,9 @@
   id: BikeHorn
 
 - type: Tag
+  id: BeltSlotNotBelt #not a 'belt'
+
+- type: Tag
   id: BodyBag
 
 - type: Tag
@@ -242,6 +245,9 @@
 
 - type: Tag
   id: ForceNoFixRotations # fixrotations command WON'T target this
+
+- type: Tag
+  id: FullBodyOuter # this outerclothing wraps around the feet and legs
 
 - type: Tag
   id: GasScrubber

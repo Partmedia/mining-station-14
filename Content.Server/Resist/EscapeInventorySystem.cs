@@ -1,7 +1,9 @@
+using Content.Server.Carrying;
 using Content.Server.DoAfter;
 using Content.Server.Contests;
 using Robust.Shared.Containers;
 using Content.Server.Popups;
+using Content.Server.Carrying;
 using Robust.Shared.Player;
 using Content.Shared.Storage;
 using Content.Shared.Inventory;
@@ -9,6 +11,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Movement.Events;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Resist;
 
@@ -25,6 +28,8 @@ public sealed class EscapeInventorySystem : EntitySystem
     /// You can't escape the hands of an entity this many times more massive than you.
     /// </summary>
     public const float MaximumMassDisadvantage = 6f;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly CarryingSystem _carryingSystem = default!;
 
     public override void Initialize()
     {
@@ -44,6 +49,13 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (!_containerSystem.TryGetContainingContainer(uid, out var container) || !_actionBlockerSystem.CanInteract(uid, container.Owner))
             return;
 
+        if (TryComp<BeingCarriedComponent>(uid, out var carriedComp))
+        {
+            if (_actionBlocker.CanInteract(uid, carriedComp.Carrier))
+                AttemptEscape(uid, carriedComp.Carrier, component);
+            return;
+        }
+
         // Contested
         if (_handsSystem.IsHolding(container.Owner, uid, out var inHand))
         {
@@ -58,7 +70,8 @@ public sealed class EscapeInventorySystem : EntitySystem
             if (contestResults >= MaximumMassDisadvantage)
                 return;
 
-            AttemptEscape(uid, container.Owner, component, contestResults);
+            if (_actionBlocker.CanInteract(uid, container.Owner))
+                AttemptEscape(uid, container.Owner, component);
             return;
         }
 
@@ -67,7 +80,13 @@ public sealed class EscapeInventorySystem : EntitySystem
             AttemptEscape(uid, container.Owner, component);
     }
 
-    private void AttemptEscape(EntityUid user, EntityUid container, CanEscapeInventoryComponent component, float multiplier = 1f)
+    private void OnMoveAttempt(EntityUid uid, CanEscapeInventoryComponent component, UpdateCanMoveEvent args)
+    {
+        if (_containerSystem.IsEntityOrParentInContainer(uid))
+            args.Cancel();
+    }
+
+    public void AttemptEscape(EntityUid user, EntityUid container, CanEscapeInventoryComponent component, float multiplier = 1f)
     {
         component.CancelToken = new();
         var doAfterEventArgs = new DoAfterEventArgs(user, component.BaseResistTime * multiplier, component.CancelToken.Token, container)
@@ -88,7 +107,14 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void OnEscapeComplete(EntityUid uid, CanEscapeInventoryComponent component, EscapeDoAfterComplete ev)
     {
+        if (TryComp<BeingCarriedComponent>(uid, out var carriedComp))
+        {
+            _carryingSystem.DropCarried(carriedComp.Carrier, uid);
+        }
         //Drops the mob on the tile below the container
+        if (TryComp<BeingCarriedComponent>(uid, out var carried))
+            _carryingSystem.DropCarried(carried.Carrier, uid);
+
         Transform(uid).AttachParentToContainerOrGrid(EntityManager);
         component.CancelToken = null;
     }
