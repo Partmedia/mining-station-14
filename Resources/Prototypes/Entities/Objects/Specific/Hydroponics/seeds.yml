@@ -24,6 +24,14 @@
       sprite: Objects/Specific/Hydroponics/wheat.rsi
 
 - type: entity
+  parent: WheatSeeds
+  id: WheatSeedsSlip
+  name: packet of wheat seeds (slippery)
+  components:
+    - type: Seed
+      seedId: wheatslip
+
+- type: entity
   parent: SeedBase
   name: packet of oat seeds
   id: OatSeeds

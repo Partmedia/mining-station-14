@@ -24,6 +24,32 @@
       PotencyDivisor: 20
 
 - type: seed
+  id: wheatslip
+  name: wheat
+  displayName: wheat stalks
+  plantRsi: Objects/Specific/Hydroponics/wheat.rsi
+  productPrototypes:
+    - WheatBushel
+  lifespan: 25
+  maturation: 6
+  production: 1
+  yield: 4
+  potency: 5
+  idealLight: 8
+  nutrientConsumption: 0.15
+  slip: true
+  sentient: true
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+    Flour:
+      Min: 5
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
   id: oat
   name: seeds-oat-name
   noun: seeds-noun-seeds
