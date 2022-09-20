@@ -284,6 +284,34 @@
       types:
         Heat: 5
 
+- type: entity
+  id: PoweredSmallLightGreen
+  name: green nav light
+  suffix:
+  parent: PoweredSmallLightEmpty
+  components:
+  - type: Sprite
+    state: off
+  - type: PoweredLight
+    hasLampOnSpawn: GreenNavLightBulb
+    damage:
+      types:
+        Heat: 5
+
+- type: entity
+  id: PoweredSmallLightRed
+  name: red nav light
+  suffix:
+  parent: PoweredSmallLightEmpty
+  components:
+  - type: Sprite
+    state: off
+  - type: PoweredLight
+    hasLampOnSpawn: RedNavLightBulb
+    damage:
+      types:
+        Heat: 5
+
 #Emergency Lights
 - type: entity
   id: EmergencyLight

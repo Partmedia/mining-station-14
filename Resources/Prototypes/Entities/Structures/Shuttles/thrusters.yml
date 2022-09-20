@@ -66,6 +66,16 @@
       offset: 0, 1
 
 - type: entity
+  id: RCSThruster
+  name: RCS thruster
+  parent: Thruster
+  components:
+  - type: Thruster
+    thrust: 50
+  - type: ApcPowerReceiver
+    powerLoad: 300
+
+- type: entity
   id: DebugThruster
   parent: BaseThruster
   suffix: DEBUG

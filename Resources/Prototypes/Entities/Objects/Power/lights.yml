@@ -152,3 +152,35 @@
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
+
+- type: entity
+  parent: BaseLightbulb
+  name: green navigation light
+  id: GreenNavLightBulb
+  description: A light bulb.
+  components:
+  - type: LightBulb
+    bulb: Bulb
+    color: "#00ff00"
+    lightEnergy: 1.0
+    lightRadius: 6
+    lightSoftness: 1.1
+  - type: Sprite
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+
+- type: entity
+  parent: BaseLightbulb
+  name: red navigation light
+  id: RedNavLightBulb
+  description: A light bulb.
+  components:
+  - type: LightBulb
+    bulb: Bulb
+    color: "#ff0000"
+    lightEnergy: 1.0
+    lightRadius: 6
+    lightSoftness: 1.1
+  - type: Sprite
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
