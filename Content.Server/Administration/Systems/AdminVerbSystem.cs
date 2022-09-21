@@ -152,6 +152,7 @@ namespace Content.Server.Administration.Systems
                     Impact = LogImpact.Low
                 });
 
+                /*
                 // TeleportHere
                 args.Verbs.Add(new Verb
                 {
@@ -161,6 +162,7 @@ namespace Content.Server.Administration.Systems
                     Act = () => _console.ExecuteCommand(player, $"tpto {args.Target} {args.User}"),
                     Impact = LogImpact.Low
                 });
+                */
 
                 // Respawn
                 if (HasComp<ActorComponent>(args.Target))
