@@ -1,0 +1,15 @@
+- type: entity
+  name: Urist McMoth
+  parent: BaseMobOrganic
+  id: BaseMobMoth
+  abstract: true
+  components:
+  - type: Hunger
+  - type: Thirst
+
+- type: entity
+  save: false
+  name: Urist McMoth
+  parent: MobHumanDummy
+  id: MobMothDummy
+  noSpawn: true

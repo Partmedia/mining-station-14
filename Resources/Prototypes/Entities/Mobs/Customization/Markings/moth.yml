@@ -1,0 +1,26 @@
+- type: marking
+  id: MothAntGeneric
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Species/Moth/moth_antennae.rsi
+    state: moth_antenna_generic
+
+- type: marking
+  id: MothWingAtlas
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Species/Moth/moth_wings.rsi
+    state: m_moth_wings_atlas_FRONT
+
+- type: marking
+  id: MothWingSnow
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Species/Moth/moth_wings.rsi
+    state: m_moth_wings_snow_FRONT

@@ -1,0 +1,1522 @@
+{
+  "version": 1,
+  "size": {
+    "x": 45,
+    "y": 34
+  },
+  "copyright": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "burnt_off_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "burnt_off_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "burnt_off_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "burnt_off_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "burnt_off_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "burnt_off_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "deathhead_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "deathhead_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "deathhead_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "deathhead_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "deathhead_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "deathhead_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "firewatch_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "firewatch_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "firewatch_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "firewatch_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "firewatch_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "firewatch_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "gothic_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "gothic_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "gothic_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "gothic_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "gothic_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "gothic_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "jungle_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "jungle_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "jungle_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "jungle_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "jungle_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "jungle_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "lovers_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "lovers_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "lovers_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "lovers_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "lovers_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "lovers_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "moonfly_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "moonfly_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "moonfly_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "moonfly_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "moonfly_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "moonfly_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "oakworm_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "oakworm_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "oakworm_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "oakworm_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "oakworm_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "oakworm_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "poison_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "poison_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "poison_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "poison_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "poison_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "poison_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "ragged_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "ragged_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "ragged_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "ragged_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "ragged_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "ragged_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "reddish_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "reddish_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "reddish_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "reddish_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "reddish_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "reddish_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "royal_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "royal_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "royal_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "royal_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "royal_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "royal_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "whitefly_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "whitefly_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "whitefly_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "whitefly_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "whitefly_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "whitefly_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "witchwing_chest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "witchwing_head",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "witchwing_l_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "witchwing_l_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "witchwing_r_arm",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "witchwing_r_leg",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}
