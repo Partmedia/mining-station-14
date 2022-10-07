@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+#cd bin/Content.Client
+ln -sf /usr/local/lib/libfreetype.so freetype6.so
+ln -sf /usr/local/lib/libglfw.so libglfw3.dll
+ln -sf /home/kevinz/workspace/games/nativefiledialog/build/lib/Release/x64/libnfd.a swnfd.dll
