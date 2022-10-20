@@ -110,7 +110,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             if (MapPath.Text.Length == 0) return;
 
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
-                $"loadbp {MapOptions.SelectedId} \"{MapPath.Text}\" {XCoordinate.Value} {YCoordinate.Value} {RotationSpin.Value}");
+                $"loadgrid {MapOptions.SelectedId} \"{MapPath.Text}\" {XCoordinate.Value} {YCoordinate.Value} {RotationSpin.Value}");
         }
     }
 }
