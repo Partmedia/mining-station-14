@@ -13,10 +13,10 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 2
+        Asphyxiation: 3
     damageRecovery:
       types:
-        Asphyxiation: -1.0
+        Asphyxiation: -1.5
   - type: Sprite
     netsync: false
     noRot: true

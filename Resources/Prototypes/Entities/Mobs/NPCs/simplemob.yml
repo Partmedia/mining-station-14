@@ -84,11 +84,11 @@
     currentTemperature: 310.15
     coldDamage:
       types:
-        Cold : 0.1 #per second, scales with temperature & other constants
+        Cold : 1 #per second, scales with temperature & other constants
     specificHeat: 42
     heatDamage:
       types:
-        Heat : 0.1 #per second, scales with temperature & other constants
+        Heat : 1 #per second, scales with temperature & other constants
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -181,7 +181,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.15 #per second, scales with pressure and other constants.
+        Blunt: 1 #per second, scales with pressure and other constants.
   - type: StatusEffects
     allowed:
       - Stun
@@ -203,10 +203,10 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 2
+        Asphyxiation: 3
     damageRecovery:
       types:
-        Asphyxiation: -1.0
+        Asphyxiation: -1.5
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260

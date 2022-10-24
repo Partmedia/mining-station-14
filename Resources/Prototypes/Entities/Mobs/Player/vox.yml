@@ -28,8 +28,8 @@
     - type: Respirator
       damage:
        types:
-        Asphyxiation: 1.0
+        Asphyxiation: 1.5
       damageRecovery:
         types:
-          Asphyxiation: -1.0
+          Asphyxiation: -1.5
 

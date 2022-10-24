@@ -834,10 +834,6 @@
     damageRecovery:
       types:
         Asphyxiation: -0.25
-  - type: Barotrauma
-    damage:
-      types:
-        Blunt: 0.1
   - type: Vocal
     sounds:
       Male: Mouse
