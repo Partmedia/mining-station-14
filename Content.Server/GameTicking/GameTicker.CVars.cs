@@ -15,6 +15,9 @@ namespace Content.Server.GameTicking
         public TimeSpan LobbyDuration { get; private set; } = TimeSpan.Zero;
 
         [ViewVariables]
+        public bool DisallowObservers { get; private set; } = false;
+
+        [ViewVariables]
         public bool DisallowLateJoin { get; private set; } = false;
 
         [ViewVariables]
@@ -46,6 +49,8 @@ namespace Content.Server.GameTicking
             }, true);
             _configurationManager.OnValueChanged(CCVars.GameDummyTicker, value => DummyTicker = value, true);
             _configurationManager.OnValueChanged(CCVars.GameLobbyDuration, value => LobbyDuration = TimeSpan.FromSeconds(value), true);
+            _configurationManager.OnValueChanged(CCVars.GameDisallowObservers,
+                value => { DisallowObservers = value; }, true);
             _configurationManager.OnValueChanged(CCVars.GameDisallowLateJoins,
                 value => { DisallowLateJoin = value; UpdateLateJoinStatus(); }, true);
             _configurationManager.OnValueChanged(CCVars.StationOffset, value => StationOffset = value, true);

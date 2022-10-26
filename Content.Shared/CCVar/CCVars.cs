@@ -149,6 +149,12 @@ namespace Content.Shared.CCVar
             GameLobbyDuration = CVarDef.Create("game.lobbyduration", 150, CVar.ARCHIVE);
 
         /// <summary>
+        ///     Controls if players can observe at all.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameDisallowObservers = CVarDef.Create("game.disallowobservers", false, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        /// <summary>
         ///     Controls if players can latejoin at all.
         /// </summary>
         public static readonly CVarDef<bool>

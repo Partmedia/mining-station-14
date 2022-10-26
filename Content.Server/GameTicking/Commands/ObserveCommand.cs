@@ -1,4 +1,5 @@
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -20,6 +21,13 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var ticker = EntitySystem.Get<GameTicker>();
+
+            // Observing is disabled.
+            if (ticker.DisallowObservers)
+            {
+                shell.WriteError("Observing is currently disabled. Join the game to play.");
+                return;
+            }
 
             if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
             {
