@@ -1,0 +1,9 @@
+- type: tile
+  id: FloorLava
+  name: lava
+  sprite: /Textures/Tiles/lava.rsi/lava.png
+  isSubfloor: true
+  canCrowbar: false
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
