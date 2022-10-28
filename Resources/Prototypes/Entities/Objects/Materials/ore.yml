@@ -31,8 +31,6 @@
   name: gold ore
   suffix: Full
   components:
-  - type: Stack
-    stackType: GoldOre
   - type: Sprite
     state: gold
   - type: Material
@@ -43,9 +41,6 @@
   parent: GoldOre
   id: GoldOre1
   suffix: Single
-  components:
-  - type: Stack
-    count: 1
 
 - type: entity
   parent: OreBase
@@ -53,8 +48,6 @@
   name: steel ore
   suffix: Full
   components:
-  - type: Stack
-    stackType: SteelOre
   - type: Sprite
     state: iron
   - type: Material
@@ -65,9 +58,6 @@
   id: SteelOre1
   parent: SteelOre
   suffix: Single
-  components:
-    - type: Stack
-      count: 1
 
 - type: entity
   parent: OreBase
@@ -75,8 +65,6 @@
   name: plasma ore
   suffix: Full
   components:
-  - type: Stack
-    stackType: PlasmaOre
   - type: Sprite
     state: plasma
   - type: Material
@@ -87,9 +75,6 @@
   parent: PlasmaOre
   id: PlasmaOre1
   suffix: Single
-  components:
-    - type: Stack
-      count: 1
 
 - type: entity
   parent: OreBase
@@ -97,8 +82,6 @@
   name: silver ore
   suffix: Full
   components:
-  - type: Stack
-    stackType: SilverOre
   - type: Sprite
     state: silver
   - type: Material
@@ -109,9 +92,6 @@
   parent: SilverOre
   id: SilverOre1
   suffix: Single
-  components:
-  - type: Stack
-    count: 1
 
 - type: entity
   parent: OreBase
@@ -119,8 +99,6 @@
   name: space quartz
   suffix: Full
   components:
-  - type: Stack
-    stackType: SpaceQuartz
   - type: Sprite
     state: spacequartz
   - type: Material
@@ -131,9 +109,6 @@
   parent: SpaceQuartz
   id: SpaceQuartz1
   suffix: Single
-  components:
-  - type: Stack
-    count: 1
 
 - type: entity
   parent: OreBase
@@ -141,8 +116,6 @@
   name: uranium ore
   suffix: Full
   components:
-  - type: Stack
-    stackType: UraniumOre
   - type: Sprite
     state: uranium
   - type: Material
@@ -153,6 +126,3 @@
   parent: UraniumOre
   id: UraniumOre1
   suffix: Single
-  components:
-  - type: Stack
-    count: 1
