@@ -45,7 +45,7 @@
 - type: entity
   parent: OreBase
   id: SteelOre
-  name: steel ore
+  name: iron ore
   suffix: Full
   components:
   - type: Sprite
