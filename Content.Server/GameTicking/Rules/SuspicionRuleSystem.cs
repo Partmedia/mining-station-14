@@ -235,7 +235,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
             // Try to scale spawned amount by station size...
             if (tiles.Length < 1000)
             {
-                count = Math.Min(count, tiles.Length / 10);
+                count = Math.Min(count, tiles.Length / 50);
 
                 // Shuffle so we pick items at random.
                 _random.Shuffle(spawn);
