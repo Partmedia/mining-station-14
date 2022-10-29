@@ -211,6 +211,16 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
         _doorSystem.AccessType = SharedDoorSystem.AccessTypes.AllowAllNoExternal;
 
+        bool spawnloot = true;
+        if (spawnloot)
+            SpawnSusLoot();
+
+        _checkTimerCancel = new CancellationTokenSource();
+        Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
+    }
+
+    private void SpawnSusLoot()
+    {
         var susLoot = _prototypeManager.Index<EntityLootTablePrototype>(SuspicionLootTable);
 
         foreach (var (_, mapGrid) in EntityManager.EntityQuery<StationMemberComponent, MapGridComponent>(true))
@@ -255,9 +265,6 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
                 }
             }
         }
-
-        _checkTimerCancel = new CancellationTokenSource();
-        Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
     }
 
     public override void Ended()
@@ -306,6 +313,11 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
             else
                 innocentsAlive++;
         }
+
+        // If we're debugging locally, don't instantly end the round.
+        bool debugging = false;
+        if (debugging)
+            return;
 
         if (innocentsAlive + traitorsAlive == 0)
         {
