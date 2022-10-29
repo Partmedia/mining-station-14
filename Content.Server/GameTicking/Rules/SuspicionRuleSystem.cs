@@ -174,6 +174,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
             mind!.AddRole(traitorRole);
             traitors.Add(traitorRole);
 
+            SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddPlayer(traitor), AudioParams.Default);
+
             // try to place uplink
             _uplink.AddUplink(mind.OwnedEntity!.Value, traitorStartingBalance);
         }
@@ -206,8 +208,6 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
         var filter = Filter.Empty()
             .AddWhere(session => ((IPlayerSession) session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
-
-        SoundSystem.Play(_addedSound.GetSound(), filter, AudioParams.Default);
 
         _doorSystem.AccessType = SharedDoorSystem.AccessTypes.AllowAllNoExternal;
 
