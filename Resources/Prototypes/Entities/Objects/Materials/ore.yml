@@ -28,7 +28,7 @@
 - type: entity
   parent: OreBase
   id: RockOre
-  name: ore
+  name: unidentified ore
   components:
   - type: Sprite
     state: iron
@@ -36,11 +36,11 @@
 - type: entity
   parent: OreBase
   id: GoldOre
-  name: gold ore
+  name: unidentified ore
   suffix: Full
   components:
   - type: Sprite
-    state: gold
+    state: iron
   - type: Material
     materials:
       Gold: 500
@@ -53,7 +53,7 @@
 - type: entity
   parent: OreBase
   id: SteelOre
-  name: iron ore
+  name: unidentified ore
   suffix: Full
   components:
   - type: Sprite
@@ -70,11 +70,11 @@
 - type: entity
   parent: OreBase
   id: PlasmaOre
-  name: plasma ore
+  name: unidentified ore
   suffix: Full
   components:
   - type: Sprite
-    state: plasma
+    state: iron
   - type: Material
     materials:
       Plasma: 500
@@ -87,11 +87,11 @@
 - type: entity
   parent: OreBase
   id: SilverOre
-  name: silver ore
+  name: unidentified ore
   suffix: Full
   components:
   - type: Sprite
-    state: silver
+    state: iron
   - type: Material
     materials:
       Silver: 500
@@ -104,11 +104,11 @@
 - type: entity
   parent: OreBase
   id: SpaceQuartz
-  name: space quartz
+  name: unidentified ore
   suffix: Full
   components:
   - type: Sprite
-    state: spacequartz
+    state: iron
   - type: Material
     materials:
       Glass: 500
@@ -121,11 +121,11 @@
 - type: entity
   parent: OreBase
   id: UraniumOre
-  name: uranium ore
+  name: unidentified ore
   suffix: Full
   components:
   - type: Sprite
-    state: uranium
+    state: iron
   - type: Material
     materials:
       Uranium: 500
