@@ -26,19 +26,29 @@ public sealed class MiningSystem : EntitySystem
 
     private void OnDestruction(EntityUid uid, OreVeinComponent component, DestructionEventArgs args)
     {
-        if (component.CurrentOre == null)
-            return;
-
-        var proto = _proto.Index<OrePrototype>(component.CurrentOre);
-
-        if (proto.OreEntity == null)
-            return;
-
         var coords = Transform(uid).Coordinates;
-        var toSpawn = _random.Next(proto.MinOreYield, proto.MaxOreYield);
-        for (var i = 0; i < toSpawn; i++)
+        int toSpawn = 0;
+        if (component.CurrentOre != null)
         {
-            Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.3f)));
+            var proto = _proto.Index<OrePrototype>(component.CurrentOre);
+            if (proto.OreEntity != null)
+            {
+                toSpawn = _random.Next(proto.MinOreYield, proto.MaxOreYield);
+                for (var i = 0; i < toSpawn; i++)
+                {
+                    Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.3f)));
+                }
+            }
+        }
+
+        // Spawn ordinary rock
+        int rest = 5 - toSpawn;
+        if (rest < 1)
+            return;
+
+        for (var i = 0; i < rest; i++)
+        {
+            Spawn("RockOre", coords.Offset(_random.NextVector2(0.3f)));
         }
     }
 

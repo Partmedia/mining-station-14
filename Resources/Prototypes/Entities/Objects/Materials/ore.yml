@@ -27,6 +27,14 @@
 
 - type: entity
   parent: OreBase
+  id: RockOre
+  name: ore
+  components:
+  - type: Sprite
+    state: iron
+
+- type: entity
+  parent: OreBase
   id: GoldOre
   name: gold ore
   suffix: Full
