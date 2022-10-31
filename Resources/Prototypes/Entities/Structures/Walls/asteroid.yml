@@ -56,3 +56,31 @@
   - type: OreVein
     oreChance: 0.33
     oreRarityPrototypeId: RandomOreDistributionStandard
+
+- type: entity
+  id: AsteroidRockIndestructible
+  parent: BaseStructure
+  name: asteroid rock
+  suffix: indestructible
+  description: This rock looks harder than most.
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/asteroid_rock.rsi
+    state: full
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+  - type: Airtight
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      density: 100
+      mask:
+      - FullTileMask
+      layer:
+      - WallLayer
+  - type: IconSmooth
+    key: walls
+    base: rock_
