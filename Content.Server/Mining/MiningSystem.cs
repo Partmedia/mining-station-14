@@ -1,4 +1,7 @@
-﻿using Content.Server.Mining.Components;
+﻿using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Mining.Components;
+using Content.Shared.Atmos;
 using Content.Shared.Destructible;
 using Content.Shared.Mining;
 using Content.Shared.Random;
@@ -15,6 +18,15 @@ public sealed class MiningSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
+
+    private static readonly Gas[] LeakableGases =
+    {
+        Gas.Miasma,
+        Gas.Plasma,
+        Gas.Tritium,
+        Gas.Frezon,
+    };
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -39,6 +51,16 @@ public sealed class MiningSystem : EntitySystem
                     Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.3f)));
                 }
             }
+        }
+
+        // Mining rocks sometimes emits a random gas.
+        if (_random.NextFloat() < 0.1)
+        {
+            // FIXME: doesn't work because no gas mixture on tile with rock
+            var atmosphereSystem = _entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+            var environment = atmosphereSystem.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
+            var gas = _random.Pick(LeakableGases);
+            environment.AdjustMoles(gas, 20);
         }
 
         // Spawn ordinary rock
