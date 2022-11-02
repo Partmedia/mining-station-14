@@ -30,3 +30,6 @@ ent-CrateEngineeringMiniJetpack = Mini jetpack crate
 
 ent-CrateAirlockKit = Airlock kit
     .desc = A kit for building 6 airlocks, doesn't include tools.
+
+ent-CrateEngineeringConveyors = Conveyor belt crate
+    .desc = 30 conveyor assemblies and a roll of LV cable for installing your next assembly line

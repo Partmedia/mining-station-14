@@ -118,3 +118,14 @@
         amount: 1
       - id: DoorElectronics
         amount: 6
+
+- type: entity
+  id: CrateEngineeringConveyors
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: ConveyorBeltAssembly
+        amount: 30
+      - id: CableApcStack
+        amount: 1

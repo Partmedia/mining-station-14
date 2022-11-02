@@ -21,3 +21,6 @@ ent-EngineeringMiniJetpack = { ent-CrateEngineeringMiniJetpack }
 
 ent-AirlockKit = { ent-CrateAirlockKit }
     .desc = { ent-CrateAirlockKit.desc }
+
+ent-EngineeringConveyors = { ent-CrateEngineeringConveyors }
+    .desc = { ent-CrateEngineeringConveyors.desc }

@@ -77,3 +77,13 @@
   cost: 1100
   category: Engineering
   group: market
+
+- type: cargoProduct
+  id: EngineeringConveyors
+  icon:
+    sprite: Structures/conveyor.rsi
+    state: conveyor_loose
+  product: CrateEngineeringConveyors
+  cost: 2000
+  category: Engineering
+  group: market
