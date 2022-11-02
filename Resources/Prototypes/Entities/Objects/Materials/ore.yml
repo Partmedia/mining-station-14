@@ -32,6 +32,8 @@
   components:
   - type: Sprite
     state: iron
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   parent: OreBase
