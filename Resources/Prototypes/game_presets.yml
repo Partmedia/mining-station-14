@@ -120,3 +120,11 @@
   rules:
     - Pirates
     - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Mining
+  name: Mining
+  description: You and your friends racked up too much poker debt and must now mine to make your way back.
+  showInVote: true
+  rules:
+    - MiningEventScheduler

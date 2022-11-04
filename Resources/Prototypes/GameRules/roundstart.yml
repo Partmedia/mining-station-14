@@ -74,6 +74,12 @@
     id: BasicStationEventScheduler
 
 - type: gameRule
+  id: MiningEventScheduler
+  config:
+    !type:GenericGameRuleConfiguration
+    id: MiningEventScheduler
+
+- type: gameRule
   id: RampingStationEventScheduler
   config:
     !type:GenericGameRuleConfiguration
