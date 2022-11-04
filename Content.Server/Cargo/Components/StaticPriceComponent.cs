@@ -9,6 +9,7 @@ public sealed class StaticPriceComponent : Component
     /// <summary>
     /// The price of the object this component is on.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("price", required: true)]
     public double Price;
 }
