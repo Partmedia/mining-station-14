@@ -19,8 +19,6 @@
     color: "#3db83b"
     castShadows: false
   - type: Clickable
-  - type: AccessReader
-    access: [["Engineering"]]
   - type: InteractionOutline
   - type: Transform
     anchored: true
@@ -159,6 +157,17 @@
   - type: Battery
     maxCharge: 50000
     startingCharge: 50000
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: BaseAPC
+  id: APCBasicAA
+  suffix: Basic, 50kW, AA
+  components:
+  - type: Battery
+    maxCharge: 50000
+    startingCharge: 50000
 
 - type: entity
   parent: BaseAPC
@@ -168,6 +177,8 @@
   - type: Battery
     maxCharge: 100000
     startingCharge: 100000
+  - type: AccessReader
+    access: [["Engineering"]]
 
 - type: entity
   parent: BaseAPC
@@ -177,6 +188,8 @@
   - type: Battery
     maxCharge: 150000
     startingCharge: 150000
+  - type: AccessReader
+    access: [["Engineering"]]
 
 - type: entity
   parent: BaseAPC
@@ -186,3 +199,5 @@
   - type: Battery
     maxCharge: 200000
     startingCharge: 200000
+  - type: AccessReader
+    access: [["Engineering"]]
