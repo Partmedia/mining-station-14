@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Materials;
 
@@ -27,6 +28,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MaterialStorageComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MaterialStorageComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<MaterialStorageComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<InsertingMaterialStorageComponent, ComponentGetState>(OnGetInsertingState);
         SubscribeLocalEvent<InsertingMaterialStorageComponent, ComponentHandleState>(OnHandleInsertingState);
         SubscribeLocalEvent<InsertingMaterialStorageComponent, EntityUnpausedEvent>(OnUnpaused);
@@ -179,6 +181,11 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
         Dirty(component);
         return true;
+    }
+
+    private void OnCollide(EntityUid uid, MaterialStorageComponent component, ref StartCollideEvent args)
+    {
+        TryInsertMaterialEntity(uid, args.OtherFixture.Body.Owner, uid, component);
     }
 
     /// <summary>

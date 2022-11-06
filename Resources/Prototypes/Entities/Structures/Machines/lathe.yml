@@ -32,6 +32,13 @@
       - MachineMask
       layer:
       - MachineLayer
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,0.1,0.4,0.3"
+      id: brrt
+      hard: false
+      layer:
+      - FullTileLayer
   - type: Destructible
     thresholds:
     - trigger:
