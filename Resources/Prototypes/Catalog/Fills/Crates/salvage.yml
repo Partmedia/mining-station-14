@@ -9,17 +9,12 @@
     contents:
       - id: ClothingOuterHardsuitSalvage
       - id: ClothingMaskBreath
-      - id: OxygenTankFilled
+      - id: AirTankFilled
       - id: FireExtinguisher
       - id: ClothingShoesBootsMag
       - id: Pickaxe
-      - id: Welder
-      - id: Wrench
-      - id: Screwdriver
-      - id: Crowbar
-      - id: Wirecutter
-      - id: ClothingBeltUtility
       - id: OreBag
+      - id: ClothingBeltUtilityFilled
 
 - type: entity
   id: CrateSalvageAssortedGoodies
