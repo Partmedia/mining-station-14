@@ -117,7 +117,7 @@
   - type: StorageFill
     contents:
       - id: SolarAssemblyPart
-        amount: 6
+        amount: 1
 
 - type: entity
   id: CrateEngineeringShuttle

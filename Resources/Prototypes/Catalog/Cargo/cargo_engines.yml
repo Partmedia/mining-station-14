@@ -86,6 +86,6 @@
     sprite: Objects/Power/solar_parts.rsi
     state: solar_assembly_parts
   product: CrateEngineeringSolar
-  cost: 500
+  cost: 3000
   category: Engineering
   group: market
