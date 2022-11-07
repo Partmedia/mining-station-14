@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Audio;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.CCVar;
@@ -19,6 +20,7 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly EventManagerSystem _event = default!;
+        [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
 
         /// <summary>
         /// How long until the next check for an event runs
@@ -30,6 +32,7 @@ namespace Content.Server.StationEvents
         public override void Started()
         {
             ResetTimer();
+            _soundSystem.DispatchGlobalEventMusic("/Mining/Audio/16tons.ogg");
         }
 
         public override void Ended()

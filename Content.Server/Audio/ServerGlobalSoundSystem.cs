@@ -69,6 +69,14 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
         RaiseNetworkEvent(msg, filter);
     }
 
+    public void DispatchGlobalEventMusic(string soundFile)
+    {
+        var audio = AudioParams.Default.WithVolume(-8);
+        var msg = new StationEventMusicEvent(soundFile, StationEventMusicType.Nuke, audio);
+        var filter = Filter.Broadcast();
+        RaiseNetworkEvent(msg, filter);
+    }
+
     /// <summary>
     ///     Command that allows admins to play global sounds.
     /// </summary>
