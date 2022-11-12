@@ -7,6 +7,8 @@
   - type: Sprite
     sprite: Structures/Walls/mountain_rock.rsi
     state: full
+  - type: CaveSupport
+  - type: CaveIn
 
 - type: entity
   id: MountainRockMining
@@ -17,3 +19,5 @@
   - type: Sprite
     sprite: Structures/Walls/mountain_rock.rsi
     state: full
+  - type: CaveSupport
+  - type: CaveIn
