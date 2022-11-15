@@ -1,0 +1,76 @@
+- type: entity
+  name: lightning
+  id: BaseLightningFixed
+  suffix: Fixed
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/lightning.rsi
+    drawdepth: Effects
+    netsync: false
+    layers:
+    - state: "lightning_1"
+      shader: unshaded
+  - type: Physics
+  - type: Lightning
+  - type: PointLight
+    enabled: true
+    color: "#4080FF"
+    radius: 3.5
+    softness: 1
+    autoRot: true
+    castShadows: false
+  - type: Beam
+    sound: /Audio/Effects/Lightning/lightningshock.ogg
+  - type: Tag
+    tags:
+      - HideContextMenu
+
+- type: entity
+  name: lightning
+  id: LightningFixed
+  suffix: Fixed
+  parent: BaseLightningFixed
+  components:
+    - type: Lightning
+      canArc: true
+
+- type: entity
+  name: charged lightning
+  id: ChargedLightningFixed
+  suffix: Fixed
+  parent: BaseLightningFixed
+  components:
+    - type: Sprite
+      sprite: /Textures/Effects/lightning.rsi
+      drawdepth: Effects
+      layers:
+        - state: "blue_lightning"
+          shader: unshaded
+    - type: Lightning
+      canArc: true
+      lightningPrototype: ChargedLightning
+
+- type: entity
+  name: hypercharged lightning
+  id: HyperchargedLightningFixed
+  suffix: Fixed
+  parent: ChargedLightningFixed
+  components:
+    - type: Sprite
+      sprite: /Textures/Effects/lightning.rsi
+      drawdepth: Effects
+      layers:
+        - state: "red_lightning"
+          shader: unshaded
+    - type: Lightning
+      canArc: true
+      lightningPrototype: HyperchargedLightning
+    - type: PointLight
+      enabled: true
+      color: "#ff0000"
+      radius: 3.5
+      softness: 1
+      autoRot: true
+      castShadows: false
+
