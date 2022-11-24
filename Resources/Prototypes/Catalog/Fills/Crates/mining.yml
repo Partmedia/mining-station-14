@@ -1,0 +1,9 @@
+- type: entity
+  id: CrateMiningDrill
+  name: mining drill crate
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: MiningDrill
+        amount: 1

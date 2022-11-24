@@ -1,0 +1,11 @@
+- type: cargoProduct
+  id: MiningDrillCrate
+  name: mining drill crate
+  description: One state-of-the-art mining drill.
+  icon:
+    sprite: Objects/Tools/handdrill.rsi
+    state: handdrill
+  product: CrateMiningDrill
+  cost: 4000
+  category: Engineering
+  group: market
