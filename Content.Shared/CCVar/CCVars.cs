@@ -249,6 +249,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> GameDiagonalMovement =
             CVarDef.Create("game.diagonalmovement", true, CVar.ARCHIVE);
 
+        public static readonly CVarDef<int> MinPlayers =
+            CVarDef.Create("game.min_players", 0, CVar.SERVERONLY);
+
         public static readonly CVarDef<int> SoftMaxPlayers =
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
