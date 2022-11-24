@@ -1,7 +1,10 @@
 using System.Linq;
 using Content.Server.Audio;
+using Content.Server.Cargo.Components;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
@@ -21,6 +24,7 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly EventManagerSystem _event = default!;
         [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
+        [Dependency] private readonly StationSystem _station = default!;
 
         /// <summary>
         /// How long until the next check for an event runs
@@ -28,6 +32,12 @@ namespace Content.Server.StationEvents
         /// Default value is how long until first event is allowed
         [ViewVariables(VVAccess.ReadWrite)]
         private float _timeUntilNextEvent;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        }
 
         public override void Started()
         {
@@ -81,6 +91,20 @@ namespace Content.Server.StationEvents
         private void ResetTimer()
         {
             _timeUntilNextEvent = _random.Next(20*60, 40*60);
+        }
+
+        private void OnRoundEndText(RoundEndTextAppendEvent ev)
+        {
+            foreach (var station in _station.Stations)
+            {
+                TryComp<StationBankAccountComponent>(station, out var bankComponent);
+                if (bankComponent != null)
+                {
+                    var profit = bankComponent.Balance - 2000;
+                    ev.AddLine(String.Format("Your station's profit was ${0:d}.", profit));
+                    Logger.InfoS("mining", "profit:{0:d}", profit);
+                }
+            }
         }
     }
 }
