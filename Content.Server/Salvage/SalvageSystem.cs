@@ -162,7 +162,7 @@ namespace Content.Server.Salvage
                     if (magnetTransform.GridUid is EntityUid gridId && _salvageGridStates.TryGetValue(gridId, out var salvageGridState))
                     {
                         var remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
-                        args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", Math.Ceiling(remainingTime.TotalSeconds))));
+                        args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active"));
                     }
                     else
                     {
@@ -185,26 +185,31 @@ namespace Content.Server.Salvage
 
         private void StartMagnet(SalvageMagnetComponent component, EntityUid user)
         {
+            SalvageGridState? gridState;
+            var magnetTransform = EntityManager.GetComponent<TransformComponent>(component.Owner);
+            EntityUid gridId = magnetTransform.GridUid ?? throw new InvalidOperationException("Magnet had no grid associated");
+            if (!_salvageGridStates.TryGetValue(gridId, out gridState))
+            {
+                gridState = new SalvageGridState();
+                _salvageGridStates[gridId] = gridState;
+            }
+
             switch (component.MagnetState.StateType)
             {
                 case MagnetStateType.Inactive:
                     ShowPopup("salvage-system-report-activate-success", component, user);
-                    SalvageGridState? gridState;
-                    var magnetTransform = EntityManager.GetComponent<TransformComponent>(component.Owner);
-                    EntityUid gridId = magnetTransform.GridUid ?? throw new InvalidOperationException("Magnet had no grid associated");
-                    if (!_salvageGridStates.TryGetValue(gridId, out gridState))
-                    {
-                        gridState = new SalvageGridState();
-                        _salvageGridStates[gridId] = gridState;
-                    }
                     gridState.ActiveMagnets.Add(component);
                     component.MagnetState = new MagnetState(MagnetStateType.Attaching, gridState.CurrentTime + component.AttachingTime);
                     RaiseLocalEvent(new SalvageMagnetActivatedEvent(component.Owner));
                     Report(component.Owner, component.SalvageChannel, "salvage-system-report-activate-success");
                     break;
                 case MagnetStateType.Attaching:
-                case MagnetStateType.Holding:
                     ShowPopup("salvage-system-report-already-active", component, user);
+                    break;
+                case MagnetStateType.Holding:
+                    // Detach
+                    Report(component.Owner, component.SalvageChannel, "salvage-system-announcement-losing", ("timeLeft", component.DetachingTime.TotalSeconds));
+                    component.MagnetState = new MagnetState(MagnetStateType.Detaching, gridState.CurrentTime + component.DetachingTime);
                     break;
                 case MagnetStateType.Detaching:
                 case MagnetStateType.CoolingDown:
@@ -343,7 +348,7 @@ namespace Content.Server.Salvage
             var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId.Value);
             pulledTransform.WorldRotation = spAngle;
 
-            Report(component.Owner, component.SalvageChannel, "salvage-system-announcement-arrived", ("timeLeft", component.HoldTime.TotalSeconds));
+            Report(component.Owner, component.SalvageChannel, "salvage-system-announcement-arrived");
             return true;
         }
 
@@ -371,8 +376,7 @@ namespace Content.Server.Salvage
                     }
                     break;
                 case MagnetStateType.Holding:
-                    Report(magnet.Owner, magnet.SalvageChannel, "salvage-system-announcement-losing", ("timeLeft", magnet.DetachingTime.TotalSeconds));
-                    magnet.MagnetState = new MagnetState(MagnetStateType.Detaching, currentTime + magnet.DetachingTime);
+                    // Do nothing, only detach on click
                     break;
                 case MagnetStateType.Detaching:
                     if (magnet.AttachedEntity.HasValue)
