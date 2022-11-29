@@ -1,9 +1,12 @@
 using System.Linq;
 using Content.Server.Audio;
+using Content.Server.Mind;
 using Content.Server.Cargo.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.Ghost;
+using Content.Server.Players;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
@@ -20,6 +23,7 @@ namespace Content.Server.StationEvents
     {
         public override string Prototype => "MiningEventScheduler";
 
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly EventManagerSystem _event = default!;
@@ -101,10 +105,44 @@ namespace Content.Server.StationEvents
                 if (bankComponent != null)
                 {
                     var profit = bankComponent.Balance - 2000;
-                    ev.AddLine(String.Format("Your station's profit was ${0:d}.", profit));
-                    Logger.InfoS("mining", "profit:{0:d}", profit);
+                    ev.AddLine(String.Format("The station made a profit of {0} spacebucks.", profit));
+                    Logger.InfoS("mining", "profit:{0}", GenEndText(profit));
                 }
             }
+        }
+
+        private SortedSet<String> GetAllPlayers()
+        {
+            SortedSet<String> players = new SortedSet<string>();
+            var allMinds = Get<MindTrackerSystem>().AllMinds;
+            foreach (var mind in allMinds)
+            {
+                if (mind == null)
+                    continue;
+
+                var userId = mind.OriginalOwnerUserId;
+                var observer = mind.AllRoles.Any(role => role is ObserverRole);
+                PlayerData? contentPlayerData = null;
+                if (_playerManager.TryGetPlayerData(userId, out var playerData))
+                {
+                    contentPlayerData = playerData.ContentData();
+                }
+
+                if (!observer && contentPlayerData != null)
+                    players.Add(contentPlayerData.Name);
+            }
+            return players;
+        }
+
+        private String ListPlayers(SortedSet<String> players)
+        {
+            return String.Join(", ", players);
+        }
+
+        private String GenEndText(int profit)
+        {
+            var players = GetAllPlayers();
+            return String.Format("The team of {0} made a profit of {1} spacebucks.", ListPlayers(players), profit);
         }
     }
 }
