@@ -9,3 +9,39 @@
   cost: 4000
   category: Engineering
   group: market
+
+- type: cargoProduct
+  id: MiningBiomassCrate
+  name: biomass crate
+  description: Lost a fellow crew member? We're here to help!
+  icon:
+    sprite: Objects/Misc/monkeycube.rsi
+    state: cube
+  product: CrateMiningBiomass
+  cost: 2000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MiningMagnetCrate
+  name: salvage magnet crate
+  description: Expand your means of production by salvaging!
+  icon:
+    sprite: Structures/Machines/salvage.rsi
+    state: salvage-magnet
+  product: CrateMiningMagnet
+  cost: 12000
+  category: Salvage
+  group: market
+
+- type: cargoProduct
+  id: MiningSalvageEquipmentCrate
+  name: salvage equipment crate
+  description: Have more miners than you expected? You're in luck!
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
+    state: icon
+  product: CrateSalvageEquipment
+  cost: 2500
+  category: Salvage
+  group: market

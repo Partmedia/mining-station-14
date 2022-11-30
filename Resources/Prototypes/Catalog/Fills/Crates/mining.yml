@@ -7,3 +7,33 @@
     contents:
       - id: MiningDrill
         amount: 1
+
+- type: entity
+  id: CrateMiningBiomass
+  name: biomass crate
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: MaterialBiomass
+        amount: 1
+
+- type: entity
+  id: CrateMiningMagnet
+  name: salvage magnet crate
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SalvageMagnet
+        amount: 1
+
+- type: entity
+  id: CrateSalvageEquipment
+  name: salvage equipment crate
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrateSalvageEquipment
+        amount: 1
