@@ -22,3 +22,10 @@
   name: trait-pacifist-name
   components:
     - type: Pacifist
+
+- type: trait
+  id: Mute
+  name: Mute
+  description: You're unable to speak
+  components:
+    - type: Muted
