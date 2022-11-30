@@ -11,7 +11,7 @@
 - type: entity
   id: CrateMiningBiomass
   name: biomass crate
-  parent: CrateGenericSteel
+  parent: CrateMedical
   components:
   - type: StorageFill
     contents:
@@ -36,4 +36,14 @@
   - type: StorageFill
     contents:
       - id: CrateSalvageEquipment
+        amount: 1
+
+- type: entity
+  id: CrateBiomassReclaimer
+  name: biomass reclaimer crate
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: BiomassReclaimer
         amount: 1

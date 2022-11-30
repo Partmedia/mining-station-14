@@ -45,3 +45,15 @@
   cost: 2500
   category: Salvage
   group: market
+
+- type: cargoProduct
+  id: MiningBiomassReclaimerCrate
+  name: biomass reclaimer crate
+  description: End NanoTrasen's monopoly on biomass with your own reclaimer!
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
+    state: icon
+  product: CrateBiomassReclaimer
+  cost: 10000
+  category: Salvage
+  group: market
