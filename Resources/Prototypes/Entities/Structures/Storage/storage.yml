@@ -51,4 +51,4 @@
         acts: [ "Destruction" ]
   - type: Climbable
   - type: StaticPrice
-    price: 150
+    price: 20

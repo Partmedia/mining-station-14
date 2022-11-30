@@ -34,6 +34,8 @@
     damage:
       types:
         Blunt: 5
+  - type: StaticPrice
+    price: 3
 
 - type: entity
   name: steel tile

@@ -201,7 +201,7 @@
     tags:
       - DroneUsable
   - type: StaticPrice
-    price: 60
+    price: 42
 
 - type: entity
   name: power drill
