@@ -8,7 +8,7 @@
     air:
       volume: 70
       moles:
-        - 22.6293856 # oxygen
+        - 11.6293856 # oxygen
       temperature: 293.15
 
 - type: entity
@@ -69,8 +69,8 @@
       air:
         volume: 70
         moles:
-          - 4.75217098 # oxygen
-          - 17.8772147 # nitrogen
+          - 2.376 # oxygen
+          - 8.938 # nitrogen
         temperature: 293.15
 
 - type: entity
@@ -85,7 +85,7 @@
         volume: 70
         moles:
           - 0 # oxygen
-          - 22.6293856 # nitrogen
+          - 11.6293856 # nitrogen
         temperature: 293.15
 
 - type: entity
@@ -99,7 +99,7 @@
       air:
         volume: 70
         moles:
-          - 20.5 # oxygen
+          - 10.25 # oxygen
           - 0 # Nitrogen
           - 0 # CO2
           - 0 # Plasma
