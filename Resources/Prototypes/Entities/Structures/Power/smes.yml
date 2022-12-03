@@ -76,8 +76,40 @@
   id: SMESEmergency
   name: Emergency Power Unit
   description: Supplies emergency power. Cannot be recharged.
-  parent: BaseSMES
+  parent: [ BaseMachine, ConstructibleMachine ]
   components:
+  - type: AmbientSound
+    volume: -7
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Smes
+  - type: Appearance
+    visuals:
+      - type: SmesVisualizer
+  - type: ExaminableBattery
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      output:
+        !type:CableTerminalPortNode
+        nodeGroupID: HVPower
+  - type: BatteryCharger
+    voltage: High
+    node: output
+  - type: BatteryDischarger
+    voltage: High
+    node: input
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#c9c042"
+    castShadows: false
+  - type: Machine
+  - type: StationInfiniteBatteryTarget
   - type: Sprite
     netsync: false
     sprite: Structures/Power/smes.rsi
