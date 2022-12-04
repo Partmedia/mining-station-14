@@ -50,6 +50,7 @@
         acts: [ "Destruction" ]
   - type: StaticPrice
     price: 10
+  - type: CaveSupport
 
 - type: entity
   id: ReinforcedGirder
