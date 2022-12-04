@@ -9,6 +9,9 @@
     state: full
   - type: CaveSupport
   - type: CaveIn
+    damage:
+      types:
+        Blunt: 100
 
 - type: entity
   id: MountainRockMining
@@ -21,3 +24,6 @@
     state: full
   - type: CaveSupport
   - type: CaveIn
+    damage:
+      types:
+        Blunt: 100

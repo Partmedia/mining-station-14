@@ -43,6 +43,9 @@
     oreRarityPrototypeId: RandomOreDistributionStandard
   - type: CaveSupport
   - type: CaveIn
+    damage:
+      types:
+        Blunt: 15
 
 - type: entity
   id: AsteroidRockMining
@@ -90,3 +93,6 @@
     base: rock_
   - type: CaveSupport
   - type: CaveIn
+    damage:
+      types:
+        Blunt: 15

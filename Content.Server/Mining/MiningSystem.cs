@@ -15,6 +15,7 @@ using System.Linq;
 using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Content.Shared.Damage;
 
 namespace Content.Server.Mining;
 
@@ -29,6 +30,7 @@ public sealed class MiningSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
     private static readonly Gas[] LeakableGases =
     {
@@ -56,19 +58,9 @@ public sealed class MiningSystem : EntitySystem
         var range = component.SupportRange;
         var supported = false;
 
-        /*foreach (var entity in _lookup.GetEntitiesInRange(pos,range)) {
-            if (entity != uid)
-            {
-                if (EntityManager.TryGetComponent<CaveSupportComponent?>(entity, out var support))
-                    supported = true;
-            }
-        }*/
-
         var box = Box2.CenteredAround(pos.Position, (range, range));
         var mapGrids = _mapManager.FindGridsIntersecting(pos.MapId, box).ToList();
         var grids = mapGrids.Select(x => x.Owner).ToList();
-
-        //TODO factor support range again - will require some kind of recursive function to track outer supports
 
         foreach (var grid in mapGrids)
         {
@@ -79,7 +71,6 @@ public sealed class MiningSystem : EntitySystem
 
                 if (!supported)
                 {
-                    //Console.WriteLine("Was not supported before range " + count);
                     // Currently no support for spreading off or across grids.
                     var index1 = origin + dir1.ToIntVec();
                     var index2 = origin + dir2.ToIntVec();
@@ -151,7 +142,6 @@ public sealed class MiningSystem : EntitySystem
                     }
                 }
 
-                //Console.WriteLine("supported at range "+ count);
                 return supported;
             }
 
@@ -186,6 +176,7 @@ public sealed class MiningSystem : EntitySystem
         var impact = component.CollapseRange;
         var range = component.SupportRange;
         var xform = _entities.GetComponent<TransformComponent>(uid);
+        var damage = component.Damage;
 
         var box = Box2.CenteredAround(pos.Position, (range, range));
         var mapGrids = _mapManager.FindGridsIntersecting(pos.MapId, box).ToList();
@@ -202,10 +193,13 @@ public sealed class MiningSystem : EntitySystem
                 var index = origin + dir.ToIntVec();
 
                 var occupied = false;
+                List<EntityUid> damageableList = new List<EntityUid>();
                 foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridTileToLocal(index)))
                 {
                     if (entity != uid)
                     {
+                        if (!damageableList.Contains(entity))
+                            damageableList.Add(entity);
                         if (EntityManager.TryGetComponent<CaveSupportComponent?>(entity, out var support))
                             occupied = true;
                     }
@@ -218,6 +212,13 @@ public sealed class MiningSystem : EntitySystem
                         var newEffect = EntityManager.SpawnEntity(
                             caveIn.EntityPrototype.ID,
                             grid.GridTileToLocal(index));
+
+                        foreach (var entity in damageableList)
+                        {
+                            // damage
+                            if (damage != null && HasComp<DamageableComponent>(entity))
+                                _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: false);
+                        }
                     }
                 }
 
