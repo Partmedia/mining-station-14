@@ -8,7 +8,7 @@ using Content.Shared.Damage;
 public sealed class CaveInComponent : Component
 {
     [DataField("supportRange")]
-    public int SupportRange = 2;
+    public int SupportRange = 3;
 
     [DataField("collapseRange")]
     public int CollapseRange = 2;
