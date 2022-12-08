@@ -1,0 +1,104 @@
+- type: entity
+  parent: BaseChemistryEmptyBottle
+  id: BaseChemistryEmptyJug
+  name: reagent jug
+  description: A large jug for holding stock chemical reagents.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugO
+  name: liquified oxygen jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Oxygen
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugK
+  name: potassium jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Potassium
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugS
+  name: sulfur jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Sulfur
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugC
+  name: carbon jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugP
+  name: phosphorus jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Phosphorus
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugN
+  name: liquified nitrogen jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Nitrogen
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugSi
+  name: silicon jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 300

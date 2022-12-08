@@ -57,3 +57,92 @@
   cost: 10000
   category: Salvage
   group: market
+
+- type: cargoProduct
+  id: MiningBiomassReclaimerCrate
+  name: biomass reclaimer crate
+  description: End NanoTrasen's monopoly on biomass with your own reclaimer!
+  icon:
+    sprite: Structures/Machines/Medical/biomass_reclaimer.rsi
+    state: icon
+  product: CrateBiomassReclaimer
+  cost: 10000
+  category: Salvage
+  group: market
+
+- type: cargoProduct
+  id: ChemJugOC
+  name: stock oxygen
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugO
+  cost: 750
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugKC
+  name: stock potassium
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugK
+  cost: 750
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugSC
+  name: stock sulfur
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugS
+  cost: 750
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugCC
+  name: stock carbon
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugC
+  cost: 750
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugPC
+  name: stock phosphorus
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugP
+  cost: 750
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugNC
+  name: stock nitrogen
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugN
+  cost: 750
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugSiC
+  name: stock silicon
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugSi
+  cost: 750
+  category: Medical
+  group: market
