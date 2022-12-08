@@ -10,10 +10,10 @@
         amount: 1
       - id: Brutepack
         amount: 2
-      - id: Gauze
-        amount: 1
       - id: Ointment
         amount: 2
+      - id: EmergencyMedipen
+        amount: 1
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
 - type: entity
