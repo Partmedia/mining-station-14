@@ -94,6 +94,7 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.Disconnected:
                 {
+                    RaiseLocalEvent(new PlayerDisconnectedEvent(session));
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
 
                     _userDb.ClientDisconnected(session);
@@ -155,6 +156,16 @@ namespace Content.Server.GameTicking
         public readonly IPlayerSession PlayerSession;
 
         public PlayerJoinedLobbyEvent(IPlayerSession playerSession)
+        {
+            PlayerSession = playerSession;
+        }
+    }
+
+    public sealed class PlayerDisconnectedEvent : EntityEventArgs
+    {
+        public readonly IPlayerSession PlayerSession;
+
+        public PlayerDisconnectedEvent(IPlayerSession playerSession)
         {
             PlayerSession = playerSession;
         }

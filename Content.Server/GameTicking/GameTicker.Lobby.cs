@@ -26,15 +26,12 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
 
-        /// <summary>
-        /// The game status of a players user Id. May contain disconnected players
-        /// </summary>
         public IReadOnlyDictionary<NetUserId, PlayerGameStatus> PlayerGameStatuses => _playerGameStatuses;
 
         private void InitMinPlayers()
         {
             SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
-            SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
+            SubscribeLocalEvent<PlayerDisconnectedEvent>(OnPlayerDisconnected);
         }
 
         public void UpdateInfoText()
@@ -207,8 +204,9 @@ namespace Content.Server.GameTicking
             CheckMinPlayers();
         }
 
-        private void OnPlayerDetached(PlayerDetachedEvent ev)
+        private void OnPlayerDisconnected(PlayerDisconnectedEvent ev)
         {
+            _playerGameStatuses.Remove(ev.PlayerSession.UserId);
             CheckMinPlayers();
         }
     }
