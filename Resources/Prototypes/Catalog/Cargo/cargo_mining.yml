@@ -51,7 +51,7 @@
   name: biomass reclaimer crate
   description: End NanoTrasen's monopoly on biomass with your own reclaimer!
   icon:
-    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
+    sprite: Structures/Machines/Medical/biomass_reclaimer.rsi
     state: icon
   product: CrateBiomassReclaimer
   cost: 10000
