@@ -16,6 +16,13 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
+using System.Net.Http;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace Content.Server.StationEvents
 {
     [UsedImplicitly]
@@ -29,6 +36,9 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly EventManagerSystem _event = default!;
         [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
         [Dependency] private readonly StationSystem _station = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+
+        private readonly HttpClient _httpClient = new();
 
         /// <summary>
         /// How long until the next check for an event runs
@@ -106,7 +116,9 @@ namespace Content.Server.StationEvents
                 {
                     var profit = bankComponent.Balance - 2000;
                     ev.AddLine(String.Format("The station made a profit of {0} spacebucks.", profit));
-                    Logger.InfoS("mining", "profit:{0}", GenEndText(profit));
+                    var endText = GenEndText(profit);
+                    Logger.InfoS("mining", "profit:{0}", endText);
+                    ReportRound(endText);
                 }
             }
         }
@@ -143,6 +155,29 @@ namespace Content.Server.StationEvents
         {
             var players = GetAllPlayers();
             return String.Format("The team of {0} made a profit of {1} spacebucks.", ListPlayers(players), profit);
+        }
+
+        private async Task ReportRound(String message)
+        {
+            String _webhookUrl = _configurationManager.GetCVar(CCVars.DiscordRoundEndWebook);
+            if (_webhookUrl == string.Empty)
+                return;
+
+            var payload = new WebhookPayload{ Content = message };
+            var ser_payload = JsonSerializer.Serialize(payload);
+            var content = new StringContent(ser_payload, Encoding.UTF8, "application/json");
+            var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true", content);
+            var reply = await request.Content.ReadAsStringAsync();
+            if (!request.IsSuccessStatusCode)
+            {
+                Logger.ErrorS("mining", $"Discord returned bad status code when posting message: {request.StatusCode}\nResponse: {reply}");
+            }
+        }
+
+        private struct WebhookPayload
+        {
+            [JsonPropertyName("content")]
+            public String Content { get; set; }
         }
     }
 }

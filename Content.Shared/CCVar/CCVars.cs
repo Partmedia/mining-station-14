@@ -304,6 +304,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DiscordAHelpWebhook =
             CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY);
 
+        public static readonly CVarDef<string> DiscordRoundEndWebook =
+            CVarDef.Create("discord.roundend_webook", string.Empty, CVar.SERVERONLY);
+
         /// <summary>
         /// The server icon to use in the Discord ahelp embed footer.
         /// Valid values are specified at https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure.
