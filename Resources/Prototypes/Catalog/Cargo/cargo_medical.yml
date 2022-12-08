@@ -77,3 +77,13 @@
   cost: 2500
   category: Medical
   group: market
+
+- type: cargoProduct
+  id: MedicalRadiationSupplies
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: radkit
+  product: MedkitRadiationFilled
+  cost: 1000
+  category: Medical
+  group: market

@@ -82,7 +82,7 @@
       - id: Ointment
         amount: 2
       - id: PillHyronalin
-        amount: 3
+        amount: 6
       - id: EmergencyMedipen
         amount: 1
 
