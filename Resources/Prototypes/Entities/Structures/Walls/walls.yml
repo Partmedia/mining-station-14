@@ -172,6 +172,20 @@
 
 - type: entity
   parent: BaseWall
+  id: WallCultIndestructible
+  name: cult wall
+  suffix: Indestructible
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cult.rsi
+  - type: Icon
+    sprite: Structures/Walls/cult.rsi
+  - type: IconSmooth
+    key: walls
+    base: cult
+
+- type: entity
+  parent: BaseWall
   id: WallDebug
   name: debug wall
   suffix: DEBUG
