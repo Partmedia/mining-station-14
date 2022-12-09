@@ -33,6 +33,10 @@ namespace Content.Server.Spawners.Components
 
         public CancellationTokenSource? TokenSource;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("TotalSpawned")]
+        public int TotalSpawned { get; set; } = 0;
+
         void ISerializationHooks.AfterDeserialization()
         {
             if (MinimumEntitiesSpawned > MaximumEntitiesSpawned)
@@ -54,10 +58,14 @@ namespace Content.Server.Spawners.Components
 
         private void OnTimerFired()
         {
+            if (TotalSpawned >= MaximumEntitiesSpawned)
+                return;
+
             if (!_robustRandom.Prob(Chance))
                 return;
 
-            var number = _robustRandom.Next(MinimumEntitiesSpawned, MaximumEntitiesSpawned);
+            var number = _robustRandom.Next(MinimumEntitiesSpawned, MaximumEntitiesSpawned - TotalSpawned);
+            TotalSpawned += number;
 
             for (int i = 0; i < number; i++)
             {
