@@ -670,6 +670,17 @@ namespace Content.Server.Database
                 var finalPreferencesDbPath = Path.Combine(_res.UserData.RootDir!, configPreferencesDbPath);
                 Logger.DebugS("db.manager", $"Using SQLite DB \"{finalPreferencesDbPath}\"");
                 connection = new SqliteConnection($"Data Source={finalPreferencesDbPath}");
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText =
+                    @"
+                    PRAGMA foreign_keys = ON;
+                    PRAGMA journal_mode = WAL;
+                    PRAGMA synchronous = OFF;
+                    PRAGMA temp_store = memory;
+                    PRAGMA mmap_size = 30000000000;
+                    ";
+                command.ExecuteNonQuery();
             }
             else
             {
