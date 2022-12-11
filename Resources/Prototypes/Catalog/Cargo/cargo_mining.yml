@@ -146,3 +146,14 @@
   cost: 750
   category: Medical
   group: market
+
+- type: cargoProduct
+  id: ChemJugRaC
+  name: stock radium
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugRa
+  cost: 750
+  category: Medical
+  group: market

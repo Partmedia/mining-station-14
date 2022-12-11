@@ -102,3 +102,16 @@
         reagents:
         - ReagentId: Silicon
           Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugRa
+  name: radium jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Radium
+          Quantity: 300
