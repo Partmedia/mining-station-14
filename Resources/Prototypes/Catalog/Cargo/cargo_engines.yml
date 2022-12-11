@@ -4,7 +4,7 @@
     sprite: Objects/Power/AME/ame_part.rsi
     state: box
   product: CrateEngineeringAMEShielding
-  cost: 6000
+  cost: 14000
   category: Engineering
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Objects/Power/AME/ame_jar.rsi
     state: jar
   product: CrateEngineeringAMEJar
-  cost: 2000
+  cost: 7000
   category: Engineering
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Structures/Power/Generation/ame.rsi
     state: control
   product: CrateEngineeringAMEControl
-  cost: 2000
+  cost: 4000
   category: Engineering
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Structures/Power/Generation/Singularity/generator.rsi
     state: icon
   product: CrateEngineeringSingularityGenerator
-  cost: 4000
+  cost: 6000
   category: Engineering
   group: market
 
