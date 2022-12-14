@@ -5,6 +5,7 @@
   id: BaseMobOrganic
   noSpawn: true
   components:
+  - type: Carriable
   - type: LagCompensation
   - type: RangedDamageSound
     soundGroups:
