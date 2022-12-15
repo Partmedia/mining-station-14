@@ -1,0 +1,88 @@
+Mining is an activity that comes with many dangers. Without regard to your safety or the safety of others, loss of life may occur.
+
+Fortunately there are a few simple measures that can be undertaken to ensure that you and those around you will remain uninjured and alive.
+
+#Cave-Ins
+
+Possibly the most important thing to keep in mind at all times is that as you mine your way through the asteroid, you must ensure the ceiling above you is adequetely supported.
+
+Before you mine each rock, consider its surrounding support.
+
+To ensure the space you are mining does not get filled in from above, the area you are mining must be supported by two structures - typically other rocks.
+These two structures should be placed on opposing sides of the mined space. To guarantee support, these structures can be immediately adjacent to the mined space.
+
+If there are not two opposing structures immediately adjacent to the space that is about to be mined, indirect support can be provided via the spaces adjacent to the target space.
+To determine if an otherwise empty space would be supported and therefore provide support to the target space, apply the same rule of two supporting structures on opposing sides to that space.
+This can be difficult to determine sometimes, so do so at your own risk!
+This principle can also be applied one more time for those supporting spaces. I.e. spaces can be supported by supported spaces that can also be supported by supported spaces.
+
+If you are unsure if a space is adequetely supported, building one or two girders or walls around that space is the safest way to prevent a cave-in.
+
+As a general guide observe the following examples (where X marks the spot to be mined and S are supports (rocks or girders or walls):
+
+
+S X S     SAFE
+
+
+S S 0     NOT SAFE
+S X 0    
+
+
+S 0 0
+0 X 0     SAFE
+0 0 S
+
+
+S 0 0
+S X 0     NOT SAFE      
+S 0 0
+
+
+S 0 S     SAFE
+S X 0
+
+
+S S S
+0 X 0     NOT SAFE
+0 0 0      
+S S S
+
+
+S S S 
+0 0 X     SAFE
+S 0 0   
+S S S
+ 
+#What to do during a cave-in
+
+Accidents happen. Sometimes an area looks like it could be supported, but actually isn't.
+
+You and/or someone near you have been buried in rock. What do you do?
+
+If you are not wearing a hardsuit, you are probably already dead. However, if you are conscious you have several options.
+
+Firstly, you should let people know that you have been caved-in on and that you might need some help. Use your radio to do so.
+
+Next, ensure your internals are ON. You will be cut off from any air that might have been in the mine to begin with.
+If you do not have internals, you will have less time to get out.
+
+Finally, you may be able to start digging your way out. If you have mining equipment on you (it would be quite odd if you didn't), proceed to mine the space you are trapped in.
+When mining your way out, be sure to take care as to not cause another cave-in.
+
+Once you have freed yourself from the cave-in, seek medical attention as needed. You should make sure to keep yourself in good shape, as if you don't the next cave-in might just outright kill you.
+
+#General safety tips
+
+Cave-ins present a tricky yet common challenge to contend with, but other dangers are present within the mine that a few simple precautions can mitigate.
+
+These simple hints will help you through:
+
+1) Always carry a pickaxe or a drill. You may not be mining at the time, but keeping one of these on your in case someone else causes a cave-in will mean you can dig yourself out and not rely on outside help.
+
+2) Ensure internals are active when you are in the mine. While not ideal to waste air if it is present in the mine at the time, the mine may be subject to sudden gas leaks. If your internals are not active you may find yourself suddenly huffing plasma gas. 9/10 doctors do not recommend this.
+
+3) Respect the airlock! Less for your safety and more for the service workers on board the station, always always always make sure the airlock doors are closed on one side. If you feel like you or another crewmember may fumble this simple procedure, consider builing firelocks at the station-side airlock.
+
+4) Be wary of sudden spacings and have your magboots on if mining outwards. While quite hilarious to suddenly be hurled in to the black abyss of space, its also quite dangerous and can be difficult to remedy. If you think you may be about to breach the exterior of the asteroid, or you hear meteors, turn those magboots on.
+
+5) Always wear a hardsuit when you are in the mine. At any time the ceiling may come down on you, high pressure gas may flood the mine, or you may be exposed to the vaccuum of space. Without a hardsuit, you will die.

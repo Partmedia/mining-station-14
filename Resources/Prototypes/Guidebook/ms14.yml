@@ -1,0 +1,48 @@
+- type: guideEntry
+  id: SS14
+  name: Mining Station 14
+  text: "/Server Info/Guidebook/Mining Station 14.txt"
+  priority: -10
+
+- type: guideEntry
+  id: KeyDifferences
+  name: Key Differences
+  text: "/Server Info/Guidebook/KeyDifferences.xml"
+  priority: -9
+
+- type: guideEntry
+  id: Controls
+  name: Controls
+  text: "/Server Info/Guidebook/Controls.xml"
+  priority: -8
+
+- type: guideEntry
+  id: MiningSafety
+  name: Mining Safety
+  text: "/Server Info/Guidebook/MiningSafety.txt"
+  priority: -7
+
+- type: guideEntry
+  id: Checklists
+  name: Checklists
+  text: "/Server Info/Guidebook/Checklists.txt"
+  priority: -6
+  children:
+  - ChecklistNormal
+  - ChecklistEmergency
+
+- type: guideEntry
+  id: ChecklistNormal
+  name: Normal Checklist
+  text: "/Server Info/Guidebook/ChecklistNormal.txt"
+
+- type: guideEntry
+  id: ChecklistEmergency
+  name: Emergency Checklist
+  text: "/Server Info/Guidebook/ChecklistEmergency.txt"
+  priority: 1
+
+- type: guideEntry
+  id: Survival
+  name: Survival
+  text: "/Server Info/Guidebook/Survival.xml"

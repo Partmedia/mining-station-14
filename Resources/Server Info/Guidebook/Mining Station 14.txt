@@ -1,0 +1,6 @@
+﻿Welcome to Mining Station 14, a state-of-the-art NanoTrasen asteroid mining outpost. This manual is issued to all crew members involved in mining operations aboard this station, and details how to operate the station safely and productively.
+
+#IMPORTANT
+If you are coming to Mining Station 14 from another NanoTrasen station, review the [color=#a4885c]Key Differences[/color] guide.
+
+If you are starting a shift, perform the [color=#a4885c]COLD START[/color] normal checklist.
