@@ -24,6 +24,11 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 0
+  - type: Material
+    materials:
+      Steel: 0
 
 - type: entity
   parent: OreBase
@@ -32,11 +37,6 @@
   components:
   - type: Sprite
     state: iron
-  - type: StaticPrice
-    price: 0
-  - type: Material
-    materials:
-      Steel: 1
 
 - type: entity
   parent: OreBase
@@ -66,6 +66,14 @@
   - type: Material
     materials:
       Steel: 500
+  - type: Extractable
+    grindableSolutionName: contents
+  - type: SolutionContainerManager
+    solutions:
+      contents:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 30
 
 - type: entity
   id: SteelOre1
@@ -117,6 +125,14 @@
   - type: Material
     materials:
       Glass: 500
+  - type: Extractable
+    grindableSolutionName: contents
+  - type: SolutionContainerManager
+    solutions:
+      contents:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 30
 
 - type: entity
   parent: SpaceQuartz
@@ -138,4 +154,92 @@
 - type: entity
   parent: UraniumOre
   id: UraniumOre1
+  suffix: Single
+
+- type: entity
+  parent: OreBase
+  id: AluminumOre
+  name: unidentified ore
+  suffix: Full
+  components:
+  - type: Sprite
+    state: iron
+  - type: Extractable
+    grindableSolutionName: contents
+  - type: SolutionContainerManager
+    solutions:
+      contents:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 30
+
+- type: entity
+  parent: AluminumOre
+  id: AluminumOre1
+  suffix: Single
+
+- type: entity
+  parent: OreBase
+  id: Coal
+  name: unidentified ore
+  suffix: Full
+  components:
+  - type: Sprite
+    state: coal
+  - type: Extractable
+    grindableSolutionName: contents
+  - type: SolutionContainerManager
+    solutions:
+      contents:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 30
+
+- type: entity
+  parent: Coal
+  id: Coal1
+  suffix: Single
+
+- type: entity
+  parent: OreBase
+  id: CopperOre
+  name: unidentified ore
+  suffix: Full
+  components:
+  - type: Sprite
+    state: iron
+  - type: Extractable
+    grindableSolutionName: contents
+  - type: SolutionContainerManager
+    solutions:
+      contents:
+        reagents:
+        - ReagentId: Copper
+          Quantity: 30
+
+- type: entity
+  parent: CopperOre
+  id: CopperOre1
+  suffix: Single
+
+- type: entity
+  parent: OreBase
+  id: CinnabarOre
+  name: unidentified ore
+  suffix: Full
+  components:
+  - type: Sprite
+    state: iron
+  - type: Extractable
+    grindableSolutionName: contents
+  - type: SolutionContainerManager
+    solutions:
+      contents:
+        reagents:
+        - ReagentId: Mercury
+          Quantity: 30
+
+- type: entity
+  parent: CinnabarOre
+  id: CinnabarOre1
   suffix: Single

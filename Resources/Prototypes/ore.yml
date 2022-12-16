@@ -34,11 +34,39 @@
   minOreYield: 1
   maxOreYield: 3
 
+- type: ore
+  id: OreAluminum
+  oreEntity: AluminumOre1
+  minOreYield: 3
+  maxOreYield: 7
+
+- type: ore
+  id: OreCopper
+  oreEntity: CopperOre1
+  minOreYield: 3
+  maxOreYield: 7
+
+- type: ore
+  id: OreCoal
+  oreEntity: Coal1
+  minOreYield: 3
+  maxOreYield: 7
+
+- type: ore
+  id: OreCinnabar
+  oreEntity: CinnabarOre1
+  minOreYield: 1
+  maxOreYield: 3
+
 - type: weightedRandom
   id: RandomOreDistributionStandard
   weights:
     OreSteel: 10
     OreSpaceQuartz: 8
+    OreCoal: 8
+    OreAluminum: 4
+    OreCopper: 4
+    OreCinnabar: 3
     OreGold: 2
     OrePlasma: 4
     OreSilver: 1
