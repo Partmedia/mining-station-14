@@ -5,7 +5,7 @@
   playTimeTracker: JobCargoTechnician
   startingGear: CargoTechGear
   icon: "CargoTechnician"
-  supervisors: job-supervisors-hop-qm
+  supervisors: "the mine supervisor"
   access:
   - Cargo
   - Maintenance

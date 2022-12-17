@@ -1,28 +1,21 @@
 - type: job
   id: Quartermaster
   name: job-name-qm
+  name: mine supervisor
   description: job-description-qm
   playTimeTracker: JobQuartermaster
   requirements:
-    - !type:RoleTimeRequirement
-      role: JobSalvageSpecialist
-      time: 3600
-    - !type:DepartmentTimeRequirement
-      department: Cargo
-      time: 18000
     - !type:OverallPlaytimeRequirement
-      time: 108000
+      time: 10800
   weight: 10
   startingGear: QuartermasterGear
   icon: "QuarterMaster"
-  supervisors: job-supervisors-hop
-  access:
-  - Cargo
-  - Salvage
-  - Quartermaster
-  - Maintenance
-  - External
-  - Command
+  requireAdminNotify: true
+  joinNotifyCrew: true
+  supervisors: "CentCom"
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
 
 - type: startingGear
   id: QuartermasterGear

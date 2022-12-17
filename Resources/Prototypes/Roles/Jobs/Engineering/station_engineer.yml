@@ -4,12 +4,12 @@
   description: job-description-engineer
   playTimeTracker: JobStationEngineer
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 1800
+    - !type:OverallPlaytimeRequirement
+      time: 7200
+  weight: 5
   startingGear: StationEngineerGear
   icon: "StationEngineer"
-  supervisors: job-supervisors-ce
+  supervisors: "the mine supervisor"
   access:
   - Maintenance
   - Engineering
