@@ -74,6 +74,10 @@
         reagents:
         - ReagentId: Iron
           Quantity: 30
+  - type: Tag
+    tags:
+    - Ore
+    - Metal
 
 - type: entity
   id: SteelOre1
