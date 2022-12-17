@@ -35,6 +35,18 @@
   group: market
 
 - type: cargoProduct
+  id: MiningElectromagnetCrate
+  name: electromagnet crate
+  description: Separate iron ore from the rest of the stuff!
+  icon:
+    sprite: Structures/Machines/electromagnet.rsi
+    state: icon
+  product: Electromagnet
+  cost: 8000
+  category: Salvage
+  group: market
+
+- type: cargoProduct
   id: MiningSalvageEquipmentCrate
   name: salvage equipment crate
   description: Have more miners than you expected? You're in luck!
