@@ -107,7 +107,6 @@ namespace Content.Server.Atmos.Miasma
                 {
                     DamageSpecifier damage = new();
                     damage.DamageDict.Add("Blunt", 0.3); // Slowly accumulate enough to gib after like half an hour
-                    damage.DamageDict.Add("Cellular", 0.3); // Cloning rework might use this eventually
 
                     _damageableSystem.TryChangeDamage(perishable.Owner, damage, true, true, origin: perishable.Owner);
                 }
