@@ -47,6 +47,18 @@
   group: market
 
 - type: cargoProduct
+  id: MiningBlastFurnaceCrate
+  name: blast furnace
+  description: Produce plasteel and double the amount of steel using this forced-air blast furnace.
+  icon:
+    sprite: Structures/Machines/ore_processor.rsi
+    state: icon
+  product: BlastFurnace
+  cost: 8000
+  category: Salvage
+  group: market
+
+- type: cargoProduct
   id: MiningSalvageEquipmentCrate
   name: salvage equipment crate
   description: Have more miners than you expected? You're in luck!

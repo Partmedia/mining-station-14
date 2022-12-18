@@ -1,0 +1,59 @@
+- type: entity
+  parent: OreProcessor
+  id: BlastFurnace
+  name: blast furnace
+  description: It produces sheets and ingots using ores.
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/ore_processor.rsi
+      netsync: false
+      layers:
+        - state: icon
+          map: ["enum.LatheVisualLayers.IsRunning"]
+        - state: unlit
+          shader: unshaded
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: panel
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: MaterialStorage
+      whitelist:
+        tags:
+          - Ore
+          - BlastFurnaceInput
+    - type: ApcPowerReceiver
+      powerLoad: 3000
+    - type: Lathe
+      staticRecipes:
+        - BlastFurnaceSteel
+        - BlastFurnacePlasteel
+
+- type: latheRecipe
+  id: BlastFurnaceSteel
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: steel_3
+  result: SheetSteel
+  completetime: 10
+  materials:
+    Steel: 1500
+    Carbon: 100
+
+- type: latheRecipe
+  id: BlastFurnacePlasteel
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: plasteel_3
+  result: SheetPlasteel
+  completetime: 10
+  materials:
+    Steel: 3000
+    Plasma: 100
+
+- type: material
+  id: Carbon
+  name: carbon
+  icon:
+    sprite: Objects/Materials/ore.rsi
+    state: coal
+  color: "#dddddd"
+  price: 0.02

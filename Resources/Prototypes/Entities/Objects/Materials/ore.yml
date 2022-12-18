@@ -190,6 +190,9 @@
   components:
   - type: Sprite
     state: coal
+  - type: Material
+    materials:
+      Carbon: 500
   - type: Extractable
     grindableSolutionName: contents
   - type: SolutionContainerManager
