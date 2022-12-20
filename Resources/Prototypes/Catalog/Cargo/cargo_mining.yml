@@ -107,6 +107,18 @@
   group: market
 
 - type: cargoProduct
+  id: MiningGasRecyclerCrate
+  name: gas recycler
+  description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
+  icon:
+    sprite: Structures/Machines/gasrecycler.rsi
+    state: icon
+  product: GasRecycler
+  cost: 6895
+  category: Engineering
+  group: market
+
+- type: cargoProduct
   id: MiningSMESCrate
   name: SMES crate
   description: Store your surplus power for a rainy day. Comes fully charged!
