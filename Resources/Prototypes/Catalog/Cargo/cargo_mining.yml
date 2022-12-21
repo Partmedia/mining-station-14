@@ -119,6 +119,30 @@
   group: market
 
 - type: cargoProduct
+  id: MiningGasThermoMachineHeater
+  name: heater
+  description: Heats gas in connected pipes.
+  icon:
+    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    state: heater_off
+  product: GasThermoMachineHeater
+  cost: 1495
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: MiningGasThermoMachineFreezer
+  name: freezer
+  description: Cools gas in connected pipes.
+  icon:
+    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    state: freezer_off
+  product: GasThermoMachineFreezer
+  cost: 2795
+  category: Engineering
+  group: market
+
+- type: cargoProduct
   id: MiningSMESCrate
   name: SMES crate
   description: Store your surplus power for a rainy day. Comes fully charged!
