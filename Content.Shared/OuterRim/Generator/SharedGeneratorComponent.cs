@@ -17,6 +17,9 @@ public sealed class SharedGeneratorComponent : Component
     [DataField("fuelMaterial"), ViewVariables(VVAccess.ReadWrite)]
     public string FuelMaterial = "Plasma";
 
+    [DataField("maxFuelRate"), ViewVariables(VVAccess.ReadWrite)]
+    public float MaxFuelRate = 30f/(15*60); // Fuel consumption at full throttle (sheets/second)
+
     public float Efficiency = 0;
     public float Output = 0;
 }

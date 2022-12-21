@@ -47,8 +47,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         {
             supplier.Enabled = !(gen.RemainingFuel <= 0.0f || xform.Anchored == false);
 
-            float maxFuelRate = 90f/3600; // 90 sheets in 60 minutes = 0.025 sheets/sec
-            var fuelRate = gen.TargetPower * maxFuelRate;
+            var fuelRate = gen.TargetPower * gen.MaxFuelRate;
             gen.RemainingFuel = MathF.Max(gen.RemainingFuel - (fuelRate * frameTime), 0.0f);
 
             // Plasma: 400 kJ/sheet
