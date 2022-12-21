@@ -88,7 +88,7 @@
   id: WallmountTelescreen
   suffix: camera monitor
   name: telescreen
-  description: Finally, some decent reception around here...
+  description: An oblong metal plaque. Can be dimmed, but not shut off completely.
   components:
   - type: Construction
     graph: WallmountTelescreen
@@ -111,6 +111,9 @@
     interfaces:
       - key: enum.SurveillanceCameraMonitorUiKey.Key
         type: SurveillanceCameraMonitorBoundUserInterface
+  - type: Speech
+  - type: Advertise
+    pack: TelescreenAds
 
 # Wall Televisions
 
