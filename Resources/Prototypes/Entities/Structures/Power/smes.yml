@@ -117,12 +117,9 @@
     color: "#FF7777FF"
     layers:
       - state: smes
-  - type: UpgradeBattery
-    maxChargeMultiplier: 2
-    baseMaxCharge: 840000
   - type: Battery
-    maxCharge: 840000
-    startingCharge: 840000
+    maxCharge: 1600000
+    startingCharge: 1600000
   - type: PowerNetworkBattery
     maxSupply: 150000
     maxChargeRate: 0
