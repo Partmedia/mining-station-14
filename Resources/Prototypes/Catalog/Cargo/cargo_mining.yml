@@ -18,7 +18,7 @@
     sprite: Objects/Misc/monkeycube.rsi
     state: cube
   product: CrateMiningBiomass
-  cost: 2000
+  cost: 1295
   category: Medical
   group: market
 
@@ -42,7 +42,7 @@
     sprite: Structures/Machines/electromagnet.rsi
     state: icon
   product: Electromagnet
-  cost: 8000
+  cost: 2995
   category: Salvage
   group: market
 
@@ -54,7 +54,7 @@
     sprite: Structures/Machines/ore_processor.rsi
     state: icon
   product: BlastFurnace
-  cost: 8000
+  cost: 5995
   category: Salvage
   group: market
 
