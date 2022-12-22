@@ -226,10 +226,6 @@
       Laser: 3
     materialRequirements:
       Cable: 5
-  - type: Construction
-    deconstructionTarget: null
-    graph: ThermomachineBoard
-    node: freezer
 
 - type: entity
   id: ThermomachineHeaterMachineCircuitBoard
@@ -246,10 +242,6 @@
       Laser: 3
     materialRequirements:
       Cable: 5
-  - type: Construction
-    graph: ThermomachineBoard
-    deconstructionTarget: null
-    node: heater
 
 - type: entity
   id: PortableScrubberMachineCircuitBoard
