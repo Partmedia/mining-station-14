@@ -78,6 +78,7 @@
     netsync: false
     sprite: Structures/conveyor.rsi
     state: conveyor_loose
+  - type: Anchorable
   - type: Construction
     graph: ConveyorGraph
     node: item
