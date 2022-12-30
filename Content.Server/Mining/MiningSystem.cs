@@ -62,9 +62,47 @@ public sealed class MiningSystem : EntitySystem
         var mapGrids = _mapManager.FindGridsIntersecting(pos.MapId, box).ToList();
         var grids = mapGrids.Select(x => x.Owner).ToList();
 
+        List<Direction> directions = new List<Direction>();
+        directions.Add(Direction.North);
+        directions.Add(Direction.South);
+        directions.Add(Direction.East);
+        directions.Add(Direction.West);
+        directions.Add(Direction.NorthEast);
+        directions.Add(Direction.NorthWest);
+        directions.Add(Direction.SouthEast);
+        directions.Add(Direction.SouthWest);
+
         foreach (var grid in mapGrids)
         {
-            //cave-in prevention requires TWO supports on opposing sides 
+            //to be able to cave-in, the space in question must be surrounded by tiles (for balance reasons to prevent infinite mining, for in-game lets say the chunk has no ceiling because its too small)
+            bool CheckSurroundSpace(Vector2i origin, Direction dir)
+            {
+
+                // Currently no support for spreading off or across grids.
+                var index = origin + dir.ToIntVec();
+
+                var hasSpace = true;
+                if (!grid.TryGetTileRef(index, out var tile) || tile.Tile.IsEmpty)
+                {
+                    hasSpace = false;
+                }
+
+                return hasSpace;
+            }
+
+            var origin = grid.TileIndicesFor(xform.Coordinates);
+            var hasSpace = true;
+
+            foreach (var direction in directions)
+            {
+                hasSpace = CheckSurroundSpace(origin, direction);
+                if (!hasSpace)
+                    break;
+            }
+            if (!hasSpace)
+                return;
+
+            //cave-in prevention requires TWO supports on opposing sides (sort of like in jenga) 
             bool CheckSupportDirs(Vector2i origin, Direction dir1, Direction dir2, bool supported, int range, int count)
             {
                 count++;
@@ -90,7 +128,7 @@ public sealed class MiningSystem : EntitySystem
                         //if there is nothing for support but the support range has not been fully expended, check if the support's support exists
                         if (!support1 && range > count)
                         {
-                            //TODO maybe find a better way to do this... (compile directions in to a list, iterate through list)
+                            //TODO maybe find a better way to do this... (compile directions in to a list, iterate through list) - I got a list now, just need to use it...
                             support1 = CheckSupportDirs(index1, Direction.North, Direction.South, support1, range, count);
                             support1 = CheckSupportDirs(index1, Direction.North, Direction.SouthEast, support1, range, count);
                             support1 = CheckSupportDirs(index1, Direction.North, Direction.SouthWest, support1, range, count);
@@ -145,8 +183,7 @@ public sealed class MiningSystem : EntitySystem
                 return supported;
             }
 
-            //TODO maybe find a better way to do this... (see above)
-            var origin = grid.TileIndicesFor(xform.Coordinates);
+            //TODO maybe find a better way to do this... (see above) 
             supported = CheckSupportDirs(origin, Direction.North, Direction.South, supported, range, 0);
             supported = CheckSupportDirs(origin, Direction.North, Direction.SouthEast, supported, range, 0);
             supported = CheckSupportDirs(origin, Direction.North, Direction.SouthWest, supported, range, 0);
