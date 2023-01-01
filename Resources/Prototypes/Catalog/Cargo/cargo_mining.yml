@@ -143,13 +143,24 @@
   group: market
 
 - type: cargoProduct
+  id: ChemJugHC
+  name: stock hydrogen
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugH
+  cost: 750
+  category: Medical
+  group: market
+
+- type: cargoProduct
   id: ChemJugOC
   name: stock oxygen
   icon:
     sprite: Objects/Consumable/Drinks/water.rsi
     state: icon
   product: ChemJugO
-  cost: 750
+  cost: 500
   category: Medical
   group: market
 
@@ -160,7 +171,7 @@
     sprite: Objects/Consumable/Drinks/water.rsi
     state: icon
   product: ChemJugK
-  cost: 750
+  cost: 600
   category: Medical
   group: market
 
@@ -171,7 +182,7 @@
     sprite: Objects/Consumable/Drinks/water.rsi
     state: icon
   product: ChemJugS
-  cost: 750
+  cost: 700
   category: Medical
   group: market
 
@@ -193,7 +204,7 @@
     sprite: Objects/Consumable/Drinks/water.rsi
     state: icon
   product: ChemJugP
-  cost: 750
+  cost: 600
   category: Medical
   group: market
 
@@ -204,7 +215,7 @@
     sprite: Objects/Consumable/Drinks/water.rsi
     state: icon
   product: ChemJugN
-  cost: 750
+  cost: 500
   category: Medical
   group: market
 
@@ -215,7 +226,7 @@
     sprite: Objects/Consumable/Drinks/water.rsi
     state: icon
   product: ChemJugSi
-  cost: 750
+  cost: 600
   category: Medical
   group: market
 
@@ -226,6 +237,94 @@
     sprite: Objects/Consumable/Drinks/water.rsi
     state: icon
   product: ChemJugRa
-  cost: 750
+  cost: 700
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugCC
+  name: stock carbon
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugC
+  cost: 400
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugClC
+  name: stock chlorine
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugCl
+  cost: 700
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugCuC
+  name: stock copper
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugCu
+  cost: 400
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugEthanolC
+  name: stock ethanol
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugEthanol
+  cost: 800
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugHC
+  name: stock hydrogen
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugH
+  cost: 600
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugIC
+  name: stock iodine
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugI
+  cost: 700
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugLiC
+  name: stock lithium
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugLi
+  cost: 800
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemJugNaC
+  name: stock sodium
+  icon:
+    sprite: Objects/Consumable/Drinks/water.rsi
+    state: icon
+  product: ChemJugNa
+  cost: 500
   category: Medical
   group: market

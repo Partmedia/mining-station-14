@@ -14,6 +14,19 @@
 
 - type: entity
   parent: BaseChemistryEmptyJug
+  id: ChemJugH
+  name: liquified hydrogen jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Hydrogen
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
   id: ChemJugO
   name: liquified oxygen jug
   components:
@@ -114,4 +127,95 @@
         maxVol: 300
         reagents:
         - ReagentId: Radium
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugCl
+  name: chlorine jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Chlorine
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugCu
+  name: copper jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Copper
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugEthanol
+  name: ethanol jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Ethanol
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugI
+  name: iodine jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Iodine
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugLi
+  name: lithium jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Lithium
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugHg
+  name: mercury jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Mercury
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugNa
+  name: sodium jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Sodium
           Quantity: 300
