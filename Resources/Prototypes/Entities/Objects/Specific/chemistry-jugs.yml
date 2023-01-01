@@ -82,6 +82,19 @@
 
 - type: entity
   parent: BaseChemistryEmptyJug
+  id: ChemJugH
+  name: liquified hydrogen jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Hydrogen
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
   id: ChemJugO
   name: liquified oxygen jug
   components:
