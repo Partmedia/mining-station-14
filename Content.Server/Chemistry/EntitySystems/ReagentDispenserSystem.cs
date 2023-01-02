@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Components;
+using Content.Server.Labels.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Containers.ItemSlots;
@@ -37,11 +38,13 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ReagentDispenserComponent, EntInsertedIntoContainerMessage>((_, comp, _) => UpdateUiState(comp));
             SubscribeLocalEvent<ReagentDispenserComponent, EntRemovedFromContainerMessage>((_, comp, _) => UpdateUiState(comp));
             SubscribeLocalEvent<ReagentDispenserComponent, BoundUIOpenedEvent>((_, comp, _) => UpdateUiState(comp));
-            SubscribeLocalEvent<ReagentDispenserComponent, GotEmaggedEvent>(OnEmagged);
+            //SubscribeLocalEvent<ReagentDispenserComponent, GotEmaggedEvent>(OnEmagged);
 
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserSetDispenseAmountMessage>(OnSetDispenseAmountMessage);
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserDispenseReagentMessage>(OnDispenseReagentMessage);
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserClearContainerSolutionMessage>(OnClearContainerSolutionMessage);
+
+            SubscribeLocalEvent<ReagentDispenserComponent, MapInitEvent>(OnMapInit);
         }
 
         private void UpdateUiState(ReagentDispenserComponent reagentDispenser)
@@ -71,9 +74,28 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private List<string> GetInventory(ReagentDispenserComponent reagentDispenser)
         {
+            //TODO instead of using a prototype list - uses a list of entities stored in the dispenser
+
             var inventory = new List<string>();
 
-            if (reagentDispenser.PackPrototypeId is not null
+            for (var i = 0; i < reagentDispenser.NumSlots; i++)
+            {
+                var storageSlotId = ReagentDispenserComponent.BaseStorageSlotId + i;
+                var storedContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, storageSlotId);
+                if (EntityManager.TryGetComponent<LabelComponent?>(storedContainer, out var label))
+                {
+                    if (label.CurrentLabel != null)
+                        inventory.Add(label.CurrentLabel);
+                    else
+                        if (EntityManager.TryGetComponent<MetaDataComponent?>(storedContainer, out var metadata))
+                            inventory.Add(metadata.EntityName);
+                }
+                else
+                    if (EntityManager.TryGetComponent<MetaDataComponent?>(storedContainer, out var metadata))
+                        inventory.Add(metadata.EntityName);
+            }
+
+            /*if (reagentDispenser.PackPrototypeId is not null
                 && _prototypeManager.TryIndex(reagentDispenser.PackPrototypeId, out ReagentDispenserInventoryPrototype? packPrototype))
             {
                 inventory.AddRange(packPrototype.Inventory);
@@ -84,12 +106,13 @@ namespace Content.Server.Chemistry.EntitySystems
                 && _prototypeManager.TryIndex(reagentDispenser.EmagPackPrototypeId, out ReagentDispenserInventoryPrototype? emagPackPrototype))
             {
                 inventory.AddRange(emagPackPrototype.Inventory);
-            }
+            }*/
 
             return inventory;
         }
 
-        private void OnEmagged(EntityUid uid, ReagentDispenserComponent reagentDispenser, ref GotEmaggedEvent args)
+        /*
+        private void OnEmagged(EntityUid uid, ReagentDispenserComponent reagentDispenser, GotEmaggedEvent args)
         {
             if (!reagentDispenser.IsEmagged)
             {
@@ -98,6 +121,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 UpdateUiState(reagentDispenser);
             }
         }
+        */
 
         private void OnSetDispenseAmountMessage(EntityUid uid, ReagentDispenserComponent reagentDispenser, ReagentDispenserSetDispenseAmountMessage message)
         {
@@ -141,6 +165,27 @@ namespace Content.Server.Chemistry.EntitySystems
         private void ClickSound(ReagentDispenserComponent reagentDispenser)
         {
             _audioSystem.PlayPvs(reagentDispenser.ClickSound, reagentDispenser.Owner, AudioParams.Default.WithVolume(-2f));
+        }
+
+        private void OnMapInit(EntityUid uid, ReagentDispenserComponent component, MapInitEvent args)
+        {
+
+            //populate storage slots with base storage slot whitelist
+            for (var i = 0; i < component.NumSlots; i++)
+            {
+                var storageSlotId = ReagentDispenserComponent.BaseStorageSlotId + i;
+                ItemSlot storageComponent = new();//component.BaseStorageSlot;
+                storageComponent.Whitelist = component.StorageWhitelist;
+                storageComponent.Swap = false;
+                storageComponent.EjectOnBreak = true;
+                component.StorageSlotIds.Add(storageSlotId);
+                component.StorageSlots.Add(storageComponent);
+                component.StorageSlots[i].Name = "Storage Slot " + (i+1);
+                //Console.WriteLine(component.StorageSlotIds[i]);
+                _itemSlotsSystem.AddItemSlot(uid, component.StorageSlotIds[i], component.StorageSlots[i]);
+            }
+
+            _itemSlotsSystem.AddItemSlot(uid, ReagentDispenserComponent.BeakerSlotId, component.BeakerSlot);
         }
     }
 }

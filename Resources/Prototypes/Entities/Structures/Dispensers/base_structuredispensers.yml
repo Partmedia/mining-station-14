@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: ReagentDispenserBase
   parent: ConstructibleMachine
@@ -48,17 +48,16 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
   - type: ReagentDispenser
-  - type: ItemSlots
-    slots:
-      beakerSlot:
-        whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
-        whitelist:
-          components:
-          - FitsInDispenser
+    beakerSlot:
+      whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
+      whitelist:
+        components:
+        - FitsInDispenser
+  - type: ItemSlots 
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-      beakerSlot: !type:ContainerSlot
+      ReagentDispenser-beakerSlot: !type:ContainerSlot
   - type: StaticPrice
     price: 1000

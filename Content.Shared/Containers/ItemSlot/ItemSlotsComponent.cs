@@ -67,8 +67,8 @@ namespace Content.Shared.Containers.ItemSlots
             CopyFrom(other);
         }
 
-
         [DataField("whitelist")]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public EntityWhitelist? Whitelist;
 
         [DataField("insertSound")]
@@ -174,6 +174,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     The actual deconstruction logic is handled by the server-side EmptyOnMachineDeconstructSystem.
         /// </remarks>
         [DataField("ejectOnDeconstruct")]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         [NonSerialized]
         public bool EjectOnDeconstruct = true;
 
@@ -182,6 +183,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     ejected when it is broken or destroyed?
         /// </summary>
         [DataField("ejectOnBreak")]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         [NonSerialized]
         public bool EjectOnBreak = false;
 
@@ -200,6 +202,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     want to insert more than one item that matches the same whitelist.
         /// </remarks>
         [DataField("swap")]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public bool Swap = true;
 
         public string? ID => ContainerSlot?.ID;

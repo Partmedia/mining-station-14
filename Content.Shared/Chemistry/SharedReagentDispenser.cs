@@ -7,7 +7,7 @@ namespace Content.Shared.Chemistry
     /// </summary>
     public sealed class SharedReagentDispenser
     {
-        public const string OutputSlotName = "beakerSlot";
+        public const string OutputSlotName = "ReagentDispenser-beakerSlot";
     }
 
     [Serializable, NetSerializable]
