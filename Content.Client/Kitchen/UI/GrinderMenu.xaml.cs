@@ -124,10 +124,12 @@ namespace Content.Client.Kitchen.UI
                 {
                     //_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto);
                     totalQuantity += reagent.Quantity;
+                    var reagentName = _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto) ? Loc.GetString($"{reagent.Quantity} {proto.LocalizedPhysicalDescription}") : "???";
+                    BeakerContentBox.BoxContents.AddItem(reagentName);
                 }
 
-                var reagentName = Loc.GetString($"{totalQuantity} {"liquids"}");
-                BeakerContentBox.BoxContents.AddItem(reagentName);
+                var total = Loc.GetString($"{totalQuantity} {"liquids"}");
+                BeakerContentBox.BoxContents.AddItem(total);
             }
         }
     }
