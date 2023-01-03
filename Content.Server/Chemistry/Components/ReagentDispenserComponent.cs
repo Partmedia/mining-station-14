@@ -16,12 +16,12 @@ namespace Content.Server.Chemistry.Components
     public sealed class ReagentDispenserComponent : Component
     {
 
-        //TODO consider re-using for reagent store presets
-        /**[DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))]
+        //packs are used for presets
+        [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))]
         [ViewVariables(VVAccess.ReadWrite)]
         public string? PackPrototypeId = default!;
 
-        [DataField("emagPack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))]
+        /**[DataField("emagPack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))]
         [ViewVariables(VVAccess.ReadWrite)]
         public string? EmagPackPrototypeId = default!;
 

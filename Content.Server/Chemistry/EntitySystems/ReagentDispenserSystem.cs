@@ -111,33 +111,8 @@ namespace Content.Server.Chemistry.EntitySystems
                         inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(metadata.EntityName, storedAmount)));
             }
 
-            /*if (reagentDispenser.PackPrototypeId is not null
-                && _prototypeManager.TryIndex(reagentDispenser.PackPrototypeId, out ReagentDispenserInventoryPrototype? packPrototype))
-            {
-                inventory.AddRange(packPrototype.Inventory);
-            }
-
-            if (reagentDispenser.IsEmagged
-                && reagentDispenser.EmagPackPrototypeId is not null
-                && _prototypeManager.TryIndex(reagentDispenser.EmagPackPrototypeId, out ReagentDispenserInventoryPrototype? emagPackPrototype))
-            {
-                inventory.AddRange(emagPackPrototype.Inventory);
-            }*/
-
             return inventory;
         }
-
-        /*
-        private void OnEmagged(EntityUid uid, ReagentDispenserComponent reagentDispenser, GotEmaggedEvent args)
-        {
-            if (!reagentDispenser.IsEmagged)
-            {
-                reagentDispenser.IsEmagged = true;
-                args.Handled = true;
-                UpdateUiState(reagentDispenser);
-            }
-        }
-        */
 
         private void OnSetDispenseAmountMessage(EntityUid uid, ReagentDispenserComponent reagentDispenser, ReagentDispenserSetDispenseAmountMessage message)
         {
@@ -195,19 +170,44 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnMapInit(EntityUid uid, ReagentDispenserComponent component, MapInitEvent args)
         {
 
+            //get list of pre-loaded containers
+            List<string> preLoad = new List<string>();
+            List<string> preLoadLabels = new List<string>();
+            if (component.PackPrototypeId is not null
+                && _prototypeManager.TryIndex(component.PackPrototypeId, out ReagentDispenserInventoryPrototype? packPrototype))
+            {
+                preLoad.AddRange(packPrototype.Inventory);
+                preLoadLabels.AddRange(packPrototype.Labels);
+            }
+
             //populate storage slots with base storage slot whitelist
             for (var i = 0; i < component.NumSlots; i++)
             {
                 var storageSlotId = ReagentDispenserComponent.BaseStorageSlotId + i;
-                ItemSlot storageComponent = new();//component.BaseStorageSlot;
+                ItemSlot storageComponent = new();
                 storageComponent.Whitelist = component.StorageWhitelist;
                 storageComponent.Swap = false;
                 storageComponent.EjectOnBreak = true;
+
+                //check corresponding index in pre-loaded container (if exists) and set starting item
+                if (i < preLoad.Count)
+                    storageComponent.StartingItem = preLoad[i];
+
                 component.StorageSlotIds.Add(storageSlotId);
                 component.StorageSlots.Add(storageComponent);
                 component.StorageSlots[i].Name = "Storage Slot " + (i+1);
                 //Console.WriteLine(component.StorageSlotIds[i]);
                 _itemSlotsSystem.AddItemSlot(uid, component.StorageSlotIds[i], component.StorageSlots[i]);
+
+                //re-label item for brevity (if labels provided)
+                if (i < preLoadLabels.Count) {
+                    var storedContainer = _itemSlotsSystem.GetItemOrNull(component.Owner, storageSlotId);
+                    if (storedContainer != null)
+                    {
+                        var label = EnsureComp<LabelComponent>(storedContainer.Value);
+                        label.CurrentLabel = preLoadLabels[i];
+                    }
+                }
             }
 
             _itemSlotsSystem.AddItemSlot(uid, ReagentDispenserComponent.BeakerSlotId, component.BeakerSlot);

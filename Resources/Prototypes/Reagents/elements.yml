@@ -98,7 +98,7 @@
   name: reagent-name-iodine
   group: Elements
   desc: reagent-desc-iodine
-  physicalDesc: reagent-physical-desc-dark-brown
+  physicalDesc: reagent-physical-desc-strong-smelling
   flavor: bitter
   color: "#BC8A00"
   boilingPoint: 184.3

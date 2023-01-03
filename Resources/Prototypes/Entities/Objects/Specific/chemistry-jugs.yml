@@ -17,6 +17,19 @@
 
 - type: entity
   parent: BaseChemistryEmptyJug
+  id: ChemJugA
+  name: aluminium jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
   id: ChemJugH
   name: liquified hydrogen jug
   components:
@@ -26,6 +39,45 @@
         maxVol: 300
         reagents:
         - ReagentId: Hydrogen
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugI
+  name: iodine jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Iodine
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugIr
+  name: iron jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Iron
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugL
+  name: lithium jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Lithium
           Quantity: 300
 
 - type: entity
@@ -56,6 +108,19 @@
 
 - type: entity
   parent: BaseChemistryEmptyJug
+  id: ChemJugM
+  name: mercury jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Mercury
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
   id: ChemJugS
   name: sulfur jug
   components:
@@ -78,6 +143,58 @@
         maxVol: 300
         reagents:
         - ReagentId: Carbon
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugCh
+  name: chlorine jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Chlorine
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugCo
+  name: copper jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Copper
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugE
+  name: ethanol jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Ethanol
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugF
+  name: fluorine jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Fluorine
           Quantity: 300
 
 - type: entity
@@ -108,6 +225,19 @@
 
 - type: entity
   parent: BaseChemistryEmptyJug
+  id: ChemJugSug
+  name: sugar jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
   id: ChemJugSi
   name: silicon jug
   components:
@@ -117,6 +247,19 @@
         maxVol: 300
         reagents:
         - ReagentId: Silicon
+          Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugSo
+  name: sodium jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Sodium
           Quantity: 300
 
 - type: entity

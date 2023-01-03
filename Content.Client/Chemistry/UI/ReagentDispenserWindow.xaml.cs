@@ -56,11 +56,7 @@ namespace Content.Client.Chemistry.UI
             ChemicalList.Children.Clear();
 
             foreach (KeyValuePair<string, KeyValuePair<string, string>> entry in inventory)
-                //.OrderBy(r => {_prototypeManager.TryIndex(r, out ReagentPrototype? p); return p?.LocalizedName;}))
             {
-                /*var localizedName = _prototypeManager.TryIndex(entry, out ReagentPrototype? p)
-                    ? p.LocalizedName
-                    : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");*/
 
                 var button = new DispenseReagentButton(entry.Key, entry.Value.Key, entry.Value.Value);
                 button.OnPressed += args => OnDispenseReagentButtonPressed?.Invoke(args, button);
@@ -149,12 +145,12 @@ namespace Content.Client.Chemistry.UI
 
             foreach (var reagent in state.OutputContainer.Contents)
             {
-                // Try get to the prototype for the given reagent. This gives us its name.
-                //TODO replace this with container label...
+                // Try get to the prototype for the given reagent. This gives us its description.
                 var localizedName = _prototypeManager.TryIndex(reagent.Id, out ReagentPrototype? p)
                     ? p.LocalizedPhysicalDescription
                     : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
 
+                //TODO figure out how to apply color to the label PLEASE HELP
                 var nameLabel = new Label {
                     Text = $"{localizedName}: ",
                 };

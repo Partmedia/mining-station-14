@@ -2,7 +2,7 @@
   id: chem_dispenser
   name: chemical dispenser
   parent: ReagentDispenserBase
-  description: An industrial grade chemical dispenser with a sizeable chemical supply.
+  description: An industrial grade chemical dispenser.
   components:
   - type: Sprite
     sprite: Structures/dispensers.rsi
@@ -13,8 +13,6 @@
     storageWhitelist:
       tags:
       - ChemJug
-    pack: ChemDispenserStandardInventory
-    emagPack: ChemDispenserEmaggedInventory
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Destructible
@@ -35,3 +33,23 @@
   - type: UpgradePowerDraw
     powerDrawMultiplier: 0.75
     scaling: Exponential
+
+- type: entity
+  id: stocked_chem_dispenser
+  name: chemical dispenser
+  suffix: fully stocked
+  description: An industrial grade chemical dispenser with a sizeable chemical supply.
+  parent: chem_dispenser
+  components:
+  - type: ReagentDispenser
+    pack: ChemDispenserStandardInventory
+
+- type: entity
+  id: expended_chem_dispenser
+  name: chemical dispenser
+  suffix: emptied stock
+  description: An industrial grade chemical dispenser with an emptied chemical supply.
+  parent: chem_dispenser
+  components:
+  - type: ReagentDispenser
+    pack: ChemDispenserExpendedInventory

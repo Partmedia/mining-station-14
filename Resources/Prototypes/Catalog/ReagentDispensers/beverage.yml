@@ -1,25 +1,43 @@
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
   inventory:
+  - DrinkIceJug
+  - DrinkCoffeeJug
+  - DrinkCreamCartonXL
+  - DrinkTeaJug
+  - DrinkGreenTeaJug
+  - DrinkIcedTeaJug
+  - DrinkColaBottleFull
+  - DrinkSpaceMountainWindBottleFull
+  - DrinkDrGibbJug
+  - DrinkRootBeerJug
+  - DrinkSpaceUpBottleFull
+  - DrinkTonicWaterBottleFull
+  - DrinkSodaWaterBottleFull
+  - DrinkLemonLimeJug
+  - DrinkSugarJug
+  - DrinkJuiceOrangeCartonXL
+  - DrinkJuiceLimeCartonXL
+  - DrinkWaterMelonJuiceJug
+  labels:
   - Ice
   - Coffee
   - Cream
   - Tea
-  - GreenTea
-  - IcedTea
-  - IcedGreenTea
+  - Green Tea
+  - Iced Tea
   - Cola
-  - SpaceMountainWind
-  - DrGibb
-  - RootBeer
-  - SpaceUp
-  - TonicWater
-  - SodaWater
-  - LemonLime
+  - Space Mountain Wind
+  - Dr Gibb
+  - Root Beer
+  - Space Up
+  - Tonic Water
+  - Soda Water
+  - Lemon Lime
   - Sugar
-  - JuiceOrange
-  - JuiceLime
-  - JuiceWatermelon
+  - Orange Juice
+  - Lime Juice
+  - Watermelon Juice
   ###Hacked
   #- Fourteen Loko
   #- GrapeSoda
@@ -27,12 +45,31 @@
 - type: reagentDispenserInventory
   id: BoozeDispenserInventory
   inventory:
-  - LemonLime
+  - DrinkLemonLimeJug
+  - DrinkSugarJug
+  - DrinkJuiceOrangeCartonXL
+  - DrinkJuiceLimeCartonXL
+  - DrinkTonicWaterBottleFull
+  - DrinkSodaWaterBottleFull
+  - DrinkBeerGrowler
+  - DrinkKahluaBottleFull
+  - DrinkWhiskeyBottleFull
+  - DrinkWineBottleFull
+  - DrinkVodkaBottleFull
+  - DrinkGinBottleFull
+  - DrinkRumBottleFull
+  - DrinkTequilaBottleFull
+  - DrinkVermouthBottleFull
+  - DrinkCognacBottleFull
+  - DrinkAleBottleFullGrowler
+  - DrinkMeadJug
+  labels:
+  - Lemon Lime
   - Sugar
-  - JuiceOrange
-  - JuiceLime
-  - SodaWater
-  - TonicWater
+  - Orange Juice
+  - Lime Juice
+  - Tonic Water
+  - Soda Water
   - Beer
   - CoffeeLiqueur
   - Whiskey
@@ -52,16 +89,16 @@
   #- JuiceBerry
 
 
-- type: reagentDispenserInventory
-  id: SodaDispenserEmagInventory
-  inventory:
-    - FourteenLoko
-    - Ephedrine
-    - Histamine
+#- type: reagentDispenserInventory
+#  id: SodaDispenserEmagInventory
+#  inventory:
+#    - FourteenLoko
+#    - Ephedrine
+#    - Histamine
 
-- type: reagentDispenserInventory
-  id: BoozeDispenserEmagInventory
-  inventory:
-    - AtomicBomb
-    - Ethanol
-    - Iron
+#- type: reagentDispenserInventory
+#  id: BoozeDispenserEmagInventory
+#  inventory:
+#    - AtomicBomb
+#    - Ethanol
+#    - Iron
