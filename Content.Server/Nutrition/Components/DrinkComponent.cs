@@ -1,5 +1,6 @@
 using System.Threading;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -17,13 +18,15 @@ namespace Content.Server.Nutrition.Components
         [DataField("useSound")]
         public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/drink.ogg");
 
-        [DataField("isOpen")]
+        [ViewVariables]
+        [DataField("isOpen")]      
         internal bool DefaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 TransferAmount { get; [UsedImplicitly] private set; } = FixedPoint2.New(5);
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(ReagentDispenserSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public bool Opened;
 
         [DataField("openSounds")]

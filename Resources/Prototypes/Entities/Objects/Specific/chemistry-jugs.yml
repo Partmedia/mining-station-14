@@ -4,6 +4,9 @@
   name: reagent jug
   description: A large jug for holding stock chemical reagents.
   components:
+  - type: Tag
+    tags:
+    - ChemJug
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water.rsi
     state: icon

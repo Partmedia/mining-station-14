@@ -11,6 +11,9 @@
     state: booze
     netsync: false
   - type: ReagentDispenser
+    storageWhitelist:
+      tags:
+      - DrinkBottle
     pack: BoozeDispenserInventory
     emagPack: BoozeDispenserEmagInventory
   - type: Transform

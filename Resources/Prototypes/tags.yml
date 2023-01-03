@@ -115,6 +115,9 @@
   id: CartridgeRocket
 
 - type: Tag
+  id: ChemJug
+
+- type: Tag
   id: Cigarette
 
 - type: Tag
@@ -197,6 +200,9 @@
 
 - type: Tag
   id: Donut
+
+- type: Tag
+  id: DrinkBottle
 
 - type: Tag
   id: DroneUsable

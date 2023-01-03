@@ -3,6 +3,9 @@
   id: DrinkBottleBaseFull
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - DrinkBottle
   - type: Drink
     openSounds:
       collection: bottleOpenSounds

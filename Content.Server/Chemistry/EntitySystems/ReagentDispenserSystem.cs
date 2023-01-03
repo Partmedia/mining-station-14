@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Nutrition.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Chemistry;
 using Content.Shared.Chemistry;
@@ -78,7 +79,6 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private List<KeyValuePair<string, KeyValuePair<string, string>>> GetInventory(ReagentDispenserComponent reagentDispenser)
         {
-            //TODO instead of using a prototype list - uses a list of entities stored in the dispenser
 
             var inventory = new List<KeyValuePair<string, KeyValuePair<string, string>>>();
 
@@ -86,6 +86,9 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 var storageSlotId = ReagentDispenserComponent.BaseStorageSlotId + i;
                 var storedContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, storageSlotId);
+
+                if (TryComp<DrinkComponent>(storedContainer, out var storedDrink))
+                    storedDrink.Opened = true;
      
                 FixedPoint2 quantity = 0f;
                 if (TryComp<SolutionContainerManagerComponent>(storedContainer, out var storageSolutions))

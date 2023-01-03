@@ -11,6 +11,9 @@
     state: soda
     netsync: false
   - type: ReagentDispenser
+    storageWhitelist:
+      tags:
+      - DrinkBottle
     pack: SodaDispenserInventory
     emagPack: SodaDispenserEmagInventory
   - type: Transform
