@@ -48,21 +48,21 @@ namespace Content.Client.Chemistry.UI
         /// Update the button grid of reagents which can be dispensed.
         /// </summary>
         /// <param name="inventory">Reagents which can be dispensed by this dispenser</param>
-        public void UpdateReagentsList(List<string> inventory)
+        public void UpdateReagentsList(List<KeyValuePair<string, KeyValuePair<string,string>>> inventory)
         {
             if (ChemicalList == null) return;
             if (inventory == null) return;
 
             ChemicalList.Children.Clear();
 
-            foreach (var entry in inventory
-                .OrderBy(r => {_prototypeManager.TryIndex(r, out ReagentPrototype? p); return p?.LocalizedName;}))
+            foreach (KeyValuePair<string, KeyValuePair<string, string>> entry in inventory)
+                //.OrderBy(r => {_prototypeManager.TryIndex(r, out ReagentPrototype? p); return p?.LocalizedName;}))
             {
-                var localizedName = _prototypeManager.TryIndex(entry, out ReagentPrototype? p)
+                /*var localizedName = _prototypeManager.TryIndex(entry, out ReagentPrototype? p)
                     ? p.LocalizedName
-                    : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
+                    : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");*/
 
-                var button = new DispenseReagentButton(entry, localizedName);
+                var button = new DispenseReagentButton(entry.Key, entry.Value.Key, entry.Value.Value);
                 button.OnPressed += args => OnDispenseReagentButtonPressed?.Invoke(args, button);
                 button.OnMouseEntered += args => OnDispenseReagentButtonMouseEntered?.Invoke(args, button);
                 button.OnMouseExited += args => OnDispenseReagentButtonMouseExited?.Invoke(args, button);
@@ -150,11 +150,15 @@ namespace Content.Client.Chemistry.UI
             foreach (var reagent in state.OutputContainer.Contents)
             {
                 // Try get to the prototype for the given reagent. This gives us its name.
+                //TODO replace this with container label...
                 var localizedName = _prototypeManager.TryIndex(reagent.Id, out ReagentPrototype? p)
-                    ? p.LocalizedName
+                    ? p.LocalizedPhysicalDescription
                     : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
 
-                var nameLabel = new Label {Text = $"{localizedName}: "};
+                var nameLabel = new Label {
+                    Text = $"{localizedName}: ",
+                };
+
                 var quantityLabel = new Label
                 {
                     Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", reagent.Quantity)),
@@ -183,10 +187,10 @@ namespace Content.Client.Chemistry.UI
     public sealed class DispenseReagentButton : Button {
         public string ReagentId { get; }
 
-        public DispenseReagentButton(string reagentId, string text)
+        public DispenseReagentButton(string reagentId, string text, string amount)
         {
             ReagentId = reagentId;
-            Text = text;
+            Text = text + " " + amount;
         }
     }
 }

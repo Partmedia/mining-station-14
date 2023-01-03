@@ -24,11 +24,11 @@ namespace Content.Shared.Chemistry
     [Serializable, NetSerializable]
     public sealed class ReagentDispenserDispenseReagentMessage : BoundUserInterfaceMessage
     {
-        public readonly string ReagentId;
+        public readonly string SlotId;
 
-        public ReagentDispenserDispenseReagentMessage(string reagentId)
+        public ReagentDispenserDispenseReagentMessage(string slotId)
         {
-            ReagentId = reagentId;
+            SlotId = slotId;
         }
     }
 
@@ -58,11 +58,11 @@ namespace Content.Shared.Chemistry
         /// <summary>
         /// A list of the reagents which this dispenser can dispense.
         /// </summary>
-        public readonly List<string> Inventory;
+        public readonly List<KeyValuePair<string, KeyValuePair<string, string>>> Inventory;
 
         public readonly ReagentDispenserDispenseAmount SelectedDispenseAmount;
 
-        public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer, List<string> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
+        public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer, List<KeyValuePair<string, KeyValuePair<string, string>>> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
         {
             OutputContainer = outputContainer;
             Inventory = inventory;

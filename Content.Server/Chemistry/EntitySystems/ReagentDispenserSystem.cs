@@ -1,7 +1,9 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Labels.Components;
+using Content.Server.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Containers.ItemSlots;
@@ -13,6 +15,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -25,6 +28,7 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SolutionTransferSystem _solutionTransferSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -72,27 +76,36 @@ namespace Content.Server.Chemistry.EntitySystems
             return null;
         }
 
-        private List<string> GetInventory(ReagentDispenserComponent reagentDispenser)
+        private List<KeyValuePair<string, KeyValuePair<string, string>>> GetInventory(ReagentDispenserComponent reagentDispenser)
         {
             //TODO instead of using a prototype list - uses a list of entities stored in the dispenser
 
-            var inventory = new List<string>();
+            var inventory = new List<KeyValuePair<string, KeyValuePair<string, string>>>();
 
             for (var i = 0; i < reagentDispenser.NumSlots; i++)
             {
                 var storageSlotId = ReagentDispenserComponent.BaseStorageSlotId + i;
                 var storedContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, storageSlotId);
+     
+                FixedPoint2 quantity = 0f;
+                if (TryComp<SolutionContainerManagerComponent>(storedContainer, out var storageSolutions))
+                    foreach (var storeSol in (storageSolutions.Solutions))
+                        foreach (var content in (storeSol.Value.Contents))
+                            quantity += content.Quantity;
+
+                var storedAmount = quantity + "u";
+
                 if (EntityManager.TryGetComponent<LabelComponent?>(storedContainer, out var label))
                 {
                     if (label.CurrentLabel != null)
-                        inventory.Add(label.CurrentLabel);
+                        inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(label.CurrentLabel, storedAmount)));
                     else
                         if (EntityManager.TryGetComponent<MetaDataComponent?>(storedContainer, out var metadata))
-                            inventory.Add(metadata.EntityName);
+                            inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(metadata.EntityName, storedAmount)));
                 }
                 else
                     if (EntityManager.TryGetComponent<MetaDataComponent?>(storedContainer, out var metadata))
-                        inventory.Add(metadata.EntityName);
+                        inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(metadata.EntityName, storedAmount)));
             }
 
             /*if (reagentDispenser.PackPrototypeId is not null
@@ -133,19 +146,28 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnDispenseReagentMessage(EntityUid uid, ReagentDispenserComponent reagentDispenser, ReagentDispenserDispenseReagentMessage message)
         {
             // Ensure that the reagent is something this reagent dispenser can dispense.
-            if (!GetInventory(reagentDispenser).Contains(message.ReagentId))
+            var storedContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, message.SlotId);
+            if (storedContainer == null)
                 return;
 
             var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
             if (outputContainer is not {Valid: true} || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution))
                 return;
 
-            if (_solutionContainerSystem.TryAddReagent(outputContainer.Value, solution, message.ReagentId, (int)reagentDispenser.DispenseAmount, out var dispensedAmount)
-                && message.Session.AttachedEntity is not null)
-            {
-                _adminLogger.Add(LogType.ChemicalReaction, LogImpact.Medium,
-                    $"{ToPrettyString(message.Session.AttachedEntity.Value):player} dispensed {dispensedAmount}u of {message.ReagentId} into {ToPrettyString(outputContainer.Value):entity}");
-            }
+            //run solution transfer from specified storage container to output container
+            //this may need to be adjusted should there ever be multiple "solutions" in a container - as it is there only ever appears to be one
+            if (TryComp<SolutionContainerManagerComponent>(storedContainer, out var storageSolutions) && TryComp<SolutionContainerManagerComponent>(outputContainer, out var outputSolutions))
+                foreach (var outSol in (outputSolutions.Solutions))
+                    foreach (var storeSol in (storageSolutions.Solutions))
+                        _solutionTransferSystem.Transfer(uid, storedContainer.Value, storeSol.Value, outputContainer.Value, outSol.Value, (int)reagentDispenser.DispenseAmount);
+
+            //if (_solutionContainerSystem.TryAddReagent(outputContainer.Value, solution, reagentId, (int)reagentDispenser.DispenseAmount, out var dispensedAmount)
+            //    && message.Session.AttachedEntity is not null)
+            //{
+            //    TODO check if this is necessary (admin log already in transfer function)
+            //    _adminLogger.Add(LogType.ChemicalReaction, LogImpact.Medium,
+            //        $"{ToPrettyString(message.Session.AttachedEntity.Value):player} dispensed {dispensedAmount}u of {reagentId} into {ToPrettyString(outputContainer.Value):entity}");
+            //}
 
             UpdateUiState(reagentDispenser);
             ClickSound(reagentDispenser);
