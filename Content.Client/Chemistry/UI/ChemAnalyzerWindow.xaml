@@ -1,0 +1,31 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            Title="Chemical Analyzer"
+            SetSize="690 350"
+            MinSize="690 350">
+    <BoxContainer Orientation="Vertical">
+        <Control MinSize="0 10"/>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'reagent-dispenser-window-container-label'}"/>
+            <Button Name="EjectButton"
+                    Access="Public"
+                    Text="{Loc 'reagent-dispenser-window-eject-button'}"
+                    StyleClasses="OpenLeft"/>
+        </BoxContainer>
+        <Control MinSize="0 10"/>
+        <PanelContainer VerticalExpand="True"
+                        SizeFlagsStretchRatio="6"
+                        MinSize="0 150">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#1b1b1e" />
+            </PanelContainer.PanelOverride>
+            <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Name="ContainerInfo"
+                          Orientation="Vertical"
+                          HorizontalExpand="True">
+                <Label Text="{Loc 'reagent-dispenser-window-no-container-loaded-text'}"/>
+            </BoxContainer>
+            </ScrollContainer>
+        </PanelContainer>
+    </BoxContainer>
+</DefaultWindow>
