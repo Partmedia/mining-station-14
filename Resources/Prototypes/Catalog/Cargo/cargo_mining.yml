@@ -242,17 +242,6 @@
   group: market
 
 - type: cargoProduct
-  id: ChemJugCC
-  name: stock carbon
-  icon:
-    sprite: Objects/Consumable/Drinks/water.rsi
-    state: icon
-  product: ChemJugC
-  cost: 400
-  category: Medical
-  group: market
-
-- type: cargoProduct
   id: ChemJugClC
   name: stock chlorine
   icon:
@@ -282,17 +271,6 @@
     state: icon
   product: ChemJugEthanol
   cost: 800
-  category: Medical
-  group: market
-
-- type: cargoProduct
-  id: ChemJugHC
-  name: stock hydrogen
-  icon:
-    sprite: Objects/Consumable/Drinks/water.rsi
-    state: icon
-  product: ChemJugH
-  cost: 600
   category: Medical
   group: market
 

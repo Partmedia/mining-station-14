@@ -3,23 +3,23 @@
   inventory:
   - ChemJugA
   - ChemJugC
-  - ChemJugCh
-  - ChemJugCo
-  - ChemJugE
+  - ChemJugCl
+  - ChemJugCu
+  - ChemJugEthanol
   - ChemJugF
   - ChemJugSug
   - ChemJugH
   - ChemJugI
-  - ChemJugIr
-  - ChemJugL
-  - ChemJugM
+  - ChemJugFe
+  - ChemJugLi
+  - ChemJugHg
   - ChemJugN
   - ChemJugO
   - ChemJugP
   - ChemJugK
   - ChemJugRa
   - ChemJugSi
-  - ChemJugSo
+  - ChemJugNa
   - ChemJugS
   labels:
   - Aluminium
