@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "license": "CC-BY",
+  "copyright": "Created by Coles_Magnum",
+  "size": {"x": 32, "y": 32}, 
+  "states": [{"name": "pillPress0", "delays": [[1.0]]}, 
+  	{"name": "pillPress1", "delays": [[1.0]]},
+  	{"name": "pillPress2", "delays": [[1.0]]},
+  	{"name": "pillPress3", "delays": [[1.0]]}
+  ]
+}

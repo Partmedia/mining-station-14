@@ -1,0 +1,61 @@
+- type: entity
+  id: pill_press
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: The PillPopper 2125 ed.
+  suffix: Pill Press
+  description: This thing is pretty dusty. Also it makes pills.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: PillPress
+    pillDosageLimit: 50
+  - type: ActivatableUI
+    key: enum.PillPressUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PillPressUiKey.Key
+      type: PillPressBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: PillPressVisualizer
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.08,-0.35,0.15,0.25"
+      mask:
+      - TabletopMachineMask
+      layer:
+      - TabletopMachineLayer
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/pill_press.rsi
+    state: pillPress0
+    drawdepth: SmallObjects
+    snapCardinals: true
+  - type: ApcPowerReceiver
+    powerLoad: 50
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+      outputSlot:
+        whitelistFailPopup: chem-master-component-cannot-put-entity-message
+        whitelist:
+          tags:
+          - PillCanister
+  - type: Machine
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      outputSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: SolutionContainerManager
+    solutions:
+      buffer: {}
