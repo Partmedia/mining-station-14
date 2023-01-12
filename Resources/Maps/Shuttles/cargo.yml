@@ -693,7 +693,11 @@ entities:
       Toggle:
       - port: Pressed
         uid: 57
+      DoorBolt: []
     type: SignalReceiver
+  - outputs:
+      DoorStatus: []
+    type: SignalTransmitter
 - uid: 2
   type: BlastDoor
   components:
@@ -706,7 +710,11 @@ entities:
       Toggle:
       - port: Pressed
         uid: 56
+      DoorBolt: []
     type: SignalReceiver
+  - outputs:
+      DoorStatus: []
+    type: SignalTransmitter
 - uid: 3
   type: BlastDoor
   components:
@@ -719,7 +727,11 @@ entities:
       Toggle:
       - port: Pressed
         uid: 55
+      DoorBolt: []
     type: SignalReceiver
+  - outputs:
+      DoorStatus: []
+    type: SignalTransmitter
 - uid: 4
   type: WallShuttle
   components:
@@ -1023,7 +1035,7 @@ entities:
 - uid: 38
   type: ConveyorBelt
   components:
-  - rot: 1.5707963267948966 rad
+  - rot: -1.5707963267948966 rad
     pos: 0.5,4.5
     parent: 0
     type: Transform
@@ -1041,7 +1053,7 @@ entities:
 - uid: 39
   type: ConveyorBelt
   components:
-  - rot: 1.5707963267948966 rad
+  - rot: -1.5707963267948966 rad
     pos: -0.5,4.5
     parent: 0
     type: Transform
@@ -1059,7 +1071,7 @@ entities:
 - uid: 40
   type: ConveyorBelt
   components:
-  - rot: 1.5707963267948966 rad
+  - rot: -1.5707963267948966 rad
     pos: -1.5,4.5
     parent: 0
     type: Transform
@@ -1077,7 +1089,7 @@ entities:
 - uid: 41
   type: ConveyorBelt
   components:
-  - rot: 1.5707963267948966 rad
+  - rot: -1.5707963267948966 rad
     pos: -5.5,0.5
     parent: 0
     type: Transform
@@ -1095,7 +1107,7 @@ entities:
 - uid: 42
   type: ConveyorBelt
   components:
-  - rot: 1.5707963267948966 rad
+  - rot: -1.5707963267948966 rad
     pos: -4.5,0.5
     parent: 0
     type: Transform
@@ -1113,7 +1125,7 @@ entities:
 - uid: 43
   type: ConveyorBelt
   components:
-  - rot: 1.5707963267948966 rad
+  - rot: -1.5707963267948966 rad
     pos: -3.5,0.5
     parent: 0
     type: Transform
@@ -1169,7 +1181,7 @@ entities:
 - uid: 46
   type: ConveyorBelt
   components:
-  - rot: -1.5707963267948966 rad
+  - rot: -4.71238898038469 rad
     pos: -0.5,0.5
     parent: 0
     type: Transform
@@ -1187,7 +1199,7 @@ entities:
 - uid: 47
   type: ConveyorBelt
   components:
-  - rot: -1.5707963267948966 rad
+  - rot: -4.71238898038469 rad
     pos: -3.5,4.5
     parent: 0
     type: Transform
@@ -1205,7 +1217,7 @@ entities:
 - uid: 48
   type: ConveyorBelt
   components:
-  - rot: -1.5707963267948966 rad
+  - rot: -4.71238898038469 rad
     pos: -4.5,4.5
     parent: 0
     type: Transform
@@ -1223,7 +1235,7 @@ entities:
 - uid: 49
   type: ConveyorBelt
   components:
-  - rot: -1.5707963267948966 rad
+  - rot: -4.71238898038469 rad
     pos: -5.5,4.5
     parent: 0
     type: Transform
@@ -1273,7 +1285,7 @@ entities:
 - uid: 51
   type: ConveyorBelt
   components:
-  - rot: -1.5707963267948966 rad
+  - rot: -4.71238898038469 rad
     pos: -1.5,0.5
     parent: 0
     type: Transform
@@ -1364,7 +1376,11 @@ entities:
       Toggle:
       - port: Pressed
         uid: 58
+      DoorBolt: []
     type: SignalReceiver
+  - outputs:
+      DoorStatus: []
+    type: SignalTransmitter
 - uid: 55
   type: SignalButton
   components:
@@ -1910,6 +1926,15 @@ entities:
   - pos: -2.5,7.5
     parent: 0
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle: []
+      DoorBolt: []
+    type: SignalReceiver
+  - outputs:
+      DoorStatus: []
+    type: SignalTransmitter
 - uid: 140
   type: GasPipeStraight
   components:
@@ -2089,7 +2114,7 @@ entities:
 - uid: 167
   type: ConveyorBelt
   components:
-  - rot: -1.5707963267948966 rad
+  - rot: -4.71238898038469 rad
     pos: 0.5,0.5
     parent: 0
     type: Transform
