@@ -139,7 +139,8 @@ public sealed class MiningSystem : EntitySystem
 
                             support1 = CheckSupportDirs(index1, Direction.NorthEast, Direction.SouthWest, support1, range, count);
                             support1 = CheckSupportDirs(index1, Direction.NorthEast, Direction.South, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.NorthEast, Direction.West, support1, range, count);
+
+                            support1 = CheckSupportDirs(index1, Direction.East, Direction.SouthWest, support1, range, count);
 
                             support1 = CheckSupportDirs(index1, Direction.NorthWest, Direction.SouthEast, support1, range, count);
                             support1 = CheckSupportDirs(index1, Direction.NorthWest, Direction.South, support1, range, count);
@@ -169,7 +170,8 @@ public sealed class MiningSystem : EntitySystem
 
                             support2 = CheckSupportDirs(index2, Direction.NorthEast, Direction.SouthWest, support2, range, count);
                             support2 = CheckSupportDirs(index2, Direction.NorthEast, Direction.South, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.NorthEast, Direction.West, support2, range, count);
+
+                            support2 = CheckSupportDirs(index2, Direction.East, Direction.SouthWest, support2, range, count);
 
                             support2 = CheckSupportDirs(index2, Direction.NorthWest, Direction.SouthEast, support2, range, count);
                             support2 = CheckSupportDirs(index2, Direction.NorthWest, Direction.South, support2, range, count);
@@ -194,11 +196,16 @@ public sealed class MiningSystem : EntitySystem
 
             supported = CheckSupportDirs(origin, Direction.NorthEast, Direction.SouthWest, supported, range, 0);
             supported = CheckSupportDirs(origin, Direction.NorthEast, Direction.South, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.NorthEast, Direction.West, supported, range, 0);
+
+            supported = CheckSupportDirs(origin, Direction.East, Direction.SouthWest, supported, range, 0);
 
             supported = CheckSupportDirs(origin, Direction.NorthWest, Direction.SouthEast, supported, range, 0);
             supported = CheckSupportDirs(origin, Direction.NorthWest, Direction.South, supported, range, 0);
             supported = CheckSupportDirs(origin, Direction.NorthWest, Direction.East, supported, range, 0);
+
+            
+
+
         }
 
         if (!supported)
