@@ -29,7 +29,7 @@
         amount: 1
 
 - type: entity
-  id: CrateSalvageEquipment
+  id: CrateSalvageEquipmentCargo
   name: salvage equipment crate
   parent: CrateGenericSteel
   components:

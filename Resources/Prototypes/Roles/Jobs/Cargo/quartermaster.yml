@@ -1,6 +1,5 @@
 - type: job
   id: Quartermaster
-  name: job-name-qm
   name: mine supervisor
   description: job-description-qm
   playTimeTracker: JobQuartermaster

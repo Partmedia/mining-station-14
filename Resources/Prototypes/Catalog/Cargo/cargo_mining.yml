@@ -83,18 +83,6 @@
   group: market
 
 - type: cargoProduct
-  id: MiningBiomassReclaimerCrate
-  name: biomass reclaimer crate
-  description: End NanoTrasen's monopoly on biomass with your own reclaimer!
-  icon:
-    sprite: Structures/Machines/Medical/biomass_reclaimer.rsi
-    state: icon
-  product: CrateBiomassReclaimer
-  cost: 10000
-  category: Medical
-  group: market
-
-- type: cargoProduct
   id: MiningBoxBodyBagCrate
   name: body bag box
   description: Expand your morgue with these body bags.
