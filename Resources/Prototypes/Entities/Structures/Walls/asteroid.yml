@@ -75,8 +75,6 @@
     sprite: Structures/Walls/asteroid_rock.rsi
     state: full
   - type: Occluder
-    sizeX: 32
-    sizeY: 32
   - type: Airtight
   - type: Fixtures
     fixtures:
