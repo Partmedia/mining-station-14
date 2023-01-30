@@ -20,6 +20,11 @@
       types:
         Asphyxiation: -1.5
   - type: Alerts
+  - type: Vocal
+    sounds:
+      Male: MaleFelinid
+      Female: FemaleFelinid
+      Unsexed: MaleFelinid
   - type: Actions
   - type: Eye
   - type: CameraRecoil
