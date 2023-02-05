@@ -143,6 +143,17 @@
   group: market
 
 - type: cargoProduct
+  id: ProductOreAnalyzer
+  name: ore analyzer
+  icon:
+    sprite: Objects/Specific/Mining/ore_scanner.rsi
+    state: analyzer
+  product: OreAnalyzer
+  cost: 1200
+  category: Mining
+  group: market
+
+- type: cargoProduct
   id: ChemJugHC
   name: stock hydrogen
   icon:

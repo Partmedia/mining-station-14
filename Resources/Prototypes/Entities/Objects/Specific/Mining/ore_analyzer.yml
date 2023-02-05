@@ -1,0 +1,18 @@
+- type: entity
+  name: ore analyzer
+  parent: BaseItem
+  id: OreAnalyzer
+  description: A hand-held scanner capable of displaying the material and chemical content of a piece of ore.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mining/ore_scanner.rsi
+    netsync: false
+    state: analyzer
+  - type: ActivatableUI
+    key: enum.OreAnalyzerUiKey.Key
+    closeOnHandDeselect: false
+  - type: UserInterface
+    interfaces:
+      - key: enum.OreAnalyzerUiKey.Key
+        type: OreAnalyzerBoundUserInterface
+  - type: OreAnalyzer
