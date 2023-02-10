@@ -15,6 +15,7 @@
       - id: Pickaxe
       - id: OreBag
       - id: ClothingBeltUtilityFilled
+      - id: ClothingNeckCloakSalvager
 
 - type: entity
   id: CrateSalvageAssortedGoodies
@@ -62,6 +63,8 @@
       - id: MagazineBoxMagnum
         prob: 0.01
       - id: ResearchDisk5000
+        prob: 0.01
+      - id: ClothingNeckCloakSalvager
         prob: 0.01
         # Just no (0.1%)
         #  - Working guns

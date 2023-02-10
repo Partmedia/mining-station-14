@@ -108,6 +108,15 @@
 
 - type: entity
   parent: ClothingNeckBase
+  id: ClothingNeckCloakSalvager
+  name: salvager's cloak
+  description: For the people who've deconstructed entire stations and built ships beyond your imagination.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/salvage.rsi
+
+- type: entity
+  parent: ClothingNeckBase
   id: ClothingNeckCloakTrans
   name: vampire cloak
   description: Worn by high ranking vampires of the transylvanian society of vampires.
