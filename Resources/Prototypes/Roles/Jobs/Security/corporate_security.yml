@@ -1,0 +1,32 @@
+- type: job
+  id: CorpSec
+  name: corporate security
+  playTimeTracker: JobSecurityOfficer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 1800
+  startingGear: CorpSecStartingGear
+  icon: "SecurityOfficer"
+  supervisors: CentCom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+
+- type: startingGear
+  id: CorpSecStartingGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSec
+    back: ClothingBackpackERTSecurityFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmetOld
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    mask: ClothingMaskGasSecurity
+    id: SecurityPDA
+    ears: ClothingHeadsetSecurity
+    belt: ClothingBeltSecurityFilled
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: HandheldCrewMonitor
+  innerclothingskirt: ClothingUniformJumpskirtSec

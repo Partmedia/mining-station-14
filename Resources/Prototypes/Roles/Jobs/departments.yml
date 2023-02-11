@@ -76,6 +76,8 @@
   - SecurityOfficer
   - Detective
   - Warden
+  - ERTSecurity
+  - CorpSec
 
 - type: department
   id: Science
