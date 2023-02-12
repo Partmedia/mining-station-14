@@ -315,15 +315,6 @@ public sealed class AirAlarmSystem : EntitySystem
         if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
             addr = netConn.Address;
 
-        if (args.AlarmType == AtmosAlarmType.Danger)
-        {
-            SetMode(uid, addr, AirAlarmMode.WideFiltering, false);
-        }
-        else if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
-        {
-            SetMode(uid, addr, AirAlarmMode.Filtering, false);
-        }
-
         UpdateUI(uid, component);
     }
 
