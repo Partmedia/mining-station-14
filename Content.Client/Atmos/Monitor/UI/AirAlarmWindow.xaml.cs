@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Client.Atmos.Monitor.UI.Widgets;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
@@ -101,7 +104,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
                     ("color", ColorForAlarm(state.AlarmType)),
                     ("state", $"{state.AlarmType}")));
         UpdateModeSelector(state.Mode);
-        foreach (var (addr, dev) in state.DeviceData)
+        foreach (var (addr, dev) in state.DeviceData.OrderBy(i => i.Key))
         {
             UpdateDeviceData(addr, dev);
         }
