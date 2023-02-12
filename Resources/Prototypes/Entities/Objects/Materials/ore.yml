@@ -185,7 +185,7 @@
 - type: entity
   parent: OreBase
   id: Coal
-  name: unidentified ore
+  name: coal
   suffix: Full
   components:
   - type: Sprite
