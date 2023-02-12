@@ -245,11 +245,11 @@ namespace Content.Server.Light.EntitySystems
             var appearanceComponent = EntityManager.GetComponent<AppearanceComponent>(component.Owner);
 
             var fraction = battery.CurrentCharge / battery.MaxCharge;
-            if (fraction >= 0.30)
+            if (fraction >= 0.15)
             {
                 _appearance.SetData(component.Owner, HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower, appearanceComponent);
             }
-            else if (fraction >= 0.10)
+            else if (fraction >= 0.05)
             {
                 _appearance.SetData(component.Owner, HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower, appearanceComponent);
             }
