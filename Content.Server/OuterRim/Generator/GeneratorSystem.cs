@@ -1,4 +1,7 @@
-﻿using Content.Server.Materials;
+﻿using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.Stacks;
@@ -13,6 +16,7 @@ namespace Content.Server.OuterRim.Generator;
 /// <inheritdoc/>
 public sealed class GeneratorSystem : SharedGeneratorSystem
 {
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
@@ -50,12 +54,29 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
             var fuelRate = gen.TargetPower * gen.MaxFuelRate;
             gen.RemainingFuel = MathF.Max(gen.RemainingFuel - (fuelRate * frameTime), 0.0f);
 
-            // Plasma: 400 kJ/sheet
-            var energyIn = fuelRate * 400000f;
-            supplier.MaxSupply = energyIn * CalcFuelEfficiency(gen.TargetPower);
+            // Plasma: 600 kJ/sheet
+            var energyIn = fuelRate * 600000f;
 
-            gen.Output = supplier.SupplyRampPosition;
-            gen.Efficiency = gen.Output / energyIn;
+            if (supplier.Enabled)
+            {
+                supplier.MaxSupply = energyIn * CalcFuelEfficiency(gen.TargetPower);
+                gen.Output = supplier.SupplyRampPosition;
+                gen.Efficiency = gen.Output / energyIn;
+
+                // Release wasted energy as heat
+                var environment = _atmosphereSystem.GetContainingMixture(gen.Owner, true, true);
+                if (environment is not null)
+                {
+                    float dQ = (energyIn - gen.Output) * frameTime;
+                    _atmosphereSystem.AddHeat(environment, dQ);
+                }
+            }
+            else
+            {
+                supplier.MaxSupply = 0;
+                gen.Output = 0;
+                gen.Efficiency = 0;
+            }
 
             UpdateUi(gen);
         }
