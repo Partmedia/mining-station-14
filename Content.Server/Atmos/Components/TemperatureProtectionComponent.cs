@@ -7,5 +7,6 @@ public sealed class TemperatureProtectionComponent : Component
     ///     How much to multiply temperature deltas by.
     /// </summary>
     [DataField("coefficient")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public float Coefficient = 1.0f;
 }

@@ -14,58 +14,29 @@ public sealed class ThermalRegulatorSystem : EntitySystem
     {
         foreach (var regulator in EntityManager.EntityQuery<ThermalRegulatorComponent>())
         {
-            regulator.AccumulatedFrametime += frameTime;
-            if (regulator.AccumulatedFrametime < 1)
-                continue;
-
-            regulator.AccumulatedFrametime -= 1;
-            ProcessThermalRegulation(regulator.Owner, regulator);
+            ProcessThermalRegulation(regulator.Owner, regulator, frameTime);
         }
     }
 
     /// <summary>
     /// Processes thermal regulation for a mob
     /// </summary>
-    private void ProcessThermalRegulation(EntityUid uid, ThermalRegulatorComponent comp)
+    private void ProcessThermalRegulation(EntityUid uid, ThermalRegulatorComponent comp, float dt)
     {
         if (!EntityManager.TryGetComponent(uid, out TemperatureComponent? temperatureComponent)) return;
 
-        var totalMetabolismTempChange = comp.MetabolismHeat - comp.RadiatedHeat;
-
-        // implicit heat regulation
-        var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - comp.NormalBodyTemperature);
-        var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
-        if (temperatureComponent.CurrentTemperature > comp.NormalBodyTemperature)
-        {
-            totalMetabolismTempChange -= Math.Min(targetHeat, comp.ImplicitHeatRegulation);
-        }
-        else
-        {
-            totalMetabolismTempChange += Math.Min(targetHeat, comp.ImplicitHeatRegulation);
-        }
-
-        _tempSys.ChangeHeat(uid, totalMetabolismTempChange, true, temperatureComponent);
-
-        // recalc difference and target heat
-        tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - comp.NormalBodyTemperature);
-        targetHeat = tempDiff * temperatureComponent.HeatCapacity;
-
-        // if body temperature is not within comfortable, thermal regulation
-        // processes starts
-        if (tempDiff > comp.ThermalRegulationTemperatureThreshold)
-            return;
-
-        if (temperatureComponent.CurrentTemperature > comp.NormalBodyTemperature)
-        {
-            if (!_actionBlockerSys.CanSweat(uid)) return;
-            _tempSys.ChangeHeat(uid, -Math.Min(targetHeat, comp.SweatHeatRegulation), true,
-                temperatureComponent);
-        }
-        else
-        {
-            if (!_actionBlockerSys.CanShiver(uid)) return;
-            _tempSys.ChangeHeat(uid, Math.Min(targetHeat, comp.ShiveringHeatRegulation), true,
-                temperatureComponent);
-        }
+        var dT = comp.NormalBodyTemperature - temperatureComponent.CurrentTemperature;
+        var dQ = comp.Gain * dT * comp.ImplicitHeatRegulation * dt;
+        var dQMax = comp.ImplicitHeatRegulation;
+        var dQMin = -comp.ImplicitHeatRegulation;
+        if (_actionBlockerSys.CanSweat(uid))
+            dQMax += comp.SweatHeatRegulation;
+        if (_actionBlockerSys.CanShiver(uid))
+            dQMin -= comp.ShiveringHeatRegulation;
+        if (dQ > dQMax)
+            dQ = dQMax;
+        else if (dQ < dQMin)
+            dQ = dQMin;
+        _tempSys.ChangeHeat(uid, dQ, true, temperatureComponent);
     }
 }

@@ -7,13 +7,13 @@ namespace Content.Server.Body.Components;
 public sealed class ThermalRegulatorComponent : Component
 {
     /// <summary>
-    /// Heat generated due to metabolism. It's generated via metabolism
+    /// Obsolete and ignored.
     /// </summary>
     [DataField("metabolismHeat")]
     public float MetabolismHeat { get; private set; }
 
     /// <summary>
-    /// Heat output via radiation.
+    /// Obsolete and ignored.
     /// </summary>
     [DataField("radiatedHeat")]
     public float RadiatedHeat { get; private set; }
@@ -34,6 +34,7 @@ public sealed class ThermalRegulatorComponent : Component
     /// Amount of heat regulation that represents thermal regulation processes not
     /// explicitly coded.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("implicitHeatRegulation")]
     public float ImplicitHeatRegulation { get; private set; }
 
@@ -44,10 +45,15 @@ public sealed class ThermalRegulatorComponent : Component
     public float NormalBodyTemperature { get; private set; }
 
     /// <summary>
-    /// Deviation from normal temperature for body to start thermal regulation
+    /// Obsolete and ignored.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("thermalRegulationTemperatureThreshold")]
     public float ThermalRegulationTemperatureThreshold { get; private set; }
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("gain")]
+    public float Gain = 1000;
 
     public float AccumulatedFrametime;
 }

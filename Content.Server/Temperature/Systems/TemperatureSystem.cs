@@ -128,40 +128,51 @@ namespace Content.Server.Temperature.Systems
 
         private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
         {
-            switch (args.CurrentTemperature)
+            if (!TryComp<TemperatureComponent>(uid, out var temp))
+            {
+                // If there is no temperature damage component, then temperature doesn't matter.
+                _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
+                return;
+            }
+
+            // Normalize temperature to 0-1, where 0 is cold damage threshold, 1 is heat damage threshold.
+            float tnorm = (args.CurrentTemperature - temp.ColdDamageThreshold)
+                          / (temp.HeatDamageThreshold - temp.ColdDamageThreshold);
+
+            switch (tnorm)
             {
                 // Cold strong.
-                case <= 260:
+                case <= 0f:
                     _alertsSystem.ShowAlert(uid, AlertType.Cold, 3);
                     break;
 
                 // Cold mild.
-                case <= 280 and > 260:
+                case <= 0.3f:
                     _alertsSystem.ShowAlert(uid, AlertType.Cold, 2);
                     break;
 
                 // Cold weak.
-                case <= 292 and > 280:
+                case <= 0.45f:
                     _alertsSystem.ShowAlert(uid, AlertType.Cold, 1);
                     break;
 
                 // Safe.
-                case <= 327 and > 292:
+                case <= 0.55f:
                     _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
                     break;
 
                 // Heat weak.
-                case <= 335 and > 327:
+                case <= 0.7f:
                     _alertsSystem.ShowAlert(uid, AlertType.Hot, 1);
                     break;
 
                 // Heat mild.
-                case <= 360 and > 335:
+                case <= 1f:
                     _alertsSystem.ShowAlert(uid, AlertType.Hot, 2);
                     break;
 
                 // Heat strong.
-                case > 360:
+                default:
                     _alertsSystem.ShowAlert(uid, AlertType.Hot, 3);
                     break;
             }
