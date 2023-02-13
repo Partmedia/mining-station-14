@@ -128,8 +128,8 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum temperature for starting superconduction.
         /// </summary>
-        public const float MinimumTemperatureStartSuperConduction = (T20C + 400f);
-        public const float MinimumTemperatureForSuperconduction = (T20C + 80f);
+        public const float MinimumTemperatureStartSuperConduction = TCMB;
+        public const float MinimumTemperatureForSuperconduction = TCMB;
 
         /// <summary>
         ///     Minimum heat capacity.

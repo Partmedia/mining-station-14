@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Content.Shared.CCVar;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -7,6 +8,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
         private void Superconduct(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
         {
+            /*
             var directions = ConductivityDirections(gridAtmosphere, tile);
 
             for(var i = 0; i < Atmospherics.Directions; i++)
@@ -27,9 +29,10 @@ namespace Content.Server.Atmos.EntitySystems
 
                 ConsiderSuperconductivity(gridAtmosphere, adjacent);
             }
+            */
 
             RadiateToSpace(tile);
-            FinishSuperconduction(gridAtmosphere, tile);
+            //FinishSuperconduction(gridAtmosphere, tile);
         }
 
         private AtmosDirection ConductivityDirections(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
@@ -141,19 +144,12 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void RadiateToSpace(TileAtmosphere tile)
         {
-            // Considering 0ºC as the break even point for radiation in and out.
-            if (tile.Temperature > Atmospherics.T0C)
-            {
-                // Hardcoded space temperature.
-                var deltaTemperature = (tile.TemperatureArchived - Atmospherics.TCMB);
-                if ((tile.HeatCapacity > 0) && (MathF.Abs(deltaTemperature) > Atmospherics.MinimumTemperatureDeltaToConsider))
-                {
-                    var heat = tile.ThermalConductivity * deltaTemperature * (tile.HeatCapacity *
-                        Atmospherics.HeatCapacityVacuum / (tile.HeatCapacity + Atmospherics.HeatCapacityVacuum));
-
-                    tile.Temperature -= heat;
-                }
-            }
+            if (tile.Air == null)
+                return;
+            float diffT = (tile.Air.Temperature - Atmospherics.TCMB);
+            float alpha = _cfg.GetCVar(CCVars.SuperconductionTileLoss) / MathF.Pow(Atmospherics.T20C, 4);
+            float dQ = alpha * MathF.Pow(diffT, 4) * AtmosTime;
+            AddHeat(tile.Air, -dQ);
         }
     }
 }
