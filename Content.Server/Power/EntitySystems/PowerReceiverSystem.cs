@@ -1,3 +1,6 @@
+using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
 using Content.Server.Power.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Administration.Logs;
@@ -15,6 +18,8 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -22,6 +27,8 @@ namespace Content.Server.Power.EntitySystems
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderConnectedEvent>(OnProviderConnected);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderDisconnectedEvent>(OnProviderDisconnected);
+
+            SubscribeLocalEvent<ApcPowerReceiverComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
 
             SubscribeLocalEvent<ApcPowerProviderComponent, ComponentShutdown>(OnProviderShutdown);
             SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverConnectedEvent>(OnReceiverConnected);
@@ -163,6 +170,22 @@ namespace Content.Server.Power.EntitySystems
             }
 
             return !receiver.PowerDisabled; // i.e. PowerEnabled
+        }
+
+        private void OnAtmosUpdate(EntityUid uid, ApcPowerReceiverComponent comp, AtmosDeviceUpdateEvent args)
+        {
+            if (!IsPowered(uid, comp))
+                return;
+
+            var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
+            if (environment is null)
+                return;
+
+            var airHeatCapacity = _atmosphereSystem.GetHeatCapacity(environment);
+            float dt = 1/_atmosphereSystem.AtmosTickRate;
+            float dQ = comp.Load * comp.DumpHeat * dt;
+            float dT = dQ / airHeatCapacity;
+            environment.Temperature += dT;
         }
     }
 }

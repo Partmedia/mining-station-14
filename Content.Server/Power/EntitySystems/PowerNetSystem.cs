@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
@@ -55,6 +56,7 @@ namespace Content.Server.Power.EntitySystems
         private void ApcPowerReceiverInit(EntityUid uid, ApcPowerReceiverComponent component, ComponentInit args)
         {
             AllocLoad(component.NetworkLoad);
+            EnsureComp<AtmosDeviceComponent>(uid); // Add atmos device so that OnAtmosUpdate() is called in ApcPowerReceiverComponent
         }
 
         private void ApcPowerReceiverShutdown(EntityUid uid, ApcPowerReceiverComponent component,

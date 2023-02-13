@@ -20,6 +20,13 @@ namespace Content.Server.Power.Components
         [DataField("powerLoad")]
         public float Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
 
+        /// <summary>
+        ///     Fraction of Load to dump as heat. Should be between 0 and 1.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("dumpHeat")]
+        public float DumpHeat = 0.8F;
+
         public ApcPowerProviderComponent? Provider = null;
 
         /// <summary>
