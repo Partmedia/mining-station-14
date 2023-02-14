@@ -6,6 +6,16 @@
   components:
   - type: Hunger
   - type: Thirst
+  - type: Temperature
+    heatDamageThreshold: 319 # 46C
+    coldDamageThreshold: 267 # -6C
+    specificHeat: 120
+    coldDamage:
+      types:
+        Cold: 0.33
+    heatDamage:
+      types:
+        Heat: 0.33
 
 - type: entity
   save: false

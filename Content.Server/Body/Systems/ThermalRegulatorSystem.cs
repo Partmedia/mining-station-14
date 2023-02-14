@@ -26,13 +26,13 @@ public sealed class ThermalRegulatorSystem : EntitySystem
         if (!EntityManager.TryGetComponent(uid, out TemperatureComponent? temperatureComponent)) return;
 
         var dT = comp.NormalBodyTemperature - temperatureComponent.CurrentTemperature;
-        var dQ = comp.Gain * dT * comp.ImplicitHeatRegulation * dt;
+        var dQ = comp.Gain * dT * dt;
         var dQMax = comp.ImplicitHeatRegulation;
         var dQMin = -comp.ImplicitHeatRegulation;
         if (_actionBlockerSys.CanSweat(uid))
-            dQMax += comp.SweatHeatRegulation;
+            dQMin -= comp.SweatHeatRegulation;
         if (_actionBlockerSys.CanShiver(uid))
-            dQMin -= comp.ShiveringHeatRegulation;
+            dQMax += comp.ShiveringHeatRegulation;
         if (dQ > dQMax)
             dQ = dQMax;
         else if (dQ < dQMin)

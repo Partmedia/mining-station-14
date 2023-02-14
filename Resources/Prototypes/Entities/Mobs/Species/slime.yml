@@ -29,6 +29,16 @@
       types:
         Bloodloss:
           -0.25
+  - type: Temperature
+    heatDamageThreshold: 313 # 40C
+    coldDamageThreshold: 273 # 0C
+    specificHeat: 250
+    coldDamage:
+      types:
+        Cold : 0.56
+    heatDamage:
+      types:
+        Heat : 1.67
   - type: Barotrauma
     damage:
       types:

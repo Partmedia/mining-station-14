@@ -53,7 +53,7 @@ public sealed class ThermalRegulatorComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("gain")]
-    public float Gain = 1000;
+    public float Gain = 10000;
 
     public float AccumulatedFrametime;
 }
