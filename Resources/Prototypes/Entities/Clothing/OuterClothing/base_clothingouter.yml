@@ -53,7 +53,7 @@
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.001 # yes it needs to be this low, fires are fucking deadly apparently!!!!
+    coefficient: 0.01
   - type: ClothingSpeedModifier
     walkModifier: 0.4
     sprintModifier: 0.6
