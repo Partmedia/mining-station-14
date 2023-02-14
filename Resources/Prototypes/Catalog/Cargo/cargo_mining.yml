@@ -131,6 +131,18 @@
   group: market
 
 - type: cargoProduct
+  id: MiningHeater
+  name: space heater
+  description: Space-age technology to deliver concentrated heat on demand.
+  icon:
+    sprite: Structures/Machines/heater.rsi
+    state: icon
+  product: SpaceHeater
+  cost: 495
+  category: Engineering
+  group: market
+
+- type: cargoProduct
   id: MiningSMESCrate
   name: SMES crate
   description: Store your surplus power for a rainy day. Comes fully charged!

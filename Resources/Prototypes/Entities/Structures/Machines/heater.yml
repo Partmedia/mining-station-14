@@ -1,0 +1,36 @@
+﻿- type: entity
+  id: SpaceHeater
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: space heater
+  description: Space-age technology to deliver concentrated heat on demand.
+  components:
+  - type: Appearance
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/heater.rsi
+    state: icon
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.1,-0.4,0.1,0.5"
+      density: 190
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Heater
+  - type: ApcPowerReceiver
+    powerLoad: 0
+    dumpHeat: 1
+  - type: StaticPrice
+    price: 200
