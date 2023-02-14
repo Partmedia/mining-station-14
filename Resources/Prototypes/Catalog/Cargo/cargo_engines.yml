@@ -82,10 +82,12 @@
 
 - type: cargoProduct
   id: EngineSolar
+  name: solar assembly part
+  description: 1x solar assembly part; builds one solar panel.
   icon:
     sprite: Objects/Power/solar_parts.rsi
     state: solar_assembly_parts
-  product: CrateEngineeringSolar
-  cost: 3000
+  product: SolarAssemblyPart
+  cost: 750
   category: Engineering
   group: market
