@@ -17,7 +17,7 @@ namespace Content.Shared.Atmos.Prototypes
         public string ID { get; } = default!;
 
         /// <summary>
-        ///     Specific heat for gas.
+        ///     Specific heat (J/mol K) for gas.
         /// </summary>
         [DataField("specificHeat")]
         public float SpecificHeat { get; private set; }
