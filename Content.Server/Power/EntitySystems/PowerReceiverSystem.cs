@@ -180,12 +180,9 @@ namespace Content.Server.Power.EntitySystems
             var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
             if (environment is null)
                 return;
-
-            var airHeatCapacity = _atmosphereSystem.GetHeatCapacity(environment);
             float dt = 1/_atmosphereSystem.AtmosTickRate;
             float dQ = comp.Load * comp.DumpHeat * dt;
-            float dT = dQ / airHeatCapacity;
-            environment.Temperature += dT;
+            _atmosphereSystem.AddHeat(environment, dQ);
         }
     }
 }
