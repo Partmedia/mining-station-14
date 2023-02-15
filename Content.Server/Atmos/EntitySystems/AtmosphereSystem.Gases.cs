@@ -119,6 +119,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             NumericsHelpers.Add(receiver.Moles, giver.Moles);
+            LimitMaxT(receiver);
         }
 
         /// <summary>
@@ -164,6 +165,7 @@ namespace Content.Server.Atmos.EntitySystems
                 // transfer moles
                 NumericsHelpers.Multiply(source.Moles, fraction, buffer);
                 NumericsHelpers.Add(receiver.Moles, buffer);
+                LimitMaxT(receiver);
             }
         }
 
@@ -330,6 +332,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 reaction = prototype.React(mixture, holder, this);
+                LimitMaxT(mixture);
                 if(reaction.HasFlag(ReactionResult.StopReactions))
                     break;
             }
