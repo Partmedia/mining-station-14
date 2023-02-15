@@ -469,12 +469,9 @@ public sealed partial class AtmosphereSystem
         tile.ArchivedCycle = 0;
 
         var ratio = 1f / adjacent.Length;
-        var totalTemperature = 0f;
 
         foreach (var adj in adjacent)
         {
-            totalTemperature += adj.Temperature;
-
             // Remove a bit of gas from the adjacent ratio...
             var mix = adj.RemoveRatio(ratio);
 
@@ -484,9 +481,6 @@ public sealed partial class AtmosphereSystem
             // Return removed gas to its original mixture.
             Merge(adj, mix);
         }
-
-        // New temperature is the arithmetic mean of the sum of the adjacent temperatures...
-        tile.Air.Temperature = totalTemperature / adjacent.Length;
     }
 
     private void GridAddPipeNet(EntityUid uid, GridAtmosphereComponent component, ref AddPipeNetMethodEvent args)
