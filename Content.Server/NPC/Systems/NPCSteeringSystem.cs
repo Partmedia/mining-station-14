@@ -382,7 +382,6 @@ namespace Content.Server.NPC.Systems
             // This should also implicitly solve tie situations.
             // I think doing this after all the ops above is best?
             // Originally I had it way above but sometimes mobs would overshoot their tile targets.
-
             if (steering.NextSteer > curTime)
             {
                 SetDirection(mover, steering, steering.LastSteerDirection, false);
