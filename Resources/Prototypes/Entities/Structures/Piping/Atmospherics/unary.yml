@@ -233,16 +233,10 @@
     - type: Appearance
     - type: PipeColorVisuals
     - type: Rotatable
-    - type: GasThermoMachine
+    - type: Heater
+      maxPower: 13000
     - type: AtmosPipeColor
     - type: AtmosDevice
-    - type: UserInterface
-      interfaces:
-      - key: enum.ThermomachineUiKey.Key
-        type: GasThermomachineBoundUserInterface
-    - type: ActivatableUI
-      inHandsOnly: false
-      key: enum.ThermomachineUiKey.Key
     - type: Wires
       BoardName: "Thermomachine"
       LayoutId: Thermomachine
@@ -263,6 +257,12 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ApcPowerReceiver
+      powerLoad: 0
+      dumpHeat: 4
+    - type: GasThermoMachine
+      mode: Freezer
+      cf: -3.9
     - type: Sprite
       layers:
         - state: freezer_off
@@ -275,8 +275,6 @@
           enabled:
             True: { state: freezer_on }
             False: { state: freezer_off }
-    - type: GasThermoMachine
-      mode: Freezer
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
 
@@ -288,6 +286,12 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ApcPowerReceiver
+      powerLoad: 0
+      dumpHeat: 0.05
+    - type: GasThermoMachine
+      mode: Heater
+      cf: 0.95
     - type: Sprite
       layers:
         - state: heater_off
@@ -300,7 +304,5 @@
           enabled:
             True: { state: heater_on }
             False: { state: heater_off }
-    - type: GasThermoMachine
-      mode: Heater
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard

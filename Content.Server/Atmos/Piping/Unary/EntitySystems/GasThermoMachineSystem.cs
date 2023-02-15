@@ -4,6 +4,7 @@ using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Construction;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Unary.Components;
@@ -35,26 +36,20 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
-            if (!thermoMachine.Enabled
-                || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
+            if (!TryComp(uid, out ApcPowerReceiverComponent? receiver)
+                    || !receiver.Powered
+                    || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                    || !nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
             {
                 DirtyUI(uid, thermoMachine);
                 _appearance.SetData(uid, ThermoMachineVisuals.Enabled, false);
                 return;
             }
 
-            var airHeatCapacity = _atmosphereSystem.GetHeatCapacity(inlet.Air);
-            var combinedHeatCapacity = airHeatCapacity + thermoMachine.HeatCapacity;
-
-            if (!MathHelper.CloseTo(combinedHeatCapacity, 0, 0.001f))
-            {
-                _appearance.SetData(uid, ThermoMachineVisuals.Enabled, true);
-                var combinedEnergy = thermoMachine.HeatCapacity * thermoMachine.TargetTemperature + airHeatCapacity * inlet.Air.Temperature;
-                inlet.Air.Temperature = combinedEnergy / combinedHeatCapacity;
-            }
-
-            // TODO ATMOS: Active power usage.
+            float dt = 1/_atmosphereSystem.AtmosTickRate;
+            float dQ = receiver.Load * thermoMachine.Cf * dt;
+            _atmosphereSystem.AddHeat(inlet.Air, dQ);
+            _appearance.SetData(uid, ThermoMachineVisuals.Enabled, true);
         }
 
         private void OnThermoMachineLeaveAtmosphere(EntityUid uid, GasThermoMachineComponent component, AtmosDeviceDisabledEvent args)

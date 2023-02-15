@@ -38,6 +38,13 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public ThermoMachineMode Mode = ThermoMachineMode.Freezer;
 
         /// <summary>
+        ///     Coefficient of performance. Output power / input power.
+        ///     Positive for heaters, negative for freezers.
+        /// </summary>
+        [DataField("cf")]
+        public float Cf = 0.9f; // output power / input power, positive is heat
+
+        /// <summary>
         ///     Current minimum temperature, calculated from <see cref="InitialMinTemperature"/> and <see
         ///     cref="MinTemperatureDelta"/>.
         /// </summary>
