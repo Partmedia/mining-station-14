@@ -81,7 +81,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var timeDelta =  (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
             var pressureDelta = (float) timeDelta * vent.TargetPressureChange;
 
-            if (vent.PumpDirection == VentPumpDirection.Releasing && pipe.Air.Pressure > 0)
+            if (vent.PumpDirection == VentPumpDirection.Releasing)
             {
                 if (environment.Pressure > vent.MaxPressure)
                     return;
@@ -92,6 +92,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     return;
                 }
                 vent.UnderPressureLockout = false;
+
+                if (pipe.Air.Pressure < environment.Pressure)
+                    return;
 
                 if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
                     pressureDelta = MathF.Min(pressureDelta, vent.ExternalPressureBound - environment.Pressure);
