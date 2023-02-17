@@ -1,0 +1,20 @@
+- type: entity
+  name: medical thermometer
+  parent: BaseItem
+  id: HandheldMedicalThermometer
+  description: A hand-held medical thermometer. Design to be used under the arm and adapted for various humanoid species.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/thermometer.rsi
+    netsync: false
+    state: thermometer
+  - type: ActivatableUI
+    key: enum.MedicalThermometerUiKey.Key
+    closeOnHandDeselect: false
+  - type: UserInterface
+    interfaces:
+      - key: enum.MedicalThermometerUiKey.Key
+        type: MedicalThermometerBoundUserInterface
+  - type: MedicalThermometer
+  - type: Item
+    size: 2

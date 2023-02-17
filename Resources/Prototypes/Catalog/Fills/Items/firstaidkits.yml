@@ -8,6 +8,8 @@
     contents:
       - id: HandheldHealthAnalyzer
         amount: 1
+      - id: HandheldMedicalThermometer
+        amount: 1
       - id: Brutepack
         amount: 2
       - id: Ointment
