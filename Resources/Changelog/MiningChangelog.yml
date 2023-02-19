@@ -223,3 +223,60 @@ Entries:
       message: "Fix cave-in conditions" }
   id: 2534
   time: '2023-01-19T22:31:45+01:00'
+
+- author: v1.0.57
+  changes:
+  - { type: Add,
+      message: "Add handheld ore analyzer" }
+  id: 2535
+  time: '2023-02-05T11:13:46-08:00'
+
+- author: v1.0.60
+  changes:
+  - { type: Add,
+      message: "Heat is now lost to space through thermal radiation. Prepare for a frigid time ahead." }
+  - { type: Add,
+      message: "Powered machines now expel waste heat" }
+  - { type: Fix,
+      message: "Air alarms no longer spuriously switch modes" }
+  - { type: Tweak,
+      message: "Floodlights now last longer" }
+  - { type: Tweak,
+      message: "Coal now appears identified" }
+  id: 2536
+  time: '2023-02-12T23:44:53-08:00'
+
+- author: v1.0.61
+  changes:
+  - { type: Add,
+      message: "Reptiles, slimes, and moths are now cold-blooded. Find somewhere warm to warm up." }
+  - { type: Tweak,
+      message: "Adjusted temperature management for warm-blooded species." }
+  id: 2537
+  time: '2023-02-13T16:29:40-08:00'
+
+- author: v1.0.62
+  changes:
+  - { type: Add,
+      message: "Add space heater for fast and portable warmth." }
+  - { type: Tweak,
+      message: "Plasma sheets now contain more energy per sheet!" }
+  - { type: Tweak,
+      message: "Solar assemblies are now sold individually and cheaper per unit." }
+  id: 2538
+  time: '2023-02-14T15:21:18-08:00'
+
+- author: v1.0.63
+  changes:
+  - { type: Tweak,
+      message: "Ore bags now pick up and dump ores much faster." }
+  - { type: Tweak,
+      message: "Pressure and volume pumps now require power." }
+  - { type: Tweak,
+      message: "Vent pumps now require supply pressure to be higher than the environment to release gas." }
+  - { type: Tweak,
+      message: "Gas filters no longer have a transfer rate setting." }
+  - { type: Tweak,
+      message: "Transfer rate of all atmos devices has been increased." }
+  id: 2539
+  time: '2023-02-18T20:43:53-08:00'
