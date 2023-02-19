@@ -23,7 +23,6 @@ namespace Content.Client.Atmos.UI
         public string? CurrentGasId;
 
         public event Action? ToggleStatusButtonPressed;
-        public event Action<string>? FilterTransferRateChanged;
         public event Action? SelectGasPressed;
 
         public GasFilterWindow(IEnumerable<GasPrototype> gases)
@@ -34,22 +33,10 @@ namespace Content.Client.Atmos.UI
             ToggleStatusButton.OnPressed += _ => SetFilterStatus(!FilterStatus);
             ToggleStatusButton.OnPressed += _ => ToggleStatusButtonPressed?.Invoke();
 
-            FilterTransferRateInput.OnTextChanged += _ => SetFilterRate.Disabled = false;
-            SetFilterRate.OnPressed += _ =>
-            {
-                FilterTransferRateChanged?.Invoke(FilterTransferRateInput.Text);
-                SetFilterRate.Disabled = true;
-            };
-
             SelectGasButton.OnPressed += _ => SelectGasPressed?.Invoke();
 
             GasList.OnItemSelected += GasListOnItemSelected;
             GasList.OnItemDeselected += GasListOnItemDeselected;
-        }
-
-        public void SetTransferRate(float rate)
-        {
-            FilterTransferRateInput.Text = rate.ToString(CultureInfo.InvariantCulture);
         }
 
         public void SetFilterStatus(bool enabled)

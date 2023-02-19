@@ -39,7 +39,6 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, InteractHandEvent>(OnFilterInteractHand);
             SubscribeLocalEvent<GasFilterComponent, GasAnalyzerScanEvent>(OnFilterAnalyzed);
             // Bound UI subscriptions
-            SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
 
@@ -58,14 +57,15 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 || !nodeContainer.TryGetNode(filter.InletName, out PipeNode? inletNode)
                 || !nodeContainer.TryGetNode(filter.FilterName, out PipeNode? filterNode)
                 || !nodeContainer.TryGetNode(filter.OutletName, out PipeNode? outletNode)
-                || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
+                || outletNode.Air.Pressure >= inletNode.Air.Pressure)
             {
                 _ambientSoundSystem.SetAmbience(filter.Owner, false);
                 return;
             }
 
-            // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferVol = (float)(filter.TransferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds);
+            float dP = inletNode.Air.Pressure - outletNode.Air.Pressure;
+            float dt = (float)(_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+            float transferVol = filter.TransferRate * dP * dt;
 
             if (transferVol <= 0)
             {
@@ -143,15 +143,6 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, filter);
             UpdateAppearance(uid, filter);
-        }
-
-        private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeRateMessage args)
-        {
-            filter.TransferRate = Math.Clamp(args.Rate, 0f, filter.MaxTransferRate);
-            _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the transfer rate on {ToPrettyString(uid):device} to {args.Rate}");
-            DirtyUI(uid, filter);
-
         }
 
         private void OnSelectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterSelectGasMessage args)

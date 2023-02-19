@@ -36,7 +36,6 @@ namespace Content.Client.Atmos.UI
             _window.OnClose += Close;
 
             _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
-            _window.FilterTransferRateChanged += OnFilterTransferRatePressed;
             _window.SelectGasPressed += OnSelectGasPressed;
         }
 
@@ -44,14 +43,6 @@ namespace Content.Client.Atmos.UI
         {
             if (_window is null) return;
             SendMessage(new GasFilterToggleStatusMessage(_window.FilterStatus));
-        }
-
-        private void OnFilterTransferRatePressed(string value)
-        {
-            float rate = float.TryParse(value, out var parsed) ? parsed : 0f;
-            if (rate > MaxTransferRate) rate = MaxTransferRate;
-
-            SendMessage(new GasFilterChangeRateMessage(rate));
         }
 
         private void OnSelectGasPressed()
@@ -80,7 +71,6 @@ namespace Content.Client.Atmos.UI
 
             _window.Title = (cast.FilterLabel);
             _window.SetFilterStatus(cast.Enabled);
-            _window.SetTransferRate(cast.TransferRate);
             if (cast.FilteredGas is not null)
             {
                 var atmos = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();

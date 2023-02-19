@@ -24,10 +24,7 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
         [ViewVariables(VVAccess.ReadWrite)]
 
         [DataField("transferRate")]
-        public float TransferRate { get; set; } = Atmospherics.MaxTransferRate;
-
-        [DataField("maxTransferRate")]
-        public float MaxTransferRate { get; set; } = Atmospherics.MaxTransferRate;
+        public float TransferRate { get; set; } = Atmospherics.MaxTransferRate / 300f; // admittance, L/(sec kPa)
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Gas? FilteredGas { get; set; }
