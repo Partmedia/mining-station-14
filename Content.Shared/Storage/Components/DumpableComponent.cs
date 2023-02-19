@@ -10,10 +10,10 @@ namespace Content.Shared.Storage.Components
     public sealed class DumpableComponent : Component
     {
         /// <summary>
-        /// How long each item adds to the doafter.
+        /// Time it takes to dump the whole bag.
         /// </summary>
-        [DataField("delayPerItem")]
-        public TimeSpan DelayPerItem = TimeSpan.FromSeconds(0.2);
+        [DataField("delay")]
+        public TimeSpan Delay = TimeSpan.FromSeconds(1);
 
         /// <summary>
         /// Cancellation token for the doafter.

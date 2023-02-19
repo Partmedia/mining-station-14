@@ -30,6 +30,9 @@ namespace Content.Server.Storage.Components
         [DataField("areaInsert")]
         public bool AreaInsert = false;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
 
+        [DataField("areaInsertDelay")]
+        public float AreaInsertDelay = 1f; //< Delay, in seconds, to pick perform area insert
+
         /// <summary>
         /// Token for interrupting area insert do after.
         /// </summary>

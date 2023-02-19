@@ -110,7 +110,7 @@ namespace Content.Server.Storage.EntitySystems
             if (storage.StoredEntities == null)
                 return;
 
-            float delay = storage.StoredEntities.Count * (float) dumpable.DelayPerItem.TotalSeconds * multiplier;
+            float delay = (float) dumpable.Delay.TotalSeconds * multiplier;
 
             dumpable.CancelToken = new CancellationTokenSource();
             _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, delay, dumpable.CancelToken.Token, target: targetUid)

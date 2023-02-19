@@ -327,7 +327,7 @@ namespace Content.Server.Storage.EntitySystems
                 if (validStorables.Count > 1)
                 {
                     storageComp.CancelToken = new CancellationTokenSource();
-                    var doAfterArgs = new DoAfterEventArgs(args.User, 0.2f * validStorables.Count, storageComp.CancelToken.Token, target: uid)
+                    var doAfterArgs = new DoAfterEventArgs(args.User, storageComp.AreaInsertDelay, storageComp.CancelToken.Token, target: uid)
                     {
                         BreakOnStun = true,
                         BreakOnDamage = true,
