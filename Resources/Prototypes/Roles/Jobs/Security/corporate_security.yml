@@ -1,6 +1,6 @@
 - type: job
   id: CorpSec
-  name: corporate security
+  name: Corporate Security
   playTimeTracker: JobSecurityOfficer
   requirements:
     - !type:DepartmentTimeRequirement
