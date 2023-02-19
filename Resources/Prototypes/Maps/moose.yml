@@ -4,7 +4,6 @@
   mapPath: /Maps/moose.yml
   minPlayers: 0
   maxPlayers: 35
-  fallback: true
   stations:
     Moose:
       mapNameTemplate: '{0} Moose {1}'

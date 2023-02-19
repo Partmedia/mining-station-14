@@ -15,6 +15,7 @@ lobbyenabled = true
 role_timers = false
 lobbyduration = 3
 defaultpreset = "Mining"
+min_players = 1
 
 [ic]
 flavor_text = true
