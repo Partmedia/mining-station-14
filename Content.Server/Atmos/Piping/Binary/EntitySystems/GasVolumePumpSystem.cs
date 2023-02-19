@@ -4,6 +4,7 @@ using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Audio;
@@ -61,6 +62,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnVolumePumpUpdated(EntityUid uid, GasVolumePumpComponent pump, AtmosDeviceUpdateEvent args)
         {
             if (!pump.Enabled
+                || (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
                 || !TryComp(uid, out NodeContainerComponent? nodeContainer)
                 || !TryComp(uid, out AtmosDeviceComponent? device)
                 || !nodeContainer.TryGetNode(pump.InletName, out PipeNode? inlet)
