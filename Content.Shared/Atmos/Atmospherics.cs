@@ -298,7 +298,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     The default maximum speed powered equipment can work at, in L/s.
         /// </summary>
-        public const float MaxTransferRate = 200;
+        public const float MaxTransferRate = 5*Atmospherics.CellVolume;
 
         #endregion
     }
