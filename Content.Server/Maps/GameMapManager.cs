@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.CCVar;
+using Content.Server.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -161,6 +162,10 @@ public sealed class GameMapManager : IGameMapManager
 
     private bool IsMapEligible(GameMapPrototype map)
     {
+        bool mining = true;
+        if (mining && !map.MapPath.ToString().StartsWith("/Mining/Maps"))
+            return false;
+
         return map.MaxPlayers >= _playerManager.PlayerCount &&
                map.MinPlayers <= _playerManager.PlayerCount &&
                map.Conditions.All(x => x.Check(map));
