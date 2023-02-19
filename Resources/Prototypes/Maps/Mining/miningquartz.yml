@@ -1,0 +1,23 @@
+- type: gameMap
+  id: MiningQuartz
+  mapName: 'Mining Quartz'
+  mapPath: /Mining/Maps/miningquartz.yml
+  minPlayers: 0
+  maxPlayers: 15
+  fallback: true
+  stations:
+    Mining:
+      mapNameTemplate: '{0} Mining Base {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: '14'
+      overflowJobs:
+        - SalvageSpecialist
+      availableJobs:
+        Quartermaster: [ 1, 1 ]
+        StationEngineer: [ 2, 3 ]
+        CargoTechnician: [ 0, 1 ]
+        SalvageSpecialist: [ -1, -1 ]
+        MedicalDoctor: [ 1, 1 ]
+        ServiceWorker: [ 1, 2 ]
+        CorpSec: [ 1, 1 ]
