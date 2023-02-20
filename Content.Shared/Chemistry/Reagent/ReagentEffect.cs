@@ -16,6 +16,11 @@ namespace Content.Shared.Chemistry.Reagent
     public abstract class ReagentEffect
     {
         [JsonPropertyName("id")] private protected string _id => this.GetType().Name;
+
+        [JsonPropertyName("worksWhenDead")]
+        [DataField("worksWhenDead")]
+        public bool WorksWhenDead = false;
+
         /// <summary>
         ///     The list of conditions required for the effect to activate. Not required.
         /// </summary>

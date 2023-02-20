@@ -162,11 +162,8 @@ namespace Content.Server.Body.Systems
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
                     // still remove reagents
-                    if (EntityManager.TryGetComponent<MobStateComponent>(solutionEntityUid.Value, out var state))
-                    {
-                        if (_mobStateSystem.IsDead(solutionEntityUid.Value, state))
-                            continue;
-                    }
+                    EntityManager.TryGetComponent<MobStateComponent>(solutionEntityUid.Value, out var state);
+                    bool dead = state is not null && _mobStateSystem.IsDead(solutionEntityUid.Value, state);
 
                     var actualEntity = organ?.Body ?? solutionEntityUid.Value;
                     var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
@@ -175,6 +172,9 @@ namespace Content.Server.Body.Systems
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
+                        if (dead && !effect.WorksWhenDead)
+                            continue;
+
                         if (!effect.ShouldApply(args, _random))
                             continue;
 
