@@ -2,9 +2,8 @@
   id: MiningBlack
   mapName: 'Mining Black'
   mapPath: /Mining/Maps/miningblack.yml
-  minPlayers: 0
+  minPlayers: 15
   maxPlayers: 10
-  fallback: true
   stations:
     MiningBlack:
       mapNameTemplate: '{0} Mining Base {1}'

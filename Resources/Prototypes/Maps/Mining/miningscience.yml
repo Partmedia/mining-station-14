@@ -2,7 +2,7 @@
   id: MiningScience
   mapName: 'Mining Science'
   mapPath: /Mining/Maps/miningscience.yml
-  minPlayers: 0
+  minPlayers: 4
   maxPlayers: 15
   fallback: true
   stations:

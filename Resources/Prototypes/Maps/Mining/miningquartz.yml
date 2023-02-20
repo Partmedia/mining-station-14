@@ -2,9 +2,8 @@
   id: MiningQuartz
   mapName: 'Mining Quartz'
   mapPath: /Mining/Maps/miningquartz.yml
-  minPlayers: 0
+  minPlayers: 20
   maxPlayers: 15
-  fallback: true
   stations:
     Mining:
       mapNameTemplate: '{0} Mining Base {1}'
