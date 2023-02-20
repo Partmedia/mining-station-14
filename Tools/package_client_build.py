@@ -9,6 +9,8 @@ import argparse
 
 from typing import List, Optional
 
+verbose = False
+
 try:
     from colorama import init, Fore, Style
     init()
@@ -152,15 +154,19 @@ def copy_dir_into_zip(directory, basepath, zipf):
         for filename in files:
             zippath = p(basepath, relpath, filename)
             filepath = p(root, filename)
+            if filepath.startswith("Resources/Mining/Maps") or '.git' in filepath or filepath.endswith('.swp') or filepath.endswith('~'):
+                continue
 
-            message = "{dim}{diskroot}{sep}{zipfile}{dim} -> {ziproot}{sep}{zipfile}".format(
-                sep=os.sep + Style.NORMAL,
-                dim=Style.DIM,
-                diskroot=directory,
-                ziproot=zipf.filename,
-                zipfile=os.path.normpath(zippath))
+            if verbose:
+                message = "{dim}{diskroot}{sep}{zipfile}{dim} -> {ziproot}{sep}{zipfile}".format(
+                    sep=os.sep + Style.NORMAL,
+                    dim=Style.DIM,
+                    diskroot=directory,
+                    ziproot=zipf.filename,
+                    zipfile=os.path.normpath(zippath))
 
-            print(Fore.CYAN + message + Style.RESET_ALL)
+                print(Fore.CYAN + message + Style.RESET_ALL)
+
             zipf.write(filepath, zippath)
 
 

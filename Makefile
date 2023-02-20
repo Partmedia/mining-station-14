@@ -21,6 +21,8 @@ test:
 	cd bin/Content.Tests && ../../linklibs
 	dotnet test ${DOTNET_FLAGS}
 
-deploy:
+package:
 	python3 Tools/package_server_build.py --hybrid-acz
+
+deploy: package
 	mv release/* ~ss14/downloads
