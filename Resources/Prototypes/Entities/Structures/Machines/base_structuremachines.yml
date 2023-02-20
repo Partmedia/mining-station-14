@@ -34,6 +34,13 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
+  - type: AtmosExposed
+  - type: Temperature
+    heatDamageThreshold: 500
+    specificHeat: 250
+    heatDamage:
+      types:
+        Heat: 0.8
 
 - type: entity
   abstract: true

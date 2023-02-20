@@ -60,7 +60,13 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
-      - !type:ExplodeBehavior
+  - type: AtmosExposed
+  - type: Temperature
+    heatDamageThreshold: 550
+    specificHeat: 250
+    heatDamage:
+      types:
+        Heat: 0.8
   - type: Explosive
     explosionType: Default
     # Same as AME, but numbers still picked from a hat.

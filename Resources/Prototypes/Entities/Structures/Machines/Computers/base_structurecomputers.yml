@@ -58,3 +58,10 @@
         ents: []
   - type: StaticPrice
     price: 400
+  - type: AtmosExposed
+  - type: Temperature
+    heatDamageThreshold: 450
+    specificHeat: 250
+    heatDamage:
+      types:
+        Heat: 0.8

@@ -60,6 +60,13 @@
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
+    - type: AtmosExposed
+    - type: Temperature
+      heatDamageThreshold: 350
+      specificHeat: 250
+      heatDamage:
+        types:
+          Heat: 0.8
 
 # SMES' in use
 

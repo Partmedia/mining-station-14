@@ -7,7 +7,6 @@
     Shock: 1.2
   flatReductions:
     Blunt: 5
-    Heat: 5
 
 # Like metallic, but without flat reduction so it can be damaged with fists.
 - type: damageModifierSet
@@ -31,7 +30,6 @@
     Slash: 15
     Piercing: 15
     Shock: 10
-    Heat: 10
 
 - type: damageModifierSet
   id: Inflatable
