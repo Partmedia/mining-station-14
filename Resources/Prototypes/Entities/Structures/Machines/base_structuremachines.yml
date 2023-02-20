@@ -50,6 +50,7 @@
   - type: ApcPowerReceiver
     powerLoad: 1000
   - type: ExtensionCableReceiver
+  - type: PowerSwitch
 
 - type: entity
   abstract: true

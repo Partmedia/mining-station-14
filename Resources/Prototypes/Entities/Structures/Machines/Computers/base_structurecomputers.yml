@@ -14,6 +14,7 @@
     graph: Computer
     node: computer
   - type: Computer
+  - type: PowerSwitch
   - type: ApcPowerReceiver
     powerLoad: 200
   - type: ExtensionCableReceiver
