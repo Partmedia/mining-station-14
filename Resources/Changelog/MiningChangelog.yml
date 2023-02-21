@@ -280,3 +280,18 @@ Entries:
       message: "Transfer rate of all atmos devices has been increased." }
   id: 2539
   time: '2023-02-18T20:43:53-08:00'
+
+- author: v1.2.0
+  changes:
+  - { type: Add,
+      message: "Update Space Station 14, including xenoarch, anomalies, and mechs." }
+  - { type: Add,
+      message: "Machines, generators, and computers take damage at high temperatures. Do not let them overheat!" }
+  - { type: Add,
+      message: "All powered machines now have built-in power switches." }
+  - { type: Add,
+      message: "Add medical thermometer to take temperatures." }
+  - { type: Add,
+      message: "Cryoxadone can now be metabolized even when dead." }
+  id: 2540
+  time: '2023-02-18T20:43:53-08:00'
