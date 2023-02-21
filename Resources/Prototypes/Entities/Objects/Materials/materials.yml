@@ -182,6 +182,10 @@
   components:
   - type: Stack
     count: 1
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 800
 
 - type: entity
   parent: MaterialBase
