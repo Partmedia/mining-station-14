@@ -79,7 +79,6 @@ namespace Content.Client.Ghost
                 sprite.Visible = GhostVisibility;
             }
 
-            _actions.AddAction(uid, component.ToggleLightingAction, null);
             _actions.AddAction(uid, component.ToggleFoVAction, null);
             _actions.AddAction(uid, component.ToggleGhostsAction, null);
         }
@@ -113,7 +112,6 @@ namespace Content.Client.Ghost
 
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
-            _actions.RemoveAction(uid, component.ToggleLightingAction);
             _actions.RemoveAction(uid, component.ToggleFoVAction);
             _actions.RemoveAction(uid, component.ToggleGhostsAction);
             _lightManager.Enabled = true;
