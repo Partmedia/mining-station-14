@@ -1,0 +1,6 @@
+- type: tile
+  id: FloorMining
+  name: mining tile
+  sprite: /Textures/Structures/Walls/asteroid_rock.rsi/full.png
+  isSubfloor: true
+  canCrowbar: false
