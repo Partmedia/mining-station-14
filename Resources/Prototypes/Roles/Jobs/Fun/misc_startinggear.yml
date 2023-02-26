@@ -25,9 +25,9 @@
     head: ClothingHeadHatPirate
     outerClothing: ClothingOuterCoatPirate
     shoes: ClothingShoesBootsWork
-    id: PassengerPDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
+    pocket2: BaseUplinkRadio20TC
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackSatchelEngineering
   duffelbag: ClothingBackpackSatchelEngineering
