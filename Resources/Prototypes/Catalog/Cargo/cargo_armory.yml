@@ -33,7 +33,17 @@
   icon:
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     state: icon
-  product: CrateArmoryLaser
-  cost: 1600
+  product: WeaponLaserGun
+  cost: 1500
+  category: Armory
+  group: market
+
+- type: cargoProduct
+  id: WeaponCapacitorRechargerC
+  icon:
+    sprite: Structures/Power/recharger.rsi
+    state: empty
+  product: WeaponCapacitorRecharger
+  cost: 150
   category: Armory
   group: market
