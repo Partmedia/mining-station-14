@@ -294,4 +294,17 @@ Entries:
   - { type: Add,
       message: "Cryoxadone can now be metabolized even when dead." }
   id: 2540
-  time: '2023-02-18T20:43:53-08:00'
+  time: '2023-02-20T20:43:53-08:00'
+
+- author: v1.2.1
+  changes:
+  - { type: Add,
+      message: "Ore veins, artifacts, and treasures can be found in the asteroid. Beware of monsters!" }
+  - { type: Tweak,
+      message: "Expand cargo catalog" }
+  - { type: Tweak,
+      message: "Diamonds are now priced reasonably" }
+  - { type: Tweak,
+      message: "Mining supervisors now start with a command headset" }
+  id: 2541
+  time: '2023-02-27T00:00:21-08:00'
