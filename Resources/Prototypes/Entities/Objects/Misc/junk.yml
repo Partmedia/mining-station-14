@@ -1,0 +1,12 @@
+- type: entity
+  name: Assorted Junk
+  parent: BaseItem
+  id: junk
+  description: 'Literal Trash. Completely Unsalvageable.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/trash.rsi #this sprite was a rush job... you could say it's trash
+    state: icon
+  - type: Tag
+    tags:
+      - Trash

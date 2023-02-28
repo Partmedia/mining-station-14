@@ -140,7 +140,7 @@ namespace Content.Shared.Damage
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
         public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
-            bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null)
+            bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null, bool unblockable = false)
         {
             if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
             {
@@ -160,7 +160,7 @@ namespace Content.Shared.Damage
             }
 
             // Don't do any more damage if total damage exceeds this limit
-            if (damageable.Damage.Total > 400 && damage.Total > 0)
+            if (!unblockable && damageable.Damage.Total > 400 && damage.Total > 0)
                 return null;
 
             // Apply resistances

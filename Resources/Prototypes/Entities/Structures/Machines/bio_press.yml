@@ -1,0 +1,65 @@
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: BioPress
+  name: Bio Press
+  description: A bioprocessing unit that will render any and all organic entities in to their base chemical elements.
+  components:
+  - type: Icon
+    sprite: Structures/Machines/biopress.rsi
+    state: icon
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/biopress.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: open
+      state_closed: closed
+  - type: ActivatableUI
+    key: enum.BiopressUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.BiopressUiKey.Key
+      type: BiopressBoundUserInterface
+  - type: EntityStorage
+    capacity: 500
+    openSound: /Audio/Machines/airlock_open.ogg
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: PlaceableSurface
+    isPlaceable: false
+  - type: Biopress
+    smallDamage:
+      types:
+        Slash: 25
+    largeDamage:
+      types:
+        Blunt: 100
+  - type: AmbientSound
+    enabled: false
+    volume: -15
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/reclaimer_ambience.ogg
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+          tags:
+          - Bottle
+          - ChemJug
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: SolutionContainerManager
+    solutions:
+      buffer: {}

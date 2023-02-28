@@ -18,6 +18,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 
 namespace Content.Server.Body.Systems;
 
@@ -28,6 +30,7 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly EntityStorageSystem _entityStorageSystem = default!;
 
     public override void Initialize()
     {
@@ -163,6 +166,12 @@ public sealed class BodySystem : SharedBodySystem
                     }
                 }
             }
+        }
+
+        if (TryComp(body.Owner, out InsideEntityStorageComponent? inside) && TryComp(inside.Storage, out EntityStorageComponent? bodyContainer))
+        { 
+            foreach (EntityUid entity in gibs)
+                _entityStorageSystem.Insert(entity, inside.Storage);
         }
 
         RaiseLocalEvent(bodyId.Value, new BeingGibbedEvent(gibs));

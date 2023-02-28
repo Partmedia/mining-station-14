@@ -1,0 +1,53 @@
+#compounds that would otherwise be found are split in to elements by the MIRACLE of space science
+
+- type: bioReagentGroup
+  id: Creature
+  reagentProportions:
+    Oxygen: 29.25
+    Carbon: 8.32
+    Hydrogen: 4.5
+    Nitrogen: 1.44
+    Phosphorus: 0.45
+    Potassium: 0.18
+    Sulfur: 0.13
+    Sodium: 0.09
+    Chlorine: 0.09
+
+- type: bioReagentGroup
+  id: SlimeCreature
+  reagentProportions:
+    Nitrogen: 29.25
+    Carbon: 8.32
+    Hydrogen: 4.5
+    Oxygen: 1.44
+    Phosphorus: 0.45
+    Potassium: 0.18
+    Sulfur: 0.13
+    Sodium: 0.09
+    Chlorine: 0.09
+
+
+#foods already have reagents assigned to them - these are for husks that are left...
+
+- type: bioReagentGroup
+  id: Meat
+  reagentProportions:
+    Hydrogen: 5
+    Oxygen: 2.5
+    Nitrogen: 2
+    Carbon: 0.5
+
+- type: bioReagentGroup
+  id: Produce
+  reagentProportions:
+    Hydrogen: 6.5
+    Oxygen: 3
+    Carbon: 0.5
+    Potassium: 0.1 #because I am feeling generous
+
+- type: bioReagentGroup
+  id: Carbohydrate
+  reagentProportions:
+    Hydrogen: 5
+    Oxygen: 2.5
+    Carbon: 1.25

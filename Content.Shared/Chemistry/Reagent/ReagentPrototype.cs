@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
@@ -30,6 +30,9 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField("group")]
         public string Group { get; } = "Unknown";
+
+        [DataField("moleculeGroup")]
+        public string MoleculeGroup { get; } = "";
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ReagentPrototype>))]
         public string[]? Parents { get; private set; }

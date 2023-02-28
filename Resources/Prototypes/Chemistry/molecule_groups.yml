@@ -1,0 +1,143 @@
+#reagents
+#these compounds will be split by the miracle of space science
+
+- type: moleculeGroup
+  id: Water
+  reagentProportions:
+    Hydrogen: 0.66
+    Oxygen: 0.33
+
+- type: moleculeGroup
+  id: CarbonDioxide
+  reagentProportions:
+    Oxygen: 0.66
+    Carbon: 0.33
+
+- type: moleculeGroup
+  id: NitrousOxide
+  reagentProportions:
+    Nitrogen: 0.66
+    Oxygen: 0.33   
+
+- type: moleculeGroup
+  id: WeldingFuel
+  reagentProportions:
+    Carbon: 0.5
+    Hydrogen: 0.5  
+
+- type: moleculeGroup
+  id: Ethanol
+  reagentProportions:
+    Hydrogen: 0.66
+    Carbon: 0.22
+    Oxygen: 0.11
+
+- type: moleculeGroup
+  id: Sugar
+  reagentProportions:
+    Hydrogen: 0.5
+    Carbon: 0.25
+    Oxygen: 0.25
+
+- type: moleculeGroup
+  id: Nutriment
+  reagentProportions:
+    Hydrogen: 0.6
+    Carbon: 0.3
+    Oxygen: 0.1
+
+#there are many kinds of vitamins - this is a catchall...
+#Vitamin B6 has phosphorus
+#B1 and B7 have sulfur
+#B12 has carbon
+- type: moleculeGroup
+  id: Vitamin
+  reagentProportions:
+    Hydrogen: 0.3
+    Nitrogen: 0.3
+    Oxygen: 0.2
+    Carbon: 0.05
+    Phosphorus: 0.05
+    Sulfur: 0.1
+
+#many kinds of proteins, this tries to cover the general proportions
+- type: moleculeGroup
+  id: Protein
+  reagentProportions:
+    Hydrogen: 0.6
+    Carbon: 0.2
+    Oxygen: 0.1
+    Nitrogen: 0.1
+
+- type: moleculeGroup
+  id: Histamine
+  reagentProportions:
+    Hydrogen: 0.5
+    Carbon: 0.3
+    Nitrogen: 0.2
+
+- type: moleculeGroup
+  id: Allicin
+  reagentProportions:
+    Hydrogen: 0.5
+    Carbon: 0.3
+    Sulfur: 0.1
+    Oxygen: 0.1
+
+- type: moleculeGroup
+  id: Capsaicin
+  reagentProportions:
+    Hydrogen: 0.6
+    Carbon: 0.3
+    Oxygen: 0.05
+    Nitrogen: 0.05
+
+#blood (Ichor will not be separable, like omni)
+#blood is complicated, a lot of this is guess work
+- type: moleculeGroup
+  id: Blood
+  reagentProportions:
+    Hydrogen: 0.6
+    Oxygen: 0.3
+    Iron: 0.01
+    Nutriment: 0.05
+    Protein: 0.03
+    Vitamin: 0.01
+
+#I'm just making this up
+- type: moleculeGroup
+  id: Slime
+  reagentProportions:
+    Sugar: 0.5 
+    Nitrogen: 0.4
+    Nutriment: 0.05
+    Protein: 0.03
+    Vitamin: 0.02
+
+#generic groups
+
+- type: moleculeGroup
+  id: AlcoholicBeverage
+  reagentProportions:
+    Ethanol: 0.4
+    Sugar: 0.1
+    Water: 0.5
+
+- type: moleculeGroup
+  id: SoftBeverage
+  reagentProportions:
+    Sugar: 0.1
+    Water: 0.9
+
+- type: moleculeGroup
+  id: DairyBeverage
+  reagentProportions:
+    Nutriment: 0.1
+    Water: 0.9
+
+- type: moleculeGroup
+  id: Noodles
+  reagentProportions:
+    Nutriment: 0.4
+    Water: 0.4
+    TableSalt: 0.1

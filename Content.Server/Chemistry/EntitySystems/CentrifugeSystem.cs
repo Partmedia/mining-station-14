@@ -47,6 +47,10 @@ namespace Content.Server.Chemistry.EntitySystems
         ///     A cache of all existant chemical reactions indexed by their resulting reagent.
         /// </summary>
         private IDictionary<string, List<ReactionPrototype>> _reactions = default!;
+        /// <summary>
+        ///     A cache of all existant molecule groups for some compound reagents not produced by recipes.
+        /// </summary>
+        private IDictionary<string, List<MoleculeGroupPrototype>> _moleculeGroups = default!;
 
         public override void Initialize()
         {
@@ -54,7 +58,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
             InitializeReactionCache();
 
-            _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
+            _prototypeManager.PrototypesReloaded += OnPrototypesReloadedReactions;
+            _prototypeManager.PrototypesReloaded += OnPrototypesReloadedMoleculeGroups;
 
             SubscribeLocalEvent<CentrifugeComponent, ComponentStartup>((_, comp, _) => UpdateUiState(comp));
             SubscribeLocalEvent<CentrifugeComponent, SolutionChangedEvent>((_, comp, _) => UpdateUiState(comp));
@@ -87,9 +92,17 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 CacheReaction(products);
             }
+
+            _moleculeGroups = new Dictionary<string, List<MoleculeGroupPrototype>>();
+
+            var moleculeGroups = _prototypeManager.EnumeratePrototypes<MoleculeGroupPrototype>();
+            foreach (var group in moleculeGroups)
+            {
+                CacheMoleculeGroup(group);
+            }
         }
 
-        private void OnPrototypesReloaded(PrototypesReloadedEventArgs eventArgs)
+        private void OnPrototypesReloadedReactions(PrototypesReloadedEventArgs eventArgs)
         {
             if (!eventArgs.ByType.TryGetValue(typeof(ReactionPrototype), out var set))
                 return;
@@ -103,7 +116,26 @@ namespace Content.Server.Chemistry.EntitySystems
 
             foreach (var prototype in set.Modified.Values)
             {
-                CacheReaction((ReactionPrototype)prototype);
+                CacheReaction((ReactionPrototype) prototype);
+            }
+        }
+
+        private void OnPrototypesReloadedMoleculeGroups(PrototypesReloadedEventArgs eventArgs)
+        {
+
+            if (!eventArgs.ByType.TryGetValue(typeof(MoleculeGroupPrototype), out var set))
+                return;
+
+            foreach (var (reagentProportions, cache) in _moleculeGroups)
+            {
+                cache.RemoveAll((moleculeGroup) => set.Modified.ContainsKey(moleculeGroup.ID));
+                if (cache.Count == 0)
+                    _moleculeGroups.Remove(reagentProportions);
+            }
+
+            foreach (var prototype in set.Modified.Values)
+            {
+                CacheMoleculeGroup((MoleculeGroupPrototype) prototype);
             }
         }
 
@@ -121,6 +153,20 @@ namespace Content.Server.Chemistry.EntitySystems
                 cache.Add(reaction);
                 return; // Only need to cache based on the first reagent.
             }
+        }
+
+        private void CacheMoleculeGroup(MoleculeGroupPrototype moleculeGroup)
+        {
+            var groupId = moleculeGroup.ID;
+
+            if (!_moleculeGroups.TryGetValue(groupId, out var cache))
+            {
+                cache = new List<MoleculeGroupPrototype>();
+                _moleculeGroups.Add(groupId, cache);
+            }
+
+            cache.Add(moleculeGroup);
+
         }
 
         private void OnPowerChange(EntityUid uid, CentrifugeComponent component, ref PowerChangedEvent args)
@@ -256,6 +302,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 foreach (var solution in (solutions.Solutions)) //will only work on the first iter val //TODO make this better...
                 {
+
                     var reagents = solution.Value.Contents.Select(reagent => (reagent.ReagentId, reagent.Quantity)).ToList();
                     foreach (var reagent in (reagents))
                     {
@@ -270,7 +317,8 @@ namespace Content.Server.Chemistry.EntitySystems
                             foreach (var reaction in productReactions)
                             {
                                 FixedPoint2 totalCoeff = 0f;
-                                foreach (var reactant in reaction.Reactants) {
+                                foreach (var reactant in reaction.Reactants)
+                                {
                                     totalCoeff += reactant.Value.Amount;
                                 }
                                 foreach (var reactant in reaction.Reactants)
@@ -279,12 +327,40 @@ namespace Content.Server.Chemistry.EntitySystems
                                     var coeff = reactant.Value.Amount;
                                     var amount = (reagent.Quantity / totalCoeff) * coeff;
 
-                                    if (!reactant.Value.Catalyst) {
-                                        bufferSolution.AddReagent(name, amount);
+                                    if (amount > 0.01)
+                                    {
+                                        if (!reactant.Value.Catalyst)
+                                        {
+                                            bufferSolution.AddReagent(name, amount);
+                                        }
                                     }
                                 }
                             }
 
+                        }
+                        else if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? p) && _moleculeGroups.TryGetValue(p.MoleculeGroup, out var productMoleculeGroups))
+                        {
+                            DiscardReagents(component, reagent.ReagentId, reagent.Quantity, SharedCentrifuge.InputSlotName, false);
+                            
+                            foreach (var productMolecules in productMoleculeGroups)
+                            {
+                                FixedPoint2 totalCoeff = 0f;
+                                if (productMolecules.ReagentProportions != null) {
+                                    foreach (KeyValuePair<string, FixedPoint2> molecule in productMolecules.ReagentProportions)
+                                    {
+                                        totalCoeff += molecule.Value;
+                                    }
+                                    foreach (KeyValuePair<string, FixedPoint2> molecule in productMolecules.ReagentProportions)
+                                    {
+                                        var name = molecule.Key;
+                                        var coeff = molecule.Value;
+                                        var amount = (reagent.Quantity / totalCoeff) * coeff;
+
+                                        bufferSolution.AddReagent(name, amount);
+
+                                    }
+                                }
+                            }
                         }
                         else
                         {

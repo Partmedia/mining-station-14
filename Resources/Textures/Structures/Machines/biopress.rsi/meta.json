@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by Coles_Magnum",
+  "size": {
+    "x": 56,
+    "y": 40
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "base",
+      "delays": [
+        [
+          0.2,
+          0.5,
+          0.2,
+          0.5,
+          0.2,
+          0.5,
+          0.2,
+          1,
+          0.2,
+          0.5,
+          0.2,
+          0.5,
+          0.2,
+          0.5,
+          0.2,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "closed"
+    },
+    {
+      "name": "open"
+    }
+  ]
+}
