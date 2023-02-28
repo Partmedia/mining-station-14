@@ -19,6 +19,9 @@
   name: "reptilian torso"
   parent: PartReptilian
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 30
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -34,6 +37,9 @@
   name: "reptilian head"
   parent: PartReptilian
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -60,6 +66,9 @@
   name: "left reptilian arm"
   parent: PartReptilian
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3.5
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -76,6 +85,9 @@
   name: "right reptilian arm"
   parent: PartReptilian
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3.5
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -92,6 +104,9 @@
   name: "left reptilian hand"
   parent: PartReptilian
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.1
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -108,6 +123,9 @@
   name: "right reptilian hand"
   parent: PartReptilian
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.1
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -124,6 +142,9 @@
   name: "left reptilian leg"
   parent: PartReptilian
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 4
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -143,6 +164,9 @@
   name: "right reptilian leg"
   parent: PartReptilian
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 4
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -162,6 +186,9 @@
   name: "left reptilian foot"
   parent: PartReptilian
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.2
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -178,6 +205,9 @@
   name: "right reptilian foot"
   parent: PartReptilian
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.2
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Reptilian/parts.rsi

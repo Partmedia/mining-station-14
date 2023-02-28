@@ -5,6 +5,9 @@
   id: FoodSkewerBase
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Meat
+    totalReagentUnits: 1
   - type: Food
     trash: FoodKebabSkewer
   - type: Sprite

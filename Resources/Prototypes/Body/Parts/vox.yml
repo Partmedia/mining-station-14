@@ -1,4 +1,4 @@
-﻿# TODO: Add descriptions (many)
+# TODO: Add descriptions (many)
 # TODO BODY: Part damage
 - type: entity
   id: PartVox
@@ -21,6 +21,9 @@
   name: "vox torso"
   parent: PartVox
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 25
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
@@ -36,6 +39,9 @@
   name: "vox head"
   parent: PartVox
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 3
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
@@ -62,6 +68,9 @@
   name: "left vox arm"
   parent: PartVox
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 3
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
@@ -78,6 +87,9 @@
   name: "right vox arm"
   parent: PartVox
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 3
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
@@ -94,6 +106,9 @@
   name: "left vox hand"
   parent: PartVox
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 0.1
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
@@ -110,6 +125,9 @@
   name: "right vox hand"
   parent: PartVox
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 0.1
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
@@ -126,6 +144,9 @@
   name: "left vox leg"
   parent: PartVox
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 4
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
@@ -143,6 +164,9 @@
   name: "right vox leg"
   parent: PartVox
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 4
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
@@ -160,6 +184,9 @@
   name: "left vox foot"
   parent: PartVox
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 0.2
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Vox/parts.rsi
@@ -176,6 +203,9 @@
   name: "right vox foot"
   parent: PartVox
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 0.2
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Vox/parts.rsi

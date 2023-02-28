@@ -5,6 +5,9 @@
   description: It's a space carp.
   abstract: true
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 25
     - type: InputMover
     - type: MobMover
     - type: HTN

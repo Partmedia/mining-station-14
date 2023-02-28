@@ -19,6 +19,9 @@
   name: "moth torso"
   parent: PartMoth
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 25
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Moth/parts.rsi
@@ -34,6 +37,9 @@
   name: "moth head"
   parent: PartMoth
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Moth/parts.rsi
@@ -60,6 +66,9 @@
   name: "left moth arm"
   parent: PartMoth
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Moth/parts.rsi
@@ -76,6 +85,9 @@
   name: "right moth arm"
   parent: PartMoth
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Moth/parts.rsi
@@ -92,6 +104,9 @@
   name: "left moth hand"
   parent: PartMoth
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.1
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Moth/parts.rsi
@@ -108,6 +123,9 @@
   name: "right moth hand"
   parent: PartMoth
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.1
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Moth/parts.rsi
@@ -124,6 +142,9 @@
   name: "left moth leg"
   parent: PartMoth
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 4
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Moth/parts.rsi
@@ -141,6 +162,9 @@
   name: "right moth leg"
   parent: PartMoth
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 4
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Moth/parts.rsi

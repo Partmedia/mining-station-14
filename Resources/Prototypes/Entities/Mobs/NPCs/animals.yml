@@ -7,6 +7,9 @@
   id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 1
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 6
@@ -159,6 +162,9 @@
   id: MobChicken
   description: Comes before an egg, and IS a dinosaur!
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -210,6 +216,9 @@
   id: MobDuckMallard
   description: An adorable mallard duck, it's fluffy and soft!
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 2.5
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -357,6 +366,9 @@
   id: MobCow
   description: Moo.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 75
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -419,6 +431,9 @@
   id: MobCrab
   description: A folk legend goes around that his claw snaps spacemen out of existence over distasteful remarks. Be polite and tolerant for your own safety.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -462,6 +477,9 @@
   id: MobGoat
   description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 30
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -520,6 +538,9 @@
   id: MobGoose
   description: Its stomach and mind are an enigma beyond human comprehension.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 20
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -565,6 +586,9 @@
   id: MobGorilla
   description: Smashes, roars, looks cool. Don't stand near one.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 75
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -605,6 +629,9 @@
   id: MobKangaroo
   description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 40
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
     baseSprintSpeed: 6
@@ -681,6 +708,9 @@
   parent: SimpleMobBase
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 20
   - type: CombatMode
     disarm: null
   - type: NameIdentifier
@@ -752,6 +782,9 @@
   id: MobMouse
   description: Squeak!
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 1
   - type: GhostTakeoverAvailable
     makeSentient: true
     allowSpeech: true
@@ -917,6 +950,9 @@
   id: MobLizard
   description: A harmless dragon.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 1
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
@@ -968,6 +1004,9 @@
   id: MobSlug
   description: And they called this a lizard?
   components:
+  - type: BiopressHarvest
+    id: SlimeCreature
+    totalReagentUnits: 1
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
@@ -1014,6 +1053,9 @@
   id: MobFrog
   description: Hop hop hop. Lookin' moist.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 1
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 6
@@ -1063,6 +1105,9 @@
   id: MobParrot
   description: Infiltrates your domain, spies on you, and somehow still a cool pet.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 1
   - type: MovementSpeedModifier
     baseWalkSpeed : 6
     baseSprintSpeed : 6
@@ -1112,6 +1157,9 @@
   id: MobPenguin
   description: Their lives are constant pain due to their inner-body knees.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 20
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1155,6 +1203,9 @@
   id: MobGrenadePenguin
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 15
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
     baseSprintSpeed : 5
@@ -1230,6 +1281,9 @@
   id: MobSnake
   description: Hissss! Bites aren't poisonous.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1277,6 +1331,9 @@
   id: MobGiantSpider
   description: Widely recognized to be the literal worst thing in existence.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 40
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1363,6 +1420,9 @@
   id: MobPossum
   description: '"O Possum! My Possum!" -- Walt Whitman, 1865'
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 20
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/possum.rsi
@@ -1417,6 +1477,9 @@
   id: MobRaccoon
   description: Trash panda!
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 20
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/raccoon.rsi
@@ -1471,6 +1534,9 @@
   id: MobFox
   description: They're a fox.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 15
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/fox.rsi
@@ -1527,6 +1593,9 @@
   id: MobCorgi
   description: Finally, a space corgi!
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 25
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
@@ -1657,6 +1726,9 @@
   id: MobCorgiPuppy
   description: A little corgi! Aww...
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 10
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
@@ -1685,6 +1757,9 @@
   id: MobCat
   description: Feline pet, very funny.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 15
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/cat.rsi
@@ -1799,6 +1874,9 @@
   parent: MobCat
   description: Hilarious.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 20
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/caracal.rsi
@@ -1824,6 +1902,9 @@
   id: MobSloth
   description: Very slow animal. For people with low energy.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 20
   - type: MovementSpeedModifier
     baseWalkSpeed : 1
     baseSprintSpeed : 1
@@ -1881,6 +1962,9 @@
   id: MobFerret
   description: Just a silly little guy!
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 15
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/ferret.rsi
@@ -1936,6 +2020,9 @@
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
   - type: GhostTakeoverAvailable
     makeSentient: true
     allowSpeech: true
@@ -2053,6 +2140,9 @@
   id: MobPig
   description: Oink.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 50
   - type: Sprite
     drawdepth: Mobs
     layers:

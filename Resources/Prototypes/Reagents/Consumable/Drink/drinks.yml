@@ -19,6 +19,7 @@
   id: Cream
   name: reagent-name-cream
   group: Drinks
+  moleculeGroup: DairyBeverage
   desc: reagent-desc-cream
   physicalDesc: reagent-physical-desc-creamy
   flavor: creamy
@@ -34,6 +35,7 @@
   name: reagent-name-cafe-latte
   parent: BaseDrink
   desc: reagent-desc-cafe-latte
+  moleculeGroup: DairyBeverage
   physicalDesc: reagent-physical-desc-creamy
   flavor: creamy
   color: "#664300"
@@ -117,6 +119,7 @@
   name: reagent-name-milk
   group: Drinks
   desc: reagent-desc-milk
+  moleculeGroup: DairyBeverage
   physicalDesc: reagent-physical-desc-opaque
   flavor: milk
   color: "#DFDFDF"
@@ -141,6 +144,7 @@
   id: MilkOat
   name: reagent-name-milk-oat
   group: Drinks
+  moleculeGroup: DairyBeverage
   desc: reagent-desc-milk-oat
   physicalDesc: reagent-physical-desc-refreshing
   flavor: oats
@@ -161,6 +165,7 @@
   id: MilkSpoiled
   name: reagent-name-milk-spoiled
   group: Drinks
+  moleculeGroup: DairyBeverage
   desc: reagent-desc-milk-spoiled
   physicalDesc: reagent-physical-desc-putrid
   flavor: terrible
@@ -190,6 +195,7 @@
   name: reagent-name-nuclear-cola
   group: Drinks
   desc: reagent-desc-nuclear-cola
+  moleculeGroup: AlcoholicBeverage #for now
   physicalDesc: reagent-physical-desc-fizzy
   flavor: atomiccola
   color: "#100800"
@@ -254,6 +260,7 @@
 - type: reagent
   id: Water
   name: reagent-name-water
+  moleculeGroup: Water
   parent: BaseDrink
   desc: reagent-desc-water
   physicalDesc: reagent-physical-desc-translucent
@@ -269,6 +276,7 @@
 
 - type: reagent
   id: Ice
+  moleculeGroup: Water
   name: reagent-name-ice
   desc: reagent-desc-ice
   physicalDesc: reagent-physical-desc-frosty
@@ -284,6 +292,7 @@
   id: DryRamen
   name: reagent-name-dry-ramen
   parent: BaseDrink
+  moleculeGroup: Noodles
   desc: reagent-desc-dry-ramen
   physicalDesc: reagent-physical-desc-wormy
   flavor: cheapnoodles
@@ -298,6 +307,7 @@
   id: HotRamen
   name: reagent-name-hot-ramen
   parent: BaseDrink
+  moleculeGroup: Noodles
   desc: reagent-desc-hot-ramen
   physicalDesc: reagent-physical-desc-wormy
   flavor: cheapnoodles

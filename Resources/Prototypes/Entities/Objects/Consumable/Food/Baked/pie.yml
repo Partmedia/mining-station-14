@@ -5,6 +5,9 @@
   id: FoodPieBase
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 2
   - type: FlavorProfile
     flavors:
       - sweet
@@ -34,6 +37,9 @@
   abstract: true
   description: A slice of pie. Tasty!
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 0.25
   - type: FlavorProfile
     flavors:
       - sweet

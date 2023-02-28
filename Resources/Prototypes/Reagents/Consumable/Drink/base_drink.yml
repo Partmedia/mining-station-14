@@ -1,6 +1,7 @@
-﻿- type: reagent
+- type: reagent
   id: BaseDrink
   group: Drinks
+  moleculeGroup: SoftBeverage
   abstract: true
   metabolisms:
     Drink:
@@ -40,6 +41,7 @@
   id: BaseAlcohol
   group: Drinks
   abstract: true
+  moleculeGroup: AlcoholicBeverage
   metabolisms:
     Drink:
       effects:

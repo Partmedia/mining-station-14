@@ -4,6 +4,9 @@
   name: sentient slime core
   description: "The source of incredible, unending gooeyness."
   components:
+    - type: BiopressHarvest
+      id: SlimeCreature
+      totalReagentUnits: 0.3
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Human/organs.rsi
@@ -33,6 +36,9 @@
   name: slime gas sacs
   description: "Collects nitrogen, which slime cells use for maintenance."
   components:
+  - type: BiopressHarvest
+    id: SlimeCreature
+    totalReagentUnits: 0.3
   - type: Sprite
     layers:
       - state: lung-l

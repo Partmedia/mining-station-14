@@ -5,6 +5,9 @@
   id: FoodDonkpocketBase
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 1
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi

@@ -1,10 +1,11 @@
-﻿- type: reagent
+- type: reagent
   id: Toxin
   name: reagent-name-toxin
   group: Toxins
   desc: reagent-desc-toxin
   flavor: bitter
   color: "#cf3600"
+  moleculeGroup: Histamine #for now...
   physicalDesc: reagent-physical-desc-opaque
   plantMetabolism:
   - !type:PlantAdjustToxins
@@ -27,6 +28,7 @@
   flavor: bitter
   color: "#e2a38c"
   physicalDesc: reagent-physical-desc-exotic-smelling
+  moleculeGroup: Histamine #for now...
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -85,6 +87,7 @@
   desc: reagent-desc-mold
   flavor: bitter
   color: "#8a9a5b"
+  moleculeGroup: Histamine #for now...
   physicalDesc: reagent-physical-desc-fuzzy
   metabolisms:
     Poison:
@@ -300,6 +303,7 @@
   id: Histamine
   name: reagent-name-histamine
   group: Toxins
+  moleculeGroup: Histamine
   desc: reagent-desc-histamine
   physicalDesc: reagent-physical-desc-abrasive
   color: "#FA6464"
@@ -340,6 +344,7 @@
   group: Toxins
   desc: reagent-desc-theobromine
   physicalDesc: reagent-physical-desc-grainy
+  moleculeGroup: Histamine #for now...
   color: "#f5f5f5"
   meltingPoint: 351
   boilingPoint: 554 # I'm not a chemist, but it boils at 295, lower than melting point, idk how it works so I gave it higher value
@@ -369,6 +374,7 @@
   name: reagent-name-amatoxin
   group: Toxins
   desc: reagent-desc-amatoxin
+  moleculeGroup: Histamine #for now...
   physicalDesc: reagent-physical-desc-nondescript
   color: "#D6CE7B"
   metabolisms:
@@ -421,6 +427,7 @@
   desc: reagent-desc-uncooked-animal-proteins
   physicalDesc: reagent-physical-desc-clumpy
   flavor: bitter
+  moleculeGroup: Protein
   color: "#FFFFE5"
   metabolisms:
     Poison:
@@ -443,6 +450,7 @@
   id: Allicin
   name: reagent-name-allicin
   desc: reagent-desc-allicin
+  moleculeGroup: Allicin
   physicalDesc: reagent-physical-desc-pungent
   flavor: bitter
   color: "#F2E9D2"

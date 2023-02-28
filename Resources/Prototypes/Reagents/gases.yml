@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Oxygen
   name: reagent-name-oxygen
   desc: reagent-desc-oxygen
@@ -108,6 +108,7 @@
 
 - type: reagent
   id: CarbonDioxide
+  moleculeGroup: CarbonDioxide
   name: reagent-name-carbon-dioxide
   desc: reagent-desc-carbon-dioxide
   physicalDesc: reagent-physical-desc-odorless
@@ -235,6 +236,7 @@
 
 - type: reagent
   id: NitrousOxide
+  moleculeGroup: NitrousOxide
   name: reagent-name-nitrous-oxide
   desc: reagent-desc-nitrous-oxide
   physicalDesc: reagent-physical-desc-gaseous

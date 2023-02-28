@@ -471,6 +471,7 @@
   id: PulpedBananaPeel
   name: reagent-name-pulped-banana-peel
   group: Medicine
+  moleculeGroup: Nutriment
   desc: reagent-desc-pulped-banana-peel
   physicalDesc: reagent-physical-desc-pulpy
   flavor: medicine

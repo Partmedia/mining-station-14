@@ -1,9 +1,12 @@
-﻿- type: entity
+- type: entity
   name: space bear
   id: MobBearSpace
   parent: SimpleSpaceMobBase
   description: It looks friendly. Why don't you give it a hug?
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 60
   - type: InputMover
   - type: MobMover
   - type: HTN

@@ -3,6 +3,9 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.3
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Diona/organs.rsi

@@ -5,6 +5,9 @@
   parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
+  - type: BiopressHarvest
+    id: SlimeCreature
+    totalReagentUnits: 50
   - type: Insulated
   - type: DiseaseProtection
     protection: 1
@@ -125,6 +128,9 @@
   parent: MobXeno
   id: MobXenoPraetorian
   components:
+  - type: BiopressHarvest
+    id: SlimeCreature
+    totalReagentUnits: 75
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/praetorian.rsi
@@ -200,6 +206,9 @@
   parent: MobXeno
   id: MobXenoQueen
   components:
+  - type: BiopressHarvest
+    id: SlimeCreature
+    totalReagentUnits: 100
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/queen.rsi
@@ -244,6 +253,9 @@
   parent: MobXeno
   id: MobXenoRavager
   components:
+  - type: BiopressHarvest
+    id: SlimeCreature
+    totalReagentUnits: 65
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/ravager.rsi
@@ -288,6 +300,9 @@
   parent: MobXeno
   id: MobXenoRunner
   components:
+  - type: BiopressHarvest
+    id: SlimeCreature
+    totalReagentUnits: 40
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/runner.rsi
@@ -379,6 +394,9 @@
   id: MobPurpleSnake
   description: A menacing purple snake from Kepler-283c.
   components:
+  - type: BiopressHarvest
+    id: SlimeCreature
+    totalReagentUnits: 10
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/purple_snake.rsi
@@ -438,6 +456,9 @@
   suffix: small
   description: A smaller version of the menacing purple snake from Kepler-283c.
   components:
+  - type: BiopressHarvest
+    id: SlimeCreature
+    totalReagentUnits: 5
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/purple_snake.rsi

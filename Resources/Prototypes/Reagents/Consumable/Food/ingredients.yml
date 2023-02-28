@@ -2,6 +2,7 @@
   id: Flour
   name: reagent-name-flour
   group: Foods
+  moleculeGroup: Nutriment
   desc: reagent-desc-flour
   physicalDesc: reagent-physical-desc-powdery
   flavor: chalky
@@ -20,6 +21,7 @@
   id: Oats
   name: reagent-name-oats
   group: Foods
+  moleculeGroup: Nutriment
   desc: reagent-desc-oats
   physicalDesc: reagent-physical-desc-coarse
   flavor: oats
@@ -38,6 +40,7 @@
   id: Enzyme
   name: reagent-name-enzyme
   group: Foods
+  moleculeGroup: Protein
   desc: reagent-desc-enzyme
   physicalDesc: reagent-physical-desc-chalky
   flavor: bitter
@@ -48,6 +51,7 @@
   name: reagent-name-egg
   group: Foods
   desc: reagent-desc-egg
+  moleculeGroup: Protein
   physicalDesc: reagent-physical-desc-mucus-like
   flavor: egg
   color: white
@@ -60,6 +64,7 @@
 
 - type: reagent
   id: Blackpepper
+  moleculeGroup: Nutriment # for now...
   name: reagent-name-blackpepper
   group: Foods
   desc: reagent-desc-blackpepper
@@ -73,6 +78,7 @@
   group: Foods
   desc: reagent-desc-vinegar
   physicalDesc: reagent-physical-desc-sour
+  moleculeGroup: Nutriment
   flavor: bitter
   color: tan
   metabolisms:
@@ -96,6 +102,7 @@
   group: Foods
   desc: reagent-desc-rice
   physicalDesc: reagent-physical-desc-chewy
+  moleculeGroup: Nutriment #for now...
   flavor: rice
   color: white
   metabolisms:
@@ -114,6 +121,7 @@
   group: Foods
   desc: reagent-desc-oil-olive
   physicalDesc: reagent-physical-desc-oily
+  moleculeGroup: Nutriment #for now...
   flavor: oily
   color: olive
   metabolisms:
@@ -143,6 +151,7 @@
   physicalDesc: reagent-physical-desc-oily
   flavor: spicy
   color: "#FF0000"
+  moleculeGroup: Capsaicin
   meltingPoint: 146
   boilingPoint: 410 # Really high boiling point compared to its melting
   metabolisms:

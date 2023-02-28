@@ -311,6 +311,9 @@
   id: FoodBakingBase
   description: Used in various recipes.
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate #for now...
+    totalReagentUnits: 1
   - type: Sprite
     sprite: Objects/Consumable/Food/ingredients.rsi
     netsync: false
@@ -435,6 +438,9 @@
   id: FoodCheese
   description: A big wheel of delicious Cheddar.
   components:
+  - type: BiopressHarvest
+    id: Produce #for now...
+    totalReagentUnits: 2
   - type: FlavorProfile
     flavors:
       - cheesy
@@ -450,6 +456,9 @@
   id: FoodCheeseSlice
   description: A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far.
   components:
+  - type: BiopressHarvest
+    id: Produce #for now...
+    totalReagentUnits: 0.25
   - type: FlavorProfile
     flavors:
       - cheesy

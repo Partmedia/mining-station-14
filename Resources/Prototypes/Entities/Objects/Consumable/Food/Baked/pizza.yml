@@ -5,6 +5,9 @@
   id: FoodPizzaBase
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 2
   - type: FlavorProfile
     flavors:
       - oily
@@ -35,6 +38,9 @@
   id: FoodPizzaSliceBase
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 0.25
   - type: FlavorProfile
     flavors:
       - oily

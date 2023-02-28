@@ -20,6 +20,9 @@
   name: "slime torso"
   parent: PartSlime
   components:
+    - type: BiopressHarvest
+      id: SlimeCreature
+      totalReagentUnits: 30
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
@@ -35,6 +38,9 @@
   name: "slime head"
   parent: PartSlime
   components:
+    - type: BiopressHarvest
+      id: SlimeCreature
+      totalReagentUnits: 3
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
@@ -61,6 +67,9 @@
   name: "left slime arm"
   parent: PartSlime
   components:
+    - type: BiopressHarvest
+      id: SlimeCreature
+      totalReagentUnits: 3.5
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
@@ -77,6 +86,9 @@
   name: "right slime arm"
   parent: PartSlime
   components:
+    - type: BiopressHarvest
+      id: SlimeCreature
+      totalReagentUnits: 3.5
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
@@ -93,6 +105,9 @@
   name: "left slime hand"
   parent: PartSlime
   components:
+    - type: BiopressHarvest
+      id: SlimeCreature
+      totalReagentUnits: 0.1
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
@@ -109,6 +124,9 @@
   name: "right slime hand"
   parent: PartSlime
   components:
+    - type: BiopressHarvest
+      id: SlimeCreature
+      totalReagentUnits: 0.1
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
@@ -125,6 +143,9 @@
   name: "left slime leg"
   parent: PartSlime
   components:
+    - type: BiopressHarvest
+      id: SlimeCreature
+      totalReagentUnits: 4
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
@@ -142,6 +163,9 @@
   name: "right slime leg"
   parent: PartSlime
   components:
+    - type: BiopressHarvest
+      id: SlimeCreature
+      totalReagentUnits: 4
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
@@ -159,6 +183,9 @@
   name: "left slime foot"
   parent: PartSlime
   components:
+    - type: BiopressHarvest
+      id: SlimeCreature
+      totalReagentUnits: 0.2
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
@@ -175,6 +202,9 @@
   name: "right slime foot"
   parent: PartSlime
   components:
+    - type: BiopressHarvest
+      id: SlimeCreature
+      totalReagentUnits: 0.2
     - type: Sprite
       netsync: false
       sprite: Mobs/Species/Slime/parts.rsi

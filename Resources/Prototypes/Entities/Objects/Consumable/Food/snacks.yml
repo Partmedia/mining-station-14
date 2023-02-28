@@ -5,6 +5,9 @@
   id: FoodSnackBase
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate #for now...
+    totalReagentUnits: 1
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi

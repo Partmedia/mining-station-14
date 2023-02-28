@@ -6,6 +6,9 @@
   id: FoodBreadBun
   description: A hamburger bun. Round and convenient to hold.
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 1
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
@@ -26,6 +29,9 @@
   id: FoodBurgerBase
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Meat
+    totalReagentUnits: 1
   - type: FlavorProfile
     flavors:
       - bun
@@ -55,6 +61,9 @@
   id: FoodBurgerJelly
   description: Culinary delight..?
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 1
   - type: Sprite
     layers:
     - state: custburg-bottom
@@ -70,6 +79,9 @@
   id: FoodBurgerAppendix
   description: Tastes like appendicitis.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.3
   - type: Sprite
     state: appendix
 # Tastes like bun, grass.
@@ -183,6 +195,9 @@
   id: FoodBurgerBrain
   description: A strange looking burger. It looks almost sentient.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.3
   - type: Sprite
     state: brain
 # Tastes like bun, brains.
@@ -255,6 +270,9 @@
   id: FoodBurgerBig
   description: Forget the Big Mac. THIS is the future!
   components:
+  - type: BiopressHarvest
+    id: Meat
+    totalReagentUnits: 1.5
   - type: FlavorProfile
     flavors: # What bun?
       - meaty
@@ -279,6 +297,9 @@
   id: FoodBurgerSuper
   description: This is a mountain of a burger. FOOD!
   components:
+  - type: BiopressHarvest
+    id: Meat
+    totalReagentUnits: 2
   - type: FlavorProfile
     flavors: # What bun?
       - meaty

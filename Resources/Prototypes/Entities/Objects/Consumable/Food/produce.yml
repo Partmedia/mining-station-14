@@ -5,6 +5,9 @@
   id: ProduceBase
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Produce
+    totalReagentUnits: 1
   - type: SolutionContainerManager
   - type: Sprite
     netsync: false
@@ -22,6 +25,9 @@
   id: FoodProduceBase
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Produce
+    totalReagentUnits: 1
   - type: SolutionContainerManager
   - type: Sprite
     netsync: false

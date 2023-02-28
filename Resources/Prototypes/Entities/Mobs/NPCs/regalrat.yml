@@ -4,6 +4,9 @@
   parent: SimpleMobBase
   description: He's da rat. He make da roolz.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 60
   - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.00
@@ -138,6 +141,9 @@
   parent: MobRatKing
   suffix: Buff
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 75
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/buffrat.rsi
@@ -182,6 +188,9 @@
   parent: SimpleMobBase
   description: He's da mini rat. He don't make da roolz.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
   - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5

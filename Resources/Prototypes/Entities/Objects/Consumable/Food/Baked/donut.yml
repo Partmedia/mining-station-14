@@ -6,6 +6,9 @@
   abstract: true
   description: Goes great with robust coffee.
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 0.5
   - type: Food
   - type: Tag
     tags:

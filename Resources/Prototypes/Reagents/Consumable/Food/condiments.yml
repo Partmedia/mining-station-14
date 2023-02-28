@@ -4,6 +4,7 @@
   group: Foods
   desc: reagent-desc-astrotame
   physicalDesc: reagent-physical-desc-sugary
+  moleculeGroup: Nutriment #for now...
   flavor: sweet
   color: aquamarine
 
@@ -13,6 +14,7 @@
   group: Foods
   desc: reagent-desc-bbq-sauce
   physicalDesc: reagent-physical-desc-gloopy
+  moleculeGroup: Nutriment #for now...
   flavor: sweet
   color: darkred
 
@@ -22,6 +24,7 @@
   group: Foods
   desc: reagent-desc-cornoil
   physicalDesc: reagent-physical-desc-oily
+  moleculeGroup: Nutriment #for now...
   flavor: oily
   color: yellow
 
@@ -31,6 +34,7 @@
   group: Foods
   desc: reagent-desc-frostoil
   physicalDesc: reagent-physical-desc-cold
+  moleculeGroup: Nutriment #for now...
   flavor: cold
   color: skyblue
 
@@ -40,6 +44,7 @@
   group: Foods
   desc: reagent-desc-horseradish-sauce
   physicalDesc: reagent-physical-desc-overpowering
+  moleculeGroup: Nutriment #for now...
   flavor: spicy
   color: gray
 
@@ -49,6 +54,7 @@
   group: Foods
   desc: reagent-desc-hotsauce
   physicalDesc: reagent-physical-desc-spicy
+  moleculeGroup: Nutriment #for now...
   flavor: spicy
   color: red
 
@@ -58,6 +64,7 @@
   group: Foods
   desc: reagent-desc-ketchup
   physicalDesc: reagent-physical-desc-tangy
+  moleculeGroup: Nutriment #for now...
   flavor: tomato
   color: red
 
@@ -67,6 +74,7 @@
   group: Foods
   desc: reagent-desc-ketchunaise
   physicalDesc: reagent-physical-desc-saucey
+  moleculeGroup: Nutriment #for now...
   flavor: piquant
   color: "#fba399"
 
@@ -75,6 +83,7 @@
   name: reagent-name-mayo
   group: Foods
   desc: reagent-desc-mayo
+  moleculeGroup: Nutriment #for now...
   physicalDesc: reagent-physical-desc-thick
   flavor: sour
   color: "#f9f5e5"
@@ -85,6 +94,7 @@
   group: Foods
   desc: reagent-desc-soysauce
   physicalDesc: reagent-physical-desc-salty
+  moleculeGroup: Nutriment #for now...
   flavor: salty
   color: saddlebrown
   metabolisms:

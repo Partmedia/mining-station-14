@@ -24,6 +24,9 @@
   name: "diona torso"
   parent: PartDiona
   components:
+  - type: BiopressHarvest
+    id: Creature #might make a special diona group later...
+    totalReagentUnits: 35
   - type: Sprite
     state: "torso_m"
   - type: Icon
@@ -36,6 +39,9 @@
   name: "diona head"
   parent: PartDiona
   components:
+  - type: BiopressHarvest
+    id: Creature #might make a special diona group later...
+    totalReagentUnits: 4
   - type: Sprite
     state: "head_m"
   - type: Icon
@@ -59,6 +65,9 @@
   name: "left diona arm"
   parent: PartDiona
   components:
+  - type: BiopressHarvest
+    id: Creature #might make a special diona group later...
+    totalReagentUnits: 3
   - type: Sprite
     state: "l_arm"
   - type: Icon
@@ -72,6 +81,9 @@
   name: "right diona arm"
   parent: PartDiona
   components:
+  - type: BiopressHarvest
+    id: Creature #might make a special diona group later...
+    totalReagentUnits: 3
   - type: Sprite
     state: "r_arm"
   - type: Icon
@@ -85,6 +97,9 @@
   name: "left diona hand"
   parent: PartDiona
   components:
+  - type: BiopressHarvest
+    id: Creature #might make a special diona group later...
+    totalReagentUnits: 0.1
   - type: Sprite
     state: "l_hand"
   - type: Icon
@@ -98,6 +113,9 @@
   name: "right diona hand"
   parent: PartDiona
   components:
+  - type: BiopressHarvest
+    id: Creature #might make a special diona group later...
+    totalReagentUnits: 0.1
   - type: Sprite
     state: "r_hand"
   - type: Icon
@@ -111,6 +129,9 @@
   name: "left diona leg"
   parent: PartDiona
   components:
+  - type: BiopressHarvest
+    id: Creature #might make a special diona group later...
+    totalReagentUnits: 4.5
   - type: Sprite
     state: "l_leg"
   - type: Icon
@@ -127,6 +148,9 @@
   name: "right diona leg"
   parent: PartDiona
   components:
+  - type: BiopressHarvest
+    id: Creature #might make a special diona group later...
+    totalReagentUnits: 4.5
   - type: Sprite
     state: "r_leg"
   - type: Icon
@@ -143,6 +167,9 @@
   name: "left diona foot"
   parent: PartDiona
   components:
+  - type: BiopressHarvest
+    id: Creature #might make a special diona group later...
+    totalReagentUnits: 0.2
   - type: Sprite
     state: "l_foot"
   - type: Icon
@@ -156,6 +183,9 @@
   name: "right diona foot"
   parent: PartDiona
   components:
+  - type: BiopressHarvest
+    id: Creature #might make a special diona group later...
+    totalReagentUnits: 0.2
   - type: Sprite
     state: "r_foot"
   - type: Icon

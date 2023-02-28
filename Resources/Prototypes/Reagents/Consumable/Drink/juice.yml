@@ -32,6 +32,7 @@
   physicalDesc: reagent-physical-desc-sickly
   flavor: bitter
   color: "#6600CC"
+  moleculeGroup: AlcoholicBeverage #for now...
   metabolisms:
     Drink:
       effects:

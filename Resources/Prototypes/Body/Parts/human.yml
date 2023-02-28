@@ -21,6 +21,9 @@
   name: "human torso"
   parent: PartHuman
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 30
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/parts.rsi
@@ -36,6 +39,9 @@
   name: "human head"
   parent: PartHuman
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/parts.rsi
@@ -62,6 +68,9 @@
   name: "left human arm"
   parent: PartHuman
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3.5
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/parts.rsi
@@ -78,6 +87,9 @@
   name: "right human arm"
   parent: PartHuman
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3.5
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/parts.rsi
@@ -94,6 +106,9 @@
   name: "left human hand"
   parent: PartHuman
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.1
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/parts.rsi
@@ -110,6 +125,9 @@
   name: "right human hand"
   parent: PartHuman
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.1
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/parts.rsi
@@ -126,6 +144,9 @@
   name: "left human leg"
   parent: PartHuman
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 4.5
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/parts.rsi
@@ -143,6 +164,9 @@
   name: "right human leg"
   parent: PartHuman
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 4.5
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/parts.rsi
@@ -160,6 +184,9 @@
   name: "left human foot"
   parent: PartHuman
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.2
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/parts.rsi
@@ -176,6 +203,9 @@
   name: "right human foot"
   parent: PartHuman
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.2
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/parts.rsi

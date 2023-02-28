@@ -5,6 +5,9 @@
   id: FoodCakeBase
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 2
   - type: FlavorProfile
     flavors:
       - sweet
@@ -29,6 +32,9 @@
   abstract: true
   description: Just a slice of cake, it is enough for everyone.
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 0.25
   - type: FlavorProfile
     flavors:
       - sweet
@@ -157,6 +163,9 @@
   id: FoodCakeBrain
   description: A squishy cake-thing.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.3
   - type: Sprite
     layers:
     - state: plate
@@ -171,6 +180,9 @@
   id: FoodCakeBrainSlice
   description: Lemme tell you something about prions. THEY'RE DELICIOUS.
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.03
   - type: Sprite
     layers:
     - state: plate-small

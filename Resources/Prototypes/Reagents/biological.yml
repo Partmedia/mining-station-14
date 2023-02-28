@@ -1,7 +1,8 @@
-﻿- type: reagent
+- type: reagent
   id: Blood
   name: reagent-name-blood
   group: Biological
+  moleculeGroup: Blood
   desc: reagent-desc-blood
   flavor: metallic
   color: "#800000"
@@ -20,6 +21,7 @@
   id: Slime
   name: reagent-name-slime
   group: Biological
+  moleculeGroup: Slime
   desc: reagent-desc-slime
   flavor: slimy
   color: "#2cf274"

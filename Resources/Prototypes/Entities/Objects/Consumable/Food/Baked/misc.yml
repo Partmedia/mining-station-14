@@ -5,6 +5,9 @@
   id: FoodBakedBase
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 1
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
@@ -171,6 +174,9 @@
   id: FoodBakedNugget
   description: A "chicken" nugget vaguely shaped into an object. # Should change depending on name.
   components:
+  - type: BiopressHarvest
+    id: Carbohydrate
+    totalReagentUnits: 0.1
   - type: Tag
     tags:
       - Nugget

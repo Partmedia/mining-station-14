@@ -5,6 +5,9 @@
   suffix: ""
   description: A flying leviathan, loosely related to space carps.
   components:
+    - type: BiopressHarvest
+      id: Creature
+      totalReagentUnits: 150
     - type: GhostTakeoverAvailable
       allowMovement: true
       allowSpeech: true
