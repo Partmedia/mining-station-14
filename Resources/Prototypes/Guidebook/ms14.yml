@@ -5,16 +5,22 @@
   priority: -10
 
 - type: guideEntry
-  id: KeyDifferences
-  name: Key Differences
-  text: "/Server Info/Guidebook/KeyDifferences.xml"
-  priority: -9
-
-- type: guideEntry
   id: Controls
   name: Controls
   text: "/Server Info/Guidebook/Controls.xml"
+  priority: -9
+
+- type: guideEntry
+  id: Survival
+  name: Survival
+  text: "/Server Info/Guidebook/Survival.xml"
   priority: -8
+
+- type: guideEntry
+  id: KeyDifferences
+  name: Key Differences
+  text: "/Server Info/Guidebook/KeyDifferences.xml"
+  priority: -7
 
 - type: guideEntry
   id: MiningSafety
@@ -41,8 +47,3 @@
   name: Emergency Checklist
   text: "/Server Info/Guidebook/ChecklistEmergency.txt"
   priority: 1
-
-- type: guideEntry
-  id: Survival
-  name: Survival
-  text: "/Server Info/Guidebook/Survival.xml"

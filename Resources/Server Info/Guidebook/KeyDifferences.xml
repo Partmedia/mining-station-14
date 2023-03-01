@@ -1,5 +1,23 @@
 <Document>
-- Generators require fuel to produce power.
+# Key Differences in Mining Station 14
+
 - Spacing in this sector is significantly more deadly.
-- Unsafe mining practices may lead to mining collapses ("cave-ins").
+
+- Generators require fuel to produce power.
+<Box>
+<GuideEntityEmbed Entity="SheetPlasma"/>
+<GuideEntityEmbed Entity="GeneratorPlasma"/>
+</Box>
+
+- Electrical equipment produce heat, which must be dealt with to prevent machine overheating and failure.
+<Box>
+<GuideEntityEmbed Entity="GasPassiveVent"/>
+<GuideEntityEmbed Entity="GasThermoMachineFreezer"/>
+</Box>
+
+- Unsafe mining practices may lead to mining collapses ("cave-ins"). See the guide to [color=#a4885c]Mining Safety[/color].
+
+- Many more items are available for purchase from the cargo catalog.
+<GuideEntityEmbed Entity="ComputerCargoOrders"/>
+
 </Document>

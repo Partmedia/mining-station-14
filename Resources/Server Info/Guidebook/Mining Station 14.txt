@@ -1,6 +1,52 @@
-﻿Welcome to Mining Station 14, a state-of-the-art NanoTrasen asteroid mining outpost. This manual is issued to all crew members involved in mining operations aboard this station, and details how to operate the station safely and productively.
+﻿<Document>
+# Welcome Aboard Mining Station 14
+You are reading the [color=#a4885c]Guidebook[/color], which you can re-open at any time by pressing [color=#a4885c]NumPad-0[/color] or [color=#a4885c]ESC→Guidebook[/color].
 
-#IMPORTANT
-If you are coming to Mining Station 14 from another NanoTrasen station, review the [color=#a4885c]Key Differences[/color] guide.
+## Objective
+Cooperate with your crew to earn as much money as you can by selling items on the cargo shuttle.
 
-If you are starting a shift, perform the [color=#a4885c]COLD START[/color] normal checklist.
+## New To Space Station 14?
+Read the guide to [color=#a4885c]Controls[/color] and then [color=#a4885c]Survival[/color]. Mining Station 14 is less forgiving compared to other stations. Ask your colleagues for help.
+
+## Space Station 14 Veteran?
+Mining Station 14 has several important differences from other NanoTrasen stations. Read the guide to [color=#a4885c]Key Differences[/color].
+
+## Quick Start
+- Find solid plasma sheets to put in the plasma generator, then turn up the throttle to produce power. Do not let the generator run out of fuel!
+<Box>
+<GuideEntityEmbed Entity="SheetPlasma"/>
+<GuideEntityEmbed Entity="GeneratorPlasma"/>
+</Box>
+
+- Find a pickaxe, head to the mines, and mine some ore.
+<Box>
+<GuideEntityEmbed Entity="Pickaxe"/>
+<GuideEntityEmbed Entity="SteelOre1"/>
+</Box>
+
+- Use an ore bag to transport ore back to the ore processor.
+<Box>
+<GuideEntityEmbed Entity="OreBag"/>
+<GuideEntityEmbed Entity="OreProcessor"/>
+</Box>
+
+- When you have enough raw materials, use the ore processor to produce materials that you can sell!
+<Box>
+<GuideEntityEmbed Entity="SheetSteel"/>
+<GuideEntityEmbed Entity="SheetGlass"/>
+<GuideEntityEmbed Entity="IngotGold"/>
+<GuideEntityEmbed Entity="SheetUranium"/>
+</Box>
+
+- Sell goods by calling the cargo shuttle, placing the goods on the cargo pallets, and then recalling the shuttle.
+<Box>
+<GuideEntityEmbed Entity="ComputerCargoShuttle"/>
+<GuideEntityEmbed Entity="CargoPallet"/>
+</Box>
+
+- Get rich and don't die!
+<Box>
+<GuideEntityEmbed Entity="MobTickSalvage"/>
+<GuideEntityEmbed Entity="MobCarpMagic"/>
+</Box>
+</Document>
