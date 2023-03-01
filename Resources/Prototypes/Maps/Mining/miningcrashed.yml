@@ -2,7 +2,7 @@
   id: MiningCrashed
   mapName: 'Mining Crashed'
   mapPath: /Mining/Maps/miningcrashed.yml
-  minPlayers: 0
+  minPlayers: 4
   maxPlayers: 15
   fallback: true
   stations:
