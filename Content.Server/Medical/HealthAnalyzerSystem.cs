@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Disease;
+using Content.Server.Temperature.Components;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.IdentityManagement;
@@ -115,8 +116,10 @@ namespace Content.Server.Medical
             if (!HasComp<DamageableComponent>(target))
                 return;
 
+            TryComp<TemperatureComponent>(target, out var temp);
+
             OpenUserInterface(user, healthAnalyzer);
-            healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target));
+            healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : 0));
         }
 
         private static void OnScanCancelled(ScanCancelledEvent args)
