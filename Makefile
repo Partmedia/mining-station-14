@@ -3,14 +3,22 @@
 DOTNET_FLAGS=-c Release -v quiet -maxcpucount:5 /property:WarningLevel=0
 DOTNET_BUILD=dotnet build ${DOTNET_FLAGS}
 
+fast: build fastserver fastclient
+
 build:
 	${DOTNET_BUILD}
 
 client:
 	cd ./bin/Content.Client && ../../linklibs && ./Content.Client
 
+fastclient:
+	cd ./bin/Content.Client && ../../linklibs && ./Content.Client --connect-address localhost:1211 --connect && pkill -TERM Content.Server
+
 server:
 	cd ./bin/Content.Server && ./Content.Server --config-file ../../devel_config.toml
+
+fastserver:
+	cd ./bin/Content.Server && ./Content.Server --config-file ../../fast_config.toml &
 
 lint:
 	${DOTNET_BUILD} Content.YAMLLinter
