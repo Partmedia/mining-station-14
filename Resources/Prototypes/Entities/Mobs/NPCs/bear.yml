@@ -24,7 +24,7 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.5
+        radius: 0.45
       density: 400
       mask:
       - MobMask
@@ -79,7 +79,6 @@
   - type: ReplacementAccent
     accent: genericAggressive
   - type: GhostTakeoverAvailable
-    prob: 0.05
     name: space bear
     description: |
       You're a bear! Do bear things.
@@ -90,7 +89,6 @@
   suffix: "Salvage Ruleset"
   components:
   - type: GhostTakeoverAvailable
-    prob: 0.05
     name: space bear on salvage wreck
     description: |
       Defend the loot inside the salvage wreck!
