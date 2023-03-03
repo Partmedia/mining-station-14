@@ -175,6 +175,56 @@
   group: market
 
 - type: cargoProduct
+  id: ProtolatheC
+  icon:
+    sprite: Structures/Machines/protolathe.rsi
+    state: icon
+  product: Protolathe
+  cost: 8000
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: MicroManipulatorStockPartC
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: micro_mani
+  product: MicroManipulatorStockPart
+  cost: 80
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: MatterBinStockPartC
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: matter_bin
+  product: MatterBinStockPart
+  cost: 80
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: CapacitorStockPartC
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: capacitor
+  product: CapacitorStockPart
+  cost: 80
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: MicroLaserStockPartC
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: micro_laser
+  product: MicroLaserStockPart
+  cost: 80
+  category: Engineering
+  group: market
+
+- type: cargoProduct
   id: ProductOreAnalyzer
   name: ore analyzer
   icon:
