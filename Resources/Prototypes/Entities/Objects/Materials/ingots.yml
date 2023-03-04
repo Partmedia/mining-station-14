@@ -35,7 +35,7 @@
   components:
   - type: Material
     materials:
-      Gold: 100
+      Gold: 500
   - type: Stack
     stackType: Gold
   - type: Sprite
@@ -69,7 +69,7 @@
   components:
   - type: Material
     materials:
-      Silver: 100
+      Silver: 500
   - type: Stack
     stackType: Silver
   - type: Sprite
