@@ -263,6 +263,16 @@
   group: market
 
 - type: cargoProduct
+  id: MineCartC
+  icon:
+    sprite: Objects/Specific/Mining/mine_cart.rsi
+    state: cart
+  product: MineCart
+  cost: 745
+  category: Mining
+  group: market
+
+- type: cargoProduct
   id: ChemJugHC
   name: stock hydrogen
   icon:
