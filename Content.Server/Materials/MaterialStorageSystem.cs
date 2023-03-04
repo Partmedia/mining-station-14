@@ -49,8 +49,6 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         if (!base.TryInsertMaterialEntity(user, toInsert, receiver, component))
             return false;
         _audio.PlayPvs(component.InsertingSound, component.Owner);
-        _popup.PopupEntity(Loc.GetString("machine-insert-item", ("user", user), ("machine", component.Owner),
-            ("item", toInsert)), component.Owner);
         QueueDel(toInsert);
 
         // Logging
