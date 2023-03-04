@@ -14,6 +14,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.GameTicking;
 
 namespace Content.Client.Guidebook;
 
@@ -46,6 +47,13 @@ public sealed class GuidebookSystem : EntitySystem
         SubscribeLocalEvent<GuidebookControlsTestComponent, ActivateInWorldEvent>(OnGuidebookControlsTestActivateInWorld);
         SubscribeLocalEvent<GuidebookControlsTestComponent, GetVerbsEvent<AlternativeVerb>>(
             OnGuidebookControlsTestGetAlternateVerbs);
+
+        SubscribeNetworkEvent<OpenGuidebookEvent>(OnOpenGuidebookEvent);
+    }
+
+    private void OnOpenGuidebookEvent(OpenGuidebookEvent message)
+    {
+        OpenGuidebook();
     }
 
     private void OnGetVerbs(EntityUid uid, GuideHelpComponent component, GetVerbsEvent<ExamineVerb> args)

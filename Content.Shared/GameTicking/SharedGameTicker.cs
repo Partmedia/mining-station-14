@@ -1,9 +1,10 @@
-﻿using Robust.Shared.Network;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.GameTicking
 {
+
     public abstract class SharedGameTicker : EntitySystem
     {
         // See ideally these would be pulled from the job definition or something.
@@ -20,6 +21,11 @@ namespace Content.Shared.GameTicking
 
     [Serializable, NetSerializable]
     public sealed class TickerJoinGameEvent : EntityEventArgs
+    {
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class OpenGuidebookEvent : EntityEventArgs
     {
     }
 
