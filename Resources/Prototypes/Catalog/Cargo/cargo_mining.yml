@@ -1,18 +1,16 @@
 - type: cargoProduct
   id: MiningDrillCrate
-  name: mining drill crate
   description: One state-of-the-art mining drill.
   icon:
     sprite: Objects/Tools/handdrill.rsi
     state: handdrill
   product: CrateMiningDrill
   cost: 4000
-  category: Engineering
+  category: Mining
   group: market
 
 - type: cargoProduct
   id: MiningBiomassCrate
-  name: biomass crate
   description: Lost a fellow crew member? We're here to help!
   icon:
     sprite: Objects/Misc/monkeycube.rsi
@@ -34,7 +32,6 @@
 
 - type: cargoProduct
   id: MiningMagnetCrate
-  name: salvage magnet crate
   description: Expand your means of production by salvaging!
   icon:
     sprite: Structures/Machines/salvage.rsi
@@ -53,7 +50,7 @@
     state: icon
   product: Electromagnet
   cost: 2995
-  category: Salvage
+  category: Mining
   group: market
 
 - type: cargoProduct
@@ -65,7 +62,7 @@
     state: icon
   product: BlastFurnace
   cost: 5995
-  category: Salvage
+  category: Mining
   group: market
 
 - type: cargoProduct
@@ -113,7 +110,7 @@
     state: icon
   product: GasRecycler
   cost: 6895
-  category: Engineering
+  category: Atmospherics
   group: market
 
 - type: cargoProduct
@@ -137,7 +134,7 @@
     state: freezer_off
   product: GasThermoMachineFreezer
   cost: 2795
-  category: Engineering
+  category: Atmospherics
   group: market
 
 - type: cargoProduct
@@ -149,7 +146,17 @@
     state: icon
   product: SpaceHeater
   cost: 495
-  category: Engineering
+  category: Atmospherics
+  group: market
+
+- type: cargoProduct
+  id: StorageCanisterC
+  icon:
+    sprite: Structures/Storage/canister.rsi
+    state: yellow
+  product: StorageCanister
+  cost: 1100
+  category: Atmospherics
   group: market
 
 - type: cargoProduct
@@ -175,13 +182,23 @@
   group: market
 
 - type: cargoProduct
+  id: CircuitImprinterC
+  icon:
+    sprite: Structures/Machines/circuit_imprinter.rsi
+    state: icon
+  product: CircuitImprinter
+  cost: 5000
+  category: Science
+  group: market
+
+- type: cargoProduct
   id: ProtolatheC
   icon:
     sprite: Structures/Machines/protolathe.rsi
     state: icon
   product: Protolathe
   cost: 8000
-  category: Engineering
+  category: Science
   group: market
 
 - type: cargoProduct
