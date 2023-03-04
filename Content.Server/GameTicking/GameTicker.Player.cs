@@ -48,7 +48,8 @@ namespace Content.Server.GameTicking
                         ? Loc.GetString("player-first-join-message", ("name", args.Session.Name))
                         : Loc.GetString("player-join-message", ("name", args.Session.Name)));
 
-                    RaiseNetworkEvent(new OpenGuidebookEvent(), session.ConnectedClient);
+                    if (firstConnection)
+                        RaiseNetworkEvent(new OpenGuidebookEvent(), session.ConnectedClient);
 
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
