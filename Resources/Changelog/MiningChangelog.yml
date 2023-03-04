@@ -308,3 +308,14 @@ Entries:
       message: "Mining supervisors now start with a command headset" }
   id: 2541
   time: '2023-02-27T00:00:21-08:00'
+
+- author: v1.2.2
+  changes:
+  - { type: Add,
+      message: "Add a mine cart for you to cart your ores" }
+  - { type: Tweak,
+      message: "Increase ore bag capacity" }
+  - { type: Fix,
+      message: "Gold and silver ingots now sell for the correct price" }
+  id: 2542
+  time: '2023-03-04T15:57:58-08:00'
