@@ -251,18 +251,15 @@ public sealed class MiningSystem : EntitySystem
 
                 if (!(!grid.TryGetTileRef(index, out var tile) || tile.Tile.IsEmpty) && !occupied && EntityManager.TryGetComponent<MetaDataComponent>(uid, out var caveIn))
                 {
-                    if (caveIn.EntityPrototype != null)
-                    {
-                        var newEffect = EntityManager.SpawnEntity(
-                            caveIn.EntityPrototype.ID,
-                            grid.GridTileToLocal(index));
+                    var newEffect = EntityManager.SpawnEntity(
+                        "AsteroidRock",
+                        grid.GridTileToLocal(index));
 
-                        foreach (var entity in damageableList)
-                        {
-                            // damage
-                            if (damage != null && HasComp<DamageableComponent>(entity))
-                                _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: false);
-                        }
+                    foreach (var entity in damageableList)
+                    {
+                        // damage
+                        if (damage != null && HasComp<DamageableComponent>(entity))
+                            _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: false);
                     }
                 }
 
