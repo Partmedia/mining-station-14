@@ -32,6 +32,10 @@ public sealed class MiningSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
+    private Queue<EntityUid> _timerQueue = new();
+    private Queue<EntityUid> _checkQueue = new();
+    private Queue<EntityUid> _removeQueue = new();
+
     private static readonly Gas[] LeakableGases =
     {
         Gas.Miasma,
@@ -48,7 +52,7 @@ public sealed class MiningSystem : EntitySystem
         SubscribeLocalEvent<OreVeinComponent, DestructionEventArgs>(OnDestruction);
     }
 
-    private void CaveInCheck(EntityUid uid, CaveInComponent component)
+    private bool CaveInCheck(EntityUid uid, CaveInComponent component)
     {
         //get the support range of the mined rock
         //check for all entities in range
@@ -100,7 +104,7 @@ public sealed class MiningSystem : EntitySystem
                     break;
             }
             if (!hasSpace)
-                return;
+                return true;
 
             //cave-in prevention requires TWO supports on opposing sides (sort of like in jenga) 
             bool CheckSupportDirs(Vector2i origin, Direction dir1, Direction dir2, bool supported, int range, int count)
@@ -203,15 +207,9 @@ public sealed class MiningSystem : EntitySystem
             supported = CheckSupportDirs(origin, Direction.NorthWest, Direction.South, supported, range, 0);
             supported = CheckSupportDirs(origin, Direction.NorthWest, Direction.East, supported, range, 0);
 
-            
-
-
         }
 
-        if (!supported)
-        {
-            CaveIn(uid, component);
-        }
+        return supported;
     }
 
     private void CaveIn(EntityUid uid, CaveInComponent component)
@@ -288,14 +286,125 @@ public sealed class MiningSystem : EntitySystem
         }
     }
 
+    public override void Update(float frameTime)
+    {
+
+        base.Update(frameTime);
+
+        foreach (var uid in _timerQueue)
+        {
+            if (!TryComp<CaveInComponent>(uid, out var timedSpace))
+                continue;
+
+            if (!timedSpace.Timed)
+                continue;
+
+            timedSpace.Timer += frameTime;
+
+            _checkQueue.Enqueue(uid);
+        }
+
+        _timerQueue.Clear();
+
+        foreach (var uid in _checkQueue)
+        {
+            //check if the time is up, if not re-queue and move on
+            if (!TryComp<CaveInComponent>(uid, out var timedSpace))
+                continue;
+
+            //first, check if an entity exists on the same space as the timedSpace
+            if (timedSpace.Timer >= timedSpace.Time)
+            {
+                timedSpace.Timer = 0f;
+
+                var pos = Transform(uid).MapPosition;
+                var xform = _entities.GetComponent<TransformComponent>(uid);
+                var box = Box2.CenteredAround(pos.Position, (0,0));
+                var mapGrids = _mapManager.FindGridsIntersecting(pos.MapId, box).ToList();
+                var check = true;
+                
+                foreach (var grid in mapGrids)
+                {
+                    var origin = grid.TileIndicesFor(xform.Coordinates);
+                    foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridTileToLocal(origin)))
+                    {
+                        if (entity != uid)
+                        {
+                            //if there is an entity with the cave-in component (with timed set to false) set THIS entity for deletion (and of course do NOT re-queue the timer)
+                            if (EntityManager.TryGetComponent<CaveInComponent?>(entity, out var rock) && !rock.Timed)
+                            {
+                                _removeQueue.Enqueue(uid);
+                                check = false;
+                            }
+                            //if there is an entity with the support component, do not check to cave in but DO re-queue the timer
+                            else if (EntityManager.TryGetComponent<CaveSupportComponent?>(entity, out var support))
+                            {
+                                _timerQueue.Enqueue(uid);
+                                check = false;
+                            }
+                        }
+                    }
+                }
+
+                if (check) {
+                    //next, run a cave-in check
+                    var supported = CaveInCheck(uid, timedSpace);
+
+                    //if supported, simply re-queue
+                    if (supported)
+                    {
+                        _timerQueue.Enqueue(uid);
+                    }
+                    else
+                    {
+                        //if not, check the warnings and play the sound if not exhausted
+                        if (timedSpace.WarningCounter < timedSpace.TimerWarnings)
+                        {
+                            timedSpace.WarningCounter++;
+                            SoundSystem.Play(timedSpace.QuakeSound, Filter.Pvs(uid), uid, null);
+                            _timerQueue.Enqueue(uid);
+                        }
+                        else
+                        {
+                            //if warnings are exhausted, queue this entity for deletion and trigger the cave-in
+                            CaveIn(uid, timedSpace);
+                            _removeQueue.Enqueue(uid);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                _timerQueue.Enqueue(uid);
+            }
+        }
+
+        _checkQueue.Clear();
+
+        foreach (var uid in _removeQueue)
+        {
+            EntityManager.DeleteEntity(uid);
+        }
+
+        _removeQueue.Clear();
+    }
 
     private void OnDestruction(EntityUid uid, OreVeinComponent component, DestructionEventArgs args)
     {
+        var coords = Transform(uid).Coordinates;
         //run a cave in check
         if (EntityManager.TryGetComponent<CaveInComponent?>(uid, out var caveIn))
-            CaveInCheck(uid, caveIn);
-
-        var coords = Transform(uid).Coordinates;
+        {
+            var supported = CaveInCheck(uid, caveIn);
+            if (!supported)
+                CaveIn(uid, caveIn);
+            else
+            {
+                //spawn timed space
+                Spawn("TimedSpace", coords);
+            }
+        }
+        
         int toSpawn = 0;
         if (component.CurrentOre != null)
         {
@@ -333,6 +442,9 @@ public sealed class MiningSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, OreVeinComponent component, MapInitEvent args)
     {
+        if (TryComp<CaveInComponent>(uid, out var timedSpace) && timedSpace.Timed)
+            _timerQueue.Enqueue(uid);
+
         if (component.CurrentOre != null || component.OreRarityPrototypeId == null || !_random.Prob(component.OreChance))
             return;
 
