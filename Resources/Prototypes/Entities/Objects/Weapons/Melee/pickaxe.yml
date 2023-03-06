@@ -25,6 +25,18 @@
     sprite: Objects/Weapons/Melee/pickaxe.rsi
 
 - type: entity
+  name: pickaxe
+  suffix: Debug
+  parent: Pickaxe
+  id: PickaxeDebug
+  components:
+  - type: GatheringTool
+    gatheringTime: 0.1
+    damage:
+      types:
+        Structural: 150
+
+- type: entity
   name: mining drill
   parent: BaseItem
   id: MiningDrill
