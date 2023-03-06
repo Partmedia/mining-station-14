@@ -20,18 +20,19 @@ namespace Content.Server.Database
     /// </summary>
     public sealed class ServerDbSqlite : ServerDbBase
     {
-        // For SQLite we use a single DB context via SQLite.
         // This doesn't allow concurrent access so that's what the semaphore is for.
         // That said, this is bloody SQLite, I don't even think EFCore bothers to truly async it.
         private readonly SemaphoreSlim _prefsSemaphore = new(1, 1);
 
         private readonly Task _dbReadyTask;
-        private readonly SqliteServerDbContext _prefsCtx;
+        private DbContextOptions<SqliteServerDbContext> options;
 
         private int _msDelay;
 
         public ServerDbSqlite(DbContextOptions<SqliteServerDbContext> options)
         {
+            this.options = options;
+            SqliteServerDbContext _prefsCtx;
             _prefsCtx = new SqliteServerDbContext(options);
 
             var cfg = IoCManager.Resolve<IConfigurationManager>();
@@ -44,6 +45,7 @@ namespace Content.Server.Database
             {
                 _dbReadyTask = Task.Run(() => _prefsCtx.Database.Migrate());
             }
+            _prefsCtx.SaveChanges();
 
             cfg.OnValueChanged(CCVars.DatabaseSqliteDelay, v => _msDelay = v, true);
         }
@@ -523,14 +525,16 @@ namespace Content.Server.Database
         private sealed class DbGuardImpl : DbGuard
         {
             private readonly ServerDbSqlite _db;
+            private readonly SqliteServerDbContext _ctx;
 
             public DbGuardImpl(ServerDbSqlite db)
             {
                 _db = db;
+                _ctx = new SqliteServerDbContext(_db.options);
             }
 
-            public override ServerDbContext DbContext => _db._prefsCtx;
-            public SqliteServerDbContext SqliteDbContext => _db._prefsCtx;
+            public override ServerDbContext DbContext => _ctx;
+            public SqliteServerDbContext SqliteDbContext => _ctx;
 
             public override ValueTask DisposeAsync()
             {

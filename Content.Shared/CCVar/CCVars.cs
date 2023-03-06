@@ -491,7 +491,7 @@ namespace Content.Shared.CCVar
 
         // Basically only exists for integration tests to avoid race conditions.
         public static readonly CVarDef<bool> DatabaseSynchronous =
-            CVarDef.Create("database.sync", false, CVar.SERVERONLY);
+            CVarDef.Create("database.sync", true, CVar.SERVERONLY);
 
 
         /*
