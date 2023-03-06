@@ -1,3 +1,4 @@
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -9,6 +10,8 @@ namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleSystem
 {
+    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+
     /// <summary>
     /// Minimum velocity difference between 2 bodies for a shuttle "impact" to occur.
     /// </summary>
@@ -54,5 +57,7 @@ public sealed partial class ShuttleSystem
         var audioParams = AudioParams.Default.WithVariation(0.05f).WithVolume(volume);
 
         _audio.Play(_shuttleImpactSound, Filter.Pvs(coordinates, rangeMultiplier: 4f, entityMan: EntityManager), coordinates, true, audioParams);
+
+        _explosionSystem.QueueExplosion(new MapCoordinates(args.WorldPoint, ourXform.MapID), "Default", 10, 0.5f, 10);
     }
 }
