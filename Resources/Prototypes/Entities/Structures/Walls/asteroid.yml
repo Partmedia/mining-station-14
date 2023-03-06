@@ -284,3 +284,19 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_west
         - state: rock_uranium
+
+- type: entity
+  id: TimedSpace
+  name: Mined Space
+  components:
+  - type: OreVein #I'm just leveraging this for the map init...
+    oreChance: 0
+  - type: Sprite
+    sprite: Structures/Walls/invisible.rsi
+    state: invisible
+  - type: CaveIn
+    timed: true
+    timerWarnings: 1
+    damage:
+      types:
+        Blunt: 50

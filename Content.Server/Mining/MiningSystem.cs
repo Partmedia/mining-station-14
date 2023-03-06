@@ -1,6 +1,7 @@
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Mining.Components;
+using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Destructible;
 using Content.Shared.Mining;
@@ -31,6 +32,21 @@ public sealed class MiningSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+
+    private Queue<EntityUid> _timerQueue = new(); // entities waiting for their next time event
+
+    /** Directions from center that cave-ins inspect and can spread to. */
+    private readonly List<Direction> directions = new List<Direction>{
+        Direction.North,
+        Direction.South,
+        Direction.East,
+        Direction.West,
+        Direction.NorthEast,
+        Direction.NorthWest,
+        Direction.SouthEast,
+        Direction.SouthWest
+    };
 
     private static readonly Gas[] LeakableGases =
     {
@@ -48,7 +64,7 @@ public sealed class MiningSystem : EntitySystem
         SubscribeLocalEvent<OreVeinComponent, DestructionEventArgs>(OnDestruction);
     }
 
-    private void CaveInCheck(EntityUid uid, CaveInComponent component)
+    private bool CaveInCheck(EntityUid uid, CaveInComponent component)
     {
         //get the support range of the mined rock
         //check for all entities in range
@@ -61,16 +77,6 @@ public sealed class MiningSystem : EntitySystem
         var box = Box2.CenteredAround(pos.Position, (range, range));
         var mapGrids = _mapManager.FindGridsIntersecting(pos.MapId, box).ToList();
         var grids = mapGrids.Select(x => x.Owner).ToList();
-
-        List<Direction> directions = new List<Direction>();
-        directions.Add(Direction.North);
-        directions.Add(Direction.South);
-        directions.Add(Direction.East);
-        directions.Add(Direction.West);
-        directions.Add(Direction.NorthEast);
-        directions.Add(Direction.NorthWest);
-        directions.Add(Direction.SouthEast);
-        directions.Add(Direction.SouthWest);
 
         foreach (var grid in mapGrids)
         {
@@ -100,120 +106,55 @@ public sealed class MiningSystem : EntitySystem
                     break;
             }
             if (!hasSpace)
-                return;
+                return true;
 
-            //cave-in prevention requires TWO supports on opposing sides (sort of like in jenga) 
-            bool CheckSupportDirs(Vector2i origin, Direction dir1, Direction dir2, bool supported, int range, int count)
+            //cave-in prevention requires a support within range
+            bool CheckSupportDir(Vector2i origin, Direction dir,  bool supported, int range, int count)
             {
                 count++;
 
                 if (!supported)
                 {
                     // Currently no support for spreading off or across grids.
-                    var index1 = origin + dir1.ToIntVec();
-                    var index2 = origin + dir2.ToIntVec();
+                    var index = origin + dir.ToIntVec();
 
                     if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var caveIn))
                     {
-                        var support1 = false;
-                        foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridTileToLocal(index1)))
+                        foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridTileToLocal(index)))
                         {
                             if (entity != uid)
                             {
                                 if (EntityManager.TryGetComponent<CaveSupportComponent?>(entity, out var support))
-                                    support1 = true;
+                                    supported = true;
                             }
                         }
 
                         //if there is nothing for support but the support range has not been fully expended, check if the support's support exists
-                        if (!support1 && range > count)
+                        if (!supported && range > count)
                         {
-                            //TODO maybe find a better way to do this... (compile directions in to a list, iterate through list) - I got a list now, just need to use it...
-                            support1 = CheckSupportDirs(index1, Direction.North, Direction.South, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.North, Direction.SouthEast, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.North, Direction.SouthWest, support1, range, count);
-
-                            support1 = CheckSupportDirs(index1, Direction.West, Direction.East, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.West, Direction.NorthEast, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.West, Direction.SouthEast, support1, range, count);
-
-                            support1 = CheckSupportDirs(index1, Direction.NorthEast, Direction.SouthWest, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.NorthEast, Direction.South, support1, range, count);
-
-                            support1 = CheckSupportDirs(index1, Direction.East, Direction.SouthWest, support1, range, count);
-
-                            support1 = CheckSupportDirs(index1, Direction.NorthWest, Direction.SouthEast, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.NorthWest, Direction.South, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.NorthWest, Direction.East, support1, range, count);
-                        }
-
-                        var support2 = false;
-                        foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridTileToLocal(index2)))
-                        {
-                            if (entity != uid)
+                            foreach (var direction in directions)
                             {
-                                if (EntityManager.TryGetComponent<CaveSupportComponent?>(entity, out var support))
-                                    support2 = true;
+                                supported = CheckSupportDir(index, direction, supported, range, count);
                             }
                         }
-                        //if there is nothing for support but the support range has not been fully expended, check if the support's support exists
-                        if (!support2 && range > count)
-                        {
-                            //TODO maybe find a better way to do this... (see above)
-                            support2 = CheckSupportDirs(index2, Direction.North, Direction.South, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.North, Direction.SouthEast, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.North, Direction.SouthWest, support2, range, count);
-
-                            support2 = CheckSupportDirs(index2, Direction.West, Direction.East, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.West, Direction.NorthEast, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.West, Direction.SouthEast, support2, range, count);
-
-                            support2 = CheckSupportDirs(index2, Direction.NorthEast, Direction.SouthWest, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.NorthEast, Direction.South, support2, range, count);
-
-                            support2 = CheckSupportDirs(index2, Direction.East, Direction.SouthWest, support2, range, count);
-
-                            support2 = CheckSupportDirs(index2, Direction.NorthWest, Direction.SouthEast, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.NorthWest, Direction.South, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.NorthWest, Direction.East, support2, range, count);
-                        }
-                        if (support1 && support2)
-                            supported = true;
                     }
                 }
 
                 return supported;
             }
 
-            //TODO maybe find a better way to do this... (see above) 
-            supported = CheckSupportDirs(origin, Direction.North, Direction.South, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.North, Direction.SouthEast, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.North, Direction.SouthWest, supported, range, 0);
-
-            supported = CheckSupportDirs(origin, Direction.West, Direction.East, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.West, Direction.NorthEast, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.West, Direction.SouthEast, supported, range, 0);
-
-            supported = CheckSupportDirs(origin, Direction.NorthEast, Direction.SouthWest, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.NorthEast, Direction.South, supported, range, 0);
-
-            supported = CheckSupportDirs(origin, Direction.East, Direction.SouthWest, supported, range, 0);
-
-            supported = CheckSupportDirs(origin, Direction.NorthWest, Direction.SouthEast, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.NorthWest, Direction.South, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.NorthWest, Direction.East, supported, range, 0);
-
-            
-
-
+            foreach (var direction in directions)
+            {
+                supported = CheckSupportDir(origin, direction, supported, range, 0);
+            }
         }
 
-        if (!supported)
-        {
-            CaveIn(uid, component);
-        }
+        return supported;
     }
 
+    /**
+     * Cave in the ceiling centered around entity 'uid' whose CaveInComponent is 'component'.
+     */
     private void CaveIn(EntityUid uid, CaveInComponent component)
     {
         var pos = Transform(uid).MapPosition;
@@ -228,6 +169,7 @@ public sealed class MiningSystem : EntitySystem
 
         foreach (var grid in mapGrids)
         {
+            List<EntityUid> damageableList = new List<EntityUid>(); // anyone who should take damage
             void SpreadToDir(Vector2i origin, Direction dir, int range, int count)
             {
 
@@ -237,7 +179,6 @@ public sealed class MiningSystem : EntitySystem
                 var index = origin + dir.ToIntVec();
 
                 var occupied = false;
-                List<EntityUid> damageableList = new List<EntityUid>();
                 foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridTileToLocal(index)))
                 {
                     if (entity != uid)
@@ -255,47 +196,151 @@ public sealed class MiningSystem : EntitySystem
                         "AsteroidRock",
                         grid.GridTileToLocal(index));
 
-                    foreach (var entity in damageableList)
-                    {
-                        // damage
-                        if (damage != null && HasComp<DamageableComponent>(entity))
-                            _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: false);
-                    }
                 }
 
                 if (count < range)
                 {
-                    SpreadToDir(index, Direction.North, impact, count);
-                    SpreadToDir(index, Direction.NorthEast, impact, count);
-                    SpreadToDir(index, Direction.NorthWest, impact, count);
-                    SpreadToDir(index, Direction.East, impact, count);
-                    SpreadToDir(index, Direction.South, impact, count);
-                    SpreadToDir(index, Direction.SouthEast, impact, count);
-                    SpreadToDir(index, Direction.SouthWest, impact, count);
-                    SpreadToDir(index, Direction.West, impact, count);
+                    foreach (var direction in directions)
+                        SpreadToDir(index, direction, impact, count);
                 }
             }
 
             var origin = grid.TileIndicesFor(xform.Coordinates);
-            SpreadToDir(origin, Direction.North, impact, 0);
-            SpreadToDir(origin, Direction.NorthEast, impact, 0);
-            SpreadToDir(origin, Direction.NorthWest, impact, 0);
-            SpreadToDir(origin, Direction.East, impact, 0);
-            SpreadToDir(origin, Direction.South, impact, 0);
-            SpreadToDir(origin, Direction.SouthEast, impact, 0);
-            SpreadToDir(origin, Direction.SouthWest, impact, 0);
-            SpreadToDir(origin, Direction.West, impact, 0);
+            foreach (var direction in directions)
+                SpreadToDir(origin, direction, impact, 0);
+
+            foreach (var entity in damageableList)
+            {
+                if (damage != null && HasComp<DamageableComponent>(entity))
+                    _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: true);
+            }
         }
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
 
+        Queue<EntityUid> _checkQueue = new(); // entities that need to be checked for cave-ins
+        foreach (var uid in _timerQueue)
+        {
+            if (!TryComp<CaveInComponent>(uid, out var timedSpace))
+                continue;
+
+            if (!timedSpace.Timed)
+                continue;
+
+            timedSpace.Timer += frameTime;
+
+            _checkQueue.Enqueue(uid);
+        }
+
+        _timerQueue.Clear();
+
+        Queue<EntityUid> _removeQueue = new();
+        foreach (var uid in _checkQueue)
+        {
+            //check if the time is up, if not re-queue and move on
+            if (!TryComp<CaveInComponent>(uid, out var timedSpace))
+                continue;
+
+            //first, check if an entity exists on the same space as the timedSpace
+            if (timedSpace.Timer >= timedSpace.Time)
+            {
+                timedSpace.Timer = 0f;
+
+                var pos = Transform(uid).MapPosition;
+                var xform = _entities.GetComponent<TransformComponent>(uid);
+                var box = Box2.CenteredAround(pos.Position, (0,0));
+                var mapGrids = _mapManager.FindGridsIntersecting(pos.MapId, box).ToList();
+                var check = true;
+                
+                foreach (var grid in mapGrids)
+                {
+                    var origin = grid.TileIndicesFor(xform.Coordinates);
+                    foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridTileToLocal(origin)))
+                    {
+                        if (entity != uid)
+                        {
+                            //if there is an entity with the cave-in component (with timed set to false) set THIS entity for deletion (and of course do NOT re-queue the timer)
+                            if (EntityManager.TryGetComponent<CaveInComponent?>(entity, out var rock) && !rock.Timed)
+                            {
+                                _removeQueue.Enqueue(uid);
+                                check = false;
+                            }
+                            //if there is an entity with the support component, do not check to cave in but DO re-queue the timer
+                            else if (EntityManager.TryGetComponent<CaveSupportComponent?>(entity, out var support))
+                            {
+                                _timerQueue.Enqueue(uid);
+                                check = false;
+                            }
+                        }
+                    }
+                }
+
+                if (check) {
+                    //next, run a cave-in check
+                    var supported = CaveInCheck(uid, timedSpace);
+
+                    //if supported, simply re-queue
+                    if (supported)
+                    {
+                        _timerQueue.Enqueue(uid);
+                    }
+                    else
+                    {
+                        //if not, check the warnings and play the sound if not exhausted
+                        if (timedSpace.WarningCounter < timedSpace.TimerWarnings)
+                        {
+                            timedSpace.WarningCounter++;
+                            _popupSystem.PopupEntity("You hear the rumble of the rocks above you.", uid, Filter.Pvs(uid));
+                            SoundSystem.Play(timedSpace.QuakeSound, Filter.Pvs(uid), uid, null);
+                            _timerQueue.Enqueue(uid);
+                        }
+                        else
+                        {
+                            //if warnings are exhausted, queue this entity for deletion and trigger the cave-in
+                            CaveIn(uid, timedSpace);
+                            _removeQueue.Enqueue(uid);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                _timerQueue.Enqueue(uid);
+            }
+        }
+
+        _checkQueue.Clear();
+
+        foreach (var uid in _removeQueue)
+        {
+            EntityManager.DeleteEntity(uid);
+        }
+
+        _removeQueue.Clear();
+    }
+
+    /**
+     * Spawns ore when an ore vein is mined or otherwise destroyed.
+     */
     private void OnDestruction(EntityUid uid, OreVeinComponent component, DestructionEventArgs args)
     {
+        var coords = Transform(uid).Coordinates;
         //run a cave in check
         if (EntityManager.TryGetComponent<CaveInComponent?>(uid, out var caveIn))
-            CaveInCheck(uid, caveIn);
-
-        var coords = Transform(uid).Coordinates;
+        {
+            var supported = CaveInCheck(uid, caveIn);
+            if (!supported)
+                CaveIn(uid, caveIn);
+            else
+            {
+                //spawn timed space
+                Spawn("TimedSpace", coords);
+            }
+        }
+        
         int toSpawn = 0;
         if (component.CurrentOre != null)
         {
@@ -333,6 +378,9 @@ public sealed class MiningSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, OreVeinComponent component, MapInitEvent args)
     {
+        if (TryComp<CaveInComponent>(uid, out var timedSpace) && timedSpace.Timed)
+            _timerQueue.Enqueue(uid);
+
         if (component.CurrentOre != null || component.OreRarityPrototypeId == null || !_random.Prob(component.OreChance))
             return;
 

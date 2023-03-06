@@ -888,6 +888,9 @@
   id: WallInvisible
   name: Invisible Wall
   components:
+  - type: Sprite
+    sprite: Structures/Walls/invisible.rsi
+    state: invisible
   - type: TimedDespawn
     lifetime: 30
   - type: Tag
