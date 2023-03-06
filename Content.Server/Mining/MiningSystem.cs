@@ -1,6 +1,7 @@
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Mining.Components;
+using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Destructible;
 using Content.Shared.Mining;
@@ -31,10 +32,9 @@ public sealed class MiningSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
-    private Queue<EntityUid> _timerQueue = new();
-    private Queue<EntityUid> _checkQueue = new();
-    private Queue<EntityUid> _removeQueue = new();
+    private Queue<EntityUid> _timerQueue = new(); // entities waiting for their next time event
 
     private static readonly Gas[] LeakableGases =
     {
@@ -226,9 +226,9 @@ public sealed class MiningSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-
         base.Update(frameTime);
 
+        Queue<EntityUid> _checkQueue = new(); // entities that need to be checked for cave-ins
         foreach (var uid in _timerQueue)
         {
             if (!TryComp<CaveInComponent>(uid, out var timedSpace))
@@ -244,6 +244,7 @@ public sealed class MiningSystem : EntitySystem
 
         _timerQueue.Clear();
 
+        Queue<EntityUid> _removeQueue = new();
         foreach (var uid in _checkQueue)
         {
             //check if the time is up, if not re-queue and move on
@@ -299,6 +300,7 @@ public sealed class MiningSystem : EntitySystem
                         if (timedSpace.WarningCounter < timedSpace.TimerWarnings)
                         {
                             timedSpace.WarningCounter++;
+                            _popupSystem.PopupEntity("You hear the rumble of the rocks above you.", uid, Filter.Pvs(uid));
                             SoundSystem.Play(timedSpace.QuakeSound, Filter.Pvs(uid), uid, null);
                             _timerQueue.Enqueue(uid);
                         }
@@ -327,6 +329,9 @@ public sealed class MiningSystem : EntitySystem
         _removeQueue.Clear();
     }
 
+    /**
+     * Spawns ore when an ore vein is mined or otherwise destroyed.
+     */
     private void OnDestruction(EntityUid uid, OreVeinComponent component, DestructionEventArgs args)
     {
         var coords = Transform(uid).Coordinates;
