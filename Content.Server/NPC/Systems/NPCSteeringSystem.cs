@@ -215,7 +215,15 @@ namespace Content.Server.NPC.Systems
             {
                 var (_, steering, mover, xform) = npcs[i];
 
-                Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime);
+                try
+                {
+                    Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime);
+                }
+                catch (Exception e)
+                {
+                    // Clean up steering log spam
+                    // FIXME why does this actually happen
+                }
             });
 
 
