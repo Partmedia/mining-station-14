@@ -8,16 +8,13 @@ Possibly the most important thing to keep in mind at all times is that as you mi
 
 Before you mine each rock, consider its surrounding support.
 
-To ensure the space you are mining does not get filled in from above, the area you are mining must be supported by two structures - typically other rocks.
-These two structures should be placed on opposing sides of the mined space. To guarantee support, these structures can be immediately adjacent to the mined space.
+To ensure the space you are mining does not get filled in from above, the area you are mining must be supported by another structure - typically other rocks. The structure should be within 3 tiles from the mined space. If you are unsure if a space is adequetely supported, building one or two girders or walls around that space is the safest way to prevent a cave-in.
 
-If there are not two opposing structures immediately adjacent to the space that is about to be mined, indirect support can be provided via the spaces adjacent to the target space.
-To determine if an otherwise empty space would be supported and therefore provide support to the target space, apply the same rule of two supporting structures on opposing sides to that space.
-This can be difficult to determine sometimes, so do so at your own risk!
-This principle can also be applied one more time for those supporting spaces. I.e. spaces can be supported by supported spaces that can also be supported by supported spaces.
+But wait! Let's say you keep digging and then suddenly you hear a rumbling sound. This rumbling sound means that a space that was supported is no longer supported. You have 30 seconds from that point to take action.
 
-If you are unsure if a space is adequetely supported, building one or two girders or walls around that space is the safest way to prevent a cave-in.
- 
+At this point you have two options - identify the unsupported area and build a girder... or run away as fast as you can. Generally you can find where you need to build, but sometimes you may hear multiple rumbles from all sorts of directions.
+The key thing to take away from this is that you should always keep your tunnels no more than 4 tiles wide and you should sometimes build supports behind you.
+
 #What to do during a cave-in
 
 Accidents happen. Sometimes an area looks like it could be supported, but actually isn't.
