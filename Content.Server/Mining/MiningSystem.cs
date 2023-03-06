@@ -106,107 +106,45 @@ public sealed class MiningSystem : EntitySystem
             if (!hasSpace)
                 return true;
 
-            //cave-in prevention requires TWO supports on opposing sides (sort of like in jenga) 
-            bool CheckSupportDirs(Vector2i origin, Direction dir1, Direction dir2, bool supported, int range, int count)
+            //cave-in prevention requires a support within range
+            bool CheckSupportDir(Vector2i origin, Direction dir,  bool supported, int range, int count)
             {
                 count++;
 
                 if (!supported)
                 {
                     // Currently no support for spreading off or across grids.
-                    var index1 = origin + dir1.ToIntVec();
-                    var index2 = origin + dir2.ToIntVec();
+                    var index = origin + dir.ToIntVec();
 
                     if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var caveIn))
                     {
-                        var support1 = false;
-                        foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridTileToLocal(index1)))
+                        foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridTileToLocal(index)))
                         {
                             if (entity != uid)
                             {
                                 if (EntityManager.TryGetComponent<CaveSupportComponent?>(entity, out var support))
-                                    support1 = true;
+                                    supported = true;
                             }
                         }
 
                         //if there is nothing for support but the support range has not been fully expended, check if the support's support exists
-                        if (!support1 && range > count)
+                        if (!supported && range > count)
                         {
-                            //TODO maybe find a better way to do this... (compile directions in to a list, iterate through list) - I got a list now, just need to use it...
-                            support1 = CheckSupportDirs(index1, Direction.North, Direction.South, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.North, Direction.SouthEast, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.North, Direction.SouthWest, support1, range, count);
-
-                            support1 = CheckSupportDirs(index1, Direction.West, Direction.East, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.West, Direction.NorthEast, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.West, Direction.SouthEast, support1, range, count);
-
-                            support1 = CheckSupportDirs(index1, Direction.NorthEast, Direction.SouthWest, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.NorthEast, Direction.South, support1, range, count);
-
-                            support1 = CheckSupportDirs(index1, Direction.East, Direction.SouthWest, support1, range, count);
-
-                            support1 = CheckSupportDirs(index1, Direction.NorthWest, Direction.SouthEast, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.NorthWest, Direction.South, support1, range, count);
-                            support1 = CheckSupportDirs(index1, Direction.NorthWest, Direction.East, support1, range, count);
-                        }
-
-                        var support2 = false;
-                        foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridTileToLocal(index2)))
-                        {
-                            if (entity != uid)
+                            foreach (var direction in directions)
                             {
-                                if (EntityManager.TryGetComponent<CaveSupportComponent?>(entity, out var support))
-                                    support2 = true;
+                                supported = CheckSupportDir(index, direction, supported, range, count);
                             }
                         }
-                        //if there is nothing for support but the support range has not been fully expended, check if the support's support exists
-                        if (!support2 && range > count)
-                        {
-                            //TODO maybe find a better way to do this... (see above)
-                            support2 = CheckSupportDirs(index2, Direction.North, Direction.South, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.North, Direction.SouthEast, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.North, Direction.SouthWest, support2, range, count);
-
-                            support2 = CheckSupportDirs(index2, Direction.West, Direction.East, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.West, Direction.NorthEast, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.West, Direction.SouthEast, support2, range, count);
-
-                            support2 = CheckSupportDirs(index2, Direction.NorthEast, Direction.SouthWest, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.NorthEast, Direction.South, support2, range, count);
-
-                            support2 = CheckSupportDirs(index2, Direction.East, Direction.SouthWest, support2, range, count);
-
-                            support2 = CheckSupportDirs(index2, Direction.NorthWest, Direction.SouthEast, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.NorthWest, Direction.South, support2, range, count);
-                            support2 = CheckSupportDirs(index2, Direction.NorthWest, Direction.East, support2, range, count);
-                        }
-                        if (support1 && support2)
-                            supported = true;
                     }
                 }
 
                 return supported;
             }
 
-            //TODO maybe find a better way to do this... (see above) 
-            supported = CheckSupportDirs(origin, Direction.North, Direction.South, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.North, Direction.SouthEast, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.North, Direction.SouthWest, supported, range, 0);
-
-            supported = CheckSupportDirs(origin, Direction.West, Direction.East, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.West, Direction.NorthEast, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.West, Direction.SouthEast, supported, range, 0);
-
-            supported = CheckSupportDirs(origin, Direction.NorthEast, Direction.SouthWest, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.NorthEast, Direction.South, supported, range, 0);
-
-            supported = CheckSupportDirs(origin, Direction.East, Direction.SouthWest, supported, range, 0);
-
-            supported = CheckSupportDirs(origin, Direction.NorthWest, Direction.SouthEast, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.NorthWest, Direction.South, supported, range, 0);
-            supported = CheckSupportDirs(origin, Direction.NorthWest, Direction.East, supported, range, 0);
-
+            foreach (var direction in directions)
+            {
+                supported = CheckSupportDir(origin, direction, supported, range, 0);
+            }
         }
 
         return supported;
