@@ -36,6 +36,18 @@ public sealed class MiningSystem : EntitySystem
 
     private Queue<EntityUid> _timerQueue = new(); // entities waiting for their next time event
 
+    /** Directions from center that cave-ins inspect and can spread to. */
+    private readonly List<Direction> directions = new List<Direction>{
+        Direction.North,
+        Direction.South,
+        Direction.East,
+        Direction.West,
+        Direction.NorthEast,
+        Direction.NorthWest,
+        Direction.SouthEast,
+        Direction.SouthWest
+    };
+
     private static readonly Gas[] LeakableGases =
     {
         Gas.Miasma,
@@ -65,16 +77,6 @@ public sealed class MiningSystem : EntitySystem
         var box = Box2.CenteredAround(pos.Position, (range, range));
         var mapGrids = _mapManager.FindGridsIntersecting(pos.MapId, box).ToList();
         var grids = mapGrids.Select(x => x.Owner).ToList();
-
-        List<Direction> directions = new List<Direction>();
-        directions.Add(Direction.North);
-        directions.Add(Direction.South);
-        directions.Add(Direction.East);
-        directions.Add(Direction.West);
-        directions.Add(Direction.NorthEast);
-        directions.Add(Direction.NorthWest);
-        directions.Add(Direction.SouthEast);
-        directions.Add(Direction.SouthWest);
 
         foreach (var grid in mapGrids)
         {
@@ -150,6 +152,9 @@ public sealed class MiningSystem : EntitySystem
         return supported;
     }
 
+    /**
+     * Cave in the ceiling centered around entity 'uid' whose CaveInComponent is 'component'.
+     */
     private void CaveIn(EntityUid uid, CaveInComponent component)
     {
         var pos = Transform(uid).MapPosition;
@@ -164,6 +169,7 @@ public sealed class MiningSystem : EntitySystem
 
         foreach (var grid in mapGrids)
         {
+            List<EntityUid> damageableList = new List<EntityUid>(); // anyone who should take damage
             void SpreadToDir(Vector2i origin, Direction dir, int range, int count)
             {
 
@@ -173,7 +179,6 @@ public sealed class MiningSystem : EntitySystem
                 var index = origin + dir.ToIntVec();
 
                 var occupied = false;
-                List<EntityUid> damageableList = new List<EntityUid>();
                 foreach (var entity in _lookup.GetEntitiesIntersecting(grid.GridTileToLocal(index)))
                 {
                     if (entity != uid)
@@ -191,36 +196,24 @@ public sealed class MiningSystem : EntitySystem
                         "AsteroidRock",
                         grid.GridTileToLocal(index));
 
-                    foreach (var entity in damageableList)
-                    {
-                        // damage
-                        if (damage != null && HasComp<DamageableComponent>(entity))
-                            _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: false);
-                    }
                 }
 
                 if (count < range)
                 {
-                    SpreadToDir(index, Direction.North, impact, count);
-                    SpreadToDir(index, Direction.NorthEast, impact, count);
-                    SpreadToDir(index, Direction.NorthWest, impact, count);
-                    SpreadToDir(index, Direction.East, impact, count);
-                    SpreadToDir(index, Direction.South, impact, count);
-                    SpreadToDir(index, Direction.SouthEast, impact, count);
-                    SpreadToDir(index, Direction.SouthWest, impact, count);
-                    SpreadToDir(index, Direction.West, impact, count);
+                    foreach (var direction in directions)
+                        SpreadToDir(index, direction, impact, count);
                 }
             }
 
             var origin = grid.TileIndicesFor(xform.Coordinates);
-            SpreadToDir(origin, Direction.North, impact, 0);
-            SpreadToDir(origin, Direction.NorthEast, impact, 0);
-            SpreadToDir(origin, Direction.NorthWest, impact, 0);
-            SpreadToDir(origin, Direction.East, impact, 0);
-            SpreadToDir(origin, Direction.South, impact, 0);
-            SpreadToDir(origin, Direction.SouthEast, impact, 0);
-            SpreadToDir(origin, Direction.SouthWest, impact, 0);
-            SpreadToDir(origin, Direction.West, impact, 0);
+            foreach (var direction in directions)
+                SpreadToDir(origin, direction, impact, 0);
+
+            foreach (var entity in damageableList)
+            {
+                if (damage != null && HasComp<DamageableComponent>(entity))
+                    _damageableSystem.TryChangeDamage(entity, damage, ignoreResistances: true);
+            }
         }
     }
 
