@@ -11,12 +11,6 @@
   priority: -9
 
 - type: guideEntry
-  id: Survival
-  name: Survival
-  text: "/Server Info/Guidebook/Survival.xml"
-  priority: -8
-
-- type: guideEntry
   id: KeyDifferences
   name: Key Differences
   text: "/Server Info/Guidebook/KeyDifferences.xml"
