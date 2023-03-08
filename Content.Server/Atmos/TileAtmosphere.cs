@@ -1,5 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 
@@ -87,6 +88,8 @@ namespace Content.Server.Atmos
         [ViewVariables]
         [Access(typeof(AtmosphereSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public GasMixture? Air { get; set; }
+
+        [ViewVariables] public Solution Liquids { get; set; } = new();
 
         [DataField("lastShare")]
         public float LastShare;

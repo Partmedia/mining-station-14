@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
@@ -20,6 +21,8 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("gasMixture")]
         public GasMixture Air { get; set; } = new();
+
+        [ViewVariables] public Solution Liquids { get; set; } = new();
 
         /// <summary>
         ///     Last recorded pressure, for appearance-updating purposes.

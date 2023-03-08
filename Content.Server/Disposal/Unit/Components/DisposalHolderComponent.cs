@@ -1,6 +1,7 @@
 using Content.Server.Atmos;
 using Content.Server.Disposal.Tube.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
@@ -58,6 +59,8 @@ namespace Content.Server.Disposal.Unit.Components
 
         [DataField("air")]
         public GasMixture Air { get; set; } = new (70);
+
+        [ViewVariables] public Solution Liquids { get; set; } = new();
 
         protected override void Initialize()
         {

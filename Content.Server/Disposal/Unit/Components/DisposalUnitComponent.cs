@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Server.Atmos;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Disposal.Components;
 using Robust.Shared.Containers;
 
@@ -67,5 +68,6 @@ namespace Content.Server.Disposal.Unit.Components
 
         [DataField("air")]
         public GasMixture Air { get; set; } = new(Atmospherics.CellVolume);
+        [ViewVariables] public Solution Liquids { get; set; } = new();
     }
 }

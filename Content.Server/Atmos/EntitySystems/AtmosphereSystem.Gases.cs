@@ -3,6 +3,8 @@ using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Robust.Shared.Prototypes;
+using Content.Shared.Chemistry.Components;
+using Content.Server.Chemistry.Components.SolutionManager;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -165,8 +167,28 @@ namespace Content.Server.Atmos.EntitySystems
                 // transfer moles
                 NumericsHelpers.Multiply(source.Moles, fraction, buffer);
                 NumericsHelpers.Add(receiver.Moles, buffer);
+
                 LimitMaxT(receiver);
             }
+        }
+
+        public void DivideLiquidsInto(Solution source, List<Solution> receivers)
+        {
+
+            var reagents = new List<Solution.ReagentQuantity>();
+            foreach (var reagent in (source))
+            {
+                reagents.Add(reagent);
+            }
+
+            foreach (var receiver in receivers)
+            {
+                foreach (var reagent in reagents)
+                {
+                   receiver.AddReagent(reagent.ReagentId, reagent.Quantity/receivers.Count());
+                }
+            }
+
         }
 
         /// <summary>

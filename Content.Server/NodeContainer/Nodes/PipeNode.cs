@@ -2,6 +2,7 @@ using Content.Server.Atmos;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
@@ -94,6 +95,17 @@ namespace Content.Server.NodeContainer.Nodes
             {
                 DebugTools.Assert(PipeNet != null);
                 PipeNet!.Air = value;
+            }
+        }
+
+        [ViewVariables]
+        public Solution Liquids
+        {
+            get => PipeNet?.Liquids ?? new Solution();
+            set
+            {
+                DebugTools.Assert(PipeNet != null);
+                PipeNet!.Liquids = value;
             }
         }
 

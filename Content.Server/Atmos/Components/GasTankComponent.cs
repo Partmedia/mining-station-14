@@ -1,5 +1,6 @@
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Atmos.Components
@@ -33,6 +34,7 @@ namespace Content.Server.Atmos.Components
         public IPlayingAudioStream? DisconnectStream;
 
         [DataField("air")] public GasMixture Air { get; set; } = new();
+        [ViewVariables] public Solution Liquids { get; set; } = new();
 
         /// <summary>
         ///     Pressure at which tank should be considered 'low' such as for internals.

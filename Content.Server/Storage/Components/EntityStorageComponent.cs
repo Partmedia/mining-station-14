@@ -1,4 +1,5 @@
 using Content.Server.Atmos;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Physics;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -98,6 +99,8 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public GasMixture Air { get; set; } = new (GasMixVolume);
+
+    [ViewVariables] public Solution Liquids { get; set; } = new();
 }
 
 public sealed class InsertIntoEntityStorageAttemptEvent : CancellableEntityEventArgs { }
