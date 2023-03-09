@@ -288,12 +288,12 @@
 - type: entity
   id: TimedSpace
   name: Mined Space
+  parent: MarkerBase
   components:
   - type: OreVein #I'm just leveraging this for the map init...
     oreChance: 0
   - type: Sprite
-    sprite: Structures/Walls/invisible.rsi
-    state: invisible
+    state: red
   - type: CaveIn
     timed: true
     timerWarnings: 1
