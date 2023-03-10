@@ -59,6 +59,10 @@ namespace Content.Server.NodeContainer.NodeGroups
             float lastAirT;
             const int maxiter = 10;
             const float reltol = 5e-2f;
+
+            if (_atmosphereSystem == null)
+                return;
+
             for (int iter = 0; iter < maxiter; iter++)
             {
                 float alpha = 1 - 1f*iter/maxiter; // 1, 0.9, 0.8...
@@ -73,6 +77,8 @@ namespace Content.Server.NodeContainer.NodeGroups
                 for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
                 {
                     var gasProto = _atmosphereSystem.GetGas(i);
+                    if (gasProto.Reagent == null)
+                        continue;
                     if (!_protoMan.TryIndex(gasProto.Reagent, out ReagentPrototype? liquidProto))
                         continue;
                     if (Tfinal < liquidProto.BoilingPoint + Atmospherics.T0C)

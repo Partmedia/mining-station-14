@@ -1,4 +1,4 @@
-﻿- type: gas
+- type: gas
   id: 0
   name: gases-oxygen
   specificHeat: 14
@@ -100,3 +100,48 @@
   color: 3a758c
   reagent: Frezon
   pricePerMole: 7.5
+
+- type: gas
+  id: 9
+  name: gases-chlorine
+  specificHeat: 14
+  heatCapacityRatio: 1.4
+  molarMass: 70
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: chlorine
+  color: ECF87F
+  reagent: Chlorine
+  pricePerMole: 1.25
+
+- type: gas
+  id: 10
+  name: gases-fluorine
+  specificHeat: 14
+  heatCapacityRatio: 1.4
+  molarMass: 38
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: fluorine
+  color: FDFD96
+  reagent: Fluorine
+  pricePerMole: 1.25
+
+- type: gas
+  id: 11
+  name: gases-hydrogen
+  specificHeat: 14
+  heatCapacityRatio: 1.4
+  molarMass: 2
+  color: FFFFFF
+  reagent: Hydrogen
+  pricePerMole: 0.01
+
+ #clf3!
+- type: gas
+  id: 12
+  name: gases-clf3
+  specificHeat: 160
+  heatCapacityRatio: 1.4
+  molarMass: 180
+  color: FFDEAD
+  reagent: ChlorineTrifluoride
+  pricePerMole: 10 #if you can safely make and store this then you deserve the big bux

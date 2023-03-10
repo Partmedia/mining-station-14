@@ -274,3 +274,16 @@
         reagents:
         - ReagentId: Sodium
           Quantity: 300
+
+- type: entity
+  parent: BaseChemistryEmptyJug
+  id: ChemJugFrezon
+  name: liquid frezon jug
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 300
+        reagents:
+        - ReagentId: Frezon
+          Quantity: 300

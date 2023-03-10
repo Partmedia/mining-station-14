@@ -221,6 +221,68 @@
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: ReagentPump
+  name: Gas Pipe Chemical Pump
+  description: A specialised pump design to extract or inject condensed chemical reagents in to a gas pipe network.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: ReagentPump
+    - type: Icon
+      sprite: Structures/Piping/Atmospherics/reagent_pump.rsi
+      state: icon
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/reagent_pump.rsi
+      noRot: true
+      layers:
+      - state: base
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+    - type: Appearance
+    - type: PipeColorVisuals
+    - type: Rotatable
+    - type: AtmosPipeColor
+    - type: AtmosDevice
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+    - type: StaticPrice
+      price: 500
+    - type: Transform
+      noRot: false
+    - type: ActivatableUI
+      key: enum.ReagentPumpUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+      - key: enum.ReagentPumpUiKey.Key
+        type: ReagentPumpBoundUserInterface
+    - type: ApcPowerReceiver
+      powerLoad: 500
+    - type: ItemSlots
+      slots:
+        beakerSlot:
+          whitelist:
+            components:
+            - FitsInDispenser
+            tags:
+            - Bottle
+            - ChemJug
+    - type: ContainerContainer
+      containers:
+        beakerSlot: !type:ContainerSlot
+        machine_board: !type:Container
+        machine_parts: !type:Container
+    - type: SolutionContainerManager
+      solutions:
+        buffer: {}
+
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: BaseGasThermoMachine
   name: thermomachine
   abstract: true

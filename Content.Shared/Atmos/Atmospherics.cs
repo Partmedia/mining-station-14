@@ -168,7 +168,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 9;
+        public const int TotalNumberOfGases = 13;
 
         /// <summary>
         ///     This is the actual length of the gases arrays in mixtures.
@@ -179,7 +179,8 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
         /// </summary>
-        public const float FireHydrogenEnergyReleased = 560000f;
+        public const float FireTritiumEnergyReleased = 560000f;
+        public const float FireHydrogenEnergyReleased = 5600f;
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
@@ -195,12 +196,20 @@ namespace Content.Shared.Atmos
         public const float PlasmaBurnRateDelta = 9f;
 
         /// <summary>
+        ///     Amount of Nitrogen required to prevent CLF3 setting everything on fire (or at least for now causing an autonomous fire reaction)
+        /// </summary>
+        public const float CLF3NitrogenRetardantFactor = 10f; //you will need at least 10 times the nitrogen for now
+
+        /// <summary>
         ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
         /// </summary>
         public const float MinimumTritiumOxyburnEnergy = 2000000f;
+        public const float MinimumHydrogenOxyburnEnergy = 2000000f;
 
         public const float TritiumBurnOxyFactor = 100f;
         public const float TritiumBurnTritFactor = 10f;
+        public const float HydrogenBurnOxyFactor = 100f;
+        public const float HydrogenBurnHydroFactor = 10f;
 
         public const float FrezonCoolLowerTemperature = 23.15f;
 
@@ -317,6 +326,10 @@ namespace Content.Shared.Atmos
         WaterVapor = 5,
         Miasma = 6,
         NitrousOxide = 7,
-        Frezon = 8
+        Frezon = 8,
+        Chlorine = 9,
+        Fluorine = 10,
+        Hydrogen = 11,
+        CLF3 = 12
     }
 }

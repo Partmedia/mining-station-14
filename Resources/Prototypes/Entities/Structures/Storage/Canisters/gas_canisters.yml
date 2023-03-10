@@ -412,6 +412,180 @@
 
 - type: entity
   parent: GasCanister
+  id: ChlorineCanister
+  components:
+    - type: Sprite
+      layers:
+        - state: greenys
+    - type: GasCanister
+      gasMixture:
+        volume: 1000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 # Water vapor
+          - 0 # Miasma
+          - 0 # N2O
+          - 0 # Frezon
+          - 1871.71051 # Chlorine
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MiasmaCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
+
+- type: entity
+  parent: GasCanister
+  id: FluorineCanister
+  components:
+    - type: Sprite
+      layers:
+        - state: greenys
+    - type: GasCanister
+      gasMixture:
+        volume: 1000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 # Water vapor
+          - 0 # Miasma
+          - 0 # N2O
+          - 0 # Frezon
+          - 0 # Chlorine
+          - 1871.71051 # Fluorine
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MiasmaCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
+
+- type: entity
+  parent: GasCanister
+  id: HydrogenCanister
+  components:
+    - type: Sprite
+      layers:
+        - state: greenys
+    - type: GasCanister
+      gasMixture:
+        volume: 1000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 # Water vapor
+          - 0 # Miasma
+          - 0 # Frezon
+          - 0 # N2O
+          - 0 # Chlorine
+          - 0 # Fluorine
+          - 1871.71051 # Hydrogen
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MiasmaCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
+
+- type: entity
+  parent: GasCanister
+  id: CLF3Canister
+  components:
+    - type: Sprite
+      layers:
+        - state: greenys
+    - type: GasCanister
+      gasMixture:
+        volume: 1000
+        moles:
+          - 0 # oxygen
+          - 1701.55 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 # Water vapor
+          - 0 # Miasma
+          - 0 # Frezon
+          - 0 # N2O
+          - 0 # Chlorine
+          - 0 # Fluorine
+          - 0 # Hydrogen
+          - 170.15 # CLF3
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MiasmaCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
+
+- type: entity
+  parent: GasCanister
   id: NitrousOxideCanister
   components:
     - type: Sprite
@@ -466,6 +640,7 @@
       - 0 # Tritium
       - 0 #  Water vapor
       - 0 # Miasma
+      - 0 # N2O
       - 1871.71051 # Frezon
       temperature: 293.15
   - type: Destructible

@@ -112,3 +112,33 @@
   components:
     - type: GasMiner
       spawnGas: NitrousOxide
+
+- type: entity
+  name: Chlorine gas miner
+  parent: GasMinerBase
+  id: GasMinerChlorine
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: Chlorine
+
+- type: entity
+  name: Fluorine gas miner
+  parent: GasMinerBase
+  id: GasMinerFluorine
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: Fluorine
+
+- type: entity
+  name: Hydrogen gas miner
+  parent: GasMinerBase
+  id: GasMinerHydrogen
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: GasMiner
+      spawnGas: Hydrogen

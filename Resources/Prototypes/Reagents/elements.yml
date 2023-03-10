@@ -21,26 +21,6 @@
   meltingPoint: 3550.0
 
 - type: reagent
-  id: Chlorine
-  name: reagent-name-chlorine
-  group: Elements
-  desc: reagent-desc-chlorine
-  physicalDesc: reagent-physical-desc-gaseous
-  flavor: bitter
-  color: "#a2ff00"
-  meltingPoint: -101.5
-  boilingPoint: -34.04
-  plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: -0.5
-    - !type:PlantAdjustToxins
-      amount: 15
-    - !type:PlantAdjustWeeds
-      amount: -3
-    - !type:PlantAdjustHealth
-      amount: -1
-
-- type: reagent
   id: Copper
   name: reagent-name-copper
   group: Elements
@@ -52,26 +32,6 @@
   meltingPoint: 1083.0
 
 - type: reagent
-  id: Fluorine
-  name: reagent-name-fluorine
-  group: Elements
-  desc: reagent-desc-fluorine
-  physicalDesc: reagent-physical-desc-gaseous
-  flavor: bitter
-  color: "#808080"
-  boilingPoint: -188.11
-  meltingPoint: -219.67
-  plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: -0.5
-    - !type:PlantAdjustToxins
-      amount: 25
-    - !type:PlantAdjustWeeds
-      amount: -4
-    - !type:PlantAdjustHealth
-      amount: -2
-
-- type: reagent
   id: Gold
   name: reagent-name-gold
   group: Elements
@@ -81,17 +41,6 @@
   color: "#F7C430"
   boilingPoint: 2700.0
   meltingPoint: 1064.76
-
-- type: reagent
-  id: Hydrogen
-  name: reagent-name-hydrogen
-  group: Elements
-  desc: reagent-desc-hydrogen
-  physicalDesc: reagent-physical-desc-gaseous
-  flavor: bitter
-  color: "#808080"
-  boilingPoint: -253.0
-  meltingPoint: -259.2
 
 - type: reagent
   id: Iodine

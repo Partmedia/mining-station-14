@@ -7,3 +7,7 @@ gases-water-vapor = Water Vapor
 gases-miasma = Miasma
 gases-n2o = Nitrous Oxide
 gases-frezon = Frezon
+gases-chlorine = Chlorine
+gases-fluorine = Fluorine
+gases-hydrogen = Hydrogen
+gases-clf3 = Chlorine Trifluoride

@@ -1,4 +1,25 @@
-﻿- type: gasReaction
+- type: gasReaction
+  id: HydrogenFire
+  priority: -1
+  minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
+  minimumRequirements: # In this case, same as minimum mole count.
+    - 0.01  # oxygen
+    - 0     # nitrogen
+    - 0     # carbon dioxide
+    - 0     # plasma
+    - 0     # tritium
+    - 0     # vapor
+    - 0     # miasma
+    - 0     # n2o
+    - 0     # frezon
+    - 0     # chlorine
+    - 0     # fluorine
+    - 0.01  # hydrogen
+  effects:
+    - !type:HydrogenFireReaction {}
+
+
+- type: gasReaction
   id: PlasmaFire
   priority: -2
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
@@ -56,6 +77,47 @@
   - 0     # frezon
   effects:
   - !type:FrezonProductionReaction {}
+
+- type: gasReaction
+  id: CLF3Production
+  priority: 0
+  minimumTemperature: 239.1 #boiling point of chlorine
+  minimumRequirements:
+    - 0     # oxygen
+    - 0     # nitrogen
+    - 0     # carbon dioxide
+    - 0     # plasma
+    - 0     # tritium
+    - 0     # vapor
+    - 0     # miasma
+    - 0     # n2o
+    - 0     # frezon
+    - 0.01  # chlorine
+    - 0.01  # fluorine
+    - 0     # hydrogen
+  effects:
+    - !type:CLF3ProductionReaction {}
+
+- type: gasReaction
+  id: CLF3Fire
+  priority: -1
+  minimumTemperature: 239.1 #boiling point of chlorine
+  minimumRequirements:
+    - 0     # oxygen
+    - 0     # nitrogen
+    - 0     # carbon dioxide
+    - 0     # plasma
+    - 0     # tritium
+    - 0     # vapor
+    - 0     # miasma
+    - 0     # n2o
+    - 0     # frezon
+    - 0.    # chlorine
+    - 0.    # fluorine
+    - 0     # hydrogen
+    - 0.01  # clf3
+  effects:
+    - !type:CLF3FireReaction {}
 
 - type: gasReaction
   id: MiasmicSubsumation
