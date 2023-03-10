@@ -154,7 +154,7 @@ def copy_dir_into_zip(directory, basepath, zipf):
         for filename in files:
             zippath = p(basepath, relpath, filename)
             filepath = p(root, filename)
-            if filepath.startswith("Resources/Mining/Maps") or '.git' in filepath or filepath.endswith('.swp') or filepath.endswith('~'):
+            if filepath.startswith("Resources/Mining/Maps") or filepath.startswith("Resources/Mining/RL") or '.git' in filepath or filepath.endswith('.swp') or filepath.endswith('~'):
                 continue
 
             if verbose:

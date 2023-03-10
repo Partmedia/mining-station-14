@@ -278,6 +278,8 @@ def copy_content_assemblies(target, zipf):
         if os.path.exists(p(source_dir, pdb_path)):
             files.append(pdb_path)
 
+    files.append("libRL.so")
+
     # Write assemblies dir if necessary.
     if not zip_entry_exists(zipf, target):
         zipf.write(".", target)

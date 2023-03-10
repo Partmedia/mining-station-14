@@ -5,8 +5,14 @@ DOTNET_BUILD=dotnet build ${DOTNET_FLAGS}
 
 fast: build fastserver fastclient
 
-build:
+build: libRL
 	${DOTNET_BUILD}
+
+libRL:
+	cd Content.Server/RL/libRL && make
+
+RL:
+	cd Resources/Mining/RL && make
 
 client:
 	cd ./bin/Content.Client && ../../linklibs && ./Content.Client
@@ -29,7 +35,7 @@ test:
 	cd bin/Content.Tests && ../../linklibs
 	dotnet test ${DOTNET_FLAGS}
 
-package:
+package: libRL RL
 	python3 Tools/package_server_build.py --hybrid-acz
 
 deploy: package
