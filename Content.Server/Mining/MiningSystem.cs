@@ -17,6 +17,8 @@ using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Content.Shared.Damage;
+using Content.Server.Gravity;
+using Content.Shared.Gravity;
 
 namespace Content.Server.Mining;
 
@@ -33,6 +35,7 @@ public sealed class MiningSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly GravitySystem _gravity = default!;
 
     private Queue<EntityUid> _timerQueue = new(); // entities waiting for their next time event
 
@@ -66,11 +69,16 @@ public sealed class MiningSystem : EntitySystem
 
     private bool CaveInCheck(EntityUid uid, CaveInComponent component)
     {
+        if (!TryComp<TransformComponent>(uid, out var xform))
+            return true;
+
+        if (TryComp<GravityComponent>(xform.GridUid, out var gravity) && !gravity.Enabled)
+            return true;
+
         //get the support range of the mined rock
         //check for all entities in range
         //if there are no walls or asteroid rocks in range, spawn rocks within the surrounding area
         var pos = Transform(uid).MapPosition;
-        var xform = _entities.GetComponent<TransformComponent>(uid);
         var range = component.SupportRange;
         var supported = false;
 
@@ -96,6 +104,7 @@ public sealed class MiningSystem : EntitySystem
                 return hasSpace;
             }
 
+            
             var origin = grid.TileIndicesFor(xform.Coordinates);
             var hasSpace = true;
 
