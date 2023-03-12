@@ -17,3 +17,70 @@
     force: 200.0
     minDist: 0.9
     range: 2.0
+
+- type: entity
+  id: Hopper
+  name: ore hopper
+  parent: BaseMachinePowered
+  description: Dump ores in the top, ore comes out from the bottom.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Disposal
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/hopper.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.4,0.25,0.4"
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+  - type: Hopper
+  - type: ApcPowerReceiver
+    powerLoad: 50
+  - type: Storage
+    popup: false
+    capacity: 1750
+    whitelist:
+      tags:
+        - Ore
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []

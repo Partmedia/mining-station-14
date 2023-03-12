@@ -108,6 +108,16 @@
   group: market
 
 - type: cargoProduct
+  id: HopperC
+  icon:
+    sprite: Structures/Machines/hopper.rsi
+    state: icon
+  product: Hopper
+  cost: 200
+  category: Salvage
+  group: market
+
+- type: cargoProduct
   id: MiningBiomassReclaimerCrate
   name: biomass reclaimer crate
   description: End NanoTrasen's monopoly on biomass with your own reclaimer!
