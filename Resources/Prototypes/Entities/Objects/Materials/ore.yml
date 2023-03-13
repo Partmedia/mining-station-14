@@ -151,6 +151,8 @@
   components:
   - type: Sprite
     state: iron
+  - type: RadiationSource
+    intensity: 0.7
   - type: Material
     materials:
       Uranium: 500

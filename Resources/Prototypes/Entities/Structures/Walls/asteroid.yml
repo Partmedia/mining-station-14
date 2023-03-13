@@ -272,6 +272,8 @@
     - type: OreVein
       oreChance: 1.0
       currentOre: OreUranium
+    - type: RadiationSource
+      intensity: 0.7
     - type: Sprite
       layers:
         - state: rock
