@@ -14,7 +14,7 @@
   - type: ApcPowerReceiver
     powerLoad: 2500
   - type: Electromagnet
-    force: 200.0
+    force: 850.0
     minDist: 0.9
     range: 2.0
 
@@ -84,3 +84,53 @@
     containers:
       storagebase: !type:Container
         ents: []
+
+- type: entity
+  id: AirJet
+  parent: BaseMachinePowered
+  name: air jet
+  description: Moves object using compressed air.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/air_jet.rsi
+    layers:
+    - state: base
+    #- state: unshaded
+    #  shader: unshaded
+    #  map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeConnector
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Transform
+    noRot: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 25
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: ApcPowerReceiver
+    powerLoad: 10
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: PipeColorVisuals
+  - type: AtmosPipeColor
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: AirJet
