@@ -19,7 +19,6 @@
       whitelist:
         tags:
           - Ore
-          - BlastFurnaceInput
     - type: ApcPowerReceiver
       powerLoad: 3000
     - type: Lathe

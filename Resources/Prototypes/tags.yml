@@ -25,9 +25,6 @@
   id: BeltSlotNotBelt #not a 'belt'
 
 - type: Tag
-  id: BlastFurnaceInput
-
-- type: Tag
   id: BodyBag
 
 - type: Tag
