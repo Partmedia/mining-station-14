@@ -170,7 +170,7 @@ public sealed class PricingSystem : EntitySystem
         {
             price += _prototypeManager.Index<MaterialPrototype>(id).Price * quantity;
         }
-        return price;
+        return price*component.Quality;
     }
 
     /// <summary>

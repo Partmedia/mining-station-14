@@ -12,5 +12,8 @@ namespace Content.Shared.Materials
     {
         [DataField("materials", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
         public readonly Dictionary<string, int> Materials = new();
+
+        [DataField("quality")]
+        public float Quality = 1; // multiplier on total material price
     }
 }
