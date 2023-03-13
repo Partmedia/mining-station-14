@@ -24,6 +24,16 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Fixtures
+    fixtures:
+    - density: 20
+      shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mask:
+      - ItemMask
+      restitution: 0.3  # fite me
+      friction: 0.2
   - type: StaticPrice
     price: 0
   - type: Material
@@ -33,7 +43,7 @@
 - type: entity
   parent: OreBase
   id: RockOre
-  name: unidentified ore
+  name: ore
   components:
   - type: Sprite
     state: iron
@@ -41,29 +51,42 @@
 - type: entity
   parent: OreBase
   id: GoldOre
+  noSpawn: true
   name: unidentified ore
-  suffix: Full
+  suffix: Gold
   components:
   - type: Sprite
     state: iron
   - type: Material
+    quality: 0.3
     materials:
       Gold: 500
+  - type: Fixtures
+    fixtures:
+    - density: 142
+      shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mask:
+      - ItemMask
+      restitution: 0.3  # fite me
+      friction: 0.2
 
 - type: entity
   parent: GoldOre
   id: GoldOre1
-  suffix: Single
 
 - type: entity
   parent: OreBase
   id: SteelOre
+  noSpawn: true
   name: unidentified ore
-  suffix: Full
+  suffix: Iron
   components:
   - type: Sprite
     state: iron
   - type: Material
+    quality: 0.3
     materials:
       Steel: 500
   - type: Extractable
@@ -78,55 +101,78 @@
     tags:
     - Ore
     - Metal
+  - type: Fixtures
+    fixtures:
+    - density: 60
+      shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mask:
+      - ItemMask
+      restitution: 0.3  # fite me
+      friction: 0.2
 
 - type: entity
   id: SteelOre1
   parent: SteelOre
-  suffix: Single
 
 - type: entity
   parent: OreBase
   id: PlasmaOre
+  noSpawn: true
   name: unidentified ore
-  suffix: Full
+  suffix: Plasma
   components:
   - type: Sprite
     state: iron
   - type: Material
+    quality: 0.3
     materials:
       Plasma: 500
 
 - type: entity
   parent: PlasmaOre
   id: PlasmaOre1
-  suffix: Single
 
 - type: entity
   parent: OreBase
   id: SilverOre
+  noSpawn: true
   name: unidentified ore
-  suffix: Full
+  suffix: Silver
   components:
   - type: Sprite
     state: iron
   - type: Material
+    quality: 0.3
     materials:
       Silver: 500
+  - type: Fixtures
+    fixtures:
+    - density: 95
+      shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mask:
+      - ItemMask
+      restitution: 0.3  # fite me
+      friction: 0.2
 
 - type: entity
   parent: SilverOre
   id: SilverOre1
-  suffix: Single
 
 - type: entity
   parent: OreBase
   id: SpaceQuartz
+  noSpawn: true
   name: unidentified ore
-  suffix: Full
+  suffix: Quartz
   components:
   - type: Sprite
     state: iron
   - type: Material
+    quality: 0.3
     materials:
       Glass: 500
   - type: Extractable
@@ -137,36 +183,57 @@
         reagents:
         - ReagentId: Silicon
           Quantity: 30
+  - type: Fixtures
+    fixtures:
+    - density: 38
+      shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mask:
+      - ItemMask
+      restitution: 0.3  # fite me
+      friction: 0.2
 
 - type: entity
   parent: SpaceQuartz
   id: SpaceQuartz1
-  suffix: Single
 
 - type: entity
   parent: OreBase
   id: UraniumOre
+  noSpawn: true
   name: unidentified ore
-  suffix: Full
+  suffix: Uranium
   components:
   - type: Sprite
     state: iron
   - type: RadiationSource
     intensity: 0.7
   - type: Material
+    quality: 0.3
     materials:
       Uranium: 500
+  - type: Fixtures
+    fixtures:
+    - density: 141
+      shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mask:
+      - ItemMask
+      restitution: 0.3  # fite me
+      friction: 0.2
 
 - type: entity
   parent: UraniumOre
   id: UraniumOre1
-  suffix: Single
 
 - type: entity
   parent: OreBase
   id: AluminumOre
+  noSpawn: true
   name: unidentified ore
-  suffix: Full
+  suffix: Bauxite
   components:
   - type: Sprite
     state: iron
@@ -178,21 +245,32 @@
         reagents:
         - ReagentId: Aluminium
           Quantity: 30
+  - type: Fixtures
+    fixtures:
+    - density: 23
+      shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mask:
+      - ItemMask
+      restitution: 0.3  # fite me
+      friction: 0.2
 
 - type: entity
   parent: AluminumOre
   id: AluminumOre1
-  suffix: Single
 
 - type: entity
   parent: OreBase
   id: Coal
+  noSpawn: true
   name: coal
-  suffix: Full
+  suffix: Coal
   components:
   - type: Sprite
     state: coal
   - type: Material
+    quality: 0.3
     materials:
       Carbon: 500
   - type: Extractable
@@ -203,17 +281,27 @@
         reagents:
         - ReagentId: Carbon
           Quantity: 30
+  - type: Fixtures
+    fixtures:
+    - density: 25
+      shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mask:
+      - ItemMask
+      restitution: 0.3  # fite me
+      friction: 0.2
 
 - type: entity
   parent: Coal
   id: Coal1
-  suffix: Single
 
 - type: entity
   parent: OreBase
   id: CopperOre
+  noSpawn: true
   name: unidentified ore
-  suffix: Full
+  suffix: Chalcocite
   components:
   - type: Sprite
     state: iron
@@ -225,17 +313,27 @@
         reagents:
         - ReagentId: Copper
           Quantity: 30
+  - type: Fixtures
+    fixtures:
+    - density: 34
+      shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mask:
+      - ItemMask
+      restitution: 0.3  # fite me
+      friction: 0.2
 
 - type: entity
   parent: CopperOre
   id: CopperOre1
-  suffix: Single
 
 - type: entity
   parent: OreBase
   id: CinnabarOre
+  noSpawn: true
   name: unidentified ore
-  suffix: Full
+  suffix: Cinnabar
   components:
   - type: Sprite
     state: iron
@@ -247,8 +345,17 @@
         reagents:
         - ReagentId: Mercury
           Quantity: 30
+  - type: Fixtures
+    fixtures:
+    - density: 80
+      shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mask:
+      - ItemMask
+      restitution: 0.3  # fite me
+      friction: 0.2
 
 - type: entity
   parent: CinnabarOre
   id: CinnabarOre1
-  suffix: Single
