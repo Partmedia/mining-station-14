@@ -190,9 +190,6 @@
     LayoutId: GeneratorPlasma
   - type: Machine
     board: GeneratorPlasmaMachineCircuitboard
-  - type: UpgradePowerSupplier
-    powerSupplyMultiplier: 1.25
-    scaling: Exponential
 
 - type: entity
   parent: [ BaseGenerator, ConstructibleMachine ]

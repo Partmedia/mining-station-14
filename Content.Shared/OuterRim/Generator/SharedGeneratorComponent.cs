@@ -22,6 +22,9 @@ public sealed class SharedGeneratorComponent : Component
 
     public float Efficiency = 0;
     public float Output = 0;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float Upgrade = 1f;
 }
 
 /// <summary>

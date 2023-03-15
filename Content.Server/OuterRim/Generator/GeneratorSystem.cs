@@ -11,6 +11,9 @@ using Content.Shared.Materials;
 using Content.Shared.OuterRim.Generator;
 using Robust.Server.GameObjects;
 
+using Content.Server.Construction;
+using Content.Server.Construction.Components;
+
 namespace Content.Server.OuterRim.Generator;
 
 /// <inheritdoc/>
@@ -23,6 +26,20 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     {
         SubscribeLocalEvent<SharedGeneratorComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<SharedGeneratorComponent, SetTargetPowerMessage>(OnTargetPowerSet);
+
+        SubscribeLocalEvent<SharedGeneratorComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<SharedGeneratorComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+    }
+
+    private void OnUpgradeExamine(EntityUid uid, SharedGeneratorComponent component, UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade("upgrade-power-supply", component.Upgrade);
+    }
+
+    private void OnRefreshParts(EntityUid uid, SharedGeneratorComponent component, RefreshPartsEvent args)
+    {
+        var rating = args.PartRatings["Capacitor"];
+        component.Upgrade = (rating-1)*0.5f + 1f;
     }
 
     private void OnTargetPowerSet(EntityUid uid, SharedGeneratorComponent component, SetTargetPowerMessage args)
@@ -51,7 +68,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         {
             supplier.Enabled = !(gen.RemainingFuel <= 0.0f || xform.Anchored == false);
 
-            var fuelRate = gen.TargetPower * gen.MaxFuelRate;
+            var fuelRate = gen.TargetPower * gen.MaxFuelRate * gen.Upgrade;
             gen.RemainingFuel = MathF.Max(gen.RemainingFuel - (fuelRate * frameTime), 0.0f);
 
             // Plasma: 600 kJ/sheet
