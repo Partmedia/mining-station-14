@@ -40,6 +40,12 @@ namespace Content.Server.StationEvents
 
         private readonly HttpClient _httpClient = new();
 
+        private IReadOnlyList<string> 音乐 = new List<string>{
+            "/Mining/Audio/16tons.ogg",
+            "/Mining/Audio/big_john.ogg",
+            "/Mining/Audio/working.ogg"
+        };
+
         /// <summary>
         /// How long until the next check for an event runs
         /// </summary>
@@ -56,7 +62,7 @@ namespace Content.Server.StationEvents
         public override void Started()
         {
             ResetTimer();
-            _soundSystem.DispatchGlobalEventMusic("/Mining/Audio/16tons.ogg");
+            _soundSystem.DispatchGlobalEventMusic(RandomExtensions.Pick(_random, 音乐));
         }
 
         public override void Ended()
