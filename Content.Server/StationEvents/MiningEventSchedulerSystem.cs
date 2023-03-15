@@ -63,6 +63,7 @@ namespace Content.Server.StationEvents
         {
             ResetTimer();
             _soundSystem.DispatchGlobalEventMusic(RandomExtensions.Pick(_random, 音乐));
+            ReportRound("A round has started on Mining Station 14!");
         }
 
         public override void Ended()
