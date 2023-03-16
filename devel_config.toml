@@ -3,7 +3,7 @@ enabled = false
 
 [net]
 tickrate = 30
-port = 1212
+port = 1211
 log_late_msg = false
 
 [server]
@@ -16,6 +16,7 @@ role_timers = false
 lobbyduration = 3
 defaultpreset = "Mining"
 min_players = 1
+map_pool = "MiningMapPool"
 
 [ic]
 flavor_text = true

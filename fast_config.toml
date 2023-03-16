@@ -17,6 +17,7 @@ lobbyduration = 3
 defaultpreset = "Mining"
 min_players = 1
 map = "Mining"
+map_pool = "MiningMapPool"
 
 [ic]
 flavor_text = true
