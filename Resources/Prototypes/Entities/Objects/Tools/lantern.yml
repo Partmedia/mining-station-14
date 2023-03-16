@@ -1,8 +1,8 @@
 ﻿- type: entity
-  name: lantern
+  name: electric lantern
   parent: BaseItem
   id: lantern
-  description: The holy light guides the way.
+  description: A battery-powered lantern to guide your way through the dark.
   components:
     - type: HandheldLight
       addPrefix: true
