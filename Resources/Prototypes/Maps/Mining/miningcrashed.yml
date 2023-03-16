@@ -4,7 +4,6 @@
   mapPath: /Mining/Maps/miningcrashed.yml
   minPlayers: 4
   maxPlayers: 15
-  fallback: true
   stations:
     MiningCrashed:
       mapNameTemplate: '{0} Mining Base {1}'

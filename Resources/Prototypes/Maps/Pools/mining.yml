@@ -1,0 +1,6 @@
+- type: gameMapPool
+  id: MiningMapPool
+  maps:
+  - Mining
+  - MiningCrashed
+  - MiningScience
