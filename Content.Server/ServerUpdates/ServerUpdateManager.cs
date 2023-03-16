@@ -1,10 +1,13 @@
 ﻿using System.Linq;
+using Content.Server.Administration;
 using Content.Server.Chat.Managers;
+using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Server;
 using Robust.Server.Player;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Timing;
 
@@ -69,7 +72,7 @@ public sealed class ServerUpdateManager
         }
     }
 
-    private void WatchdogOnUpdateReceived()
+    public void WatchdogOnUpdateReceived()
     {
         _chatManager.DispatchServerAnnouncement(Loc.GetString("server-updates-received"));
         _updateOnRoundEnd = true;
@@ -105,5 +108,20 @@ public sealed class ServerUpdateManager
     private void DoShutdown()
     {
         _server.Shutdown(Loc.GetString("server-updates-shutdown"));
+    }
+}
+
+[AdminCommand(AdminFlags.Server)]
+public sealed class ShutdownIdle : IConsoleCommand
+{
+    public string Command => "shutdownidle";
+    public string Description => "Shut down the server when the round ends for an update.";
+    public string Help => $"{Command}";
+
+    [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        _serverUpdates.WatchdogOnUpdateReceived();
     }
 }
