@@ -1,8 +1,8 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
-            SetSize="690 550"
-            MinSize="690 550">
+            SetSize="525 675"
+            MinSize="525 675">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'reagent-dispenser-window-amount-to-dispense-label'}"/>

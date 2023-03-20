@@ -23,6 +23,10 @@ namespace Content.Client.Chemistry.UI
         public event Action<GUIMouseHoverEventArgs, DispenseReagentButton>? OnDispenseReagentButtonMouseEntered;
         public event Action<GUIMouseHoverEventArgs, DispenseReagentButton>? OnDispenseReagentButtonMouseExited;
 
+        public event Action<BaseButton.ButtonEventArgs, EjectJugButton>? OnEjectJugButtonPressed;
+        public event Action<GUIMouseHoverEventArgs, EjectJugButton>? OnEjectJugButtonMouseEntered;
+        public event Action<GUIMouseHoverEventArgs, EjectJugButton>? OnEjectJugButtonMouseExited;
+
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
         /// actual data isn't filled in until the server sends data about the dispenser.
@@ -63,6 +67,11 @@ namespace Content.Client.Chemistry.UI
                 button.OnMouseEntered += args => OnDispenseReagentButtonMouseEntered?.Invoke(args, button);
                 button.OnMouseExited += args => OnDispenseReagentButtonMouseExited?.Invoke(args, button);
                 ChemicalList.AddChild(button);
+                var ejectButton = new EjectJugButton(entry.Key);
+                ejectButton.OnPressed += args => OnEjectJugButtonPressed?.Invoke(args, ejectButton);
+                ejectButton.OnMouseEntered += args => OnEjectJugButtonMouseEntered?.Invoke(args, ejectButton);
+                ejectButton.OnMouseExited += args => OnEjectJugButtonMouseExited?.Invoke(args, ejectButton);
+                ChemicalList.AddChild(ejectButton);
             }
         }
 
@@ -187,6 +196,16 @@ namespace Content.Client.Chemistry.UI
         {
             ReagentId = reagentId;
             Text = text + " " + amount;
+        }
+    }
+    public sealed class EjectJugButton : Button
+    {
+        public string ReagentId { get; }
+
+        public EjectJugButton(string reagentId)
+        {
+            ReagentId = reagentId;
+            Text = "Eject";
         }
     }
 }
