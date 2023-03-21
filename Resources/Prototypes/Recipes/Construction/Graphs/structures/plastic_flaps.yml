@@ -12,9 +12,9 @@
         steps:
           - material: Plastic
             amount: 5
-            doAfter: 10
+            doAfter: 3
   - node: plasticFlaps
-    entity: PlasticFlapsClear
+    entity: PlasticFlapsAirtightClear
     edges:
       - to: start
         completed:
@@ -23,4 +23,4 @@
             amount: 5
         steps:
           - tool: Anchoring
-            doAfter: 10
+            doAfter: 3

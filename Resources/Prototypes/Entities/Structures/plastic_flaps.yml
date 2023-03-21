@@ -39,9 +39,6 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
-  - type: Construction
-    graph: PlasticFlapsGraph
-    node: plasticFlaps
   - type: StaticPrice
     price: 150
 
@@ -82,6 +79,9 @@
         acts: ["Destruction"]
   - type: Airtight
     fixVacuum: true
+  - type: Construction
+    graph: PlasticFlapsGraph
+    node: plasticFlaps
 
 - type: entity
   id: PlasticFlapsAirtightOpaque
