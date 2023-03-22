@@ -189,7 +189,7 @@ namespace Content.Server.Voting.Managers
                 }
 
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
-                if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
+                if (ticker.CanUpdateMap())
                 {
                     if (_gameMapManager.TrySelectMapIfEligible(picked.ID))
                     {
@@ -198,7 +198,14 @@ namespace Content.Server.Voting.Managers
                 }
                 else
                 {
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-notlobby"));
+                    if (ticker.RoundPreloadTime <= TimeSpan.Zero)
+                    {
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-notlobby"));
+                    }
+                    else
+                    {
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-notlobby-time"));
+                    }
                 }
             };
         }

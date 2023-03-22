@@ -15,6 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 
@@ -39,7 +40,6 @@ public sealed partial class ShuttleSystem
     private const float DefaultTravelTime = 30f;
     private const float DefaultArrivalTime = 5f;
     private const float FTLCooldown = 30f;
-
     private const float ShuttleFTLRange = 100f;
 
     /// <summary>
@@ -89,6 +89,12 @@ public sealed partial class ShuttleSystem
 
     public bool CanFTL(EntityUid? uid, [NotNullWhen(false)] out string? reason, TransformComponent? xform = null)
     {
+        if (HasComp<PreventPilotComponent>(uid))
+        {
+            reason = Loc.GetString("shuttle-console-prevent");
+            return false;
+        }
+
         reason = null;
 
         if (!TryComp<MapGridComponent>(uid, out var grid) ||
@@ -228,6 +234,9 @@ public sealed partial class ShuttleSystem
                     DoTheDinosaur(xform);
 
                     comp.State = FTLState.Travelling;
+                    var fromMapUid = xform.MapUid;
+                    var fromMatrix = _transform.GetWorldMatrix(xform);
+                    var fromRotation = _transform.GetWorldRotation(xform);
 
                     var width = Comp<MapGridComponent>(comp.Owner).LocalAABB.Width;
                     xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
@@ -243,14 +252,16 @@ public sealed partial class ShuttleSystem
                         _physics.SetAngularDamping(body, 0f);
                     }
 
+                    SetDockBolts(comp.Owner, true);
+                    _console.RefreshShuttleConsoles(comp.Owner);
+                    var ev = new FTLStartedEvent(fromMapUid, fromMatrix, fromRotation);
+                    RaiseLocalEvent(comp.Owner, ref ev);
+
                     if (comp.TravelSound != null)
                     {
                         comp.TravelStream = SoundSystem.Play(comp.TravelSound.GetSound(),
                             Filter.Pvs(comp.Owner, 4f, entityManager: EntityManager), comp.TravelSound.Params);
                     }
-
-                    SetDockBolts(comp.Owner, true);
-                    _console.RefreshShuttleConsoles(comp.Owner);
                     break;
                 // Arriving, play effects
                 case FTLState.Travelling:
