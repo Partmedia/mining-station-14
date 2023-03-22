@@ -594,10 +594,6 @@
       materialRequirements:
         Cable: 3
       tagRequirements:
-        Pipe:
-          Amount: 4
-          DefaultPrototype: GasPipeStraight
-          ExamineName: Pipe
         Cryobeaker:
           Amount: 2
           DefaultPrototype: CryostasisBeaker
