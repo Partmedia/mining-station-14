@@ -135,7 +135,7 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.5
       - !type:Emote
         emote: Scream
@@ -145,7 +145,7 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Caustic: 2
       - !type:PopupMessage
         type: Local
@@ -171,7 +171,7 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.3
       - !type:Emote
         emote: Scream
@@ -181,7 +181,7 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Caustic: 2
       - !type:PopupMessage
         type: Local
@@ -214,7 +214,7 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.1
       - !type:Emote
         emote: Scream
@@ -225,7 +225,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Caustic: 2
       - !type:PopupMessage
         type: Local
         visualType: Large
