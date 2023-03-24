@@ -2,6 +2,7 @@
   abstract: true
   parent: BaseItem
   id: OreBase
+  name: unidentified ore
   description: A piece of unrefined ore.
   components:
   - type: Sprite
@@ -43,7 +44,6 @@
 - type: entity
   parent: OreBase
   id: RockOre
-  name: ore
   components:
   - type: Sprite
     state: iron
@@ -52,7 +52,6 @@
   parent: OreBase
   id: GoldOre
   noSpawn: true
-  name: unidentified ore
   suffix: Gold
   components:
   - type: Sprite
@@ -80,7 +79,6 @@
   parent: OreBase
   id: SteelOre
   noSpawn: true
-  name: unidentified ore
   suffix: Iron
   components:
   - type: Sprite
@@ -120,7 +118,6 @@
   parent: OreBase
   id: PlasmaOre
   noSpawn: true
-  name: unidentified ore
   suffix: Plasma
   components:
   - type: Sprite
@@ -138,7 +135,6 @@
   parent: OreBase
   id: SilverOre
   noSpawn: true
-  name: unidentified ore
   suffix: Silver
   components:
   - type: Sprite
@@ -166,7 +162,6 @@
   parent: OreBase
   id: SpaceQuartz
   noSpawn: true
-  name: unidentified ore
   suffix: Quartz
   components:
   - type: Sprite
@@ -202,7 +197,6 @@
   parent: OreBase
   id: UraniumOre
   noSpawn: true
-  name: unidentified ore
   suffix: Uranium
   components:
   - type: Sprite
@@ -232,7 +226,6 @@
   parent: OreBase
   id: AluminumOre
   noSpawn: true
-  name: unidentified ore
   suffix: Bauxite
   components:
   - type: Sprite
@@ -264,7 +257,6 @@
   parent: OreBase
   id: Coal
   noSpawn: true
-  name: coal
   suffix: Coal
   components:
   - type: Sprite
@@ -300,7 +292,6 @@
   parent: OreBase
   id: CopperOre
   noSpawn: true
-  name: unidentified ore
   suffix: Chalcocite
   components:
   - type: Sprite
@@ -332,7 +323,6 @@
   parent: OreBase
   id: CinnabarOre
   noSpawn: true
-  name: unidentified ore
   suffix: Cinnabar
   components:
   - type: Sprite
