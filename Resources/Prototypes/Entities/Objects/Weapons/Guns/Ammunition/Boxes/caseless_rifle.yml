@@ -24,6 +24,9 @@
     steps: 2
     zeroVisible: false
   - type: Appearance
+  - type: Tag
+    tags:
+      - BoxCaselessRifle
 
 # Boxes
 - type: entity
