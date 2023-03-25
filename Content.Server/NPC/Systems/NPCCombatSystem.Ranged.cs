@@ -10,9 +10,6 @@ public sealed partial class NPCCombatSystem
 {
     [Dependency] private readonly RotateToFaceSystem _rotate = default!;
 
-    // TODO: Don't predict for hitscan
-    private const float ShootSpeed = 20f;
-
     /// <summary>
     /// Cooldown on raycasting to check LOS.
     /// </summary>
@@ -86,19 +83,41 @@ public sealed partial class NPCCombatSystem
 
             comp.LOSAccumulator -= frameTime;
 
-            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
-            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
+            var (x, worldRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
+            var v = gun.ProjectileSpeed; // bullet velocity
+            var (xt, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
+            var vt = targetBody.LinearVelocity; // target velocity
 
-            // We'll work out the projected spot of the target and shoot there instead of where they are.
-            var distance = (targetPos - worldPos).Length;
-            var oldInLos = comp.TargetInLOS;
+            /// Targeting
+            Vector2 targetSpot;
+            Angle goalRotation;
+            var dx = xt - x; // target displacement from gun
+            var distance = dx.Length; // distance to target
+
+            if (comp.Advanced)
+            {
+                var phi = (-dx).ToWorldAngle() - vt.ToWorldAngle();
+                var theta = Math.Asin(vt.Length/v * Math.Sin(phi.Theta));
+                goalRotation = dx.ToWorldAngle() + theta;
+                var psi = Math.PI - phi - theta;
+                float intercept_dist = (float)(distance * Math.Sin(theta)/Math.Sin(psi));
+                targetSpot = xt + vt.Normalized*intercept_dist;
+            }
+            else
+            {
+                // We'll work out the projected spot of the target and shoot there instead of where they are.
+                targetSpot = xt + vt * distance / v;
+                goalRotation = (targetSpot - x).ToWorldAngle();
+            }
 
             // TODO: Should be doing these raycasts in parallel
             // Ideally we'd have 2 steps, 1. to go over the normal details for shooting and then 2. to handle beep / rotate / shoot
+            var oldInLos = comp.TargetInLOS;
             if (comp.LOSAccumulator < 0f)
             {
                 comp.LOSAccumulator += UnoccludedCooldown;
-                comp.TargetInLOS = _interaction.InRangeUnobstructed(comp.Owner, comp.Target, distance + 0.1f);
+                comp.TargetInLOS = _interaction.InRangeUnobstructed(comp.Owner, comp.Target, distance + 0.1f) &&
+                    (!comp.Advanced | _interaction.InRangeUnobstructed(comp.Owner, new MapCoordinates(targetSpot, xform.MapID), distance + 0.1f));
             }
 
             if (!comp.TargetInLOS)
@@ -120,11 +139,6 @@ public sealed partial class NPCCombatSystem
                 continue;
             }
 
-            var mapVelocity = targetBody.LinearVelocity;
-            var targetSpot = targetPos + mapVelocity * distance / ShootSpeed;
-
-            // If we have a max rotation speed then do that.
-            var goalRotation = (targetSpot - worldPos).ToWorldAngle();
             var rotationSpeed = comp.RotationSpeed;
 
             if (!_rotate.TryRotateTo(comp.Owner, goalRotation, frameTime, comp.AccuracyThreshold, rotationSpeed?.Theta ?? double.MaxValue, xform))
@@ -145,7 +159,7 @@ public sealed partial class NPCCombatSystem
 
             EntityCoordinates targetCordinates;
 
-            if (_mapManager.TryFindGridAt(xform.MapID, targetPos, out var mapGrid))
+            if (_mapManager.TryFindGridAt(xform.MapID, xt, out var mapGrid))
             {
                 targetCordinates = new EntityCoordinates(mapGrid.Owner, mapGrid.WorldToLocal(targetSpot));
             }

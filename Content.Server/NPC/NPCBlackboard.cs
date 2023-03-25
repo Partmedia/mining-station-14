@@ -25,6 +25,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         {"MinimumIdleTime", 2f},
         {"MovementRange", 1.5f},
         {"RangedRange", 7f},
+        {"AdvancedTargeting", false},
         {"RotateSpeed", MathF.PI},
         {"VisionRadius", 7f},
     };
