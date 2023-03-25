@@ -50,3 +50,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:ExplodeBehavior
+  - type: Faction
+    factions:
+      - Meteor

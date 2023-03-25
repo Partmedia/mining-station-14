@@ -33,3 +33,11 @@
   hostile:
   - NanoTrasen
   - Syndicate
+
+- type: faction
+  id: CIWS
+  hostile:
+  - Meteor
+
+- type: faction
+  id: Meteor

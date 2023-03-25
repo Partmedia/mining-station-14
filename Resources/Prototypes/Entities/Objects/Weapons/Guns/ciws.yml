@@ -1,0 +1,37 @@
+- type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretCIWS
+  name: Goalie CIWS
+  description: A close-in weapon system fitted with a STS-14 Long-Range Phased-Array Radar and a MK-IV Fire Control System. Designed to detect and destroy meteors.
+  components:
+  - type: Anchorable
+  - type: Faction
+    factions:
+    - CIWS
+  - type: HTN
+    rootTask: TurretCompound
+    blackboard:
+      SoundTargetInLOS: !type:SoundPathSpecifier
+        path: /Audio/Effects/double_beep.ogg
+      AdvancedTargeting: !type:Bool
+        true
+      RangedRange: !type:Single
+        60.0
+      VisionRadius: !type:Single
+        100.0
+
+- type: entity
+  parent: WeaponTurretCIWS
+  id: WeaponTurretCIWSCheap
+  name: Sus-Tech ELITE CIWS
+  description: It looks like a Goalie, but its targeting computer was most likely coded by a NanoTrasen employee obsessed with refactoring code.
+  components:
+  - type: HTN
+    rootTask: TurretCompound
+    blackboard:
+      SoundTargetInLOS: !type:SoundPathSpecifier
+        path: /Audio/Effects/double_beep.ogg
+      RangedRange: !type:Single
+        60.0
+      VisionRadius: !type:Single
+        80.0

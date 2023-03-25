@@ -457,3 +457,34 @@
     contents:
       - id: SpaceCash1000
         amount: 10
+
+- type: cargoProduct
+  id: WeaponTurretCIWSC
+  icon:
+    sprite: Objects/Weapons/Guns/turrets.rsi
+    state: syndie_lethal
+  product: WeaponTurretCIWS
+  cost: 19000
+  category: Armory
+  group: market
+
+- type: cargoProduct
+  id: WeaponTurretCIWSCheapC
+  icon:
+    sprite: Objects/Weapons/Guns/turrets.rsi
+    state: syndie_lethal
+  product: WeaponTurretCIWSCheap
+  cost: 6000
+  category: Armory
+  group: market
+
+- type: cargoProduct
+  id: MagazineBoxCaselessRifleBigC
+  description: 200 rounds of ammunition suitable for use with close-in weapon systems.
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/caseless_rifle.rsi
+    state: base-b
+  product: MagazineBoxCaselessRifleBig
+  cost: 4800
+  category: Armory
+  group: market
