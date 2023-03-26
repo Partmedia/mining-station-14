@@ -1,0 +1,45 @@
+- type: entity
+  name: mining treasure spawner
+  id: MiningTreasureSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Materials/ingots.rsi
+          state: gold_3
+    - type: RandomSpawner
+      prototypes:
+        - AdvancedCapacitorStockPart 
+        - AdvancedMatterBinStockPart 
+        - AdvancedScanningModuleStockPart 
+        - BibleNecronomicon 
+        - BoxPerformer 
+        - ClockworkShield 
+        - ClothingNeckCloakHerald 
+        - CrayonRainbow 
+        - DrinkGoldenCup 
+        - HighPowerMicroLaserStockPart 
+        - MirrorShield 
+        - NanoManipulatorStockPart 
+        - NuclearBombKeg 
+        - PowerCellAntiqueProto 
+        - ToolboxGolden 
+        - WeaponRevolverDeckard 
+      chance: 0.7
+      rarePrototypes:
+        - BluespaceMatterBinStockPart
+        - EldritchBlade
+        - FemtoManipulatorStockPart
+        - PhasicScanningModuleStockPart
+        - PicoManipulatorStockPart
+        - QuadUltraMicroLaserStockPart
+        - QuadraticCapacitorStockPart
+        - RitualDagger
+        - SuperCapacitorStockPart
+        - SuperMatterBinStockPart
+        - TriphasicScanningModuleStockPart
+        - UltraHighPowerMicroLaserStockPart
+        - UnholyHalberd
+        - WeaponStaffHealing
+      rareChance: 0.3
