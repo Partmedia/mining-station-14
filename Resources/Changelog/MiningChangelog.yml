@@ -319,3 +319,28 @@ Entries:
       message: "Gold and silver ingots now sell for the correct price" }
   id: 2542
   time: '2023-03-04T15:57:58-08:00'
+
+- author: v1.2.3
+  changes:
+  - { type: Add,
+      message: "Add close-in weapon systems to defend the station against meteors" }
+  - { type: Add,
+      message: "Add new lobby art and round-start music" }
+  - { type: Add,
+      message: "Uranium is now radioactive" }
+  - { type: Add,
+      message: "Plasma generators are now upgradable" }
+  - { type: Add,
+      message: "Airtight plastic flaps are now constructible" }
+  - { type: Tweak,
+      message: "Unrefined ores now sell for less money than refined materials" }
+  - { type: Tweak,
+      message: "Ceilings without supports now always cave in" }
+  - { type: Tweak,
+      message: "Cave-ins no longer happen when gravity is off" }
+  - { type: Tweak,
+      message: "Cargo shuttles now have better names" }
+  - { type: Tweak,
+      message: "Stasis beds are now easier to construct" }
+  id: 2543
+  time: '2023-03-25T18:15:12-07:00'
