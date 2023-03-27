@@ -78,6 +78,16 @@
   group: market
 
 - type: cargoProduct
+  id: GeigerCounterC
+  icon:
+    sprite: Objects/Tools/geiger.rsi
+    state: geiger_base
+  product: GeigerCounter
+  cost: 80
+  category: Salvage
+  group: market
+
+- type: cargoProduct
   id: MiningBiomassReclaimerCrate
   name: biomass reclaimer crate
   description: End NanoTrasen's monopoly on biomass with your own reclaimer!
