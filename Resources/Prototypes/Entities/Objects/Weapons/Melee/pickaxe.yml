@@ -51,12 +51,29 @@
   - type: GatheringTool
     damage:
       types:
-        Structural: 75
-    gatheringTime: 0.50
-    MaxGatheringEntities: 2
+        Structural: 150
+    gatheringTime: 2
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
         Piercing: 10
         Blunt: 4
+  - type: Construction
+    graph: MiningDrillGraph
+    node: drill
+    defaultTarget: diamond drill
+
+- type: entity
+  name: diamond mining drill
+  parent: MiningDrill
+  id: MiningDrillDiamond
+  components:
+  - type: Sprite
+    state: diamond
+  - type: GatheringTool
+    gatheringTime: 1
+    maxEntities: 2
+  - type: Construction
+    graph: MiningDrillGraph
+    node: diamond drill

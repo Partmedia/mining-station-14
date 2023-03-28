@@ -1,0 +1,15 @@
+- type: constructionGraph
+  id: MiningDrillGraph
+  start: start
+  graph:
+    - node: start
+    - node: drill
+      entity: MiningDrill
+      edges:
+        - to: diamond drill
+          steps:
+            - material: Diamond
+              amount: 3
+              doAfter: 3
+    - node: diamond drill
+      entity: MiningDrillDiamond
