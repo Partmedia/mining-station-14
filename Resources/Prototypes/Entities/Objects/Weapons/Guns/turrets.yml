@@ -92,8 +92,7 @@
         mask:
         - MachineMask
         layer:
-        - MidImpassable
-        - LowImpassable
+        - MachineLayer
 
 - type: entity
   parent: BaseWeaponTurret
