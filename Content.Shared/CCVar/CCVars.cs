@@ -300,6 +300,9 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.round_start_fail_shutdown_count", 5, CVar.SERVERONLY | CVar.SERVER);
 #endif
 
+        public static readonly CVarDef<int> InitialBalance =
+            CVarDef.Create("game.initial_balance", 2000, CVar.SERVERONLY);
+
         /*
          * Discord
          */

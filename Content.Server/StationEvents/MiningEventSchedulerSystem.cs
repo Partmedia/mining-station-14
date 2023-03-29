@@ -121,7 +121,7 @@ namespace Content.Server.StationEvents
                 TryComp<StationBankAccountComponent>(station, out var bankComponent);
                 if (bankComponent != null)
                 {
-                    var profit = bankComponent.Balance - 2000;
+                    var profit = bankComponent.Balance - bankComponent.InitialBalance;
                     ev.AddLine(String.Format("The station made a profit of {0} spacebucks.", profit));
                     var endText = GenEndText(profit);
                     Logger.InfoS("mining", "profit:{0}", endText);

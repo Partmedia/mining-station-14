@@ -1,14 +1,17 @@
 using Content.Server.Cargo.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Containers.ItemSlots;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem : SharedCargoSystem
 {
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -34,7 +37,9 @@ public sealed partial class CargoSystem : SharedCargoSystem
 
     private void OnStationInit(StationInitializedEvent ev)
     {
-        EnsureComp<StationBankAccountComponent>(ev.Station);
+        var bank = EnsureComp<StationBankAccountComponent>(ev.Station);
+        bank.InitialBalance = _configurationManager.GetCVar(CCVars.InitialBalance);
+        bank.Balance = bank.InitialBalance;
         EnsureComp<StationCargoOrderDatabaseComponent>(ev.Station);
     }
 
