@@ -11,6 +11,11 @@
   - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
+    blackboard:
+      VisionRadius: !type:Single
+        2.0
+      FollowRange: !type:Single
+        2.0
   - type: Faction
     factions:
     - SimpleHostile
@@ -23,8 +28,8 @@
       scale: 0.8, 0.8
   - type: Physics
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4
-    baseSprintSpeed : 6
+    baseWalkSpeed : 3
+    baseSprintSpeed : 4
   - type: Fixtures
     fixtures:
     - shape:

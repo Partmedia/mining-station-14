@@ -12,6 +12,11 @@
     - type: MobMover
     - type: HTN
       rootTask: SimpleHostileCompound
+      blackboard:
+        VisionRadius: !type:Single
+          3.0
+        FollowRange: !type:Single
+          3.0
     - type: Faction
       factions:
         - SimpleHostile
