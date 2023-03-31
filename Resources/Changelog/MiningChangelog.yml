@@ -348,6 +348,19 @@ Entries:
 - author: v1.2.4
   changes:
   - { type: Add,
+      message: "Asteroids are now more exciting and have new treasures" }
+  - { type: Add,
+      message: "Geiger counters are available for purchase from cargo" }
+  - { type: Add,
+      message: "Add diamond drills" }
+  - { type: Fix,
+      message: "Brute packs are less annoying to use" }
+  id: 2544
+  time: '2023-03-31T16:16:36-07:00'
+
+- author: v1.2.5
+  changes:
+  - { type: Add,
       message: "Add upgradable diamond mining drills." }
   - { type: Add,
       message: "Add ore hoppers for you to dump your ores onto a conveyor." }
@@ -361,5 +374,5 @@ Entries:
       message: "Some monsters don't see as far anymore." }
   - { type: Tweak,
       message: "Felinids can now purr." }
-  id: 2544
+  id: 2545
   time: '2023-04-06T22:39:38-07:00'
