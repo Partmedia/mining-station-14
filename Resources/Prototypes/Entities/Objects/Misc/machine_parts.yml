@@ -88,6 +88,8 @@
       state: adv_capacitor
     - type: MachinePart
       rating: 2
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   id: AdvancedScanningModuleStockPart
@@ -99,6 +101,8 @@
       state: adv_scan_module
     - type: MachinePart
       rating: 2
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   id: NanoManipulatorStockPart
@@ -110,6 +114,8 @@
       state: nano_mani
     - type: MachinePart
       rating: 2
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   id: HighPowerMicroLaserStockPart
@@ -121,6 +127,8 @@
       state: high_micro_laser
     - type: MachinePart
       rating: 2
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   id: AdvancedMatterBinStockPart
@@ -132,6 +140,8 @@
       state: advanced_matter_bin
     - type: MachinePart
       rating: 2
+  - type: StaticPrice
+    price: 250
 
 # Rating 3
 
@@ -145,6 +155,8 @@
       state: super_capacitor
     - type: MachinePart
       rating: 3
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   id: PhasicScanningModuleStockPart
@@ -156,6 +168,8 @@
       state: super_scan_module
     - type: MachinePart
       rating: 3
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   id: PicoManipulatorStockPart
@@ -167,6 +181,8 @@
       state: pico_mani
     - type: MachinePart
       rating: 3
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   id: UltraHighPowerMicroLaserStockPart
@@ -178,6 +194,8 @@
       state: ultra_high_micro_laser
     - type: MachinePart
       rating: 3
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   id: SuperMatterBinStockPart
@@ -189,6 +207,8 @@
       state: super_matter_bin
     - type: MachinePart
       rating: 3
+  - type: StaticPrice
+    price: 1000
 
 # Rating 4
 
@@ -202,6 +222,8 @@
       state: quadratic_capacitor
     - type: MachinePart
       rating: 4
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   id: TriphasicScanningModuleStockPart
@@ -213,6 +235,8 @@
       state: triphasic_scan_module
     - type: MachinePart
       rating: 4
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   id: FemtoManipulatorStockPart
@@ -224,6 +248,8 @@
       state: femto_mani
     - type: MachinePart
       rating: 4
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   id: QuadUltraMicroLaserStockPart
@@ -235,6 +261,8 @@
       state: quadultra_micro_laser
     - type: MachinePart
       rating: 4
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   id: BluespaceMatterBinStockPart
@@ -246,6 +274,8 @@
       state: bluespace_matter_bin
     - type: MachinePart
       rating: 4
+  - type: StaticPrice
+    price: 1500
 
 # Subspace stock parts
 
