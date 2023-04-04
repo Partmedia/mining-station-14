@@ -191,3 +191,5 @@
     - type: BatterySelfRecharger
       autoRecharge: true
       autoRechargeRate: 40
+  - type: StaticPrice
+    price: 2000
