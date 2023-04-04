@@ -168,8 +168,8 @@
       passiveBlockModifier: PassiveClockworkShieldBlock
       activeBlockModifier: ActiveClockworkShieldBlock
       #Have it break into brass when clock cult is in
-  - type: StaticPrice
-    price: 3000
+    - type: StaticPrice
+      price: 3000
     
 - type: entity
   name: Mirror Shield
@@ -201,7 +201,7 @@
                 SheetGlass:
                   min: 5
                   max: 5
-  - type: StaticPrice
-    price: 4000
+    - type: StaticPrice
+      price: 4000
     
     
