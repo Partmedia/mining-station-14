@@ -98,6 +98,8 @@
     - Crayon
     - Recyclable
     - Trash
+  - type: StaticPrice
+    price: 6000
 
 - type: entity
   parent: Crayon
