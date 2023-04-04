@@ -78,3 +78,5 @@
   - type: Clothing
     slots:
     - Belt
+  - type: StaticPrice
+    price: 4000
