@@ -100,3 +100,6 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+  - type: StaticPrice
+    price: 3000
+    

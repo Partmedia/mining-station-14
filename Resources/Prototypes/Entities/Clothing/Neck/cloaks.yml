@@ -69,6 +69,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/herald.rsi
+  - type: StaticPrice
+    price: 4000
 
 - type: entity
   parent: ClothingNeckBase

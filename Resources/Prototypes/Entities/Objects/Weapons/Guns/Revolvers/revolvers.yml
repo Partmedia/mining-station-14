@@ -65,6 +65,8 @@
     steps: 4
     zeroVisible: true
   - type: Appearance
+  - type: StaticPrice
+    price: 4000
 
 - type: entity
   name: Inspector
