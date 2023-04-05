@@ -1,0 +1,22 @@
+- type: gameMap
+  id: MiningDev
+  mapName: 'Mining Test'
+  mapPath: /Maps/miningdev.yml
+  minPlayers: 0
+  maxPlayers: 10
+  fallback: true
+  stations:
+    Mining:
+      mapNameTemplate: '{0} Mining Base {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: '14'
+      overflowJobs:
+        - SalvageSpecialist
+      availableJobs:
+        Quartermaster: [ 1, 1 ]
+        StationEngineer: [ 1, 3 ]
+        SalvageSpecialist: [ 3, 5 ]
+        MedicalDoctor: [ 0, 1 ]
+        ServiceWorker: [ 1, 2 ]
+        CorpSec: [ 1, 1 ]
