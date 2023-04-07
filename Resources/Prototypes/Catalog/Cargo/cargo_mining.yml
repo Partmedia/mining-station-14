@@ -88,6 +88,26 @@
   group: market
 
 - type: cargoProduct
+  id: C4C
+  icon:
+    sprite: Objects/Weapons/Bombs/c4.rsi
+    state: icon
+  product: C4
+  cost: 120
+  category: Salvage
+  group: market
+
+- type: cargoProduct
+  id: RemoteSignallerC
+  icon:
+    sprite: Objects/Devices/signaller.rsi
+    state: signaller
+  product: RemoteSignaller
+  cost: 300
+  category: Salvage
+  group: market
+
+- type: cargoProduct
   id: MiningBiomassReclaimerCrate
   name: biomass reclaimer crate
   description: End NanoTrasen's monopoly on biomass with your own reclaimer!
