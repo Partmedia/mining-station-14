@@ -344,3 +344,22 @@ Entries:
       message: "Stasis beds are now easier to construct" }
   id: 2543
   time: '2023-03-25T18:15:12-07:00'
+
+- author: v1.2.4
+  changes:
+  - { type: Add,
+      message: "Add upgradable diamond mining drills." }
+  - { type: Add,
+      message: "Add ore hoppers for you to dump your ores onto a conveyor." }
+  - { type: Add,
+      message: "Geiger counters, C-4, remote signallers, and ore hoppers are available from the cargo catalog." }
+  - { type: Add,
+      message: "You can now play a fox." }
+  - { type: Tweak,
+      message: "Brute packs are less annoying to use." }
+  - { type: Tweak,
+      message: "Some monsters don't see as far anymore." }
+  - { type: Tweak,
+      message: "Felinids can now purr." }
+  id: 2544
+  time: '2023-04-06T22:39:38-07:00'
