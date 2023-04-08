@@ -42,6 +42,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     Positive for heaters, negative for freezers.
         /// </summary>
         [DataField("cf")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float Cf = 0.9f; // output power / input power, positive is heat
 
         /// <summary>
