@@ -262,10 +262,10 @@
   components:
     - type: ApcPowerReceiver
       powerLoad: 0
-      dumpHeat: 4
+      dumpHeat: 11
     - type: GasThermoMachine
       mode: Freezer
-      cf: -3.9
+      cf: -11.0
     - type: Sprite
       layers:
         - state: freezer_off
