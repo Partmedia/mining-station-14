@@ -1,6 +1,7 @@
 - type: gameMapPool
   id: MiningMapPool
   maps:
+  - MiningTiny
   - Mining
   - MiningCrashed
   - MiningScience
