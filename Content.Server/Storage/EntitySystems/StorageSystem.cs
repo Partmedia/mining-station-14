@@ -261,6 +261,14 @@ namespace Content.Server.Storage.EntitySystems
             if (HasComp<PlaceableSurfaceComponent>(uid))
                 return;
 
+            // Click to interact-transfer contents without having to right click verb
+            if (TryComp(args.Used, out ServerStorageComponent? otherStorage))
+            {
+                TransferEntities(args.Used, uid, otherStorage);
+                args.Handled = true;
+                return;
+            }
+
             if (PlayerInsertHeldEntity(uid, args.User, storageComp))
                 args.Handled = true;
         }
