@@ -99,7 +99,8 @@ tilemap:
 entities:
 - uid: 0
   components:
-  - type: MetaData
+  - name: Escape Pod
+    type: MetaData
   - pos: 0.48958334,0.74920964
     parent: invalid
     type: Transform
@@ -495,10 +496,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 22
-  type: Gyroscope
+  type: RCSThruster
   components:
-  - rot: 3.141592653589793 rad
-    pos: -5.5,-1.5
+  - pos: 3.5,2.5
     parent: 0
     type: Transform
   - type: AtmosDevice
@@ -697,19 +697,21 @@ entities:
     parent: 0
     type: Transform
 - uid: 51
-  type: ShuttleWindow
+  type: RCSThruster
   components:
   - rot: -1.5707963267948966 rad
-    pos: -0.5,-1.5
+    pos: 3.5,-5.5
     parent: 0
     type: Transform
+  - type: AtmosDevice
 - uid: 52
-  type: Grille
+  type: RCSThruster
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -0.5,-1.5
+  - rot: 1.5707963267948966 rad
+    pos: -4.5,-5.5
     parent: 0
     type: Transform
+  - type: AtmosDevice
 - uid: 53
   type: CableHV
   components:
@@ -991,9 +993,9 @@ entities:
     type: Transform
   - type: AtmosDevice
 - uid: 97
-  type: Thruster
+  type: RCSThruster
   components:
-  - pos: -5.5,0.5
+  - pos: -4.5,2.5
     parent: 0
     type: Transform
   - type: AtmosDevice
@@ -1014,43 +1016,13 @@ entities:
     type: Transform
   - type: AtmosDevice
 - uid: 100
-  type: Thruster
+  type: Gyroscope
   components:
-  - pos: 4.5,0.5
+  - pos: -0.5,-1.5
     parent: 0
     type: Transform
-  - type: AtmosDevice
-- uid: 101
-  type: Thruster
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 3.5,2.5
-    parent: 0
-    type: Transform
-  - type: AtmosDevice
-- uid: 102
-  type: Thruster
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -4.5,2.5
-    parent: 0
-    type: Transform
-  - type: AtmosDevice
-- uid: 103
-  type: Thruster
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -4.5,-5.5
-    parent: 0
-    type: Transform
-  - type: AtmosDevice
-- uid: 104
-  type: Thruster
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 3.5,-5.5
-    parent: 0
-    type: Transform
+  - baseThrust: 2000
+    type: Thruster
   - type: AtmosDevice
 - uid: 105
   type: CableApcExtension
@@ -1128,6 +1100,8 @@ entities:
   - pos: -0.5,1.5
     parent: 0
     type: Transform
+  - authorizationsRequired: 1
+    type: EmergencyShuttleConsole
   - type: AtmosDevice
 - uid: 117
   type: Catwalk
@@ -1198,15 +1172,6 @@ entities:
     pos: 1.5,-0.5
     parent: 0
     type: Transform
-- uid: 126
-  type: EmergencyLight
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -3.5,-1.5
-    parent: 0
-    type: Transform
-  - type: AtmosDevice
-  - type: ActiveEmergencyLight
 - uid: 127
   type: Catwalk
   components:
