@@ -18,5 +18,5 @@
         - FoodBoxDonkpocketBerry
         - FoodBoxDonkpocketHonk
         - FoodBoxDonkpocketDink
-      chance: 0.5
+      chance: 1.0
       offset: 0.0
