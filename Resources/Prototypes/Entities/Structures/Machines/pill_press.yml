@@ -9,6 +9,8 @@
   components:
   - type: Transform
     anchored: true
+  - type: Machine
+    board: PillPressMachineBoard
   - type: PillPress
     pillDosageLimit: 50
   - type: ActivatableUI
