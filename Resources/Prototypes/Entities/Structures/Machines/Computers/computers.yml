@@ -27,6 +27,7 @@
     access:
     - [ Command ]
   - type: EmergencyShuttleConsole
+    authorizationsRequired: 1
   - type: ActivatableUI
     key: enum.EmergencyConsoleUiKey.Key
   - type: UserInterface
