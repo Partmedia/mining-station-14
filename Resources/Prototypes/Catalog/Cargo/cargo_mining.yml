@@ -21,16 +21,6 @@
   group: market
 
 - type: cargoProduct
-  id: HandheldCrewMonitorC
-  icon:
-    sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
-    state: scanner
-  product: HandheldCrewMonitor
-  cost: 1295
-  category: Medical
-  group: market
-
-- type: cargoProduct
   id: MiningMagnetCrate
   description: Expand your means of production by salvaging!
   icon:
