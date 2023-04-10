@@ -23,6 +23,32 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Melee/pickaxe.rsi
+  - type: Construction
+    graph: PickaxeGraph
+    node: pickaxe
+    defaultTarget: diamond pickaxe
+
+- type: entity
+  name: diamond pickaxe
+  parent: Pickaxe
+  id: PickaxeDiamond
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/diamond_pickaxe.rsi
+    state: pickaxe
+  - type: GatheringTool
+    gatheringTime: 1
+    damage:
+      types:
+        Structural: 75
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 20
+        Blunt: 8
+  - type: Construction
+    graph: PickaxeGraph
+    node: diamond pickaxe
 
 - type: entity
   name: pickaxe
@@ -48,6 +74,8 @@
   - type: Sprite
     sprite: Objects/Tools/handdrill.rsi
     state: handdrill
+  - type: Item
+    size: 24
   - type: GatheringTool
     damage:
       types:

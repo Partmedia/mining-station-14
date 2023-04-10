@@ -1,4 +1,20 @@
 - type: constructionGraph
+  id: PickaxeGraph
+  start: start
+  graph:
+    - node: start
+    - node: pickaxe
+      entity: Pickaxe
+      edges:
+        - to: diamond pickaxe
+          steps:
+            - material: Diamond
+              amount: 1
+              doAfter: 3
+    - node: diamond pickaxe
+      entity: PickaxeDiamond
+
+- type: constructionGraph
   id: MiningDrillGraph
   start: start
   graph:
