@@ -7,8 +7,8 @@
      Plastic: 50
 
 - type: latheRecipe
-  id: ChemicalAnalyzerMachineBoard
-  result: ChemicalAnalyzerMachineCBoard
+  id: ChemicalAnalysisMachineBoard
+  result: ChemicalAnalysisMachineBoard
   completetime: 4
   materials:
      Glass: 150
