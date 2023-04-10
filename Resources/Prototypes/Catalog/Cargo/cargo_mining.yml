@@ -108,6 +108,16 @@
   group: market
 
 - type: cargoProduct
+  id: FloodlightC
+  icon:
+    sprite: Objects/Misc/Lights/lights.rsi
+    state: floodlight
+  product: Floodlight
+  cost: 200
+  category: Salvage
+  group: market
+
+- type: cargoProduct
   id: MiningBiomassReclaimerCrate
   name: biomass reclaimer crate
   description: End NanoTrasen's monopoly on biomass with your own reclaimer!
