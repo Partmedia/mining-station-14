@@ -50,6 +50,7 @@
           tags:
           - PillCanister
   - type: Machine
+    board: PillPressMachineBoard
   - type: ContainerContainer
     containers:
       beakerSlot: !type:ContainerSlot

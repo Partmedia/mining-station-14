@@ -26,6 +26,8 @@
     interfaces:
     - key: enum.BiopressUiKey.Key
       type: BiopressBoundUserInterface
+  - type: Machine
+    board: BioPressMachineBoard
   - type: EntityStorage
     capacity: 500
     openSound: /Audio/Machines/airlock_open.ogg

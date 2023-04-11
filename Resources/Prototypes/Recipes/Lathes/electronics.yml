@@ -7,6 +7,34 @@
      Plastic: 50
 
 - type: latheRecipe
+  id: ChemicalAnalysisMachineBoard
+  result: ChemicalAnalysisMachineBoard
+  completetime: 4
+  materials:
+     Glass: 150
+
+- type: latheRecipe
+  id: BioPressMachineBoard
+  result: BioPressMachineBoard
+  completetime: 4
+  materials:
+     Glass: 150
+
+- type: latheRecipe
+  id: CentrifugeMachineBoard
+  result: CentrifugeMachineBoard
+  completetime: 4
+  materials:
+     Glass: 150
+
+- type: latheRecipe
+  id: PillPressMachineBoard
+  result: PillPressMachineBoard
+  completetime: 4
+  materials:
+     Glass: 150
+
+- type: latheRecipe
   id: MailingUnitElectronics
   result: MailingUnitElectronics
   completetime: 4

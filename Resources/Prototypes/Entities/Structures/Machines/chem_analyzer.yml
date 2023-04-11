@@ -1,12 +1,14 @@
 - type: entity
   id: ChemicalAnalysisMachine
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: Chemical Analysis Machine
   description: A machine that analyzes chemical samples.
   placement:
     mode: SnapgridCenter
   components:
   - type: ChemAnalyzer
+  - type: Machine
+    board: ChemicalAnalysisMachineBoard
   - type: Transform
     anchored: true
     noRot: true

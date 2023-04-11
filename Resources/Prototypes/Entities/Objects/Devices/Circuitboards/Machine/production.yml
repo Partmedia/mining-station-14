@@ -68,6 +68,91 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: ChemicalAnalysisMachineBoard
+  parent: BaseMachineCircuitboard
+  name: chemical analysis machine board
+  description: A machine printed circuit board for a chemical analysis machine
+  components:
+    - type: Sprite
+      state: medical
+    - type: MachineBoard
+      prototype: ChemicalAnalysisMachine
+      requirements:
+        ScanningModule: 2
+        Manipulator: 1
+      tagRequirements:
+        GlassBeaker:
+          Amount: 1
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
+      materialRequirements:
+        Steel: 1
+        Glass: 1
+
+- type: entity
+  id: BioPressMachineBoard
+  parent: BaseMachineCircuitboard
+  name: bio press machine board
+  description: A machine printed circuit board for a bio press
+  components:
+    - type: Sprite
+      state: medical
+    - type: MachineBoard
+      prototype: BioPress
+      requirements:
+        ScanningModule: 1
+        Manipulator: 1
+      tagRequirements:
+        GlassBeaker:
+          Amount: 1
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
+      materialRequirements:
+        Steel: 5
+
+- type: entity
+  id: PillPressMachineBoard
+  parent: BaseMachineCircuitboard
+  name: pill press machine board
+  description: A machine printed circuit board for a pill press
+  components:
+    - type: Sprite
+      state: medical
+    - type: MachineBoard
+      prototype: pill_press
+      requirements:
+        ScanningModule: 1
+        Manipulator: 2
+      tagRequirements:
+        GlassBeaker:
+          Amount: 1
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
+      materialRequirements:
+        Steel: 5
+
+- type: entity
+  id: CentrifugeMachineBoard
+  parent: BaseMachineCircuitboard
+  name: centrifuge machine board
+  description: A machine printed circuit board for a centrifuge
+  components:
+    - type: Sprite
+      state: medical
+    - type: MachineBoard
+      prototype: Centrifuge
+      requirements:
+        ScanningModule: 1
+        Manipulator: 5
+      tagRequirements:
+        GlassBeaker:
+          Amount: 2
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
+      materialRequirements:
+        Steel: 5
+
+- type: entity
   id: CircuitImprinterMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: circuit imprinter machine board

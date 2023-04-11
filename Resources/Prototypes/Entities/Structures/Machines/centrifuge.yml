@@ -7,6 +7,8 @@
   components:
   - type: Transform
     anchored: true
+  - type: Machine
+    board: CentrifugeMachineBoard
   - type: Centrifuge
     beakerSlot:
       insertSound: /Audio/Machines/machine_switch.ogg
