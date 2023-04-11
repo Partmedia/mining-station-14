@@ -70,7 +70,7 @@
 - type: entity
   id: ChemicalAnalysisMachineBoard
   parent: BaseMachineCircuitboard
-  name: chemical analysis machine board
+  name: chemical analyzer machine board
   description: A machine printed circuit board for a chemical analysis machine
   components:
     - type: Sprite
