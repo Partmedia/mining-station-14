@@ -477,7 +477,8 @@ public sealed partial class PathfindingSystem
                             if (!fixturesQuery.TryGetComponent(ent, out var fixtures))
                                 continue;
 
-                            // TODO: Inefficient af
+                            var colliding = false;
+
                             foreach (var fixture in fixtures.Fixtures.Values)
                             {
                                 // Don't need to re-do it.
@@ -510,7 +511,12 @@ public sealed partial class PathfindingSystem
 
                                 collisionLayer |= fixture.CollisionLayer;
                                 collisionMask |= fixture.CollisionMask;
+                                colliding = true;
                             }
+
+                            // If entity doesn't intersect this node (e.g. thindows) then ignore it.
+                            if (!colliding)
+                                continue;
 
                             if (accessQuery.HasComponent(ent))
                             {
