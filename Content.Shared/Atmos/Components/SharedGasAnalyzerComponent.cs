@@ -46,14 +46,18 @@ namespace Content.Shared.Atmos.Components
             public readonly string Name;
             public readonly float Pressure;
             public readonly float Temperature;
+            public readonly float LiquidHeight;
             public readonly GasEntry[]? Gases;
+            public readonly LiquidEntry[]? Liquids;
 
-            public GasMixEntry(string name, float pressure, float temperature, GasEntry[]? gases = null)
+            public GasMixEntry(string name, float pressure, float temperature, float liquidHeight, GasEntry[]? gases = null, LiquidEntry[]? liquids = null)
             {
                 Name = name;
                 Pressure = pressure;
                 Temperature = temperature;
+                LiquidHeight = liquidHeight;
                 Gases = gases;
+                Liquids = liquids;
             }
         }
 
@@ -81,6 +85,33 @@ namespace Content.Shared.Atmos.Components
                     "gas-entry-info",
                      ("gasName", Name),
                      ("gasAmount", Amount));
+            }
+        }
+
+        /// <summary>
+        /// Individual liquid entry data for populating the UI
+        /// </summary>
+        [Serializable, NetSerializable]
+        public struct LiquidEntry
+        {
+            public readonly string Name;
+            public readonly float Amount;
+            public readonly string Color;
+
+            public LiquidEntry(string name, float amount, string color)
+            {
+                Name = name;
+                Amount = amount;
+                Color = color;
+            }
+
+            public override string ToString()
+            {
+                // e.g. "Plasma: 1200u"
+                return Loc.GetString(
+                    "liquid-entry-info",
+                     ("liquidName", Name),
+                     ("liquidAmount", Amount));
             }
         }
 

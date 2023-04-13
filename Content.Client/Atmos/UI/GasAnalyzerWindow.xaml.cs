@@ -186,8 +186,8 @@ namespace Content.Client.Atmos.UI
             });
             dataContainer.AddChild(presBox);
 
-            // If there is no gas, it doesn't really have a temperature, so skip displaying it
-            if (gasMix.Pressure > Atmospherics.GasMinMoles)
+            // If there is no gas, it doesn't really have a temperature, so skip displaying it - unless there's liquids in the system
+            if (gasMix.Pressure > Atmospherics.GasMinMoles || gasMix.Liquids?.Length > 0)
             {
                 // Temperature label
                 var tempBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
@@ -226,8 +226,100 @@ namespace Content.Client.Atmos.UI
                     Text = Loc.GetString("gas-analyzer-window-no-gas-text"),
                     FontColorOverride = Color.Gray
                 });
-                // return, everything below is for the fancy gas display stuff
-                return;
+            }
+            else
+            {
+                // Separator
+                dataContainer.AddChild(new Control
+                {
+                    MinSize = new Vector2(0, 10)
+                });
+
+                // Add a table with all the gases
+                var gasTableKey = new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Vertical
+                };
+                var gasTableVal = new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Vertical
+                };
+                dataContainer.AddChild(new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                    Children =
+                    {
+                        gasTableKey,
+                        new Control
+                        {
+                            MinSize = new Vector2(10, 0),
+                            HorizontalExpand = true
+                        },
+                        gasTableVal
+                    }
+                });
+                // This is the gas bar thingy
+                var height = 30;
+                var minSize = 24; // This basically allows gases which are too small, to be shown properly
+                var gasBar = new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                    HorizontalExpand = true,
+                    MinSize = new Vector2(0, height)
+                };
+                // Separator
+                dataContainer.AddChild(new Control
+                {
+                    MinSize = new Vector2(0, 10),
+                    VerticalExpand = true
+                });
+
+                var totalGasAmount = 0f;
+                foreach (var gas in gasMix.Gases!)
+                {
+                    totalGasAmount += gas.Amount;
+                }
+
+                for (var j = 0; j < gasMix.Gases.Length; j++)
+                {
+                    var gas = gasMix.Gases[j];
+                    var color = Color.FromHex($"#{gas.Color}", Color.White);
+                    // Add to the table
+                    gasTableKey.AddChild(new Label
+                    {
+                        Text = Loc.GetString(gas.Name)
+                    });
+                    gasTableVal.AddChild(new Label
+                    {
+                        Text = Loc.GetString("gas-analyzer-window-molarity-text",
+                            ("mol", $"{gas.Amount:0.##}"),
+                            ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
+                        Align = Label.AlignMode.Right,
+                        HorizontalExpand = true
+                    });
+
+                    // Add to the gas bar //TODO: highlight the currently hover one
+                    var left = (j == 0) ? 0f : 2f;
+                    var right = (j == gasMix.Gases.Length - 1) ? 0f : 2f;
+                    gasBar.AddChild(new PanelContainer
+                    {
+                        ToolTip = Loc.GetString("gas-analyzer-window-molarity-percentage-text",
+                            ("gasName", gas.Name),
+                            ("amount", $"{gas.Amount:0.##}"),
+                            ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
+                        HorizontalExpand = true,
+                        SizeFlagsStretchRatio = gas.Amount,
+                        MouseFilter = MouseFilterMode.Stop,
+                        PanelOverride = new StyleBoxFlat
+                        {
+                            BackgroundColor = color,
+                            PaddingLeft = left,
+                            PaddingRight = right
+                        },
+                        MinSize = new Vector2(minSize, 0)
+                    });
+                }
+                dataContainer.AddChild(gasBar);
             }
             // Separator
             dataContainer.AddChild(new Control
@@ -235,92 +327,126 @@ namespace Content.Client.Atmos.UI
                 MinSize = new Vector2(0, 10)
             });
 
-            // Add a table with all the gases
-            var tableKey = new BoxContainer
+            if (gasMix.Liquids == null || gasMix.Liquids?.Length == 0)
             {
-                Orientation = BoxContainer.LayoutOrientation.Vertical
-            };
-            var tableVal = new BoxContainer
-            {
-                Orientation = BoxContainer.LayoutOrientation.Vertical
-            };
-            dataContainer.AddChild(new BoxContainer
-            {
-                Orientation = BoxContainer.LayoutOrientation.Horizontal,
-                Children =
+                // Add a label that there are no liquids so it's less confusing
+                dataContainer.AddChild(new Label
                 {
-                    tableKey,
-                    new Control
-                    {
-                        MinSize = new Vector2(10, 0),
-                        HorizontalExpand = true
-                    },
-                    tableVal
-                }
-            });
-            // This is the gas bar thingy
-            var height = 30;
-            var minSize = 24; // This basically allows gases which are too small, to be shown properly
-            var gasBar = new BoxContainer
-            {
-                Orientation = BoxContainer.LayoutOrientation.Horizontal,
-                HorizontalExpand = true,
-                MinSize = new Vector2(0, height)
-            };
-            // Separator
-            dataContainer.AddChild(new Control
-            {
-                MinSize = new Vector2(0, 10),
-                VerticalExpand = true
-            });
-
-            var totalGasAmount = 0f;
-            foreach (var gas in gasMix.Gases!)
-            {
-                totalGasAmount += gas.Amount;
-            }
-
-            for (var j = 0; j < gasMix.Gases.Length; j++)
-            {
-                var gas = gasMix.Gases[j];
-                var color = Color.FromHex($"#{gas.Color}", Color.White);
-                // Add to the table
-                tableKey.AddChild(new Label
-                {
-                    Text = Loc.GetString(gas.Name)
+                    Text = Loc.GetString("gas-analyzer-window-no-liquids-text"),
+                    FontColorOverride = Color.Gray
                 });
-                tableVal.AddChild(new Label
+            }
+            else
+            {
+                var levelBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
+
+                levelBox.AddChild(new Label
                 {
-                    Text = Loc.GetString("gas-analyzer-window-molarity-text",
-                        ("mol", $"{gas.Amount:0.##}"),
-                        ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
+                    Text = Loc.GetString("gas-analyzer-window-liquid-level-text")
+                });
+                levelBox.AddChild(new Control
+                {
+                    MinSize = new Vector2(10, 0),
+                    HorizontalExpand = true
+                });
+                levelBox.AddChild(new Label
+                {
+                    Text = $"{gasMix.LiquidHeight:0.##}/1",
                     Align = Label.AlignMode.Right,
                     HorizontalExpand = true
                 });
-
-                // Add to the gas bar //TODO: highlight the currently hover one
-                var left = (j == 0) ? 0f : 2f;
-                var right = (j == gasMix.Gases.Length - 1) ? 0f : 2f;
-                gasBar.AddChild(new PanelContainer
+                dataContainer.AddChild(levelBox);
+                // Separator
+                dataContainer.AddChild(new Control
                 {
-                    ToolTip = Loc.GetString("gas-analyzer-window-molarity-percentage-text",
-                        ("gasName", gas.Name),
-                        ("amount", $"{gas.Amount:0.##}"),
-                        ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
-                    HorizontalExpand = true,
-                    SizeFlagsStretchRatio = gas.Amount,
-                    MouseFilter = MouseFilterMode.Stop,
-                    PanelOverride = new StyleBoxFlat
-                    {
-                        BackgroundColor = color,
-                        PaddingLeft = left,
-                        PaddingRight = right
-                    },
-                    MinSize = new Vector2(minSize, 0)
+                    MinSize = new Vector2(0, 10)
                 });
-            }
+                // Add a table with all the liquids
+                var liquidTableKey = new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Vertical
+                };
+                var liquidTableVal = new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Vertical
+                };
+                dataContainer.AddChild(new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                    Children =
+                    {
+                        liquidTableKey,
+                        new Control
+                        {
+                            MinSize = new Vector2(10, 0),
+                            HorizontalExpand = true
+                        },
+                        liquidTableVal
+                    }
+                });
+                // Liquid bar
+                var height = 30;
+                var minSize = 24;
+                var liquidBar = new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                    HorizontalExpand = true,
+                    MinSize = new Vector2(0, height)
+                };
+                // Separator
+                dataContainer.AddChild(new Control
+                {
+                    MinSize = new Vector2(0, 10)
+                });
 
-            dataContainer.AddChild(gasBar);
+                var totalReagentAmount = 0f;
+                foreach (var reagent in gasMix.Liquids!)
+                {
+                    totalReagentAmount += reagent.Amount;
+                }
+
+                for (var j = 0; j < gasMix.Liquids.Length; j++)
+                {
+                    var reagent = gasMix.Liquids[j];
+                    var color = Color.FromHex(reagent.Color, Color.White);
+                    // Add to the table
+                    liquidTableKey.AddChild(new Label
+                    {
+                        Text = Loc.GetString(reagent.Name)
+                    });
+                    liquidTableVal.AddChild(new Label
+                    {
+                        Text = Loc.GetString("gas-analyzer-window-quantity-text",
+                            ("amount", $"{reagent.Amount:0.##}"),
+                            ("percentage", $"{(reagent.Amount / totalReagentAmount * 100):0.#}")),
+                        Align = Label.AlignMode.Right,
+                        HorizontalExpand = true
+                    });
+
+                    // Add to the gas bar //TODO: highlight the currently hover one
+                    var left = (j == 0) ? 0f : 2f;
+                    var right = (j == gasMix.Liquids.Length - 1) ? 0f : 2f;
+                    liquidBar.AddChild(new PanelContainer
+                    {
+                        ToolTip = Loc.GetString("gas-analyzer-window-quantity-percentage-text",
+                            ("liquidName", reagent.Name),
+                            ("amount", $"{reagent.Amount:0.##}"),
+                            ("percentage", $"{(reagent.Amount / totalReagentAmount * 100):0.#}")),
+                        HorizontalExpand = true,
+                        SizeFlagsStretchRatio = reagent.Amount,
+                        MouseFilter = MouseFilterMode.Stop,
+                        PanelOverride = new StyleBoxFlat
+                        {
+                            BackgroundColor = color,
+                            PaddingLeft = left,
+                            PaddingRight = right
+                        },
+                        MinSize = new Vector2(minSize, 0)
+                    });
+                }
+
+                dataContainer.AddChild(liquidBar);
+            }
         }
     }
 }

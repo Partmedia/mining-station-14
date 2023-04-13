@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -37,6 +38,7 @@ namespace Content.Server.Atmos.EntitySystems
         ///     The mixture that the entity is exposed to. Output parameter.
         /// </summary>
         public GasMixture? Gas = null;
+        public Solution? Liquids = null;
 
         /// <summary>
         ///     Whether to invalidate the mixture, if possible.

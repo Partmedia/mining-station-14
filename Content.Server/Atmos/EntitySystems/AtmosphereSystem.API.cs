@@ -4,6 +4,7 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
@@ -47,6 +48,44 @@ public partial class AtmosphereSystem
         var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
 
         return GetTileMixture(gridUid, mapUid, position, excite);
+    }
+
+    // TODO CONDENSE This is fucking bad. Merge Get*Solution into Get*Mixture.
+    public Solution? GetContainingSolution(EntityUid uid, bool ignoreExposed = false, bool excite = false, TransformComponent? transform = null)
+    {
+        if (!ignoreExposed)
+        {
+            // Used for things like disposals/cryo to change which air people are exposed to.
+            var ev = new AtmosExposedGetAirEvent(uid, excite);
+
+            // Give the entity itself a chance to handle this.
+            RaiseLocalEvent(uid, ref ev, false);
+
+            if (ev.Handled)
+                return ev.Liquids;
+
+            // We need to get the parent now, so we need the transform... If the parent is invalid, we can't do much else.
+            if(!Resolve(uid, ref transform) || !transform.ParentUid.IsValid() || transform.MapUid == null)
+                return GetTileSolution(null, null, Vector2i.Zero, excite);
+
+            // Give the parent entity a chance to handle the event...
+            RaiseLocalEvent(transform.ParentUid, ref ev, false);
+
+            if (ev.Handled)
+                return ev.Liquids;
+        }
+        // Oops, we did a little bit of code duplication...
+        else if(!Resolve(uid, ref transform))
+        {
+            return GetTileSolution(null, null, Vector2i.Zero, excite);
+        }
+
+
+        var gridUid = transform.GridUid;
+        var mapUid = transform.MapUid;
+        var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
+
+        return GetTileSolution(gridUid, mapUid, position, excite);
     }
 
     public bool HasAtmosphere(EntityUid gridUid)
@@ -141,6 +180,28 @@ public partial class AtmosphereSystem
 
         // Default to a space mixture... This is a space game, after all!
         return ev.Mixture ?? GasMixture.SpaceGas;
+    }
+
+    public Solution? GetTileSolution(EntityUid? gridUid, EntityUid? mapUid, Vector2i tile, bool excite = false)
+    {
+        var ev = new GetTileMixtureMethodEvent(gridUid, mapUid, tile, excite);
+
+        // If we've been passed a grid, try to let it handle it.
+        if(gridUid.HasValue)
+            RaiseLocalEvent(gridUid.Value, ref ev, false);
+
+        if (ev.Handled)
+            return ev.Liquids;
+
+        // We either don't have a grid, or the event wasn't handled.
+        // Let the map handle it instead, and also broadcast the event.
+        if(mapUid.HasValue)
+            RaiseLocalEvent(mapUid.Value, ref ev, true);
+        else
+            RaiseLocalEvent(ref ev);
+
+        // Default to absolutely nothing.
+        return ev.Liquids ?? new Solution();
     }
 
     public ReactionResult ReactTile(EntityUid gridId, Vector2i tile)
@@ -289,10 +350,10 @@ public partial class AtmosphereSystem
         (EntityUid Grid, Vector2i Tile, bool Handled = false);
 
     [ByRefEvent] private record struct GetTileMixturesMethodEvent
-        (EntityUid? GridUid, EntityUid? MapUid, List<Vector2i> Tiles, bool Excite = false, GasMixture?[]? Mixtures = null, bool Handled = false);
+        (EntityUid? GridUid, EntityUid? MapUid, List<Vector2i> Tiles, bool Excite = false, GasMixture?[]? Mixtures = null, Solution?[]? Liquids = null, bool Handled = false);
 
     [ByRefEvent] private record struct GetTileMixtureMethodEvent
-        (EntityUid? GridUid, EntityUid? MapUid, Vector2i Tile, bool Excite = false, GasMixture? Mixture = null, bool Handled = false);
+        (EntityUid? GridUid, EntityUid? MapUid, Vector2i Tile, bool Excite = false, GasMixture? Mixture = null, Solution? Liquids = null, bool Handled = false);
 
     [ByRefEvent] private record struct ReactTileMethodEvent
         (EntityUid GridId, Vector2i Tile, ReactionResult Result = default, bool Handled = false);

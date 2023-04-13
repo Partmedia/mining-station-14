@@ -5,11 +5,15 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -21,6 +25,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmo = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+        [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
         public override void Initialize()
         {
@@ -169,16 +174,47 @@ namespace Content.Server.Atmos.EntitySystems
             var gasMixList = new List<GasMixEntry>();
 
             // Fetch the environmental atmosphere around the scanner. This must be the first entry
-            var tileMixture = _atmo.GetContainingMixture(component.Owner, true);
-            if (tileMixture != null)
+            // TODO CONDENSE account for puddles on tile
+            // TODO CONDENSE remove duplicated heat equation code, it breaks when there's no gas anyway
+            var tileGasMixture = _atmo.GetContainingMixture(component.Owner, true);
+            var tileSolution = _atmo.GetContainingSolution(component.Owner, true);
+            var Ttile = Atmospherics.TCMB;
+            if (tileGasMixture != null || tileSolution != null)
             {
-                gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), tileMixture.Pressure, tileMixture.Temperature,
-                    GenerateGasEntryArray(tileMixture)));
+               
+                float Hgas = tileSolution?.Volume == 0 ? Atmospherics.SpaceHeatCapacity : 0;
+                float Qgas = 0;
+                if(tileGasMixture != null)
+                {
+                    Hgas = _atmo.GetHeatCapacity(tileGasMixture);
+                    Qgas = Hgas * tileGasMixture.Temperature;
+                }
+                else
+                {
+                    Qgas = Atmospherics.SpaceHeatCapacity * Atmospherics.TCMB;
+                }
+                float Hliquid = 0;
+                float Qliquid = 0;
+                if (tileSolution != null)
+                {
+                Hliquid = tileSolution.GetHeatCapacity(_protoMan);
+                Qliquid = Hliquid * tileSolution.Temperature;
+                }
+                Ttile = (Qgas + Qliquid) / (Hgas + Hliquid);
+            }
+            var liquidHeight = 0f;
+            if (tileSolution != null) {
+                liquidHeight = (tileSolution.Volume/tileSolution.MaxVolume).Float(); //tileSolution.SafeVolume?
+            }
+            if (tileGasMixture != null)
+            {
+                gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), tileGasMixture.Pressure, Ttile, liquidHeight, 
+                    GenerateGasEntryArray(tileGasMixture), GenerateLiquidEntryArray(tileSolution)));
             }
             else
             {
                 // No gases were found
-                gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), 0f, 0f));
+                gasMixList.Add(new GasMixEntry(Loc.GetString("gas-analyzer-window-environment-tab-label"), 0f, Ttile, liquidHeight, null, GenerateLiquidEntryArray(tileSolution)));
             }
 
             var deviceFlipped = false;
@@ -191,18 +227,42 @@ namespace Content.Server.Atmos.EntitySystems
                     return false;
                 }
 
-                // gas analyzed was used on an entity, try to request gas data via event for override
+                // gas analyzer was used on an entity, try to request gas data via event for override
                 var ev = new GasAnalyzerScanEvent();
                 RaiseLocalEvent(component.Target.Value, ev, false);
-
                 if (ev.GasMixtures != null)
                 {
                     foreach (var mixes in ev.GasMixtures)
                     {
+                        Solution? liquids = null;
+                        if(ev.Liquids != null)
+                            if(ev.Liquids.ContainsKey(mixes.Key))
+                                liquids = ev.Liquids[mixes.Key];
+                        if(liquids == null)
+                            liquids = new Solution();
+                        float Hgas = liquids?.Volume == 0 ? Atmospherics.SpaceHeatCapacity : 0;
+                        float Qgas = 0;
                         if(mixes.Value != null)
-                            gasMixList.Add(new GasMixEntry(mixes.Key, mixes.Value.Pressure, mixes.Value.Temperature, GenerateGasEntryArray(mixes.Value)));
+                        {
+                            Hgas = _atmo.GetHeatCapacity(mixes.Value);
+                            Qgas = Hgas * mixes.Value.Temperature;
+                        }
+                        else
+                        {
+                            Qgas = Atmospherics.SpaceHeatCapacity * Atmospherics.TCMB;
+                        }
+                        float Hliquid = 0;
+                        float Qliquid = 0;
+                        float height = 0;
+                        if(liquids != null) {
+                            Hliquid = liquids.GetHeatCapacity(_protoMan);
+                            Qliquid = Hliquid * liquids.Temperature;
+                            height = (liquids.Volume/liquids.MaxVolume).Float();
+                        }
+                        float Tfinal = (Qgas + Qliquid) / (Hgas + Hliquid);
+                        if(mixes.Value != null)
+                            gasMixList.Add(new GasMixEntry(mixes.Key, mixes.Value.Pressure, Tfinal, height, GenerateGasEntryArray(mixes.Value), GenerateLiquidEntryArray(liquids)));
                     }
-
                     deviceFlipped = ev.DeviceFlipped;
                 }
                 else
@@ -213,7 +273,7 @@ namespace Content.Server.Atmos.EntitySystems
                         foreach (var pair in node.Nodes)
                         {
                             if (pair.Value is PipeNode pipeNode)
-                                gasMixList.Add(new GasMixEntry(pair.Key, pipeNode.Air.Pressure, pipeNode.Air.Temperature, GenerateGasEntryArray(pipeNode.Air)));
+                                gasMixList.Add(new GasMixEntry(pair.Key, pipeNode.Air.Pressure, pipeNode.Air.Temperature, (pipeNode.Liquids.Volume/pipeNode.Air.Volume).Float(), GenerateGasEntryArray(pipeNode.Air), GenerateLiquidEntryArray(pipeNode.Liquids)));
                         }
                     }
                 }
@@ -259,8 +319,28 @@ namespace Content.Server.Atmos.EntitySystems
                     gases.Add(new GasEntry(gasName, mixture.Moles[i], gas.Color));
                 }
             }
-
             return gases.ToArray();
+        }
+
+        /// <summary>
+        /// Generates a LiquidEntry array for a given Solution
+        /// </summary>
+        private LiquidEntry[] GenerateLiquidEntryArray(Solution? liquids)
+        {
+            var reagents = new List<LiquidEntry>();
+            
+            if (liquids == null)
+                return reagents.ToArray();
+            
+            foreach (var reagent in liquids)
+            {
+                    var liquidName = Loc.GetString(reagent.ReagentId);
+                    var color = Color.Transparent;
+                    if (_protoMan.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
+                        color = proto.SubstanceColor;
+                    reagents.Add(new LiquidEntry(liquidName, reagent.Quantity.Float(), color.ToHex()));
+            }
+            return reagents.ToArray();
         }
     }
 }
@@ -277,6 +357,7 @@ public sealed class GasAnalyzerScanEvent : EntityEventArgs
     /// Key is the mix name (ex "pipe", "inlet", "filter"), value is the pipe direction and GasMixture. Add all mixes that should be reported when scanned.
     /// </summary>
     public Dictionary<string, GasMixture?>? GasMixtures;
+    public Dictionary<string, Solution?>? Liquids;
 
     /// <summary>
     /// If the device is flipped. Flipped is defined as when the inline input is 90 degrees CW to the side input

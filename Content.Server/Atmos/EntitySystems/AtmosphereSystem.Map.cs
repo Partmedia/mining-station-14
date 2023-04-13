@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Components;
+using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -27,19 +28,21 @@ public partial class AtmosphereSystem
 
         // Clone the mixture, if possible.
         args.Mixture = component.Mixture?.Clone();
+        args.Liquids = component.Liquids?.Clone();
         args.Handled = true;
     }
 
     private void MapGetTileMixtures(EntityUid uid, MapAtmosphereComponent component, ref GetTileMixturesMethodEvent args)
     {
-        if (args.Handled || component.Mixture == null)
+        if (args.Handled || component.Mixture == null || component.Liquids == null)
             return;
         args.Handled = true;
         args.Mixtures ??= new GasMixture?[args.Tiles.Count];
-
+        args.Liquids ??= new Solution?[args.Tiles.Count];
         for (var i = 0; i < args.Tiles.Count; i++)
         {
             args.Mixtures[i] ??= component.Mixture.Clone();
+            args.Liquids[i] ??= component.Liquids.Clone();
         }
     }
 }
