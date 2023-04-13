@@ -282,6 +282,16 @@
   group: market
 
 - type: cargoProduct
+  id: ScanningModuleStockPartC
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: scan_module
+  product: ScanningModuleStockPart
+  cost: 80
+  category: Engineering
+  group: market
+
+- type: cargoProduct
   id: ProductOreAnalyzer
   name: ore analyzer
   icon:
