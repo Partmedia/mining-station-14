@@ -29,6 +29,9 @@
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 
+  <PropertyGroup Condition="'$(RL)' == 'True'">
+    <DefineConstants>$(DefineConstants);RL</DefineConstants>
+  </PropertyGroup>
   <ItemGroup Condition="'$(RL)' == 'True'">
     <Content Include="RL/libRL/libRL.so">
       <Link>libRL.so</Link>
