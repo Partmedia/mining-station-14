@@ -511,8 +511,8 @@
 - type: cargoProduct
   id: WeaponTurretCIWSC
   icon:
-    sprite: Objects/Weapons/Guns/turrets.rsi
-    state: syndie_lethal
+    sprite: Objects/Weapons/Guns/Turrets/goalie.rsi
+    state: goalie_lethal
   product: WeaponTurretCIWS
   cost: 19000
   category: Armory
@@ -521,7 +521,7 @@
 - type: cargoProduct
   id: WeaponTurretCIWSCheapC
   icon:
-    sprite: Objects/Weapons/Guns/turrets.rsi
+    sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
     state: syndie_lethal
   product: WeaponTurretCIWSCheap
   cost: 6000

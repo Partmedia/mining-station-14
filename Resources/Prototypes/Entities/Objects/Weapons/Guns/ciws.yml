@@ -8,6 +8,12 @@
   - type: Faction
     factions:
     - CIWS
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Turrets/goalie.rsi
+    drawdepth: WallMountedItems
+    layers:
+      - state: goalie_lethal
   - type: HTN
     rootTask: TurretCompound
     blackboard:
