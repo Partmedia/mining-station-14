@@ -142,6 +142,16 @@
   group: market
 
 - type: cargoProduct
+  id: KitchenReagentGrinderC
+  icon:
+    sprite: Structures/Machines/juicer.rsi
+    state: juicer0
+  product: KitchenReagentGrinder
+  cost: 345
+  category: Medical
+  group: market
+
+- type: cargoProduct
   id: MiningGasRecyclerCrate
   name: gas recycler
   description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
@@ -219,6 +229,17 @@
   product: GeneratorPlasma
   cost: 8000
   category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: CrateScienceStarterC
+  description: Start your very own science department! Complete with an R&D server and necessary machine and computer boards. Parts sold separately.
+  icon:
+    sprite: Structures/Storage/Crates/science.rsi
+    state: icon
+  product: CrateScienceStarter
+  cost: 2000
+  category: Science
   group: market
 
 - type: cargoProduct

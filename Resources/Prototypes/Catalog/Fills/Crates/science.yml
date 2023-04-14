@@ -1,1 +1,19 @@
 # Bro what do I PUT here
+
+- type: entity
+  id: CrateScienceStarter
+  name: science kickstart crate
+  parent: CrateScience
+  components:
+  - type: StorageFill
+    contents:
+      - id: ResearchComputerCircuitboard
+        amount: 1
+      - id: AnalysisComputerCircuitboard
+        amount: 1
+      - id: ArtifactAnalyzerMachineCircuitboard
+        amount: 1
+      - id: TechDiskComputerCircuitboard
+        amount: 1
+      - id: ResearchAndDevelopmentServer
+        amount: 1
