@@ -13,56 +13,31 @@
       - id: ClothingHeadsetAltSyndicate
 
 - type: entity
-  id: ClosetEmergencyFilledRandom
-  parent: ClosetEmergency
-  suffix: Filled, Random
+  id: EmergencyFill
+  abstract: true
   components:
   - type: StorageFill
     contents:
       - id: ToolboxEmergencyFilled
-        prob: 0.4
+        prob: 1.0
       - id: ClothingMaskBreath
-        prob: 0.4
-      - id: ClothingMaskBreath
-        prob: 0.25
+        prob: 1.0
       - id: EmergencyOxygenTankFilled
-        prob: 0.4
-      - id: OxygenTankFilled
-        prob: 0.2
-      - id: MedkitOxygenFilled
-        prob: 0.2
-      - id: WeaponFlareGun
-        prob: 0.05
+        prob: 1.0
       - id: ClothingOuterSuitEmergency
-        prob: 0.5
+        prob: 1.0
       - id: BoxMRE
         prob: 0.1
 
 - type: entity
-  id: ClosetWallEmergencyFilledRandom
-  parent: ClosetWallEmergency
+  id: ClosetEmergencyFilledRandom
+  parent: [ ClosetEmergency, EmergencyFill ]
   suffix: Filled, Random
-  components:
-  - type: StorageFill
-    contents:
-      - id: ToolboxEmergencyFilled
-        prob: 0.4
-      - id: ClothingMaskBreath
-        prob: 0.4
-      - id: ClothingMaskBreath
-        prob: 0.25
-      - id: EmergencyOxygenTankFilled
-        prob: 0.4
-      - id: OxygenTankFilled
-        prob: 0.2
-      - id: MedkitOxygenFilled
-        prob: 0.2
-      - id: WeaponFlareGun
-        prob: 0.05
-      - id: ClothingOuterSuitEmergency
-        prob: 0.5
-      - id: BoxMRE
-        prob: 0.1
+
+- type: entity
+  id: ClosetWallEmergencyFilledRandom
+  parent: [ ClosetWallEmergency, EmergencyFill ]
+  suffix: Filled, Random
         
 - type: entity
   id: ClosetFireFilled

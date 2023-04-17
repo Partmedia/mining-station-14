@@ -142,6 +142,16 @@
   group: market
 
 - type: cargoProduct
+  id: KitchenReagentGrinderC
+  icon:
+    sprite: Structures/Machines/juicer.rsi
+    state: juicer0
+  product: KitchenReagentGrinder
+  cost: 345
+  category: Medical
+  group: market
+
+- type: cargoProduct
   id: MiningGasRecyclerCrate
   name: gas recycler
   description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
@@ -222,6 +232,17 @@
   group: market
 
 - type: cargoProduct
+  id: CrateScienceStarterC
+  description: Start your very own science department! Complete with an R&D server and necessary machine and computer boards. Parts sold separately.
+  icon:
+    sprite: Structures/Storage/Crates/science.rsi
+    state: icon
+  product: CrateScienceStarter
+  cost: 2000
+  category: Science
+  group: market
+
+- type: cargoProduct
   id: CircuitImprinterC
   icon:
     sprite: Structures/Machines/circuit_imprinter.rsi
@@ -277,6 +298,16 @@
     sprite: Objects/Misc/stock_parts.rsi
     state: micro_laser
   product: MicroLaserStockPart
+  cost: 80
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: ScanningModuleStockPartC
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: scan_module
+  product: ScanningModuleStockPart
   cost: 80
   category: Engineering
   group: market
@@ -501,8 +532,8 @@
 - type: cargoProduct
   id: WeaponTurretCIWSC
   icon:
-    sprite: Objects/Weapons/Guns/turrets.rsi
-    state: syndie_lethal
+    sprite: Objects/Weapons/Guns/Turrets/goalie.rsi
+    state: goalie_lethal
   product: WeaponTurretCIWS
   cost: 19000
   category: Armory
@@ -511,7 +542,7 @@
 - type: cargoProduct
   id: WeaponTurretCIWSCheapC
   icon:
-    sprite: Objects/Weapons/Guns/turrets.rsi
+    sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
     state: syndie_lethal
   product: WeaponTurretCIWSCheap
   cost: 6000

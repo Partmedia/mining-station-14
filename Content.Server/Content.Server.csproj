@@ -12,6 +12,7 @@
     <NoWarn>1998</NoWarn>
     <WarningsAsErrors>nullable</WarningsAsErrors>
     <Nullable>enable</Nullable>
+    <RL Condition="Exists('RL/libRL/libRL.so')">True</RL>
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
@@ -28,4 +29,14 @@
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 
+  <PropertyGroup Condition="'$(RL)' == 'True'">
+    <DefineConstants>$(DefineConstants);RL</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(RL)' == 'True'">
+    <Content Include="RL/libRL/libRL.so">
+      <Link>libRL.so</Link>
+      <IsAssembly>True</IsAssembly>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

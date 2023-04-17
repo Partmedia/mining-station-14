@@ -9,6 +9,7 @@
         - sprite: Objects/Materials/ingots.rsi
           state: gold_3
     - type: RandomSpawner
+      chance: 1.0
       prototypes:
         - AdvancedCapacitorStockPart 
         - AdvancedMatterBinStockPart 
@@ -26,7 +27,7 @@
         - PowerCellAntiqueProto 
         - ToolboxGolden 
         - WeaponRevolverDeckard 
-      chance: 0.7
+      rareChance: 0.3
       rarePrototypes:
         - BluespaceMatterBinStockPart
         - EldritchBlade
@@ -42,4 +43,3 @@
         - UltraHighPowerMicroLaserStockPart
         - UnholyHalberd
         - WeaponStaffHealing
-      rareChance: 0.3
