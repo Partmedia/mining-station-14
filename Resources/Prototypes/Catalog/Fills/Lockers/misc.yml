@@ -13,9 +13,8 @@
       - id: ClothingHeadsetAltSyndicate
 
 - type: entity
-  id: ClosetEmergencyFilledRandom
-  parent: ClosetEmergency
-  suffix: Filled, Random
+  id: EmergencyFill
+  abstract: true
   components:
   - type: StorageFill
     contents:
@@ -31,8 +30,13 @@
         prob: 0.1
 
 - type: entity
+  id: ClosetEmergencyFilledRandom
+  parent: [ ClosetEmergency, EmergencyFill ]
+  suffix: Filled, Random
+
+- type: entity
   id: ClosetWallEmergencyFilledRandom
-  parent: ClosetWallEmergency
+  parent: [ ClosetWallEmergency, EmergencyFill ]
   suffix: Filled, Random
         
 - type: entity
