@@ -8,7 +8,7 @@
 
 3. Communications should be primarily in [color=yellow]English[/color]. Phrases in other languages are allowed for roleplay purposes if they are in good taste.
 
-4. You [color=yellow]must not[/color] communicate details about ongoing rounds to anyone using any means outside of the game. This includes voice chat, instant messaging, and posting screenshots. This is called "meta-communication" and is considered cheating because it is unfair to other players.
+4. You may communicate with other players in-round using the [color=cyan]#radio[/color] voice channel on Discord, or using other means, but [color=yellow]only if all other players online are able to participate[/color]. For example, if someone arrives who cannot participate in voice chat, you must only use in-game chat.
 
 5. You [color=yellow]must not cheat[/color]. This includes using exploits, external programs, or a modified client to gain in-game advantages or lag the server. You may only connect to this server using one account (i.e. no "alts" or "multi-keying").
 
