@@ -19,6 +19,8 @@ using Robust.Shared.Player;
 using Content.Shared.Damage;
 using Content.Server.Gravity;
 using Content.Shared.Gravity;
+using Content.Shared.Construction.Components;
+using Content.Server.Construction.Conditions;
 
 namespace Content.Server.Mining;
 
@@ -231,6 +233,7 @@ public sealed class MiningSystem : EntitySystem
         base.Update(frameTime);
 
         Queue<EntityUid> _checkQueue = new(); // entities that need to be checked for cave-ins
+        Queue<EntityUid> _removeQueue = new();
         foreach (var uid in _timerQueue)
         {
             if (!TryComp<CaveInComponent>(uid, out var timedSpace))
@@ -241,14 +244,18 @@ public sealed class MiningSystem : EntitySystem
 
             timedSpace.Timer += frameTime;
 
-            _checkQueue.Enqueue(uid);
+            //check if the entity is anchored - if not REMOVE IT
+            if(Transform(uid).Anchored)
+                _checkQueue.Enqueue(uid);
+            else
+                _removeQueue.Enqueue(uid);
         }
 
         _timerQueue.Clear();
-
-        Queue<EntityUid> _removeQueue = new();
+   
         foreach (var uid in _checkQueue)
         {
+
             //check if the time is up, if not re-queue and move on
             if (!TryComp<CaveInComponent>(uid, out var timedSpace))
                 continue;
