@@ -14,7 +14,7 @@
       - id: ClothingShoesBootsMag
       - id: Pickaxe
       - id: OreBag
-      - id: ClothingBeltUtilityFilled
+      - id: ClothingBeltSalvageWebbing
       - id: ClothingNeckCloakSalvager
 
 - type: entity
@@ -33,7 +33,7 @@
       - id: ClothingShoesBootsMag
       - id: Pickaxe
       - id: OreBag
-      - id: ClothingBeltUtilityFilled
+      - id: ClothingBeltSalvageWebbing
       - id: ClothingNeckCloakSalvager
 
 - type: entity
