@@ -1,13 +1,13 @@
-﻿using System.Globalization;
+﻿using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
+using System.Globalization;
 
 namespace Content.Shared.Localizations
 {
     public sealed class ContentLocalizationManager
     {
         [Dependency] private readonly ILocalizationManager _loc = default!;
-
-        // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.
@@ -22,15 +22,27 @@ namespace Content.Shared.Localizations
 
         public void Initialize()
         {
-            var culture = new CultureInfo(Culture);
+            _configManager.OnValueChanged(CCVars.Locale, LocaleChanged);
+            LocaleChanged(_configManager.GetCVar(CCVars.Locale));
+        }
 
-            _loc.LoadCulture(culture);
-            _loc.AddFunction(culture, "PRESSURE", FormatPressure);
-            _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
-            _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
-            _loc.AddFunction(culture, "UNITS", FormatUnits);
-            _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
-            _loc.AddFunction(culture, "LOC", FormatLoc);
+        private void LocaleChanged(string locale)
+        {
+            var culture = new CultureInfo(locale);
+            try
+            {
+                _loc.LoadCulture(culture);
+                _loc.AddFunction(culture, "PRESSURE", FormatPressure);
+                _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
+                _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
+                _loc.AddFunction(culture, "UNITS", FormatUnits);
+                _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
+                _loc.AddFunction(culture, "LOC", FormatLoc);
+            }
+            catch (ArgumentException e)
+            {
+                // Already loaded; ignore
+            }
         }
 
         private static ILocValue FormatLoc(LocArgs args)
