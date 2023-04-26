@@ -29,13 +29,20 @@ namespace Content.Shared.Localizations
         private void LocaleChanged(string locale)
         {
             var culture = new CultureInfo(locale);
-            _loc.LoadCulture(culture);
-            _loc.AddFunction(culture, "PRESSURE", FormatPressure);
-            _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
-            _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
-            _loc.AddFunction(culture, "UNITS", FormatUnits);
-            _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
-            _loc.AddFunction(culture, "LOC", FormatLoc);
+            try
+            {
+                _loc.LoadCulture(culture);
+                _loc.AddFunction(culture, "PRESSURE", FormatPressure);
+                _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
+                _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
+                _loc.AddFunction(culture, "UNITS", FormatUnits);
+                _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
+                _loc.AddFunction(culture, "LOC", FormatLoc);
+            }
+            catch (ArgumentException e)
+            {
+                // Already loaded; ignore
+            }
         }
 
         private static ILocValue FormatLoc(LocArgs args)
