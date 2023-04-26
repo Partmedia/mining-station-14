@@ -30,6 +30,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> RulesHeader =
             CVarDef.Create("server.rules_header", "ui-rules-header", CVar.REPLICATED | CVar.SERVER);
 
+        public static readonly CVarDef<string> Locale =
+            CVarDef.Create("server.locale", "en-US", CVar.REPLICATED | CVar.SERVER);
+
         /// <summary>
         ////    A txt file containing other servers that we're happy redialing to.
         /// </summary>

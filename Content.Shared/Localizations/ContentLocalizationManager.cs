@@ -1,13 +1,13 @@
-﻿using System.Globalization;
+﻿using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
+using System.Globalization;
 
 namespace Content.Shared.Localizations
 {
     public sealed class ContentLocalizationManager
     {
         [Dependency] private readonly ILocalizationManager _loc = default!;
-
-        // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.
@@ -22,8 +22,13 @@ namespace Content.Shared.Localizations
 
         public void Initialize()
         {
-            var culture = new CultureInfo(Culture);
+            _configManager.OnValueChanged(CCVars.Locale, LocaleChanged);
+            LocaleChanged(_configManager.GetCVar(CCVars.Locale));
+        }
 
+        private void LocaleChanged(string locale)
+        {
+            var culture = new CultureInfo(locale);
             _loc.LoadCulture(culture);
             _loc.AddFunction(culture, "PRESSURE", FormatPressure);
             _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
