@@ -4,6 +4,14 @@
   sprite: /Textures/Tiles/plating.png
   baseTurfs:
   - Lattice
+  - FloorAsteroidSand
+  - FloorAsteroidCoarseSand0
+  - FloorBasaslt
+  - FloorCave
+  - FloorCaveDrought
+  - FloorDirt
+  - FloorGrassLight
+  
   isSubfloor: true
   footstepSounds:
     collection: FootstepPlating
