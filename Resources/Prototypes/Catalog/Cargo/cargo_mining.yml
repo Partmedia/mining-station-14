@@ -152,6 +152,16 @@
   group: market
 
 - type: cargoProduct
+  id: CrateCloningC
+  icon:
+    sprite: Structures/Machines/cloning.rsi
+    state: pod_0
+  product: CrateCloning
+  cost: 3000
+  category: Medical
+  group: market
+
+- type: cargoProduct
   id: MiningGasRecyclerCrate
   name: gas recycler
   description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.

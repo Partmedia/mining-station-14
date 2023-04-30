@@ -136,3 +136,20 @@
     contents:
       - id: MedkitRadiationFilled
         amount: 4
+
+- type: entity
+  id: CrateCloning
+  name: cloning starter kit
+  description: Machine boards and parts for a full cloning room setup. Biomass, materials, and tools sold separately.
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: CloningConsoleComputerCircuitboard
+      - id: CloningPodMachineCircuitboard
+      - id: MedicalScannerMachineCircuitboard
+      - id: ScanningModuleStockPart
+        amount: 4
+      - id: MicroManipulatorStockPart
+        amount: 2
+      - id: CapacitorStockPart
