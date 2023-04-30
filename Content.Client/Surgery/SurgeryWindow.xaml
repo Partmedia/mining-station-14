@@ -1,0 +1,12 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            Title="Surgery Menu"
+            SetSize="525 675"
+            MinSize="525 675">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Name="BodyPartSlotList"
+                         Orientation="Vertical"
+                         HorizontalExpand="True">
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

@@ -5,6 +5,7 @@
   id: BaseMobOrganic
   noSpawn: true
   components:
+  - type: Surgery
   - type: Carriable
   - type: LagCompensation
   - type: RangedDamageSound
@@ -249,6 +250,8 @@
         type: HumanoidMarkingModifierBoundUserInterface
       - key: enum.StrippingUiKey.Key
         type: StrippableBoundUserInterface
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: Puller
   - type: Butcherable
     butcheringType: Spike # TODO human.

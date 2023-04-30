@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -232,6 +232,7 @@ public partial class SharedBodySystem
         return true;
     }
 
+
     public virtual bool DropPart(EntityUid? partId, [NotNullWhen(true)] BodyPartComponent? part = null)
     {
         if (partId == null ||
@@ -362,6 +363,30 @@ public partial class SharedBodySystem
             return false;
 
         Del(id.Value);
+        return true;
+    }
+
+    public virtual bool AttachPartAttachment()
+    {
+
+        return true;
+    }
+
+    public virtual bool RemovePartAttachment()
+    {
+
+        return true;
+    }
+
+    public virtual bool AttachPartSlotAttachment()
+    {
+
+        return true;
+    }
+
+    public virtual bool RemovePartSlotAttachment()
+    {
+
         return true;
     }
 

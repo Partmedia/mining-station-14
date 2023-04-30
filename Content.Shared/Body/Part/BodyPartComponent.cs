@@ -1,4 +1,4 @@
-﻿using Content.Shared.Body.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
 using Robust.Shared.GameStates;
@@ -34,4 +34,18 @@ public sealed class BodyPartComponent : Component
 
     [DataField("symmetry")]
     public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
+
+    /// <summary>
+    /// an attached surgical tool on the body part (such as a retractor)
+    /// </summary>
+    [DataField("attachment")]
+    public EntityUid? Attachment { get; set; }
+
+    [DataField("incisable")]
+    public bool Incisable = false;
+
+    public bool Incised = false;
+
+    public bool Opened = false;
+
 }
