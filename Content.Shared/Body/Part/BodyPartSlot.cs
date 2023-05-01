@@ -14,7 +14,7 @@ public sealed record BodyPartSlot(string Id, EntityUid Parent, BodyPartType? Typ
     public EntityUid? Child { get; set; }
 
     /// <summary>
-    /// an attached surgical tool on the body part slot (such as a Hemostat)
+    /// an attached surgical tool on the body part slot (such as a Torniquet)
     /// </summary>
     public EntityUid? Attachment { get; set; }
 

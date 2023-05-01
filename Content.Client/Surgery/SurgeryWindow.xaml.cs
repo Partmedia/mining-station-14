@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Content.Shared.Body.Part;
 using Robust.Client.Graphics;
-//using static Content.Client.IoC.StaticIoC;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Surgery
 {
@@ -20,7 +20,7 @@ namespace Content.Client.Surgery
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         public event Action<BaseButton.ButtonEventArgs, SurgerySlotButton>? OnSurgerySlotButtonPressed;
-        public static int DefaultButtonSize = 96;
+        public static int DefaultButtonSize = 112;
 
         /// <summary>
         ///
@@ -33,7 +33,7 @@ namespace Content.Client.Surgery
         }
 
         /// <summary>
-        /// 
+        /// Adding body part slots to interface, part slot buttons are assigned to rows based on their type
         /// </summary>
         public void UpdateSurgeryMenu(SurgeryBoundUserInterfaceState state)
         {
@@ -45,6 +45,23 @@ namespace Content.Client.Surgery
                 return;
             }
 
+            var headWingSlotsRow = new SurgerySlotRow();
+            List<SurgerySlotButton> headWingSlotButtons = new List<SurgerySlotButton>();
+
+            var armTorsoSlotsRow = new SurgerySlotRow();
+            List<SurgerySlotButton> armTorsoSlotButtons = new List<SurgerySlotButton>();
+
+            var handOtherSlotsRow = new SurgerySlotRow();
+            List<SurgerySlotButton> handOtherSlotButtons = new List<SurgerySlotButton>();
+
+            var legTailSlotsRow = new SurgerySlotRow();
+            List<SurgerySlotButton> legTailSlotButtons = new List<SurgerySlotButton>();
+
+            var footSlotsRow = new SurgerySlotRow();
+            List<SurgerySlotButton> footSlotButtons = new List<SurgerySlotButton>();
+
+            List<SurgerySlotButton> slotButtons = new List<SurgerySlotButton>();
+
             for (var i = 0; i < state.BodyPartSlots.Count; i++)
             {
                 if (state.BodyPartSlots[i] != null) {
@@ -54,9 +71,109 @@ namespace Content.Client.Surgery
 
                     var button = new SurgerySlotButton(state.BodyPartSlots[i], slotType);
                     button.OnPressed += args => OnSurgerySlotButtonPressed?.Invoke(args, button);
-                    BodyPartSlotList.AddChild(button);
+
+                    if (state.BodyPartSlots[i].Child != null)
+                    {
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(state.BodyPartSlots[i].Child, out var sprite)) {
+
+                            var bodyPartSprite = new BodyPartSprite();
+                            bodyPartSprite.Sprite = sprite;
+                            button.Children.Add(bodyPartSprite);
+                        }
+
+                    }
+                    slotButtons.Add(button);
+                    
                 }
             }
+
+            for (var i = 0; i < slotButtons.Count; i++)
+            {
+                //symmetrical part types are added to the start/end of list, rest are placed in centre TODO assign symmetry via part slot
+                void AddToSlotRow(SurgerySlotButton button, List<SurgerySlotButton> list, bool symmetry)
+                {
+                    if(!symmetry)
+                    {
+                        var index = (list.Count+1) / 2;
+                        list.Insert(index, button);
+                    } else
+                    {
+                        var counterpartFound = false;
+                        for (var j = 0; j < list.Count; j++)
+                        {
+                            if (list[j].SlotType == button.SlotType && !list[j].Counterpart)
+                            {
+                                counterpartFound = true;
+                                button.Symmetry = "Right"; //right now we are assuming left is always found first, followed by right... this is not necessarily correct //TODO fix
+                                button.Counterpart = true;
+                                list.Insert(list.Count-(j-1),button);
+                                break;
+                            }
+                        }
+                        if (!counterpartFound)
+                        {
+                            button.Symmetry = "Left"; //TODO fix
+                            button.Counterpart = true;
+                            list.Insert(0, button);
+                        }
+                    }
+                }
+
+                Logger.Debug(slotButtons[i].SlotType);
+
+                switch (slotButtons[i].SlotType)
+                {
+                    case "Head":
+                        AddToSlotRow(slotButtons[i], headWingSlotButtons, false);
+                        break;
+                    case "Wing":
+                        AddToSlotRow(slotButtons[i], headWingSlotButtons, true);
+                        break;
+                    case "Torso":
+                        AddToSlotRow(slotButtons[i], armTorsoSlotButtons, false);
+                        break;
+                    case "Arm":
+                        AddToSlotRow(slotButtons[i], armTorsoSlotButtons, true);
+                        break;
+                    case "Hand":
+                        AddToSlotRow(slotButtons[i], handOtherSlotButtons, true);
+                        break;
+                    case "Leg":
+                        AddToSlotRow(slotButtons[i], legTailSlotButtons, true);
+                        break;
+                    case "Foot":
+                        AddToSlotRow(slotButtons[i], footSlotButtons, true);
+                        break;
+                    case "Tail":
+                        AddToSlotRow(slotButtons[i], legTailSlotButtons, false);
+                        break;
+                    default: //other
+                        AddToSlotRow(slotButtons[i], handOtherSlotButtons, false);
+                        break;
+                }
+            }
+
+            for (var i = 0; i < headWingSlotButtons.Count; i++)
+                headWingSlotsRow.Children.Add(headWingSlotButtons[i]);
+
+            for (var i = 0; i < armTorsoSlotButtons.Count; i++)
+                armTorsoSlotsRow.Children.Add(armTorsoSlotButtons[i]);
+
+            for (var i = 0; i < handOtherSlotButtons.Count; i++)
+                handOtherSlotsRow.Children.Add(handOtherSlotButtons[i]);
+
+            for (var i = 0; i < legTailSlotButtons.Count; i++)
+                legTailSlotsRow.Children.Add(legTailSlotButtons[i]);
+
+            for (var i = 0; i < footSlotButtons.Count; i++)
+                footSlotsRow.Children.Add(footSlotButtons[i]);
+
+            BodyPartSlotList.Children.Add(headWingSlotsRow);
+            BodyPartSlotList.Children.Add(armTorsoSlotsRow);
+            BodyPartSlotList.Children.Add(handOtherSlotsRow);
+            BodyPartSlotList.Children.Add(legTailSlotsRow);
+            BodyPartSlotList.Children.Add(footSlotsRow);
+
         }
 
         /// <summary>
@@ -74,6 +191,8 @@ namespace Content.Client.Surgery
         {
             public BodyPartSlot Slot { get; }
             public string SlotType { get; }
+            public string Symmetry = "None";
+            public bool Counterpart = false;
 
             public SurgerySlotButton(BodyPartSlot slot, string slotType)
             {
@@ -84,6 +203,24 @@ namespace Content.Client.Surgery
                 MinSize = (DefaultButtonSize, DefaultButtonSize);
                 MaxSize = (DefaultButtonSize, DefaultButtonSize);
                 TextureNormal = Theme.ResolveTexture("/Slots/hand_l");
+            }
+        }
+
+        public sealed class SurgerySlotRow : BoxContainer
+        {
+            public SurgerySlotRow()
+            {
+                Orientation = LayoutOrientation.Horizontal;
+                Align = AlignMode.Center;
+            }
+        }
+
+        public sealed class BodyPartSprite : SpriteView
+        {
+            public BodyPartSprite()
+            {
+                OverrideDirection = Direction.South;
+                Scale = (3, 3);
             }
         }
 
