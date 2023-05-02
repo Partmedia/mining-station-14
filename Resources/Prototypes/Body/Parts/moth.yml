@@ -73,6 +73,11 @@
   name: "moth torso"
   parent: PartMoth
   components:
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: BiopressHarvest
     id: Creature
     totalReagentUnits: 25
@@ -93,6 +98,11 @@
   name: "moth head"
   parent: PartMoth
   components:
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: BiopressHarvest
     id: Creature
     totalReagentUnits: 3

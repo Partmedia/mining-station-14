@@ -75,6 +75,11 @@
   name: "skeleton torso"
   parent: PartSkeleton
   components:
+    - type: Surgery
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurgeryUiKey.Key
+          type: SurgeryBoundUserInterface
     - type: Sprite
       netsync: true
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -92,6 +97,11 @@
   description: Alas poor Yorick...
   parent: PartSkeleton
   components:
+    - type: Surgery
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurgeryUiKey.Key
+          type: SurgeryBoundUserInterface
     - type: Sprite
       netsync: true
       sprite: Mobs/Species/Skeleton/parts.rsi
