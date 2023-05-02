@@ -74,11 +74,6 @@
   name: "human torso"
   parent: PartHuman
   components:
-  - type: Surgery
-  - type: UserInterface
-    interfaces:
-      - key: enum.SurgeryUiKey.Key
-        type: SurgeryBoundUserInterface
   - type: BiopressHarvest
     id: Creature
     totalReagentUnits: 30
@@ -99,11 +94,6 @@
   name: "human head"
   parent: PartHuman
   components:
-  - type: Surgery
-  - type: UserInterface
-    interfaces:
-      - key: enum.SurgeryUiKey.Key
-        type: SurgeryBoundUserInterface
   - type: BiopressHarvest
     id: Creature
     totalReagentUnits: 3
