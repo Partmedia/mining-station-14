@@ -22,6 +22,11 @@
   name: "fox torso"
   parent: PartHumanoidFox
   components:
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/HumanoidFox/parts.rsi
@@ -37,6 +42,11 @@
   name: "fox head"
   parent: PartHumanoidFox
   components:
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/HumanoidFox/parts.rsi

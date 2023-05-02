@@ -1,4 +1,4 @@
-﻿# Just copypasta of some human basic body parts for interaction,
+# Just copypasta of some human basic body parts for interaction,
 # only differences for now is that limbs work in pairs,
 # they are unextractable and can't be spawned (no surgery on Animals!?).
 
@@ -54,6 +54,11 @@
   parent: PartAnimal
   noSpawn: true
   components:
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: BodyPart
     partType: Torso
   - type: Damageable

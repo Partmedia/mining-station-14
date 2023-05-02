@@ -6,7 +6,6 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Body.Part;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedBodySystem))]
 public sealed class BodyPartComponent : Component
 {
     [DataField("body")]
@@ -42,8 +41,11 @@ public sealed class BodyPartComponent : Component
     [DataField("attachment")]
     public EntityUid? Attachment { get; set; }
 
+    [DataField("container")]
+    public bool Container = false;
+
     [DataField("incisable")]
-    public bool Incisable = false; //can this part be cut open? (technically should be true for everything, but we only care about whatever has organs)
+    public bool Incisable = true; //can this part be cut open?
 
     public bool Incised = false; //whether or not an incision has been made
 

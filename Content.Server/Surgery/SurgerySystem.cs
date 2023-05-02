@@ -76,16 +76,23 @@ namespace Content.Server.Surgery
         private List<BodyPartSlot> GetAllBodyPartSlots(EntityUid bodyOwner)
         {
 
+            EntityUid? rootPart; // = body.Root.Child;
+
             //using body uid, get root part slot's child (usually the torso)
-            if (!TryComp<BodyComponent>(bodyOwner,out var body))
-                return new List<BodyPartSlot>();
+            if (TryComp<BodyComponent>(bodyOwner, out var body))
+            {
+                
+                if (body.Root == null)
+                    return new List<BodyPartSlot>();
 
-            if (body.Root == null)
-                return new List<BodyPartSlot>();
+                rootPart = body.Root.Child;
 
-            var rootPart = body.Root.Child;
+                if (rootPart == null)
+                    return new List<BodyPartSlot>();
 
-            if (rootPart == null)
+            } else if (TryComp<BodyPartComponent>(bodyOwner, out var bodyPart)) {
+                rootPart = bodyOwner;
+            } else
                 return new List<BodyPartSlot>();
 
             //proceed to get all part slots
@@ -110,8 +117,17 @@ namespace Content.Server.Surgery
             }
             initialPartList.AddRange(additionalPartList);
 
-            if(TryComp<BodyPartComponent>(rootPart, out var bodyPartComp) && bodyPartComp.ParentSlot != null)
+            if (TryComp<BodyPartComponent>(rootPart, out var bodyPartComp) && bodyPartComp.ParentSlot != null)
+            {
                 initialPartList.Add(bodyPartComp.ParentSlot);
+            }
+            else if (bodyPartComp != null && rootPart != null)
+            {
+                var tempSelfSlot = new BodyPartSlot("self", rootPart.Value, bodyPartComp.PartType);
+                tempSelfSlot.Child = rootPart;
+                tempSelfSlot.IsRoot = true;
+                initialPartList.Add(tempSelfSlot);
+            }
 
             return initialPartList;
         }

@@ -21,6 +21,11 @@
   name: "vox torso"
   parent: PartVox
   components:
+    - type: Surgery
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurgeryUiKey.Key
+          type: SurgeryBoundUserInterface
     - type: BiopressHarvest
       id: Creature
       totalReagentUnits: 25
@@ -39,6 +44,11 @@
   name: "vox head"
   parent: PartVox
   components:
+    - type: Surgery
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurgeryUiKey.Key
+          type: SurgeryBoundUserInterface
     - type: BiopressHarvest
       id: Creature
       totalReagentUnits: 3

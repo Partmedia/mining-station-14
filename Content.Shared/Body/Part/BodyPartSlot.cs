@@ -4,7 +4,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Body.Part;
 
 [Serializable, NetSerializable]
-[Access(typeof(SharedBodySystem))]
 [DataRecord]
 public sealed record BodyPartSlot(string Id, EntityUid Parent, BodyPartType? Type)
 {
@@ -19,6 +18,12 @@ public sealed record BodyPartSlot(string Id, EntityUid Parent, BodyPartType? Typ
     public EntityUid? Attachment { get; set; }
 
     public bool Cauterised = false;
+
+    /// <summary>
+    /// whether or not the body part slot is the root slot
+    /// for when the part should not be removed from the slot
+    /// </summary>
+    public bool IsRoot = false;
 
     public float BaseSurgeryTime = 10f;
 

@@ -127,6 +127,7 @@ public sealed class BodySystem : SharedBodySystem
         var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
         var partComponent = Comp<BodyPartComponent>(bodyId);
         var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
+        slot.IsRoot = true;
         body.Root = slot;
         partComponent.Body = bodyId;
 

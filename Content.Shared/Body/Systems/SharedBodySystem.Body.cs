@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
@@ -88,20 +88,33 @@ public partial class SharedBodySystem
         foreach (var connection in connections)
         {
             var childSlot = prototype.Slots[connection];
-            if (childSlot.Part == null)
-                continue;
 
-            var childPart = Spawn(childSlot.Part, coordinates);
-            var childPartComponent = Comp<BodyPartComponent>(childPart);
-            var slot = CreatePartSlot(connection, parent.Owner, childPartComponent.PartType, parent);
-            if (slot == null)
+            //TODO tidy this up
+            if (childSlot.Part != null)
             {
-                Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
-                continue;
+                var childPart = Spawn(childSlot.Part, coordinates);
+                var childPartComponent = Comp<BodyPartComponent>(childPart);
+                var slot = CreatePartSlot(connection, parent.Owner, childPartComponent.PartType, parent);
+                if (slot == null)
+                {
+                    Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
+                    continue;
+                }
+                AttachPart(childPart, slot, childPartComponent);
+                subConnections.Add((childPartComponent, connection));       
             }
-
-            AttachPart(childPart, slot, childPartComponent);
-            subConnections.Add((childPartComponent, connection));
+            else if (childSlot.SlotType != null)
+            {
+                var slot = CreatePartSlot(connection, parent.Owner, childSlot.SlotType.Value, parent);
+                if (slot == null)
+                {
+                    Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
+                    continue;
+                }
+                AttachPart(null, slot);
+            }           
+            else
+                continue;
         }
 
         foreach (var (organSlotId, organId) in organs)

@@ -1,4 +1,4 @@
-﻿# Just copypasta of some animal basic body parts for interaction,
+# Just copypasta of some animal basic body parts for interaction,
 # It's basically as animals except a different torso with different organs
 - type: entity
   id: TorsoRat
@@ -6,6 +6,11 @@
   parent: PartAnimal
   noSpawn: true
   components:
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: BodyPart
     partType: Torso
   - type: Damageable

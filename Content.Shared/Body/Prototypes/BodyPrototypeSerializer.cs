@@ -1,5 +1,6 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Body.Organ;
+using Content.Shared.Body.Part;
 using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -125,7 +126,7 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
         var name = node.Get<ValueDataNode>("name").Value;
         var root = node.Get<ValueDataNode>("root").Value;
         var slotNodes = node.Get<MappingDataNode>("slots");
-        var allConnections = new Dictionary<string, (string? Part, HashSet<string>? Connections, Dictionary<string, string>? Organs)>();
+        var allConnections = new Dictionary<string, (string? Part, HashSet<string>? Connections, Dictionary<string, string>? Organs, BodyPartType? SlotType)>();
 
         foreach (var (keyNode, valueNode) in slotNodes)
         {
@@ -160,10 +161,17 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
                 }
             }
 
-            allConnections.Add(slotId, (part, connections, organs));
+            BodyPartType? slotType = null;
+            if (slot.TryGet<ValueDataNode>("slotType", out var slotTypeValue))
+            {
+                slotType = (BodyPartType)Enum.Parse(typeof(BodyPartType), slotTypeValue.Value);
+            }
+
+
+            allConnections.Add(slotId, (part, connections, organs, slotType));
         }
 
-        foreach (var (slotId, (_, connections, _)) in allConnections)
+        foreach (var (slotId, (_, connections, _, _)) in allConnections)
         {
             if (connections == null)
                 continue;
@@ -178,9 +186,9 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
         }
 
         var slots = new Dictionary<string, BodyPrototypeSlot>();
-        foreach (var (slotId, (part, connections, organs)) in allConnections)
+        foreach (var (slotId, (part, connections, organs, slotType)) in allConnections)
         {
-            var slot = new BodyPrototypeSlot(part, connections, organs);
+            var slot = new BodyPrototypeSlot(part, connections, organs, slotType);
             slots.Add(slotId, slot);
         }
 

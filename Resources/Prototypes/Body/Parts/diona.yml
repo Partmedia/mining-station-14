@@ -24,6 +24,11 @@
   name: "diona torso"
   parent: PartDiona
   components:
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: BiopressHarvest
     id: Creature #might make a special diona group later...
     totalReagentUnits: 35
@@ -39,6 +44,11 @@
   name: "diona head"
   parent: PartDiona
   components:
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: BiopressHarvest
     id: Creature #might make a special diona group later...
     totalReagentUnits: 4

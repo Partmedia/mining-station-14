@@ -19,6 +19,11 @@
   name: "reptilian torso"
   parent: PartReptilian
   components:
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: BiopressHarvest
     id: Creature
     totalReagentUnits: 30
@@ -37,6 +42,11 @@
   name: "reptilian head"
   parent: PartReptilian
   components:
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: BiopressHarvest
     id: Creature
     totalReagentUnits: 3
