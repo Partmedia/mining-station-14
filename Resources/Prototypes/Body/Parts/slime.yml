@@ -75,11 +75,6 @@
   name: "slime torso"
   parent: PartSlime
   components:
-    - type: Surgery
-    - type: UserInterface
-      interfaces:
-        - key: enum.SurgeryUiKey.Key
-          type: SurgeryBoundUserInterface
     - type: BiopressHarvest
       id: SlimeCreature
       totalReagentUnits: 30
@@ -100,11 +95,6 @@
   name: "slime head"
   parent: PartSlime
   components:
-    - type: Surgery
-    - type: UserInterface
-      interfaces:
-        - key: enum.SurgeryUiKey.Key
-          type: SurgeryBoundUserInterface
     - type: BiopressHarvest
       id: SlimeCreature
       totalReagentUnits: 3
