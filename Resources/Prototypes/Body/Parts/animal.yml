@@ -72,10 +72,11 @@
   name: "animal torso"
   parent: PartAnimal
   components:
-  - type: Sprite
-    netsync: true
-    sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "torso_m"
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: BodyPart
     partType: Torso
     incisable: true
