@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Body.Events
+namespace Content.Shared.Body.Events
 {
     // All of these events are raised on a mechanism entity when added/removed to a body in different
     // ways.
@@ -82,6 +82,18 @@
         {
             OldBody = oldBody;
             OldPart = oldPart;
+        }
+    }
+
+    public sealed class MindTransferredEvent : EntityEventArgs
+    {
+        public EntityUid OldBody;
+        public bool Removed;
+
+        public MindTransferredEvent(EntityUid oldBody, bool removed)
+        {
+            OldBody = oldBody;
+            Removed = removed;
         }
     }
 }

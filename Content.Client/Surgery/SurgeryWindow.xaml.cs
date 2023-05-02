@@ -37,6 +37,7 @@ namespace Content.Client.Surgery
         /// </summary>
         public void UpdateSurgeryMenu(SurgeryBoundUserInterfaceState state)
         {
+
             BodyPartSlotList.Children.Clear();
 
             if (state.BodyPartSlots is null)

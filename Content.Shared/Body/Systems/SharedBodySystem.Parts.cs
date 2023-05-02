@@ -21,6 +21,7 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<BodyPartComponent, ComponentRemove>(OnPartRemoved);
         SubscribeLocalEvent<BodyPartComponent, ComponentGetState>(OnPartGetState);
         SubscribeLocalEvent<BodyPartComponent, ComponentHandleState>(OnPartHandleState);
+        SubscribeLocalEvent<BodyPartComponent, MindTransferredEvent>(OnMindTransfer);
     }
 
     private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
@@ -256,8 +257,8 @@ public partial class SharedBodySystem
 
         if (oldBodyNullable is { } oldBody)
         {
-            var args = new BodyPartRemovedEvent(slot.Id, part);
-            RaiseLocalEvent(oldBody, ref args);
+            var partRemovedEvent = new BodyPartRemovedEvent(slot.Id, part);
+            RaiseLocalEvent(oldBody, ref partRemovedEvent);
 
             if (part.PartType == BodyPartType.Leg)
             {
@@ -266,12 +267,12 @@ public partial class SharedBodySystem
                     Standing.Down(oldBody);
             }
 
-            if (part.IsVital && !GetBodyChildrenOfType(oldBody, part.PartType).Any())
-            {
+            //if (part.IsVital && !GetBodyChildrenOfType(oldBody, part.PartType).Any())
+            //{
                 // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
-                var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
-                Damageable.TryChangeDamage(part.Owner, damage);
-            }
+            //    var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
+                //Damageable.TryChangeDamage(part.Owner, damage);
+            //}
 
             foreach (var organSlot in part.Organs.Values)
             {
@@ -280,12 +281,27 @@ public partial class SharedBodySystem
 
                 RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody), true);
             }
+
+            if (part.PartType == BodyPartType.Head)
+            {
+                if (!GetBodyChildrenOfType(oldBody, BodyPartType.Head).Any()) //TODO do this by mind component move instead
+                    Standing.Down(oldBody);
+            }
         }
 
         Dirty(slot.Parent);
         Dirty(partId.Value);
 
         return true;
+    }
+
+    ///<summary>
+    ///make body fall over if its mind has been removed
+    ///</summary>
+    public void OnMindTransfer(EntityUid uid, BodyPartComponent component, MindTransferredEvent args)
+    {
+        if (args.Removed && TryComp(args.OldBody, out BodyComponent? oldBody))
+            Standing.Down(args.OldBody);
     }
 
     public void UpdateMovementSpeed(EntityUid body, BodyComponent? component = null, MovementSpeedModifierComponent? movement = null)

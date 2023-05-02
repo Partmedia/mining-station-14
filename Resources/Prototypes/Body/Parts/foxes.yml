@@ -6,6 +6,11 @@
   name: "fox body part"
   abstract: true
   components:
+  - type: Surgery
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
@@ -22,11 +27,6 @@
   name: "fox torso"
   parent: PartHumanoidFox
   components:
-  - type: Surgery
-  - type: UserInterface
-    interfaces:
-      - key: enum.SurgeryUiKey.Key
-        type: SurgeryBoundUserInterface
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/HumanoidFox/parts.rsi
@@ -42,11 +42,6 @@
   name: "fox head"
   parent: PartHumanoidFox
   components:
-  - type: Surgery
-  - type: UserInterface
-    interfaces:
-      - key: enum.SurgeryUiKey.Key
-        type: SurgeryBoundUserInterface
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/HumanoidFox/parts.rsi

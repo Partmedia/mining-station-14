@@ -14,11 +14,13 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Body.Systems;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Organ;
 
 namespace Content.Server.Surgery
 {
+
     public sealed class SurgerySystem : EntitySystem
     {
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -34,6 +36,16 @@ namespace Content.Server.Surgery
 
             SubscribeLocalEvent<SurgeryComponent, GetVerbsEvent<Verb>>(AddSurgeryVerb);
             SubscribeLocalEvent<SurgeryComponent, GetVerbsEvent<ExamineVerb>>(AddSurgeryExamineVerb);
+
+            SubscribeLocalEvent<SurgeryComponent, AddedToBodyEvent>((_, _, args) => UpdateUiState(args.Body));
+            SubscribeLocalEvent<SurgeryComponent, AddedToPartEvent>((_, _, args) => UpdateUiState(args.Part));
+            SubscribeLocalEvent<SurgeryComponent, AddedToPartInBodyEvent>((_, _, args) => UpdateUiState(args.Body));
+            SubscribeLocalEvent<SurgeryComponent, RemovedFromBodyEvent>((_, _, args) => UpdateUiState(args.Old));
+            SubscribeLocalEvent<SurgeryComponent, RemovedFromPartEvent>((_, _, args) => UpdateUiState(args.Old));
+            SubscribeLocalEvent<SurgeryComponent, RemovedFromPartInBodyEvent>((_, _, args) => UpdateUiState(args.OldBody));
+
+            SubscribeLocalEvent<SurgeryComponent, BodyPartAddedEvent>(OnBodyPartAdded);
+            SubscribeLocalEvent<SurgeryComponent, BodyPartRemovedEvent>(OnBodyPartRemoved);
 
             // BUI
             SubscribeLocalEvent<SurgeryComponent, SurgerySlotButtonPressed>(OnSurgeryButtonPressed);
@@ -142,15 +154,25 @@ namespace Content.Server.Surgery
             return organSlots;
         }
 
-        private void UpdateUiState(SurgeryComponent component)
+        private void UpdateUiState(EntityUid uid)
         {
-            var bodyPartSlots = GetAllBodyPartSlots(component.Owner);
+            Logger.Debug("SurgerySystem: UpdateUiState");
+            var bodyPartSlots = GetAllBodyPartSlots(uid);
             //GetOpenPartOrganSlots
 
             var state = new SurgeryBoundUserInterfaceState(bodyPartSlots); //organPartSlots
-            _userInterfaceSystem.TrySetUiState(component.Owner, SurgeryUiKey.Key, state);
+            _userInterfaceSystem.TrySetUiState(uid, SurgeryUiKey.Key, state);
         }
 
+        private void OnBodyPartAdded(EntityUid uid, SurgeryComponent component, ref BodyPartAddedEvent args)
+        {
+            UpdateUiState(uid);
+        }
+
+        private void OnBodyPartRemoved(EntityUid uid, SurgeryComponent component, ref BodyPartRemovedEvent args)
+        {
+            UpdateUiState(uid);
+        }
 
         private void OnSurgeryButtonPressed(EntityUid uid, SurgeryComponent component, SurgerySlotButtonPressed args)
         {
@@ -183,7 +205,7 @@ namespace Content.Server.Surgery
                 if (_userInterfaceSystem.SessionHasOpenUi(component.Owner, SurgeryUiKey.Key, actor.PlayerSession))
                     return;
                 _userInterfaceSystem.TryOpen(component.Owner, SurgeryUiKey.Key, actor.PlayerSession);
-                UpdateUiState(component);
+                UpdateUiState(component.Owner);
             }
         }
 

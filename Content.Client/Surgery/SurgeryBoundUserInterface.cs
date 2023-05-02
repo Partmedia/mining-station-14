@@ -12,7 +12,6 @@ namespace Content.Client.Surgery
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         private SurgeryWindow? _window;
-        private SurgeryBoundUserInterfaceState? _lastState;
 
         public SurgeryBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -51,7 +50,6 @@ namespace Content.Client.Surgery
             base.UpdateState(state);
 
             var castState = (SurgeryBoundUserInterfaceState)state;
-            _lastState = castState;
 
             _window?.UpdateState(castState); //Update window state
         }
