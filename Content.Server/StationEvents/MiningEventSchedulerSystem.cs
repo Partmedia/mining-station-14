@@ -63,7 +63,7 @@ namespace Content.Server.StationEvents
         {
             ResetTimer();
             _soundSystem.DispatchGlobalEventMusic(RandomExtensions.Pick(_random, 音乐));
-            ReportRound("A round has started on Mining Station 14!");
+            ReportRound(Loc.GetString("round-started"));
         }
 
         public override void Ended()
@@ -122,10 +122,10 @@ namespace Content.Server.StationEvents
                 if (bankComponent != null)
                 {
                     var profit = bankComponent.Balance - bankComponent.InitialBalance;
-                    ev.AddLine(String.Format("The station made a profit of {0} spacebucks.", profit));
-                    var endText = GenEndText(profit);
-                    Logger.InfoS("mining", "profit:{0}", endText);
-                    ReportRound(endText);
+                    ev.AddLine(Loc.GetString("station-profit", ("profit", profit)));
+                    var players = GetAllPlayers();
+                    ReportRound(Loc.GetString("team-profit", ("team", ListPlayers(players)), ("profit", profit)));
+                    LogProfit(profit, players);
                 }
             }
         }
@@ -158,14 +158,15 @@ namespace Content.Server.StationEvents
             return String.Join(", ", players);
         }
 
-        private String GenEndText(int profit)
+        private void LogProfit(int profit, SortedSet<String> players)
         {
-            var players = GetAllPlayers();
-            return String.Format("The team of {0} made a profit of {1} spacebucks.", ListPlayers(players), profit);
+            var endText = String.Format("The team of {0} made a profit of {1} spacebucks.", ListPlayers(players), profit);
+            Logger.InfoS("mining", "profit:{0}", endText);
         }
 
         private async Task ReportRound(String message)
         {
+            Logger.InfoS("discord", message);
             String _webhookUrl = _configurationManager.GetCVar(CCVars.DiscordRoundEndWebook);
             if (_webhookUrl == string.Empty)
                 return;
