@@ -255,15 +255,14 @@ public sealed class HTNSystem : EntitySystem
         {
             level++;
             text.AppendLine(compound.ID);
-            var branches = _compoundBranches[compound];
 
-            for (var i = 0; i < branches.Length; i++)
+            int i = 0;
+            foreach (var branch in compound.Branches)
             {
-                var branch = branches[i];
-                btr.Add(i);
+                btr.Add(i++);
                 text.AppendLine($" branch {string.Join(" ", btr)}:");
 
-                foreach (var sub in branch)
+                foreach (var sub in branch.Tasks)
                 {
                     AppendDebugText(sub, text, planBtr, btr, ref level);
                 }
