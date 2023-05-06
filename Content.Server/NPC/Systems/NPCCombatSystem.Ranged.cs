@@ -23,7 +23,7 @@ public sealed partial class NPCCombatSystem
 
     private void OnRangedStartup(EntityUid uid, NPCRangedCombatComponent component, ComponentStartup args)
     {
-        if (TryComp<SharedCombatModeComponent>(uid, out var combat))
+        if (TryComp<CombatModeComponent>(uid, out var combat))
         {
             combat.IsInCombatMode = true;
         }
@@ -35,7 +35,7 @@ public sealed partial class NPCCombatSystem
 
     private void OnRangedShutdown(EntityUid uid, NPCRangedCombatComponent component, ComponentShutdown args)
     {
-        if (TryComp<SharedCombatModeComponent>(uid, out var combat))
+        if (TryComp<CombatModeComponent>(uid, out var combat))
         {
             combat.IsInCombatMode = false;
         }
@@ -45,7 +45,7 @@ public sealed partial class NPCCombatSystem
     {
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var combatQuery = GetEntityQuery<SharedCombatModeComponent>();
+        var combatQuery = GetEntityQuery<CombatModeComponent>();
 
         foreach (var (comp, xform) in EntityQuery<NPCRangedCombatComponent, TransformComponent>())
         {

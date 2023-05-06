@@ -1,4 +1,4 @@
-using Content.Client.CombatMode;
+using Content.Shared.CombatMode;
 using Content.Client.Gameplay;
 using Content.Client.Hands;
 using Content.Shared.Mobs.Components;

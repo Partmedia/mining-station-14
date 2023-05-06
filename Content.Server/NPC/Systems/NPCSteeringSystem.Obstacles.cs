@@ -1,4 +1,4 @@
-using Content.Server.CombatMode;
+using Content.Shared.CombatMode;
 using Content.Server.Destructible;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
