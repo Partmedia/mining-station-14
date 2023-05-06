@@ -60,6 +60,8 @@
         amount: 1
       - id: ClothingHandsGlovesLeather
         amount: 1
+      - id: HydroponicsToolClippers
+        amount: 1
 
 - type: entity
   id: CrateHydroponicsSeeds
