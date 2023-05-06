@@ -85,15 +85,4 @@ namespace Content.Shared.Body.Events
         }
     }
 
-    public sealed class MindTransferredEvent : EntityEventArgs
-    {
-        public EntityUid OldBody;
-        public bool Removed;
-
-        public MindTransferredEvent(EntityUid oldBody, bool removed)
-        {
-            OldBody = oldBody;
-            Removed = removed;
-        }
-    }
 }

@@ -68,7 +68,7 @@ namespace Content.Client.Surgery
                 if (state.BodyPartSlots[i] != null) {
 
                     var typeVal = state.BodyPartSlots[i].Type ?? 0;
-                    var slotType = ((BodyPartType)typeVal).ToString(); //TODO loc
+                    var slotType = ((BodyPartType)typeVal).ToString();
 
                     var button = new SurgerySlotButton(state.BodyPartSlots[i], slotType);
                     button.OnPressed += args => OnSurgerySlotButtonPressed?.Invoke(args, button);
@@ -82,6 +82,9 @@ namespace Content.Client.Surgery
                             button.Children.Add(bodyPartSprite);
                         }
 
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BodyPartComponent?>(state.BodyPartSlots[i].Child, out var bodyPart))
+                            button.Symmetry = ((BodyPartSymmetry)bodyPart.Symmetry).ToString();
+
                     }
                     slotButtons.Add(button);
                     
@@ -93,11 +96,12 @@ namespace Content.Client.Surgery
                 //symmetrical part types are added to the start/end of list, rest are placed in centre TODO assign symmetry via part slot
                 void AddToSlotRow(SurgerySlotButton button, List<SurgerySlotButton> list, bool symmetry)
                 {
-                    if(!symmetry)
+                    if (!symmetry)
                     {
-                        var index = (list.Count+1) / 2;
+                        var index = (list.Count + 1) / 2;
                         list.Insert(index, button);
-                    } else
+                    }
+                    else
                     {
                         var counterpartFound = false;
                         for (var j = 0; j < list.Count; j++)
@@ -105,17 +109,40 @@ namespace Content.Client.Surgery
                             if (list[j].SlotType == button.SlotType && !list[j].Counterpart)
                             {
                                 counterpartFound = true;
-                                button.Symmetry = "Right"; //right now we are assuming left is always found first, followed by right... this is not necessarily correct //TODO fix
-                                button.Counterpart = true;
-                                list.Insert(list.Count-(j-1),button);
-                                break;
-                            }
+                                if (button.Symmetry == "Left") //if we have assigned a left value from the constituent body part above, it overrides here
+                                {
+                                    list.Insert(0, button);
+                                    break;
+                                }
+                                else
+                                {
+                                    button.Symmetry = "Right"; //right now we are assuming left is always found first, followed by right... this is not necessarily correct //TODO fix by assigning symmetry to the slot
+                                    button.Counterpart = true;
+                                    if (list.Count > 0)
+                                        list.Insert(list.Count - (j - 1), button);
+                                    else
+                                        list.Insert(0, button);
+                                    break;
+                                }
+                            }        
                         }
                         if (!counterpartFound)
                         {
-                            button.Symmetry = "Left"; //TODO fix
-                            button.Counterpart = true;
-                            list.Insert(0, button);
+                            if (button.Symmetry == "Right") //if we have assigned a right value from the constituent body part above, it overrides here
+                            {
+                                button.Counterpart = true;
+                                if (list.Count > 0)
+                                    list.Insert(list.Count - 1, button); //TODO fix still not ideal but better than assuming its position, just wouldn't on something with four arms as well
+                                else
+                                    list.Insert(0, button);
+                            }
+                            else
+                            {
+                                button.Symmetry = "Left"; //TODO fix
+                                button.Counterpart = true;
+                                list.Insert(0, button);
+                            }
+
                         }
                     }
                 }

@@ -11,6 +11,7 @@ using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Content.Shared.Humanoid;
 
 namespace Content.Shared.Body.Systems;
 
@@ -21,19 +22,28 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<BodyPartComponent, ComponentRemove>(OnPartRemoved);
         SubscribeLocalEvent<BodyPartComponent, ComponentGetState>(OnPartGetState);
         SubscribeLocalEvent<BodyPartComponent, ComponentHandleState>(OnPartHandleState);
-        SubscribeLocalEvent<BodyPartComponent, MindTransferredEvent>(OnMindTransfer);
     }
 
     private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
     {
         args.State = new BodyPartComponentState(
             part.Body,
+            part.OriginalBody,
             part.ParentSlot,
             part.Children,
             part.Organs,
             part.PartType,
             part.IsVital,
-            part.Symmetry
+            part.Symmetry,
+            part.Attachment,
+            part.Container,
+            part.Incisable,
+            part.Incised,
+            part.Opened,
+            part.EndoSkeleton,
+            part.ExoSkeleton,
+            part.EndoOpened,
+            part.ExoOpened
         );
     }
 
@@ -43,12 +53,22 @@ public partial class SharedBodySystem
             return;
 
         part.Body = state.Body;
+        part.OriginalBody = state.OriginalBody;
         part.ParentSlot = state.ParentSlot;
         part.Children = state.Children;
         part.Organs = state.Organs;
         part.PartType = state.PartType;
         part.IsVital = state.IsVital;
         part.Symmetry = state.Symmetry;
+        part.Attachment = state.Attachment;
+        part.Container = state.Container;
+        part.Incisable = state.Incisable;
+        part.Incised = state.Incised;
+        part.Opened = state.Opened;
+        part.EndoSkeleton = state.EndoSkeleton;
+        part.ExoSkeleton = state.ExoSkeleton;
+        part.EndoOpened = state.EndoOpened;
+        part.ExoOpened = state.ExoOpened;
     }
 
     private void OnPartRemoved(EntityUid uid, BodyPartComponent part, ComponentRemove args)
@@ -245,6 +265,7 @@ public partial class SharedBodySystem
 
         slot.Child = null;
         part.ParentSlot = null;
+        part.OriginalBody = part.Body;
         part.Body = null;
 
         if (Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container))
@@ -279,13 +300,17 @@ public partial class SharedBodySystem
                 if (organSlot.Child is not { } child)
                     continue;
 
-                RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody), true);
+                RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody));
             }
 
-            if (part.PartType == BodyPartType.Head)
+            if (part != null && TryComp(oldBody, out HumanoidAppearanceComponent? bodyAppearance) &&
+                !TryComp(part.Owner, out BodyPartAppearanceComponent? existingAppearance))
             {
-                if (!GetBodyChildrenOfType(oldBody, BodyPartType.Head).Any()) //TODO do this by mind component move instead
-                    Standing.Down(oldBody);
+                var appearance = AddComp<BodyPartAppearanceComponent>(part.Owner);
+                appearance.OriginalBody = part.OriginalBody;
+                appearance.Color = bodyAppearance.SkinColor;
+
+                Dirty(appearance);
             }
         }
 
@@ -293,15 +318,6 @@ public partial class SharedBodySystem
         Dirty(partId.Value);
 
         return true;
-    }
-
-    ///<summary>
-    ///make body fall over if its mind has been removed
-    ///</summary>
-    public void OnMindTransfer(EntityUid uid, BodyPartComponent component, MindTransferredEvent args)
-    {
-        if (args.Removed && TryComp(args.OldBody, out BodyComponent? oldBody))
-            Standing.Down(args.OldBody);
     }
 
     public void UpdateMovementSpeed(EntityUid body, BodyComponent? component = null, MovementSpeedModifierComponent? movement = null)

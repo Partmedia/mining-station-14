@@ -30,7 +30,7 @@
       id: Creature
       totalReagentUnits: 25
     - type: Sprite
-      netsync: false
+      netsync: true
       sprite: Mobs/Species/Vox/parts.rsi
       state: "torso_m"
     - type: Icon
@@ -48,7 +48,7 @@
       id: Creature
       totalReagentUnits: 3
     - type: Sprite
-      netsync: false
+      netsync: true
       sprite: Mobs/Species/Vox/parts.rsi
       state: "head_m"
     - type: Icon
@@ -77,7 +77,7 @@
       id: Creature
       totalReagentUnits: 3
     - type: Sprite
-      netsync: false
+      netsync: true
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_arm"
     - type: Icon
@@ -96,7 +96,7 @@
       id: Creature
       totalReagentUnits: 3
     - type: Sprite
-      netsync: false
+      netsync: true
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_arm"
     - type: Icon
@@ -115,7 +115,7 @@
       id: Creature
       totalReagentUnits: 0.1
     - type: Sprite
-      netsync: false
+      netsync: true
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_hand"
     - type: Icon
@@ -134,7 +134,7 @@
       id: Creature
       totalReagentUnits: 0.1
     - type: Sprite
-      netsync: false
+      netsync: true
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_hand"
     - type: Icon
@@ -153,7 +153,7 @@
       id: Creature
       totalReagentUnits: 4
     - type: Sprite
-      netsync: false
+      netsync: true
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_leg"
     - type: Icon
@@ -173,7 +173,7 @@
       id: Creature
       totalReagentUnits: 4
     - type: Sprite
-      netsync: false
+      netsync: true
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_leg"
     - type: Icon
@@ -193,7 +193,7 @@
       id: Creature
       totalReagentUnits: 0.2
     - type: Sprite
-      netsync: false
+      netsync: true
       sprite: Mobs/Species/Vox/parts.rsi
       state: "l_foot"
     - type: Icon
@@ -212,7 +212,7 @@
       id: Creature
       totalReagentUnits: 0.2
     - type: Sprite
-      netsync: false
+      netsync: true
       sprite: Mobs/Species/Vox/parts.rsi
       state: "r_foot"
     - type: Icon

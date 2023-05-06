@@ -25,7 +25,7 @@
   parent: PartSilicon
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Silicon/drone.rsi
     state: "l_hand"
   - type: Icon
@@ -46,7 +46,7 @@
   parent: PartSilicon
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Silicon/drone.rsi
     state: "r_hand"
   - type: Icon

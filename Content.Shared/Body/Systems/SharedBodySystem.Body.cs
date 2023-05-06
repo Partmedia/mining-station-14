@@ -7,6 +7,9 @@ using Content.Shared.Body.Prototypes;
 using Content.Shared.Coordinates;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Content.Shared.Humanoid;
+using static Content.Shared.Humanoid.HumanoidAppearanceState;
+using Content.Shared.Humanoid.Prototypes;
 
 namespace Content.Shared.Body.Systems;
 
@@ -94,12 +97,28 @@ public partial class SharedBodySystem
             {
                 var childPart = Spawn(childSlot.Part, coordinates);
                 var childPartComponent = Comp<BodyPartComponent>(childPart);
+                childPartComponent.OriginalBody = parent.Owner;
                 var slot = CreatePartSlot(connection, parent.Owner, childPartComponent.PartType, parent);
                 if (slot == null)
                 {
                     Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
                     continue;
                 }
+
+                if (TryComp(parent.Owner, out HumanoidAppearanceComponent? bodyAppearance))
+                {
+                    var appearance = AddComp<BodyPartAppearanceComponent>(childPart);
+                    appearance.OriginalBody = childPartComponent.OriginalBody;
+                    appearance.Color = bodyAppearance.SkinColor;
+
+                    var symmetry = ((BodyPartSymmetry)childPartComponent.Symmetry).ToString();
+                    if (symmetry == "None")
+                        symmetry = "";
+                    appearance.ID = "removed" + symmetry + ((BodyPartType)childPartComponent.PartType).ToString();
+
+                    Dirty(appearance);
+                }
+
                 AttachPart(childPart, slot, childPartComponent);
                 subConnections.Add((childPartComponent, connection));       
             }

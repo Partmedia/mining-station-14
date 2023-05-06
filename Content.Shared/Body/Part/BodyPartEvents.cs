@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Body.Part;
+namespace Content.Shared.Body.Part;
 
 [ByRefEvent]
 public readonly record struct BodyPartAddedEvent(string Slot, BodyPartComponent Part);

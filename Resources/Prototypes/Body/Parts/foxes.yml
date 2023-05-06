@@ -28,7 +28,7 @@
   parent: PartHumanoidFox
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/HumanoidFox/parts.rsi
     state: "torso_m"
   - type: Icon
@@ -43,7 +43,7 @@
   parent: PartHumanoidFox
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/HumanoidFox/parts.rsi
     state: "head_m"
   - type: Icon
@@ -69,7 +69,7 @@
   parent: PartHumanoidFox
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/HumanoidFox/parts.rsi
     state: "l_arm"
   - type: Icon
@@ -85,7 +85,7 @@
   parent: PartHumanoidFox
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/HumanoidFox/parts.rsi
     state: "r_arm"
   - type: Icon
@@ -101,7 +101,7 @@
   parent: PartHumanoidFox
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/HumanoidFox/parts.rsi
     state: "l_hand"
   - type: Icon
@@ -117,7 +117,7 @@
   parent: PartHumanoidFox
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/HumanoidFox/parts.rsi
     state: "r_hand"
   - type: Icon
@@ -133,7 +133,7 @@
   parent: PartHumanoidFox
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/HumanoidFox/parts.rsi
     state: "l_leg"
   - type: Icon
@@ -152,7 +152,7 @@
   parent: PartHumanoidFox
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/HumanoidFox/parts.rsi
     state: "r_leg"
   - type: Icon
@@ -171,7 +171,7 @@
   parent: PartHumanoidFox
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/HumanoidFox/parts.rsi
     state: "l_foot"
   - type: Icon
@@ -187,7 +187,7 @@
   parent: PartHumanoidFox
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/HumanoidFox/parts.rsi
     state: "r_foot"
   - type: Icon

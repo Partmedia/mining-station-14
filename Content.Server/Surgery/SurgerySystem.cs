@@ -156,7 +156,6 @@ namespace Content.Server.Surgery
 
         private void UpdateUiState(EntityUid uid)
         {
-            Logger.Debug("SurgerySystem: UpdateUiState");
             var bodyPartSlots = GetAllBodyPartSlots(uid);
             //GetOpenPartOrganSlots
 

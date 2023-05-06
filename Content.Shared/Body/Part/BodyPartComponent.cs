@@ -11,6 +11,9 @@ public sealed class BodyPartComponent : Component
     [DataField("body")]
     public EntityUid? Body;
 
+    [DataField("originalBody")]
+    public EntityUid? OriginalBody;
+
     [DataField("parent")]
     public BodyPartSlot? ParentSlot;
 
@@ -56,17 +59,18 @@ public sealed class BodyPartComponent : Component
     /// by default the part has bones, but it may not
     /// instead it may have an exoskeleton (see below) or no skeleton at all (slimes for example)!
     /// </summary>
-    [DataField("endoskeleton")]
-    public bool Endoskeleton = true; 
+    [DataField("endoSkeleton")]
+    public bool EndoSkeleton = true; 
     /// <summary>
     /// but what if its skelly is on the outside?
     /// if the part has an exoskeleton it must be opened prior to any incision
     /// </summary>
-    [DataField("exoskeleton")]
-    public bool Exoskeleton = false; 
+    [DataField("exoSkeleton")]
+    public bool ExoSkeleton = false; 
 
     public bool EndoOpened = false; //gotta get through the bones (if they have them)
 
     public bool ExoOpened = false; //gotta get through the shell or whatever it is (if they have them)
+
 
 }
