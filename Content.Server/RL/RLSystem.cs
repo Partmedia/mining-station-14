@@ -62,7 +62,7 @@ public class RLSystem : EntitySystem
 }
 
 #if RL
-[AdminCommand(AdminFlags.Server)]
+[AdminCommand(AdminFlags.Host)]
 sealed class RLReloadCommand : IConsoleCommand
 {
     public string Command => "reload";
@@ -82,7 +82,7 @@ sealed class RLReloadCommand : IConsoleCommand
     }
 }
 
-[AdminCommand(AdminFlags.Query)]
+[AdminCommand(AdminFlags.Host)]
 sealed class RLEvalCommand : IConsoleCommand
 {
     public string Command => "eval";
@@ -110,7 +110,7 @@ sealed class RLEvalCommand : IConsoleCommand
     }
 }
 
-[AdminCommand(AdminFlags.Query)]
+[AdminCommand(AdminFlags.Host)]
 sealed class RLDebugCommand : IConsoleCommand
 {
     public string Command => "rldebug";
