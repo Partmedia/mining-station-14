@@ -1,4 +1,4 @@
-using Content.Server.CombatMode;
+using Content.Shared.CombatMode;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Shared.NPC;

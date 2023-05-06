@@ -8,7 +8,7 @@ using Robust.Shared.Player;
 using Content.Server.Popups;
 using Content.Server.Speech.Components;
 using Content.Server.Body.Systems;
-using Content.Server.CombatMode;
+using Content.Shared.CombatMode;
 using Content.Server.Inventory;
 using Content.Server.Mind.Components;
 using Content.Server.Chat.Managers;
