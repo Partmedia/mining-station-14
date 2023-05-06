@@ -116,6 +116,9 @@ namespace Content.Server.StationEvents
 
         private void OnRoundEndText(RoundEndTextAppendEvent ev)
         {
+            if (!RuleStarted)
+                return;
+
             foreach (var station in _station.Stations)
             {
                 TryComp<StationBankAccountComponent>(station, out var bankComponent);
