@@ -242,6 +242,16 @@
   group: market
 
 - type: cargoProduct
+  id: FirelockElectronicsC
+  icon:
+    sprite: Objects/Misc/module.rsi
+    state: mainboard
+  product: FirelockElectronics
+  cost: 100
+  category: Engineering
+  group: market
+
+- type: cargoProduct
   id: CrateScienceStarterC
   description: Start your very own science department! Complete with an R&D server and necessary machine and computer boards. Parts sold separately.
   icon:
