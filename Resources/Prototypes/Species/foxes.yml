@@ -1,6 +1,6 @@
 - type: species
   id: HumanoidFoxes
-  name: Foxes
+  name: Fox
   roundStart: true
   prototype: MobHumanoidFox
   sprites: MobHumanoidFoxSprites
