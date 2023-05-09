@@ -88,6 +88,27 @@
   group: market
 
 - type: cargoProduct
+  id: CrateC4C
+  icon:
+    sprite: Objects/Weapons/Bombs/c4.rsi
+    state: icon
+  product: CrateC4
+  cost: 1000
+  category: Salvage
+  group: market
+
+- type: entity
+  id: CrateC4
+  name: C-4 crate
+  description: Buy C-4 in bulk and receive a 12% discount!
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: C4
+        amount: 10
+
+- type: cargoProduct
   id: RemoteSignallerC
   icon:
     sprite: Objects/Devices/signaller.rsi
@@ -249,6 +270,36 @@
   product: FirelockElectronics
   cost: 100
   category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: HolofanProjectorC
+  icon:
+    sprite: Objects/Devices/Holoprojectors/atmos.rsi
+    state: icon
+  product: HolofanProjector
+  cost: 1200
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: PowerCellRechargerC
+  icon:
+    sprite: Structures/Power/cell_recharger.rsi
+    state: empty
+  product: PowerCellRecharger
+  cost: 100
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: VendingMachineTheaterC
+  icon:
+    sprite: Structures/Machines/VendingMachines/theater.rsi
+    state: off
+  product: VendingMachineTheater
+  cost: 1820
+  category: Fun
   group: market
 
 - type: cargoProduct
