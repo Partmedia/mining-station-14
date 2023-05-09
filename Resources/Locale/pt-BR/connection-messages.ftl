@@ -1,5 +1,5 @@
 whitelist-not-whitelisted = Você não está na whitelist.
-whitelist-not-whitelisted-rp = Você não está na whitelist. Para entrar na whitelist, visite nosso Discord (que pode ser encontrado em https://estacaopirata.com/).
+whitelist-not-whitelisted-rp = Você não está na whitelist. Entre em contato com os administradores no discord aqui https://discord.gg/9bXzRwqk9z
 
 command-whitelistadd-description = Adiciona o jogador na whitelist.
 command-whitelistadd-help = whitelistadd <username>
@@ -16,7 +16,7 @@ command-whitelistremove-not-found = Usuário '{$username}' não encontrado
 command-kicknonwhitelisted-description = Expulsar todos os jogadores que não estão na whitelist.
 command-kicknonwhitelisted-help = kicknonwhitelisted
 
-ban-banned-permanent = Este ban só expira através de apelo em https://discord.gg/8gDMcmsCPQ
+ban-banned-permanent = Este ban só expira através de apelo por DM no discord, entre no discord aqui https://discord.gg/9bXzRwqk9z
 ban-expires = Este ban dura {$duration} minutos e irá expirar em {$time} UTC.
 ban-banned-1 = Você ou outro usuário desse computador ou conexão estão banidos aqui.
 ban-banned-2 = O motivo do ban é: "{$reason}"
