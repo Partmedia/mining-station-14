@@ -153,3 +153,24 @@
       - id: MicroManipulatorStockPart
         amount: 2
       - id: CapacitorStockPart
+
+- type: entity
+  id: CrateBasicChemBottles
+  name: chemistry starter kit
+  description: Start your own chemistry lab today! Comes with O, C, Si, K, N, and sugar.
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: OxygenChemistryBottle
+        amount: 1
+      - id: SugarChemistryBottle
+        amount: 1
+      - id: CarbonChemistryBottle
+        amount: 3
+      - id: SiliconChemistryBottle
+        amount: 2
+      - id: PotassiumChemistryBottle
+        amount: 1
+      - id: NitrogenChemistryBottle
+        amount: 1
