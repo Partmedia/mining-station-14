@@ -49,3 +49,10 @@
   completetime: 2
   materials:
     Glass: 200
+
+- type: latheRecipe
+  id: BaseChemistryEmptyJug
+  result: BaseChemistryEmptyJug
+  completetime: 2
+  materials:
+    Plastic: 300
