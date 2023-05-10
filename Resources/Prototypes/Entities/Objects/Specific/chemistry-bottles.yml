@@ -118,7 +118,7 @@
 - type: entity
   id: EpinephrineChemistryBottle
   name: epinephrine bottle
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
@@ -135,7 +135,7 @@
   id: RobustHarvestChemistryBottle
   name: robust harvest bottle
   description: This will increase the potency of your plants.
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
@@ -152,7 +152,7 @@
   id: UnstableMutagenChemistryBottle
   name: unstable mutagen bottle
   description: This will cause rapid mutations in your plants.
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
@@ -169,7 +169,7 @@
   id: NocturineChemistryBottle
   name: nocturine bottle
   description: This will make someone fall down almost immediately. Hard to overdose on.
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
@@ -185,7 +185,7 @@
 - type: entity
   id: EphedrineChemistryBottle
   name: ephedrine bottle
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
@@ -201,7 +201,7 @@
 - type: entity
   id: OmnizineChemistryBottle
   name: omnizine bottle
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
