@@ -217,7 +217,7 @@
 - type: entity
   id: OxygenChemistryBottle
   name: oxygen bottle
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
@@ -233,7 +233,7 @@
 - type: entity
   id: SugarChemistryBottle
   name: sugar bottle
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
@@ -249,7 +249,7 @@
 - type: entity
   id: CarbonChemistryBottle
   name: carbon bottle
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
@@ -265,7 +265,7 @@
 - type: entity
   id: SiliconChemistryBottle
   name: silicon bottle
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
@@ -281,7 +281,7 @@
 - type: entity
   id: PotassiumChemistryBottle
   name: potassium bottle
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
@@ -297,7 +297,7 @@
 - type: entity
   id: NitrogenChemistryBottle
   name: nitrogen bottle
-  parent: BaseChemistryEmptyBottle
+  parent: ChemistryEmptyBottle01
   components:
   - type: SolutionContainerManager
     solutions:
