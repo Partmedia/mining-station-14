@@ -87,6 +87,7 @@
       - GasAnalyzer
       - UtilityBelt
       - Pickaxe
+      - BaseChemistryEmptyJug
   - type: StaticPrice
     price: 800
 
