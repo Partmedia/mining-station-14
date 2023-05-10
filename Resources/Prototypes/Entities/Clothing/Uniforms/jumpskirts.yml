@@ -611,8 +611,8 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtClown
-  name: sexy clown suit
-  description: It makes you look HONKable!
+  name: clown skirt
+  description: It's a skirt for Clowns!
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/sexyclown.rsi
