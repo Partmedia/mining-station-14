@@ -156,7 +156,8 @@
 
 - type: entity
   id: CrateBasicChemBottles
-  name: basic chem bottles
+  name: chemistry starter kit
+  description: Start your own chemistry lab today! Comes with O, C, Si, K, N, and sugar.
   parent: CrateMedical
   components:
   - type: StorageFill
