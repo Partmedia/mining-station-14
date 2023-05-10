@@ -153,3 +153,23 @@
       - id: MicroManipulatorStockPart
         amount: 2
       - id: CapacitorStockPart
+
+- type: entity
+  id: CrateBasicChemBottles
+  name: basic chem bottles
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: OxygenChemistryBottle
+        amount: 1
+      - id: SugarChemistryBottle
+        amount: 1
+      - id: CarbonChemistryBottle
+        amount: 3
+      - id: SiliconChemistryBottle
+        amount: 2
+      - id: PotassiumChemistryBottle
+        amount: 1
+      - id: NitrogenChemistryBottle
+        amount: 1
