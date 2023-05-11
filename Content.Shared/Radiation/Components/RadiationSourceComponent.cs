@@ -16,9 +16,8 @@ public sealed class RadiationSourceComponent : Component
     public float Intensity = 1;
 
     /// <summary>
-    ///     Defines how fast radiation rays will loose intensity
-    ///     over distance. The bigger the value, the shorter range
-    ///     of radiation source will be.
+    ///     Deprecated and unused. Radiation always falls off at an
+    ///     inverse law (see Irradiate() in RadiationSystem.GridCast).
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("slope")]

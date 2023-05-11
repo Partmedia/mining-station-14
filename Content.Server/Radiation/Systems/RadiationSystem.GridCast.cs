@@ -107,7 +107,7 @@ public partial class RadiationSystem
         if (dist > GridcastMaxDistance)
             return null;
         // will it even reach destination considering distance penalty
-        var rads = incomingRads - slope * dist;
+        var rads = incomingRads / (4*MathF.Max(1, dist));
         if (rads <= MinIntensity)
             return null;
 
