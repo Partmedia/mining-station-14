@@ -56,4 +56,4 @@
   - type: StorageFill
     contents:
       - id: BoxFlare
-        amount: 5
+        amount: 2
