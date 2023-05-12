@@ -87,3 +87,23 @@
   cost: 2000
   category: Engineering
   group: market
+
+- type: cargoProduct
+  id: EngineeringGear
+  icon:
+    sprite: Clothing/Belt/utility.rsi
+    state: icon
+  product: CrateEngineeringGear
+  cost: 2000
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: GasPipeChemicalPump
+  icon:
+    sprite: Structures/Piping/Atmospherics/reagent_pump.rsi
+    state: icon
+  product: ReagentPump
+  cost: 80000
+  category: Engineering
+  group: market
