@@ -174,3 +174,71 @@
         amount: 1
       - id: NitrogenChemistryBottle
         amount: 1
+
+- type: entity
+  id: CrateChemDispenserKit
+  name: chem dispenser kit
+  description: A board and parts kit to build a chem dispenser.
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: ChemDispenserMachineCircuitboard
+        amount: 1
+      - id: CapacitorStockPart
+        amount: 1
+      - id: MatterBinStockPart
+        amount: 2
+      - id: MicroManipulatorStockPart
+        amount: 1
+
+- type: entity
+  id: CratePillPressKit
+  name: pill press kit
+  description: A board and parts kit to build a pill popper.
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: PillPressMachineBoard
+        amount: 1
+      - id: ScanningModuleStockPart
+        amount: 1
+      - id: Beaker
+        amount: 1
+      - id: MicroManipulatorStockPart
+        amount: 2
+
+- type: entity
+  id: CrateCentrifugeKit
+  name: centrifuge machine kit
+  description: A board and parts kit to build a centrifuge machine.
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: CentrifugeMachineBoard
+        amount: 1
+      - id: ScanningModuleStockPart
+        amount: 1
+      - id: Beaker
+        amount: 2
+      - id: MicroManipulatorStockPart
+        amount: 5
+
+- type: entity
+  id: CrateChemicalAnalyzerKit
+  name: chemical analyzer kit
+  description: A board and parts kit to build a chemical analyzer.
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: ChemicalAnalysisMachineBoard
+        amount: 1
+      - id: Beaker
+        amount: 1
+      - id: ScanningModuleStockPart
+        amount: 2
+      - id: MicroManipulatorStockPart
+        amount: 1
