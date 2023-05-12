@@ -47,3 +47,13 @@
     contents:
       - id: BiomassReclaimer
         amount: 1
+
+- type: entity
+  id: CrateEmergencyFlares
+  name: biomass reclaimer crate
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxFlare
+        amount: 5
