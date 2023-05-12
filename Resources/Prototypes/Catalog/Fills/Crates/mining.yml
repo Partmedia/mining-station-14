@@ -50,7 +50,7 @@
 
 - type: entity
   id: CrateEmergencyFlares
-  name: biomass reclaimer crate
+  name: emergency flares crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
