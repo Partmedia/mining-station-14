@@ -16,7 +16,7 @@
 
 - type: latheRecipe
   id: Welder
-  result: Welder
+  result: WelderEmpty
   completetime: 2
   materials:
     Steel: 400

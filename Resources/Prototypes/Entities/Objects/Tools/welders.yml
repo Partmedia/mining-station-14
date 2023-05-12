@@ -66,6 +66,16 @@
     temperature: 700
 
 - type: entity
+  id: WelderEmpty
+  parent: Welder
+  suffix: Empty
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        maxVol: 100
+
+- type: entity
   name: industrial welding tool
   parent: Welder
   id: WelderIndustrial
