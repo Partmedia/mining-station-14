@@ -635,8 +635,8 @@
   id: EmergencyFlares
   description: Crate of 5 Flare Boxes
   icon:
-    sprite: Objects/Objects/Misc/flare.rsi
-    state: flare
+    sprite: Objects/Misc/flare.rsi
+    state: icon
   product: CrateEmergencyFlares
   cost: 500
   category: Mining
