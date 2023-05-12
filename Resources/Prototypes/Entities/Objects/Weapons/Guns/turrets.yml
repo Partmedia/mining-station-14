@@ -83,6 +83,17 @@
       magState: mag
       steps: 1
       zeroVisible: true
+    - type: Fixtures
+      fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
 
 - type: entity
   parent: BaseWeaponTurret
