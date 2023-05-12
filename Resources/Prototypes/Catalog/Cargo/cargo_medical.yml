@@ -87,3 +87,43 @@
   cost: 750
   category: Medical
   group: market
+
+- type: cargoProduct
+  id: ChemDispenserKit
+  icon:
+    sprite: Structures/dispensers.rsi
+    state: industrial
+  product: CrateChemDispenserKit
+  cost: 10000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: PillPressKit
+  icon:
+    sprite: Structures/Machines/pill_press.rsi
+    state: pillPress0
+  product: CratePillPressKit
+  cost: 7000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: CentrifugeKit
+  icon:
+    sprite: Structures/Machines/centrifuge.rsi
+    state: centrifuge0
+  product: CrateCentrifugeKit
+  cost: 10000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: ChemicalAnalyzerKit
+  icon:
+    sprite: Structures/Machines/chem_analyzer.rsi
+    state: icon
+  product: CrateChemicalAnalyzerKit
+  cost: 10000
+  category: Medical
+  group: market
