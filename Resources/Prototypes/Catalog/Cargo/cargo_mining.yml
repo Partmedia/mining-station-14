@@ -630,3 +630,14 @@
   cost: 4800
   category: Armory
   group: market
+
+- type: cargoProduct
+  id: EmergencyFlares
+  description: Crate of 5 Flare Boxes
+  icon:
+    sprite: Objects/Objects/Misc/flare.rsi
+    state: flare
+  product: CrateEmergencyFlares
+  cost: 500
+  category: Mining
+  group: market
