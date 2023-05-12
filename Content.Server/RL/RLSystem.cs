@@ -34,7 +34,7 @@ public class RLSystem : EntitySystem
             Logger.ErrorS("RL", "Failed to start; could not find libRL");
         }
 #else
-        Logger.ErrorS("RL", "Not available in this build");
+        Logger.WarningS("RL", "Not available in this build");
 #endif
     }
 
