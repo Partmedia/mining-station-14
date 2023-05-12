@@ -94,7 +94,7 @@
     sprite: Structures/dispensers.rsi
     state: industrial
   product: CrateChemDispenserKit
-  cost: 1
+  cost: 10000
   category: Medical
   group: market
 
@@ -104,7 +104,7 @@
     sprite: Structures/Machines/pill_press.rsi
     state: pillPress0
   product: CratePillPressKit
-  cost: 7
+  cost: 7000
   category: Medical
   group: market
 
@@ -114,7 +114,7 @@
     sprite: Structures/Machines/centrifuge.rsi
     state: centrifuge0
   product: CrateCentrifugeKit
-  cost: 1
+  cost: 10000
   category: Medical
   group: market
 
@@ -124,6 +124,6 @@
     sprite: Structures/Machines/chem_analyzer.rsi
     state: icon
   product: CrateChemicalAnalyzerKit
-  cost: 1
+  cost: 10000
   category: Medical
   group: market
