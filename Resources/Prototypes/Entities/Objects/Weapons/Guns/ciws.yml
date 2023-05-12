@@ -30,7 +30,7 @@
   parent: WeaponTurretCIWS
   id: WeaponTurretCIWSCheap
   name: Sus-Tech ELITE CIWS
-  description: It looks like a Goalie, but its targeting computer was most likely coded by a NanoTrasen employee obsessed with refactoring code.
+  description: It looks like a Goalie, but its targeting computer looks counterfeit.
   components:
   - type: HTN
     rootTask: TurretCompound
