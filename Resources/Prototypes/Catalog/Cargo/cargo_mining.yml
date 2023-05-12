@@ -633,7 +633,7 @@
 
 - type: cargoProduct
   id: EmergencyFlares
-  description: Crate of 5 Flare Boxes
+  description: Crate of 2 Flare Boxes
   icon:
     sprite: Objects/Misc/flare.rsi
     state: icon
