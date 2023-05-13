@@ -742,7 +742,7 @@ namespace Content.Shared.CCVar
         ///     Rate of radiation system update in seconds.
         /// </summary>
         public static readonly CVarDef<float> RadiationGridcastUpdateRate =
-            CVarDef.Create("radiation.gridcast.update_rate", 1.0f, CVar.SERVERONLY);
+            CVarDef.Create("radiation.gridcast.update_rate", 0.2f, CVar.SERVERONLY);
 
         /// <summary>
         ///     If both radiation source and receiver are placed on same grid, ignore grids between them.
