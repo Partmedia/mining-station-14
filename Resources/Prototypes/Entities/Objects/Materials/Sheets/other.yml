@@ -151,7 +151,9 @@
     materials:
       Uranium: 100
   - type: RadiationSource
-    intensity: 0.7
+    N: 8000
+    hl: 3600
+    k: 0.5
   - type: Stack
     stackType: Uranium
   - type: Sprite

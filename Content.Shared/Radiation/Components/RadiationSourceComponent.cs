@@ -22,4 +22,31 @@ public sealed class RadiationSourceComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("slope")]
     public float Slope = 0.5f;
+
+    /** Number of radioactive molecules (left). Each radioactive molecule can
+     * produce one unit of radiation. If negative, infinite to preserve old
+     * behavior. */
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("N")]
+    public float N = -1;
+
+    /** Number of depleted molecules. Used to slow down fission. */
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("D")]
+    public float D = 0;
+
+    /** Half life in seconds. After this many seconds, N will be halved. */
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("hl")]
+    public float hl = 0;
+
+    /** For each unit of radiation received, emit fissionK more. 0 means non-fissile. */
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("k")]
+    public float fissionK = 0;
+
+    /** Number of new particles to create due to fission from the last update. */
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("fissionN")]
+    public float FissionN = 0;
 }
