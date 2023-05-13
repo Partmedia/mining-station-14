@@ -89,6 +89,7 @@ namespace Content.Client.Cargo.UI
                          Text = Loc.GetString(
                              "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
                              ("productName", productName),
+                             ("cost", product.PointCost),
                              ("orderAmount", order.Amount),
                              ("orderRequester", order.Requester))
                      },
