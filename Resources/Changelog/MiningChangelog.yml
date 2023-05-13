@@ -408,3 +408,20 @@ Entries:
       message: "Emergency lockers now have more useful items." }
   id: 2547
   time: '2023-04-29T14:58:00-07:00'
+
+- author: v1.2.8
+  changes:
+  - { type: Add,
+      message: "Uranium now decays and can undergo fission. Do not place uranium too close to each other!" }
+  - { type: Add,
+      message: "Add signal valves" }
+  - { type: Add,
+      message: "Update cargo catalog" }
+  - { type: Tweak,
+      message: "Improve medical kit contents" }
+  - { type: Tweak,
+      message: "Crew members no longer sell for money" }
+  - { type: Fix,
+      message: "Lathed welders now start empty" }
+  id: 2548
+  time: '2023-05-13T14:18:23-07:00'
