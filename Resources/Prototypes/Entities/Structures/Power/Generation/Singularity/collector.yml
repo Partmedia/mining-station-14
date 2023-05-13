@@ -39,7 +39,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: RadiationCollector
-    chargeModifier: 2500
+    chargeModifier: 1000
     # Note that this doesn't matter too much (see next comment)
     # However it does act as a cap on power receivable via the collector.
   - type: Battery

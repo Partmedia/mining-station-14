@@ -202,7 +202,8 @@
   - type: Sprite
     state: iron
   - type: RadiationSource
-    intensity: 0.7
+    N: 8000
+    hl: 7200
   - type: Material
     quality: 0.3
     materials:
