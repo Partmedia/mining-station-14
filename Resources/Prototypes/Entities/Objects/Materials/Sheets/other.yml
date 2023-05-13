@@ -142,6 +142,7 @@
     count: 1
 
 - type: entity
+  noSpawn: true
   parent: SheetOtherBase
   id: SheetUranium
   name: uranium
@@ -154,8 +155,6 @@
     N: 8000
     hl: 3600
     k: 0.5
-  - type: Stack
-    stackType: Uranium
   - type: Sprite
     state: uranium_3
   - type: Appearance
@@ -182,5 +181,5 @@
   name: uranium
   suffix: Single
   components:
-  - type: Stack
-    count: 1
+  - type: Sprite
+    state: uranium
