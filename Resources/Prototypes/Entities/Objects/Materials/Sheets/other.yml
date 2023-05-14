@@ -147,6 +147,8 @@
   name: uranium
   suffix: Full
   components:
+  - type: StaticPrice
+    price: 1500
   - type: Material
     materials:
       Uranium: 100
