@@ -1,4 +1,4 @@
-﻿- type: entityList
+- type: entityList
   id: surgerytools
   entities:
   - Cautery
@@ -7,4 +7,7 @@
   - Retractor
   - Hemostat
   - SawAdvanced
+  - Suture
+  - MetalSuture
+  - Tourniquet
 # - Drapes

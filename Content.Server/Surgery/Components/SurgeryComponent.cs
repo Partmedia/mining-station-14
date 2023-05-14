@@ -1,5 +1,3 @@
-using System.Threading;
-using Content.Shared.DragDrop;
 
 namespace Content.Server.Surgery
 {
@@ -8,6 +6,6 @@ namespace Content.Server.Surgery
     public sealed class SurgeryComponent : Component
     {
 
-        public Dictionary<EntityUid, CancellationTokenSource> CancelTokens = new();
+        //public Dictionary<EntityUid, CancellationTokenSource> CancelTokens = new();
     }
 }

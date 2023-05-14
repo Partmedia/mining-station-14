@@ -179,6 +179,8 @@ namespace Content.Server.Surgery
                 !TryComp<HandsComponent>(user, out var userHands))
                 return;
 
+            Logger.Debug("test");
+
             //check for surgical tool in active hand
             //apply to slot - resulting in attachment of tool on slot, condition change of body/organ, removal of body part/organ, or opening of body container
 

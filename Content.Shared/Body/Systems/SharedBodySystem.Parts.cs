@@ -240,7 +240,7 @@ public partial class SharedBodySystem
             RaiseLocalEvent(newBody, ref partAddedEvent);
 
             // TODO: Body refactor. Somebody is doing it
-            // EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
+            //EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
 
             foreach (var organ in GetPartOrgans(partId, part))
             {

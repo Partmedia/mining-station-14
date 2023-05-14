@@ -24,6 +24,8 @@
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/cautery.rsi
   - type: ItemCooldown
+  - type: SurgeryTool
+    cauterizer: true
 
 # Drill
 
@@ -45,6 +47,8 @@
         Piercing: 10
     soundHit:
       path: /Audio/Items/drill_hit.ogg
+  - type: SurgeryTool
+    drill: true
 
 # Scalpel
 
@@ -72,6 +76,8 @@
         Slash: 8
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+    - type: SurgeryTool
+      incisor: true
 
 - type: entity
   name: shiv
@@ -83,6 +89,9 @@
     state: shiv
   - type: Item
     heldPrefix: shiv
+  - type: SurgeryTool
+    incisor: true
+    incisorTimeMod: 2
 
 - type: entity
   name: advanced scalpel
@@ -94,6 +103,9 @@
     state: advanced
   - type: Item
     heldPrefix: advanced
+  - type: SurgeryTool
+    incisor: true
+    incisorTimeMod: 0.75
 
 - type: entity
   name: laser scalpel
@@ -105,6 +117,9 @@
     state: laser
   - type: Item
     heldPrefix: laser
+  - type: SurgeryTool
+    incisor: true
+    incisorTimeMod: 0.5
 
 # Scissors
 
@@ -120,6 +135,10 @@
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
   - type: ItemCooldown
+  - type: SurgeryTool
+    retractor: true
+    manipulator: true
+    manipulatorTimeMod: 2
 
 - type: entity
   name: hemostat
@@ -131,6 +150,10 @@
     state: hemostat
   - type: Item
     heldPrefix: hemostat
+  - type: SurgeryTool
+    smallClamp: true    
+    manipulator: true
+    manipulatorTimeMod: 1
 
   # - type: entity
   #   name: bone setter
@@ -160,6 +183,9 @@
     qualities:
       - Sawing
     speed: 1.0
+  - type: SurgeryTool
+    saw: true
+    sawTimeMod: 1
 # No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
 
 - type: entity
@@ -182,6 +208,9 @@
     qualities:
       - Sawing
     speed: 0.5
+  - type: SurgeryTool
+    saw: true
+    sawTimeMod: 1.5
 
 - type: entity
   name: circular saw
@@ -203,6 +232,9 @@
     qualities:
       - Sawing
     speed: 1.5
+  - type: SurgeryTool
+    saw: true
+    sawTimeMod: 0.5
 
 - type: entity
   name: advanced circular saw
@@ -225,3 +257,69 @@
     qualities:
       - Sawing
     speed: 2.0
+  - type: SurgeryTool
+    saw: true
+    sawTimeMod: 0.3
+
+- type: entity
+  name: suture
+  id: Suture
+  parent: BaseToolSurgery
+  description: A surgical thread used to stitch incisions and wounds.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/suture.rsi #TODO sprite this
+    state: suture
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/suture.rsi
+  - type: ItemCooldown
+  - type: SurgeryTool
+    suture: true
+
+- type: entity
+  name: metal suture
+  id: Metal Suture
+  parent: BaseToolSurgery
+  description: A harder surgical thread used for sternal closure. Can also be used to close exoskeletons on certain species.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/metal_suture.rsi #TODO sprite this
+    state: suture
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/metal_suture.rsi
+  - type: ItemCooldown
+  - type: SurgeryTool
+    suture: true
+    sutureTimeMod: 1.5
+    hardSuture: true
+
+- type: entity
+  name: tourniquet
+  id: Toruniquet
+  parent: BaseToolSurgery
+  description: A device that is used to apply pressure to a limb or extremity to stop bloodflow.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/tourniquet.rsi #TODO sprite this
+    state: suture
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/tourniquet.rsi
+  - type: ItemCooldown
+  - type: SurgeryTool
+    largeClamp: true
+
+- type: entity
+  name: makeshift tourniquet
+  id: ClothToruniquet
+  parent: BaseToolSurgery
+  description: A tourniquet quickly made up from cloth
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/clothtourniquet.rsi #TODO sprite this
+    state: clothtourniquet
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/clothtourniquet.rsi
+  - type: ItemCooldown
+  - type: SurgeryTool
+    largeClamp: true
+    largeClampTimeMod: 1.5
