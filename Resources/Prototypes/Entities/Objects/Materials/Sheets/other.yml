@@ -62,6 +62,8 @@
   name: plasma
   suffix: Full
   components:
+  - type: StaticPrice
+    price: 0
   - type: Material
     materials:
       Plasma: 100
@@ -147,8 +149,6 @@
   name: uranium
   suffix: Full
   components:
-  - type: StaticPrice
-    price: 1500
   - type: Material
     materials:
       Uranium: 100
