@@ -15,6 +15,12 @@ public sealed class HTNComponent : NPCComponent
     public string RootTask = default!;
 
     /// <summary>
+    /// Check any active services for our current plan. This is used to find new targets for example without changing our plan.
+    /// </summary>
+    [DataField("checkServices")]
+    public bool CheckServices = true;
+
+    /// <summary>
     /// The NPC's current plan.
     /// </summary>
     [ViewVariables]

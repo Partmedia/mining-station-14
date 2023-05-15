@@ -204,6 +204,7 @@ public sealed class HTNSystem : EntitySystem
 
                 if (comp.Plan == null || newPlanBetter)
                 {
+                    comp.CheckServices = false;
                     comp.Plan?.CurrentTask.Operator.Shutdown(comp.Blackboard, HTNOperatorStatus.BetterPlan);
                     comp.Plan = comp.PlanningJob.Result;
 
@@ -234,6 +235,11 @@ public sealed class HTNSystem : EntitySystem
                             Text = text.ToString(),
                         }, session.ConnectedClient);
                     }
+                }
+                // Keeping old plan
+                else
+                {
+                    comp.CheckServices = true;
                 }
 
                 comp.PlanningJob = null;
@@ -312,6 +318,19 @@ public sealed class HTNSystem : EntitySystem
             // Run the existing operator
             var currentOperator = component.Plan.CurrentOperator;
             var blackboard = component.Blackboard;
+
+            // Service still on cooldown.
+            if (component.CheckServices)
+            {
+                foreach (var service in currentTask.Services)
+                {
+                    var serviceResult = _utility.GetEntities(blackboard, service.Prototype);
+                    blackboard.SetValue(service.Key, serviceResult.GetHighest());
+                }
+
+                component.CheckServices = false;
+            }
+
             status = currentOperator.Update(blackboard, frameTime);
 
             switch (status)
