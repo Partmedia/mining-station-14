@@ -412,6 +412,8 @@ Entries:
 - author: v1.2.8
   changes:
   - { type: Add,
+      message: "Add radiator" }
+  - { type: Add,
       message: "Uranium now decays and can undergo fission. Do not place uranium too close to each other!" }
   - { type: Add,
       message: "Add signal valves" }
@@ -424,4 +426,4 @@ Entries:
   - { type: Fix,
       message: "Lathed welders now start empty" }
   id: 2548
-  time: '2023-05-13T14:18:23-07:00'
+  time: '2023-05-15T15:05:53-07:00'
