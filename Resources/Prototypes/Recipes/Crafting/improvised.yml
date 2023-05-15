@@ -24,13 +24,13 @@
 
 - type: construction
   name: makeshift tourniquet
-  id: makeshifthandcuffs
+  id: makeshiftourniquet
   graph: makeshifttourniquet
   startNode: start
   targetNode: clothtourniquet
   category: construction-category-tools
   description: "A tourniquet quickly made up from cloth"
-  icon: { sprite: Objects/Specific/Medical/Surgery/clothtourniquet.rsi, state: clothtourniquet } #TODO sprite
+  icon: { sprite: Objects/Specific/Medical/Surgery/tourniquet.rsi, state: clothtourniquet }
   objectType: Item
 
 - type: construction

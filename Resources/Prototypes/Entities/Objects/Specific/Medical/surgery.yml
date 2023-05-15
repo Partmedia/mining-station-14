@@ -76,8 +76,8 @@
         Slash: 8
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
-    - type: SurgeryTool
-      incisor: true
+  - type: SurgeryTool
+    incisor: true
 
 - type: entity
   name: shiv
@@ -268,7 +268,7 @@
   description: A surgical thread used to stitch incisions and wounds.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/Surgery/suture.rsi #TODO sprite this
+    sprite: Objects/Specific/Medical/Surgery/suture.rsi
     state: suture
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/suture.rsi
@@ -283,10 +283,10 @@
   description: A harder surgical thread used for sternal closure. Can also be used to close exoskeletons on certain species.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/Surgery/metal_suture.rsi #TODO sprite this
-    state: suture
+    sprite: Objects/Specific/Medical/Surgery/suture.rsi
+    state: metalsuture
   - type: Item
-    sprite: Objects/Specific/Medical/Surgery/metal_suture.rsi
+    sprite: Objects/Specific/Medical/Surgery/suture.rsi
   - type: ItemCooldown
   - type: SurgeryTool
     suture: true
@@ -300,8 +300,8 @@
   description: A device that is used to apply pressure to a limb or extremity to stop bloodflow.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/Surgery/tourniquet.rsi #TODO sprite this
-    state: suture
+    sprite: Objects/Specific/Medical/Surgery/tourniquet.rsi
+    state: tourniquet
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/tourniquet.rsi
   - type: ItemCooldown
@@ -310,15 +310,19 @@
 
 - type: entity
   name: makeshift tourniquet
-  id: ClothToruniquet
+  id: ClothTourniquet
   parent: BaseToolSurgery
   description: A tourniquet quickly made up from cloth
   components:
+  - type: Construction
+    graph: makeshifttourniquet
+    node: clothtourniquet
   - type: Sprite
-    sprite: Objects/Specific/Medical/Surgery/clothtourniquet.rsi #TODO sprite this
+    sprite: Objects/Specific/Medical/Surgery/tourniquet.rsi
     state: clothtourniquet
   - type: Item
-    sprite: Objects/Specific/Medical/Surgery/clothtourniquet.rsi
+    sprite: Objects/Specific/Medical/Surgery/tourniquet.rsi
+    state: clothtourniquet
   - type: ItemCooldown
   - type: SurgeryTool
     largeClamp: true
