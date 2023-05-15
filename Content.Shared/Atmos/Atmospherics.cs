@@ -139,7 +139,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     For the purposes of making space "colder"
         /// </summary>
-        public const float SpaceHeatCapacity = 7000f;
+        public const float SpaceHeatCapacity = 0;
 
         #region Excited Groups
 
