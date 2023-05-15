@@ -125,6 +125,7 @@ namespace Content.Client.Medical.CrewMonitoring
                SensorsTable.RemoveChild(child);
             }
             _rowsContent.Clear();
+            _directionIcons.Clear();
         }
     }
 }
