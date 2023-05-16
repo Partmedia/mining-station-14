@@ -76,8 +76,8 @@ public sealed partial class RadiationSystem : EntitySystem
 
             // Heat
             var temp = EnsureComp<TemperatureComponent>(source.Owner);
-            var dE = 200e3f * (-dN); // E = mc^2
-            temp.CurrentTemperature += dE / temp.SpecificHeat;
+            var dE = 1e2f * (-dN); // E = mc^2
+            temp.CurrentTemperature += dE / temp.SpecificHeat * dt;
             
             // Explosions
             if (doExplosion && source.Intensity > 120)
@@ -107,7 +107,9 @@ public sealed partial class RadiationSystem : EntitySystem
         // Handle fission
         if (TryComp<RadiationSourceComponent>(uid, out var source))
         {
-            source.FissionN += radsPerSecond * time * source.fissionK * (source.N / (source.N + source.D));
+            var temp = EnsureComp<TemperatureComponent>(source.Owner);
+            var K = source.fissionK + source.fissionKTC*(temp.CurrentTemperature-293);
+            source.FissionN += radsPerSecond * time * K * (source.N / (source.N + source.D));
         }
     }
 
