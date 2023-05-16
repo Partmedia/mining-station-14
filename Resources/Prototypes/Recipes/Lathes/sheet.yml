@@ -72,7 +72,7 @@
 - type: latheRecipe
   id: SheetUranium1
   result: SheetUranium1
-  completetime: 2
+  completetime: 30
   materials:
     Uranium: 500
     
