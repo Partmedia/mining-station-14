@@ -157,6 +157,7 @@
     N: 16000
     hl: 7200
     k: 0.5
+    ktc: -0.0005
   - type: Sprite
     state: uranium_3
   - type: Appearance

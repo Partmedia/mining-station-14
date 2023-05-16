@@ -45,6 +45,10 @@ public sealed class RadiationSourceComponent : Component
     [DataField("k")]
     public float fissionK = 0;
 
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("ktc")]
+    public float fissionKTC = 0;
+
     /** Number of new particles to create due to fission from the last update. */
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("fissionN")]
