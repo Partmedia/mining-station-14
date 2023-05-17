@@ -53,3 +53,11 @@
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: uranium }
   color: "#32a852"
   price: 15
+
+- type: material
+  id: ShieldedUranium
+  stackEntity: SheetShieldedUranium1
+  name: materials-shieldeduranium
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: shieldeduranium }
+  color: "#023802"
+  price: 1.6 # Uranium Price / 10, + SteelPrice, + Graphene Price

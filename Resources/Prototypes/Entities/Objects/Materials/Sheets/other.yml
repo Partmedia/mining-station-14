@@ -144,7 +144,7 @@
     count: 1
 
 - type: entity
-  noSpawn: true
+  nospawn: true
   parent: SheetOtherBase
   id: SheetUranium
   name: uranium
@@ -154,9 +154,11 @@
     materials:
       Uranium: 100
   - type: RadiationSource
-    N: 8000
+    n: 8000
     hl: 3600
     k: 0.5
+  - type: Stack
+    stackType: Uranium
   - type: Sprite
     state: uranium_3
   - type: Appearance
@@ -185,3 +187,56 @@
   components:
   - type: Sprite
     state: uranium
+  - type: Stack
+    count: 1
+
+- type: entity
+  nospawn: true
+  parent: SheetOtherBase
+  id: SheetShieldedUranium
+  name: shielded uranium
+  suffix: full
+  components:
+  - type: Material
+    materials:
+      Uranium: 10
+      Steel: 10
+      Carbon: 80
+  - type: RadiationSource
+    n: 800
+    hl: 3600
+    k: 0.05
+  - type: Stack
+    stackType: ShieldedUranium
+  - type: Sprite
+    state: shieldeduranium_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - shieldeduranium
+      - shieldeduranium_2
+      - shieldeduranium_3
+  - type: Item
+    heldprefix: shieldeduranium
+  - type: Extractable
+    grindablesolutionname: shieldeduranium
+  - type: SolutionContainerManager
+    solutions:
+      shieldeduranium:
+        reagents:
+        - ReagentId: Uranium
+          Quantity: 1
+        - ReagentId: Carbon
+          Quantity: 8
+
+- type: entity
+  parent: SheetShieldedUranium
+  id: SheetShieldedUranium1
+  name: shielded uranium
+  suffix: Single
+  components:
+  - type: Sprite
+    state: shieldeduranium
+  - type: Stack
+    count: 1

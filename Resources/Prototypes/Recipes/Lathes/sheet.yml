@@ -97,3 +97,12 @@
   completetime: 2
   materials:
     Plastic: 100
+
+- type: latheRecipe
+  id: SheetShieldedUranium1
+  result: SheetShieldedUranium1
+  completetime: 10
+  materials:
+    Uranium: 50
+    Steel: 50
+    Carbon: 400
