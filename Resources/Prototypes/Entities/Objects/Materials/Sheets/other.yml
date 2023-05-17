@@ -187,7 +187,7 @@
     state: uranium
 
 - type: entity
-  nospawn: true
+  noSpawn: true
   parent: SheetOtherBase
   id: SheetShieldedUranium
   name: shielded uranium
@@ -212,7 +212,7 @@
       - shieldeduranium_2
       - shieldeduranium_3
   - type: Item
-    heldprefix: shieldeduranium
+    heldPrefix: shieldeduranium
   - type: Extractable
     grindableSolutionName: shieldeduranium
   - type: SolutionContainerManager
@@ -236,7 +236,7 @@
     state: shieldeduranium
 
 - type: entity
-  nospawn: true
+  noSpawn: true
   parent: SheetOtherBase
   id: SheetGraphene
   name: graphene
@@ -259,7 +259,7 @@
       - graphene_2
       - graphene_3
   - type: Item
-    heldprefix: graphene
+    heldPrefix: graphene
   - type: Extractable
     grindableSolutionName: contents
   - type: SolutionContainerManager
