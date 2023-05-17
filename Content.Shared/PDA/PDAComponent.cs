@@ -1,6 +1,7 @@
+using Robust.Shared.Prototypes;
+using Robust.Shared.GameStates;
 using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.PDA
@@ -28,5 +29,7 @@ namespace Content.Shared.PDA
 
         [ViewVariables] public string? OwnerName;
         [ViewVariables] public string? StationName;
+        [ViewVariables] public string? StationAlertLevel;
+        [ViewVariables] public Color StationAlertColor = Color.White;
     }
 }
