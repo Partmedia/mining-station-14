@@ -144,7 +144,7 @@
     count: 1
 
 - type: entity
-  nospawn: true
+  noSpawn: true
   parent: SheetOtherBase
   id: SheetUranium
   name: uranium
@@ -154,7 +154,7 @@
     materials:
       Uranium: 100
   - type: RadiationSource
-    n: 8000
+    N: 8000
     hl: 3600
     k: 0.5
   - type: Stack
