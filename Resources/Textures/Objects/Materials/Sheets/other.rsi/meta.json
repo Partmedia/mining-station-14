@@ -102,6 +102,23 @@
     {
       "name": "shieldeduranium-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "graphene"
+    },
+    {
+      "name": "graphene_2"
+    },
+    {
+      "name": "graphene_3"
+    },
+    {
+      "name": "graphene-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "graphene-inhand-right",
+      "directions": 4
     }
   ]
 }

@@ -106,3 +106,10 @@
     Uranium: 50
     Steel: 50
     Carbon: 400
+
+- type: latheRecipe
+  id: SheetGraphene30
+  result: SheetGraphene
+  completetime: 2
+  materials:
+    Carbon: 3000

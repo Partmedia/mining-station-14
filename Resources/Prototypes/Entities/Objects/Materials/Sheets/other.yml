@@ -240,3 +240,48 @@
     state: shieldeduranium
   - type: Stack
     count: 1
+
+- type: entity
+  nospawn: true
+  parent: SheetOtherBase
+  id: SheetGraphene
+  name: graphene
+  suffix: full
+  components:
+  - type: StaticPrice
+    price: 0
+  - type: Material
+    materials:
+      Graphene: 100
+  - type: Stack
+    stackType: Graphene
+  - type: Sprite
+    state: graphene_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - graphene
+      - graphene_2
+      - graphene_3
+  - type: Item
+    heldprefix: graphene
+  - type: Extractable
+    grindablesolutionname: carbon
+  - type: SolutionContainerManager
+    solutions:
+      carbon:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 10
+
+- type: entity
+  parent: SheetGraphene
+  id: SheetGraphene1
+  name: grapene
+  suffix: Single
+  components:
+  - type: Sprite
+    state: graphene
+  - type: Stack
+    count: 1
