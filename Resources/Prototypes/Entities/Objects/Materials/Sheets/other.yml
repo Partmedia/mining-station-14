@@ -157,8 +157,6 @@
     N: 8000
     hl: 3600
     k: 0.5
-  - type: Stack
-    stackType: Uranium
   - type: Sprite
     state: uranium_3
   - type: Appearance
@@ -187,8 +185,6 @@
   components:
   - type: Sprite
     state: uranium
-  - type: Stack
-    count: 1
 
 - type: entity
   nospawn: true
@@ -203,11 +199,9 @@
       Steel: 10
       Carbon: 80
   - type: RadiationSource
-    n: 800
+    N: 800
     hl: 3600
     k: 0.05
-  - type: Stack
-    stackType: ShieldedUranium
   - type: Sprite
     state: shieldeduranium_3
   - type: Appearance
@@ -238,8 +232,6 @@
   components:
   - type: Sprite
     state: shieldeduranium
-  - type: Stack
-    count: 1
 
 - type: entity
   nospawn: true
@@ -267,18 +259,18 @@
   - type: Item
     heldprefix: graphene
   - type: Extractable
-    grindablesolutionname: carbon
+    grindablesolutionname: contents
   - type: SolutionContainerManager
     solutions:
-      carbon:
+      contents:
         reagents:
         - ReagentId: Carbon
-          Quantity: 10
+          Quantity: 30
 
 - type: entity
   parent: SheetGraphene
   id: SheetGraphene1
-  name: grapene
+  name: graphene
   suffix: Single
   components:
   - type: Sprite
