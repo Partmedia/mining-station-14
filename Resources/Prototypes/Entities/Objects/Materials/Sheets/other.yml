@@ -214,7 +214,7 @@
   - type: Item
     heldprefix: shieldeduranium
   - type: Extractable
-    grindablesolutionname: shieldeduranium
+    grindableSolutionName: shieldeduranium
   - type: SolutionContainerManager
     solutions:
       shieldeduranium:
@@ -223,6 +223,8 @@
           Quantity: 1
         - ReagentId: Carbon
           Quantity: 8
+        - ReagentId: Iron
+          Quantity: 1
 
 - type: entity
   parent: SheetShieldedUranium
@@ -259,13 +261,13 @@
   - type: Item
     heldprefix: graphene
   - type: Extractable
-    grindablesolutionname: contents
+    grindableSolutionName: contents
   - type: SolutionContainerManager
     solutions:
       contents:
         reagents:
         - ReagentId: Carbon
-          Quantity: 30
+          Quantity: 10
 
 - type: entity
   parent: SheetGraphene
