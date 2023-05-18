@@ -85,6 +85,40 @@
     {
       "name": "uranium-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "shieldeduranium"
+    },
+    {
+      "name": "shieldeduranium_2"
+    },
+    {
+      "name": "shieldeduranium_3"
+    },
+    {
+      "name": "shieldeduranium-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "shieldeduranium-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "graphene"
+    },
+    {
+      "name": "graphene_2"
+    },
+    {
+      "name": "graphene_3"
+    },
+    {
+      "name": "graphene-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "graphene-inhand-right",
+      "directions": 4
     }
   ]
 }

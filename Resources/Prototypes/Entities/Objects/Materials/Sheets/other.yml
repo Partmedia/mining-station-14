@@ -185,3 +185,96 @@
   components:
   - type: Sprite
     state: uranium
+
+- type: entity
+  noSpawn: true
+  parent: SheetOtherBase
+  id: SheetShieldedUranium
+  name: shielded uranium
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Uranium: 10
+      Steel: 10
+      Carbon: 80
+  - type: RadiationSource
+    N: 800
+    hl: 3600
+    k: 0.05
+  - type: Sprite
+    state: shieldeduranium_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - shieldeduranium
+      - shieldeduranium_2
+      - shieldeduranium_3
+  - type: Item
+    heldPrefix: shieldeduranium
+  - type: Extractable
+    grindableSolutionName: shieldeduranium
+  - type: SolutionContainerManager
+    solutions:
+      shieldeduranium:
+        reagents:
+        - ReagentId: Uranium
+          Quantity: 1
+        - ReagentId: Carbon
+          Quantity: 8
+        - ReagentId: Iron
+          Quantity: 1
+
+- type: entity
+  parent: SheetShieldedUranium
+  id: SheetShieldedUranium1
+  name: shielded uranium
+  suffix: Single
+  components:
+  - type: Sprite
+    state: shieldeduranium
+
+- type: entity
+  parent: SheetOtherBase
+  id: SheetGraphene
+  name: graphene
+  suffix: Full
+  components:
+  - type: StaticPrice
+    price: 0
+  - type: Material
+    materials:
+      Graphene: 100
+  - type: Stack
+    stackType: Graphene
+  - type: Sprite
+    state: graphene_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - graphene
+      - graphene_2
+      - graphene_3
+  - type: Item
+    heldPrefix: graphene
+  - type: Extractable
+    grindableSolutionName: contents
+  - type: SolutionContainerManager
+    solutions:
+      contents:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 6
+
+- type: entity
+  parent: SheetGraphene
+  id: SheetGraphene1
+  name: graphene
+  suffix: Single
+  components:
+  - type: Sprite
+    state: graphene
+  - type: Stack
+    count: 1
