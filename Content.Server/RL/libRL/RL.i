@@ -21,6 +21,10 @@ cl_object num(int x) {
     return ecl_make_fixnum(x);
 }
 
+cl_object floatnum(float x) {
+    return ecl_make_single_float(x);
+}
+
 cl_object str(const char *s) {
     return ecl_cstring_to_base_string_or_nil(s);
 }
@@ -31,6 +35,10 @@ const char* cstr(const cl_object o) {
 
 int cint(const cl_object o) {
     return ecl_to_int(o);
+}
+
+float cfloat(const cl_object o) {
+    return ecl_to_float(o);
 }
 
 cl_object list() {
@@ -122,8 +130,10 @@ extern int boot(void);
 extern void set_debug(int level);
 extern bool nil(cl_object o);
 extern cl_object num(int x);
+extern cl_object floatnum(float x);
 extern cl_object str(const char *s);
 extern int cint(const cl_object o);
+extern float cfloat(const cl_object o);
 extern const char* cstr(const cl_object o);
 extern cl_object list(void);
 extern cl_object list2(cl_object a, cl_object b);
