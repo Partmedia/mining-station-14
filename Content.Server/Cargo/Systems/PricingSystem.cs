@@ -168,7 +168,17 @@ public sealed class PricingSystem : EntitySystem
         double price = 0;
         foreach (var (id, quantity) in component.Materials)
         {
-            price += _prototypeManager.Index<MaterialPrototype>(id).Price * quantity;
+            var prot = _prototypeManager.Index<MaterialPrototype>(id);
+            var mprice = prot.Price;
+#if RL
+            var fn = RL.readstr("matprice");
+            var arg = RL.str(prot.ID);
+            var form = RL.list2(fn, arg);
+            var ret = RL.eval(form);
+            if (!RL.nil(ret))
+                mprice = RL.cfloat(ret);
+#endif
+            price += mprice * quantity;
         }
         return price*component.Quality;
     }
@@ -251,3 +261,59 @@ public struct PriceCalculationEvent
 
     public PriceCalculationEvent() { }
 }
+
+#if RL
+[AdminCommand(AdminFlags.Query)]
+sealed class PricesCommand : IConsoleCommand
+{
+    public string Command => "prices";
+    public string Description => "List current stock prices";
+    public string Help => "prices";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+        var _rl = sysMan.GetEntitySystem<RLSystem>();
+        if (!_rl.Available())
+        {
+            shell.WriteLine("RL is not available");
+            return;
+        }
+
+        var call = RL.call("all-prices");
+        var ret = RL.reval(call);
+        shell.WriteLine(RL.repr(ret));
+    }
+}
+
+[AdminCommand(AdminFlags.Query)]
+sealed class SetPriceCommand : IConsoleCommand
+{
+    public string Command => "setprice";
+    public string Description => "Set price on a stock";
+    public string Help => "setprice <stock> <price>";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length < 2)
+        {
+            shell.WriteLine(Help);
+            return;
+        }
+
+        var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+        var _rl = sysMan.GetEntitySystem<RLSystem>();
+        if (!_rl.Available())
+        {
+            shell.WriteLine("RL is not available");
+            return;
+        }
+
+        var call = RL.call("set-price");
+        call = RL.add(call, RL.str(args[0]));
+        call = RL.add(call, RL.floatnum(float.Parse(args[1])));
+        var ret = RL.reval(call);
+        shell.WriteLine(RL.repr(ret));
+    }
+}
+#endif
