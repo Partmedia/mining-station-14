@@ -37,11 +37,6 @@
       - MobMask
       layer:
       - MobLayer
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      150: Dead
   - type: Stamina
     excess: 150
   - type: DamageStateVisuals
