@@ -4,7 +4,7 @@
   name: materials-biomass
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   color: "#8A9A5B"
-  price: 0.1
+  price: 8
 
 - type: material
   id: Cloth

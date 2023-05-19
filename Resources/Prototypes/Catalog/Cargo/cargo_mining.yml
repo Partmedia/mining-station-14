@@ -16,7 +16,6 @@
     sprite: Objects/Misc/monkeycube.rsi
     state: cube
   product: CrateMiningBiomass
-  cost: 1295
   category: Medical
   group: market
 
