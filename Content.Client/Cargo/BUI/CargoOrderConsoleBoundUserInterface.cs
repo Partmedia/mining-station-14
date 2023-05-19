@@ -79,7 +79,6 @@ namespace Content.Client.Cargo.BUI
                 _orderMenu.Description.SetMessage(description);
                 _product = row.Product;
                 _orderMenu.ProductName.Text = row.ProductName.Text;
-                _orderMenu.PointCost.Text = row.PointCost.Text;
                 _orderMenu.Requester.Text = orderRequester;
                 _orderMenu.Reason.Text = "";
                 _orderMenu.Amount.Value = 1;
