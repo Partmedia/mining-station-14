@@ -1327,7 +1327,7 @@
 # random sprite state when you spawn it.
 - type: entity
   name: tarantula
-  parent: SimpleMobBase
+  parent: SimpleSpaceMobBase
   id: MobGiantSpider
   description: Widely recognized to be the literal worst thing in existence.
   components:
