@@ -4,7 +4,6 @@
     sprite: Structures/Storage/canister.rsi
     state: grey
   product: AirCanister
-  cost: 6200
   category: Atmospherics
   group: market
 
@@ -14,7 +13,6 @@
     sprite: Structures/Storage/canister.rsi
     state: blue
   product: OxygenCanister
-  cost: 4300
   category: Atmospherics
   group: market
 
@@ -24,7 +22,6 @@
     sprite: Structures/Storage/canister.rsi
     state: red
   product: NitrogenCanister
-  cost: 4300
   category: Atmospherics
   group: market
 
@@ -34,7 +31,6 @@
     sprite: Structures/Storage/canister.rsi
     state: black
   product: CarbonDioxideCanister
-  cost: 1800
   category: Atmospherics
   group: market
 
@@ -46,7 +42,6 @@
 #    sprite: Structures/Storage/canister.rsi
 #    state: water_vapor
 #  product: WaterVaporCanister
-#  cost: 2600
 #  category: Atmospherics
 #  group: market
 
@@ -58,7 +53,6 @@
     sprite: Structures/Storage/canister.rsi
     state: orange
   product: PlasmaCanister
-  cost: 8500
   category: Atmospherics
   group: market
 
@@ -70,6 +64,5 @@
 #    sprite: Structures/Storage/canister.rsi
 #    state: green
 #  product: TritiumCanister
-#  cost: 15500
 #  category: Atmospherics
 #  group: market
