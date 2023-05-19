@@ -81,17 +81,6 @@
     damage:
       types:
         Heat: 1 #per second, scales with number of fire 'stacks'
-  - type: Temperature
-    heatDamageThreshold: 360
-    coldDamageThreshold: 0
-    currentTemperature: 310.15
-    coldDamage:
-      types:
-        Cold : 1 #per second, scales with temperature & other constants
-    specificHeat: 42
-    heatDamage:
-      types:
-        Heat : 1 #per second, scales with temperature & other constants
   - type: MobState
   - type: MobThresholds
     thresholds:
