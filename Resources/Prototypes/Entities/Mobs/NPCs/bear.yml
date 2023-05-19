@@ -68,9 +68,6 @@
       enabled: false
       autoPopulate: false
       name: action-name-disarm
-  - type: Temperature
-    heatDamageThreshold: 500
-    coldDamageThreshold: 0
   - type: MeleeWeapon
     hidden: true
     soundHit:
