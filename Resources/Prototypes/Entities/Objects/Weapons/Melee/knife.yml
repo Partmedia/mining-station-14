@@ -86,7 +86,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 10
+        Slash: 16
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi
