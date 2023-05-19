@@ -14,8 +14,10 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cargo.Systems
 {
@@ -38,6 +40,9 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly PricingSystem _pricingSystem = default!;
 
         private void InitializeConsole()
         {
@@ -147,7 +152,7 @@ namespace Content.Server.Cargo.Systems
                 PlayDenySound(uid, component);
             }
 
-            var cost = product.PointCost * order.Amount;
+            var cost = order.Price * order.Amount;
 
             // Not enough balance
             if (cost > bankAccount.Balance)
@@ -236,7 +241,19 @@ namespace Content.Server.Cargo.Systems
 
         private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int index)
         {
-            return new CargoOrderData(index, args.ProductId, args.Amount, args.Requester, args.Reason);
+            var product = _protoManager.Index<CargoProductPrototype>(args.ProductId);
+            int price = 0;
+            if (product.PointCost == 0)
+            {
+                float markup = 1.5f; // how much buy price is inflated TODO: CCVar
+                var ent = _entityManager.SpawnEntity(product.Product, MapCoordinates.Nullspace);
+                price = (int)(_pricingSystem.GetPrice(ent) * markup);
+            }
+            else
+            {
+                price = product.PointCost;
+            }
+            return new CargoOrderData(index, args.ProductId, price, args.Amount, args.Requester, args.Reason);
         }
 
         private int GetOrderCount(StationCargoOrderDatabaseComponent component)

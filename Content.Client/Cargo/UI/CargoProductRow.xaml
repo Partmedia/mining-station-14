@@ -19,10 +19,6 @@
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#25252A" />
             </PanelContainer.PanelOverride>
-            <Label Name="PointCost"
-                   Access="Public"
-                   MinSize="52 32"
-                   Align="Right" />
         </PanelContainer>
     </BoxContainer>
 </PanelContainer>

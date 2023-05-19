@@ -10,6 +10,7 @@ namespace Content.Shared.Cargo
         /// The human-readable number, when displaying this order
         public int PrintableOrderNumber { get { return OrderIndex + 1; } }
         public string ProductId;
+        public int Price; /// quoted price
         public int Amount;
         public string Requester;
         // public String RequesterRank; // TODO Figure out how to get Character ID card data
@@ -18,10 +19,11 @@ namespace Content.Shared.Cargo
         public bool Approved => Approver is not null;
         public string? Approver;
 
-        public CargoOrderData(int orderIndex, string productId, int amount, string requester, string reason)
+        public CargoOrderData(int orderIndex, string productId, int price, int amount, string requester, string reason)
         {
             OrderIndex = orderIndex;
             ProductId = productId;
+            Price = price;
             Amount = amount;
             Requester = requester;
             Reason = reason;

@@ -228,7 +228,7 @@ public sealed partial class CargoSystem
 
             if (cappedAmount < order.Amount)
             {
-                var reducedOrder = new CargoOrderData(order.OrderIndex, order.ProductId, cappedAmount, order.Requester, order.Reason);
+                var reducedOrder = new CargoOrderData(order.OrderIndex, order.ProductId, order.Price, cappedAmount, order.Requester, order.Reason);
 
                 orders.Add(reducedOrder);
                 break;

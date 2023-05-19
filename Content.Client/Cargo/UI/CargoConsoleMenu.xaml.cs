@@ -80,7 +80,6 @@ namespace Content.Client.Cargo.UI
                         Product = prototype,
                         ProductName = { Text = prototype.Name },
                         MainButton = { ToolTip = prototype.Description },
-                        PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", prototype.PointCost.ToString())) },
                         Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
                     };
                     button.MainButton.OnPressed += args =>
@@ -141,7 +140,7 @@ namespace Content.Client.Cargo.UI
                         Text = Loc.GetString(
                             "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
                             ("productName", productName),
-                            ("cost", product.PointCost),
+                            ("cost", order.Price),
                             ("orderAmount", order.Amount),
                             ("orderRequester", order.Requester))
                     },
