@@ -103,6 +103,9 @@
     name: space bear
     description: |
       You're a bear! Do bear things.
+  - type: MobPrice
+    price: 500
+    deathPenalty: 1 # we cannot sell living space mobs so...
 
 - type: entity
   id: MobBearSpaceSalvage

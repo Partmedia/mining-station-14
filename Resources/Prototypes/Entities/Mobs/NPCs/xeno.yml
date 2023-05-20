@@ -122,6 +122,9 @@
   - type: NoSlip
   - type: Perishable #Ummmm the acid kills a lot of the bacteria or something
     molsPerSecondPerUnitMass: 0.0005
+  - type: MobPrice
+    price: 700 
+    deathPenalty: 1 # we cannot sell living space mobs so...
 
 - type: entity
   name: Praetorian
@@ -161,6 +164,9 @@
       - MobMask
       layer:
       - MobLayer
+  - type: MobPrice
+    price: 2900
+    deathPenalty: 1 # we cannot sell living space mobs so...
 
 - type: entity
   name: Drone
@@ -200,6 +206,9 @@
       - MobMask
       layer:
       - MobLayer
+  - type: MobPrice
+    price: 700
+    deathPenalty: 1 # we cannot sell living space mobs so...
 
 - type: entity
   name: Queen
@@ -247,6 +256,9 @@
       - MobMask
       layer:
       - MobLayer
+  - type: MobPrice
+    price: 10600 # Living critters are valuable in space.
+    deathPenalty: 1 # we cannot sell living space mobs so...
 
 - type: entity
   name: Ravager
@@ -294,6 +306,9 @@
       - MobMask
       layer:
       - MobLayer
+  - type: MobPrice
+    price: 1800
+    deathPenalty: 1 # we cannot sell living space mobs so...
 
 - type: entity
   name: Runner
@@ -341,6 +356,9 @@
       - MobMask
       layer:
       - MobLayer
+  - type: MobPrice
+    price: 700
+    deathPenalty: 1 # we cannot sell living space mobs so...
 
 - type: entity
   name: Rouny
@@ -387,6 +405,9 @@
       - MobMask
       layer:
       - MobLayer
+  - type: MobPrice
+    price: 1200
+    deathPenalty: 1 # we cannot sell living space mobs so...
 
 - type: entity
   name: space adder
@@ -448,6 +469,9 @@
       - MobMask
       layer:
       - MobLayer
+  - type: MobPrice
+    price: 300
+    deathPenalty: 1 # we cannot sell living space mobs so...
 
 - type: entity
   name: space adder

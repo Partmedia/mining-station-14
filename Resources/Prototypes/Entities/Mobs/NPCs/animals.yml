@@ -1395,6 +1395,9 @@
   - type: NoSlip
   - type: Spider
   - type: IgnoreSpiderWeb
+  - type: MobPrice
+    price: 300
+    deathPenalty: 1 # we cannot sell living mobs so...
 
 - type: entity
   name: tarantula
