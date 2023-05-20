@@ -113,6 +113,9 @@
       sprite: Mobs/Aliens/Carps/magic.rsi
     - type: TypingIndicator
       proto: guardian
+    - type: MobPrice
+      price: 600
+      deathPenalty: 1 # we cannot sell living space mobs so...
 
 - type: entity
   name: holocarp
@@ -135,6 +138,9 @@
             - Opaque
     - type: TypingIndicator
       proto: robot
+    - type: MobPrice
+      price: 700
+      deathPenalty: 1 # we cannot sell living space mobs so...
 
 - type: entity
   id: MobCarpSalvage
