@@ -21,12 +21,15 @@ using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Materials;
+using Content.Shared.Stacks;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -346,7 +349,70 @@ public sealed partial class CargoSystem
 
         foreach (var ent in toSell)
         {
+            SellHooks(ent);
             Del(ent);
+        }
+    }
+
+    private void BuyHooks(EntityUid uid)
+    {
+        if (TryComp<MaterialComponent>(uid, out var material) && !HasComp<StackPriceComponent>(uid))
+        {
+            int count = 1;
+            if (TryComp<StackComponent>(uid, out var stack))
+                count = stack.Count;
+
+            foreach (var (id, quantity) in material.Materials)
+            {
+#if RL
+                var call = RL.call("buy-material");
+                call = RL.add(call, RL.str(id));
+                call = RL.add(call, RL.num(count*quantity));
+                var ret = RL.reval(call);
+#endif
+            }
+        }
+
+        if (TryComp<ContainerManagerComponent>(uid, out var containers))
+        {
+            foreach (var container in containers.Containers)
+            {
+                foreach (var ent in container.Value.ContainedEntities)
+                {
+                    BuyHooks(ent);
+                }
+            }
+        }
+    }
+
+    private void SellHooks(EntityUid uid)
+    {
+        if (TryComp<MaterialComponent>(uid, out var material) && !HasComp<StackPriceComponent>(uid))
+        {
+            int count = 1;
+            if (TryComp<StackComponent>(uid, out var stack))
+                count = stack.Count;
+
+            foreach (var (id, quantity) in material.Materials)
+            {
+#if RL
+                var call = RL.call("sell-material");
+                call = RL.add(call, RL.str(id));
+                call = RL.add(call, RL.num(count*quantity));
+                var ret = RL.reval(call);
+#endif
+            }
+        }
+
+        if (TryComp<ContainerManagerComponent>(uid, out var containers))
+        {
+            foreach (var container in containers.Containers)
+            {
+                foreach (var ent in container.Value.ContainedEntities)
+                {
+                    SellHooks(ent);
+                }
+            }
         }
     }
 
@@ -440,6 +506,7 @@ public sealed partial class CargoSystem
             var order = orders[0];
             var coordinates = new EntityCoordinates(component.Owner, xformQuery.GetComponent(_random.PickAndTake(pads).Owner).LocalPosition);
             var item = Spawn(_protoMan.Index<CargoProductPrototype>(order.ProductId).Product, coordinates);
+            BuyHooks(item);
             SpawnAndAttachOrderManifest(item, order, coordinates, component);
             order.Amount--;
 
