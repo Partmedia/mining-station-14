@@ -2,11 +2,13 @@ using System.Linq;
 using Content.Server.Audio;
 using Content.Server.Mind;
 using Content.Server.Cargo.Components;
+using Content.Server.Cargo.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost;
 using Content.Server.Players;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
@@ -37,6 +39,7 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly PricingSystem _pricingSystem = default!;
 
         private readonly HttpClient _httpClient = new();
 
@@ -53,9 +56,12 @@ namespace Content.Server.StationEvents
         [ViewVariables(VVAccess.ReadWrite)]
         private float _timeUntilNextEvent;
 
+        private int startValue = 0;
+
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
             SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         }
 
@@ -66,8 +72,39 @@ namespace Content.Server.StationEvents
             ReportRound(Loc.GetString("round-started"));
         }
 
+        private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
+        {
+            startValue = stationPrice();
+            Logger.InfoS("mining", $"Initial value: {startValue}");
+        }
+
         public override void Ended()
         {
+        }
+
+        private bool anchored(EntityUid uid)
+        {
+            if (TryComp<TransformComponent>(uid, out var xform))
+                return xform.Anchored;
+            return false;
+        }
+
+        private int stationPrice()
+        {
+            double total = 0;
+            foreach (var station in _station.Stations)
+            {
+                if (TryComp<StationDataComponent>(station, out var data))
+                {
+                    var grid = _station.GetLargestGrid(data);
+                    if (grid != null)
+                    {
+                        var val = _pricingSystem.AppraiseGrid(grid.Value, anchored);
+                        total += val;
+                    }
+                }
+            }
+            return (int)total;
         }
 
         public override void Update(float frameTime)
@@ -119,13 +156,23 @@ namespace Content.Server.StationEvents
             if (!RuleStarted)
                 return;
 
+            int endValue = stationPrice();
+            int change = endValue - startValue;
+            Logger.InfoS("mining", $"End value: {endValue} (change {change})");
+
             foreach (var station in _station.Stations)
             {
                 TryComp<StationBankAccountComponent>(station, out var bankComponent);
                 if (bankComponent != null)
                 {
-                    var profit = bankComponent.Balance - bankComponent.InitialBalance;
+                    var profit = bankComponent.Balance - bankComponent.InitialBalance + change;
+                    ev.AddLine(Loc.GetString("financial-summary"));
+                    ev.AddLine(Loc.GetString("cargo-balance", ("amount", bankComponent.Balance)));
+                    ev.AddLine(Loc.GetString("initial-loan", ("amount", -bankComponent.InitialBalance)));
+                    ev.AddLine(Loc.GetString("station-value-change", ("amount", change)));
+                    ev.AddLine("");
                     ev.AddLine(Loc.GetString("station-profit", ("profit", profit)));
+
                     var players = GetAllPlayers();
                     ReportRound(Loc.GetString("team-profit", ("team", ListPlayers(players)), ("profit", profit)));
                     LogProfit(profit, players);
