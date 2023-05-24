@@ -10,6 +10,7 @@
       - id: ClothingMaskSterile
       - id: ClothingOuterCoatLab
       - id: AnomalyScanner
+      - id: AnomalyLocator
         prob: 0.5
         orGroup: Scanner
       - id: NodeScanner
