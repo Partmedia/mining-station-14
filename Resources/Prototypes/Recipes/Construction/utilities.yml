@@ -520,11 +520,6 @@
   icon:
     sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpSignalValve
-  layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
-    state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
-    state: pumpSignalValve
   conditions:
   - !type:TileNotBlocked {}
 
