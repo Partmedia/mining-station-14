@@ -188,7 +188,7 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            var readyCount = _playerGameStatuses.Values.Count(x => x == PlayerGameStatus.ReadyToPlay);
+            var readyCount = Readied();
             var needPlayers = minPlayers - readyCount;
             if (needPlayers > 0)
             {
@@ -208,6 +208,11 @@ namespace Content.Server.GameTicking
         {
             _playerGameStatuses.Remove(ev.PlayerSession.UserId);
             CheckMinPlayers();
+        }
+
+        public int Readied()
+        {
+            return _playerGameStatuses.Values.Count(x => x == PlayerGameStatus.ReadyToPlay);
         }
     }
 }
