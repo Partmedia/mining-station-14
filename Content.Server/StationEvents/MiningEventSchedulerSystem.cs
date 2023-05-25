@@ -91,8 +91,9 @@ namespace Content.Server.StationEvents
 
             foreach (var player in ev.Players)
             {
-                string username = player.Data.ContentData().Name;
-                players.Add(username);
+                var data = player.Data.ContentData();
+                if (data != null)
+                    players.Add(data.Name);
             }
         }
 
@@ -103,8 +104,9 @@ namespace Content.Server.StationEvents
             if (!ev.LateJoin)
                 return;
 
-            string username = ev.Player.Data.ContentData().Name;
-            players.Add(username);
+            var data = ev.Player.Data.ContentData();
+            if (data != null)
+                players.Add(data.Name);
         }
 
         public override void Ended()
