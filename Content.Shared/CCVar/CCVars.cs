@@ -33,12 +33,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> Locale =
             CVarDef.Create("server.locale", "en-US", CVar.REPLICATED | CVar.SERVER);
 
-        /// <summary>
-        ////    A txt file containing other servers that we're happy redialing to.
-        /// </summary>
-        public static readonly CVarDef<string> RedialAddressesFile =
-            CVarDef.Create("server.redial_addresses", "RedialAddresses.txt", CVar.REPLICATED | CVar.SERVER);
-
         /*
          * Ambience
          */
