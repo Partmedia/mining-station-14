@@ -94,10 +94,6 @@
     radius: 1.2
     energy: 2
     color: "#4faffb"
-  - type: GhostTakeoverAvailable
-    name: space bear
-    description: |
-      You're a bear! Do bear things.
   - type: MobPrice
     price: 500
     deathPenalty: 1 # we cannot sell living space mobs so...

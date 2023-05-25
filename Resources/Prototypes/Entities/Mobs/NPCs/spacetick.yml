@@ -86,8 +86,6 @@
           Quantity: 5
   - type: MeleeChemicalInjector
     solution: melee
-  - type: GhostTakeoverAvailable
-    prob: 0.33
     makeSentient: true
     name: space tick
     description: |
