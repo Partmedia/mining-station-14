@@ -58,15 +58,21 @@ namespace Content.Server.StationEvents
 
         private int startValue = 0;
 
+        private SortedSet<string> players = new SortedSet<string>();
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
             SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+
+            SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
+            SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
         }
 
         public override void Started()
         {
+            players = new SortedSet<string>();
             ResetTimer();
             _soundSystem.DispatchGlobalEventMusic(RandomExtensions.Pick(_random, 音乐));
             ReportRound(Loc.GetString("round-started"));
@@ -76,6 +82,29 @@ namespace Content.Server.StationEvents
         {
             startValue = stationPrice();
             Logger.InfoS("mining", $"Initial value: {startValue}");
+        }
+
+        private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
+        {
+            if (!RuleAdded)
+                return;
+
+            foreach (var player in ev.Players)
+            {
+                string username = player.Data.ContentData().Name;
+                players.Add(username);
+            }
+        }
+
+        private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
+        {
+            if (!RuleAdded)
+                return;
+            if (!ev.LateJoin)
+                return;
+
+            string username = ev.Player.Data.ContentData().Name;
+            players.Add(username);
         }
 
         public override void Ended()
@@ -173,34 +202,10 @@ namespace Content.Server.StationEvents
                     ev.AddLine("");
                     ev.AddLine(Loc.GetString("station-profit", ("profit", profit)));
 
-                    var players = GetAllPlayers();
                     ReportRound(Loc.GetString("team-profit", ("team", ListPlayers(players)), ("profit", profit)));
                     LogProfit(profit, players);
                 }
             }
-        }
-
-        private SortedSet<String> GetAllPlayers()
-        {
-            SortedSet<String> players = new SortedSet<string>();
-            var allMinds = Get<MindTrackerSystem>().AllMinds;
-            foreach (var mind in allMinds)
-            {
-                if (mind == null)
-                    continue;
-
-                var userId = mind.OriginalOwnerUserId;
-                var observer = mind.AllRoles.Any(role => role is ObserverRole);
-                PlayerData? contentPlayerData = null;
-                if (_playerManager.TryGetPlayerData(userId, out var playerData))
-                {
-                    contentPlayerData = playerData.ContentData();
-                }
-
-                if (!observer && contentPlayerData != null)
-                    players.Add(contentPlayerData.Name);
-            }
-            return players;
         }
 
         private String ListPlayers(SortedSet<String> players)
