@@ -36,7 +36,6 @@ namespace Content.Client.Launcher
             };
             RetryButton.OnPressed += _ => _state.RetryConnect();
             ExitButton.OnPressed += _ => _state.Exit();
-            RedirectButton.OnPressed += _ => _state.Redirect();
 
             var addr = state.Address;
             if (addr != null)
@@ -44,7 +43,6 @@ namespace Content.Client.Launcher
 
             state.PageChanged += OnPageChanged;
             state.ConnectFailReasonChanged += ConnectFailReasonChanged;
-            state.RedirectAddressChanged += RedirectAddressChanged;
             state.ConnectionStateChanged += ConnectionStateChanged;
 
             ConnectionStateChanged(state.ConnectionState);
@@ -60,17 +58,6 @@ namespace Content.Client.Launcher
             ConnectFailReason.SetMessage(reason == null
                 ? ""
                 : Loc.GetString("connecting-fail-reason", ("reason", reason)));
-        }
-
-        private void RedirectAddressChanged(string? address)
-        {
-            if (address == null)
-            {
-                RedirectButton.Visible = false;
-            } else
-            {
-                RedirectButton.Visible = true;
-            }
         }
 
         private void LastNetDisconnectedArgsChanged(NetDisconnectedArgs? args)

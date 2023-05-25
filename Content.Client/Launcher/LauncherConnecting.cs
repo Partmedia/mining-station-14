@@ -18,19 +18,8 @@ namespace Content.Client.Launcher
 
         private Page _currentPage;
         private string? _connectFailReason;
-        private string? _redirectAddress;
 
         public string? Address => _gameController.LaunchState.Ss14Address ?? _gameController.LaunchState.ConnectAddress;
-
-        public string? RedirectAddress
-        {
-            get => _redirectAddress;
-            private set
-            {
-                _redirectAddress = value;
-                RedirectAddressChanged?.Invoke(value);
-            }
-        }
 
         public string? ConnectFailReason
         {
@@ -58,7 +47,6 @@ namespace Content.Client.Launcher
 
         public event Action<Page>? PageChanged;
         public event Action<string?>? ConnectFailReasonChanged;
-        public event Action<string?>? RedirectAddressChanged;
         public event Action<ClientConnectionState>? ConnectionStateChanged;
 
         protected override void Startup()
@@ -89,21 +77,7 @@ namespace Content.Client.Launcher
                 // Result deliberately discarded.
                 Redial();
             }
-            var reason = args.Reason.Split("%redial");
-
-            string? newAddress = null;
-
-            if (reason[1] != null)
-            {
-                var address = reason[1];
-
-                // Assuming URI format will stay restricted to ss14 or ss14s
-                if (address.StartsWith("ss14"))
-                    newAddress = address;
-            }
-            RedirectAddress = newAddress;
-            ConnectFailReason = reason[0];
-
+            ConnectFailReason = args.Reason;
             CurrentPage = Page.ConnectFailed;
         }
 
@@ -121,27 +95,6 @@ namespace Content.Client.Launcher
             }
         }
 
-        public bool Redirect()
-        {
-            try
-            {
-                if (RedirectAddress != null)
-                {
-                    _gameController.Redial(RedirectAddress);
-                    return true;
-                }
-                else
-                {
-                    Logger.InfoS("launcher-ui", $"Redirect not possible, no Ss14Address");
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorS("launcher-ui", $"Redial exception: {ex}");
-            }
-            return false;
-        }
-
         public bool Redial()
         {
             try
@@ -153,7 +106,7 @@ namespace Content.Client.Launcher
                 }
                 else
                 {
-                    Logger.InfoS("launcher-ui", $"Redial not possible, no address");
+                    Logger.InfoS("launcher-ui", $"Redial not possible, no Ss14Address");
                 }
             }
             catch (Exception ex)
