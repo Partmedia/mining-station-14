@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.CCVar;
+using Content.Server.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -13,7 +14,6 @@ public sealed class GameMapManager : IGameMapManager
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     
     [ViewVariables(VVAccess.ReadOnly)]
@@ -161,8 +161,11 @@ public sealed class GameMapManager : IGameMapManager
 
     private bool IsMapEligible(GameMapPrototype map)
     {
-        return map.MaxPlayers >= _playerManager.PlayerCount &&
-               map.MinPlayers <= _playerManager.PlayerCount &&
+        var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+        var _gameTicker = sysMan.GetEntitySystem<GameTicker>();
+        int ready = _gameTicker.Readied();
+        return map.MaxPlayers >= ready &&
+               map.MinPlayers <= ready &&
                map.Conditions.All(x => x.Check(map));
     }
 
