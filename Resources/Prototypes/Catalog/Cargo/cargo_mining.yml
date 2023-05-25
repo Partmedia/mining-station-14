@@ -292,16 +292,6 @@
   group: market
 
 - type: cargoProduct
-  id: HeatExchangerC
-  icon:
-    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
-    state: heStraight
-  product: HeatExchanger
-  cost: 800
-  category: Engineering
-  group: market
-
-- type: cargoProduct
   id: VendingMachineTheaterC
   icon:
     sprite: Structures/Machines/VendingMachines/theater.rsi

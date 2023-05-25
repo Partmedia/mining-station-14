@@ -416,6 +416,6 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: South
- #- type: Construction
- #  graph: GasBinary
- #  node: pressurepump
+  - type: Construction
+    graph: GasBinary
+    node: radiator
