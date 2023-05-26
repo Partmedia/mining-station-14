@@ -27,6 +27,21 @@
         - PowerCellAntiqueProto 
         - ToolboxGolden 
         - WeaponRevolverDeckard 
+        - ClothingEyesEyepatch
+        - ClothingHeadHatHoodGoliathCloak
+        - ClothingNeckCloakGoliathCloak
+        - Katana
+        - WeaponSniperMosin
+        - MagazineBoxLightRifle
+        - SpeedLoaderLightRifle
+        - SpeedLoaderMagnum
+        - SadTromboneImplanter
+        - PhoneInstrument
+        - LightImplanter
+        - TrackingImplanter
+        - WeaponShotgunDoubleBarreled
+        - ShellShotgun
+        - ShellShotgunSlug
       rareChance: 0.3
       rarePrototypes:
         - BluespaceMatterBinStockPart
@@ -44,3 +59,15 @@
         - UnholyHalberd
         - GoldenBikeHorn
         - PlushieRGBee
+        - Claymore
+        - ClothingBeltChampion
+        - MechEquipmentGrabber
+        - RipleyHarness
+        - RipleyLArm
+        - RipleyLLeg
+        - RipleyRArm
+        - RipleyRLeg
+        - RipleyPeripheralsElectronics
+        - RipleyCentralElectronics
+        - CLothingBeltSheathFilled
+        - ClothingOuterHardsuitWizard
