@@ -410,7 +410,9 @@
     damageCoefficient: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
-
+  - type: StaticPrice
+    price: 10000
+    
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitLing
