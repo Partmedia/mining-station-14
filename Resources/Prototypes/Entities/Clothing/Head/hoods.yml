@@ -139,3 +139,5 @@
     sprite: Clothing/Head/Hoods/goliathcloak.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/goliathcloak.rsi
+  - type: StaticPrice
+    price: 2500

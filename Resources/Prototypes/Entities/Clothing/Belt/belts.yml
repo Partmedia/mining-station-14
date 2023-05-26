@@ -423,7 +423,9 @@
   - type: Clothing
     sprite: Clothing/Belt/champion.rsi
     quickEquip: true
-
+  - type: StaticPrice
+    price: 5000
+    
 - type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltHolster
