@@ -2,7 +2,7 @@
   id: MiningCrashed
   mapName: 'Mining Crashed'
   mapPath: /Mining/Maps/miningcrashed.yml
-  minPlayers: 4
+  minPlayers: 5
   maxPlayers: 15
   stations:
     MiningCrashed:
@@ -14,8 +14,6 @@
         - SalvageSpecialist
       availableJobs:
         Quartermaster: [ 1, 1 ]
-        StationEngineer: [ 1, 3 ]
-        SalvageSpecialist: [ 3, -1 ]
-        MedicalDoctor: [ 0, 1 ]
-        ServiceWorker: [ 1, 2 ]
+        StationEngineer: [ 2, 3 ]
+        SalvageSpecialist: [ -1, -1 ]
         CorpSec: [ 1, 1 ]
