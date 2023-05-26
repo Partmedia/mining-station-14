@@ -141,3 +141,5 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: StaticPrice
+    price: 2500
