@@ -14,5 +14,5 @@
         - SalvageSpecialist
       availableJobs:
         Quartermaster: [ 1, 1 ]
-        SalvageSpecialist: [ 4, -1 ]
+        SalvageSpecialist: [ -1, -1 ]
         CorpSec: [ 1, 1 ]
