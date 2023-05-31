@@ -23,18 +23,23 @@ public sealed class RLMapGen : EntitySystem
 
     private void ProcGen(MapGridComponent map)
     {
-        var miningFloor = _tileManager["FloorMining"].TileId;
         var defaultFloor = _tileManager["FloorAsteroidSand"].TileId;
 
         // Add all mining tiles to list, determine width and height of bounding grid indices
-        List<Vector2i> miningTiles = new List<Vector2i>();
+        List<(Vector2i, int)> miningTiles = new List<(Vector2i, int)>();
         int minX = 0, maxX = 0, minY = 0, maxY = 0;
         foreach (TileRef tile in map.GetAllTiles())
         {
-            if (tile.Tile.TypeId == miningFloor)
+            int val = 0;
+            if (tile.Tile.TypeId == _tileManager["FloorMining"].TileId)
+                val = 1;
+            else if (tile.Tile.TypeId == _tileManager["FloorRLForest"].TileId)
+                val = 100;
+
+            if (val != 0)
             {
                 map.SetTile(tile.GridIndices, new Tile(defaultFloor));
-                miningTiles.Add(tile.GridIndices);
+                miningTiles.Add((tile.GridIndices, val));
                 int x = tile.GridIndices.X;
                 int y = tile.GridIndices.Y;
                 minX = Math.Min(minX, x);
@@ -60,11 +65,11 @@ public sealed class RLMapGen : EntitySystem
             }
 
             // Populate array
-            foreach (Vector2i v in miningTiles)
+            foreach ((var v, var val) in miningTiles)
             {
                 int tx = v.X - minX;
                 int ty = v.Y - minY;
-                RL.si_aset(4, arg, RL.num(tx), RL.num(ty), RL.num(1));
+                RL.si_aset(4, arg, RL.num(tx), RL.num(ty), RL.num(val));
             }
 
             // Run mapgen
