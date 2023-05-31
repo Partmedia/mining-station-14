@@ -4,3 +4,10 @@
   sprite: /Textures/Structures/Walls/asteroid_rock.rsi/full.png
   isSubfloor: true
   canCrowbar: false
+
+- type: tile
+  id: FloorRLForest
+  name: random forest tile
+  sprite: /Textures/Tiles/grassjungle.png
+  isSubfloor: true
+  canCrowbar: false
