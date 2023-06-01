@@ -1,0 +1,43 @@
+- type: entity
+  parent: FoodEggBase
+  id: XenoEgg
+  name: xeno egg
+  components:
+  - type: StaticPrice
+    price: 1500
+  - type: Sprite
+    sprite: Objects/Consumable/Food/xenoegg.rsi
+    layers:
+      - state: icon
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+    netsync: false
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          icon: ""
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          XenoEggCracked:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: Eggshells
+  id: XenoEggCracked
+  name: xeno egg shell
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/xenoegg.rsi
+    state: cracked
+    netsync: false
