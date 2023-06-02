@@ -2,6 +2,7 @@
   id: MiningMapPool
   maps:
   - MiningTiny
+  - MiningPill
   - Mining
   - MiningCrashed
   - MiningScience
