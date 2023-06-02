@@ -24,6 +24,8 @@
       - id: DoorRemoteCargo
       - id: RubberStampQm
       - id: ClothingHeadsetAltCargo
+      - id: Stunbaton
+      - id: Handcuffs
 
 - type: entity
   id: LockerCaptainFilled
