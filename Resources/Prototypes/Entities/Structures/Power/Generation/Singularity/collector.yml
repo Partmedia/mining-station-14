@@ -39,7 +39,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: RadiationCollector
-    chargeModifier: 1000
+    chargeModifier: 4000
   - type: RadiationReceiver
   - type: PowerSupplier
     supplyRate: 0
