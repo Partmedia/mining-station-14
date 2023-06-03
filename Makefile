@@ -27,6 +27,7 @@ fastserver:
 	cd ./bin/Content.Server && ./Content.Server --config-file ../../fast_config.toml &
 
 lint:
+	rm -f Content.Server/RL/libRL/libRL.so
 	${DOTNET_BUILD} Content.YAMLLinter
 	cd bin/Content.YAMLLinter && ../../linklibs && ./Content.YAMLLinter
 
