@@ -33,17 +33,13 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnRadiation(EntityUid uid, RadiationCollectorComponent component, OnIrradiatedEvent args)
         {
-            if (!component.Enabled) return;
-
-            // No idea if this is even vaguely accurate to the previous logic.
-            // The maths is copied from that logic even though it works differently.
-            // But the previous logic would also make the radiation collectors never ever stop providing energy.
-            // And since frameTime was used there, I'm assuming that this is what the intent was.
-            // This still won't stop things being potentially hilariously unbalanced though.
-            if (TryComp<BatteryComponent>(uid, out var batteryComponent))
+            if (TryComp<PowerSupplierComponent>(uid, out var comp))
             {
                 var charge = args.TotalRads * component.ChargeModifier;
-                batteryComponent.CurrentCharge += charge;
+                if (component.Enabled)
+                    comp.MaxSupply = charge;
+                else
+                    comp.MaxSupply = 0;
             }
         }
 
