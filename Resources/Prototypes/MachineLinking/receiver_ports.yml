@@ -92,3 +92,8 @@
   id: B2
   name: "Input B2"
   description: "Input B2"
+
+- type: receiverPort
+  id: ControlRodReceiver
+  name: "Control Rod"
+  description: "Control Rod Receiver"
