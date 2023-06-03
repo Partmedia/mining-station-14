@@ -4,6 +4,8 @@
   name: reagent jug
   description: A large jug for holding stock chemical reagents.
   components:
+  - type: Item
+    size: 30
   - type: Tag
     tags:
     - ChemJug
