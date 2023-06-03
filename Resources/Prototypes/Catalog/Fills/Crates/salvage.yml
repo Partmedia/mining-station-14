@@ -18,6 +18,25 @@
       - id: ClothingNeckCloakSalvager
 
 - type: entity
+  id: CrateSpatioSalvageEquipment
+  name: "spationaut salvage equipment crate"
+  description: For the daring.
+  suffix: Filled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSpatio
+      - id: ClothingMaskBreath
+      - id: AirTankFilled
+      - id: FireExtinguisher
+      - id: ClothingShoesBootsMag
+      - id: Pickaxe
+      - id: OreBag
+      - id: ClothingBeltUtilityFilled
+      - id: ClothingNeckCloakSalvager
+
+- type: entity
   id: CrateSalvageAssortedGoodies
   suffix: Filled, Salvage Random
   noSpawn: true # You should use SalvageMaterialCrateSpawner instead
