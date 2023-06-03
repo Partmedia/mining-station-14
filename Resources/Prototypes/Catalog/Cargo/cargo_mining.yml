@@ -67,6 +67,18 @@
   group: market
 
 - type: cargoProduct
+  id: MiningSpatioSalvageEquipmentCrate
+  name: spationaut salvage equipment crate
+  description: Have more miners than you expected? You're in luck! This one with a different suit.
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
+    state: icon
+  product: CrateSpatioSalvageEquipment
+  cost: 2500
+  category: Salvage
+  group: market
+
+- type: cargoProduct
   id: GeigerCounterC
   icon:
     sprite: Objects/Tools/geiger.rsi
