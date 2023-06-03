@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 using Content.Shared.Body.Part;
-//using Content.Shared.Body.Organ;
+using Content.Shared.Body.Organ;
 
 namespace Content.Shared.Surgery
 {
@@ -36,6 +36,17 @@ namespace Content.Shared.Surgery
         public readonly BodyPartSlot Slot;
 
         public SurgerySlotButtonPressed(BodyPartSlot slot)
+        {
+            Slot = slot;
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public sealed class OrganSlotButtonPressed : BoundUserInterfaceMessage
+    {
+        public readonly OrganSlot Slot;
+
+        public OrganSlotButtonPressed(OrganSlot slot)
         {
             Slot = slot;
         }

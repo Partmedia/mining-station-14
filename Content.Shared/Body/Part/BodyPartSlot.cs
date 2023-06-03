@@ -25,8 +25,6 @@ public sealed record BodyPartSlot(string Id, EntityUid Parent, BodyPartType? Typ
     /// </summary>
     public bool IsRoot = false;
 
-    public float BaseSurgeryTime = 10f;
-
     // Rider doesn't suggest explicit properties during deconstruction without this
     public void Deconstruct(out EntityUid? child, out EntityUid? attachment, out string id, out EntityUid parent, out BodyPartType? type, out bool cauterised)
     {

@@ -120,6 +120,7 @@
   - type: SurgeryTool
     incisor: true
     incisorTimeMod: 0.5
+    cauterizer: true
 
 # Scissors
 
