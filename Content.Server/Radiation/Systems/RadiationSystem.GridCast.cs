@@ -78,10 +78,7 @@ public partial class RadiationSystem
             // update radiation value of receiver
             // if no radiation rays reached target, that will set it to 0
             receiver.CurrentRadiation = rads;
-
-            // also send an event with combination of total rad
-            if (rads > 0)
-                IrradiateEntity(receiver.Owner, rads,GridcastUpdateRate);
+            IrradiateEntity(receiver.Owner, rads,GridcastUpdateRate);
         }
 
         // raise broadcast event that radiation system has updated
