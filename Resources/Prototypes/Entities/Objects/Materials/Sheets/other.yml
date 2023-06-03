@@ -154,8 +154,8 @@
     materials:
       Uranium: 100
   - type: RadiationSource
-    N: 8000
-    hl: 3600
+    N: 16000
+    hl: 7200
     k: 0.5
   - type: Sprite
     state: uranium_3
