@@ -18,8 +18,8 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 4
-        Blunt: 3
+        Piercing: 6
+        Blunt: 6
   - type: Item
     size: 24
     sprite: Objects/Weapons/Melee/pickaxe.rsi
@@ -44,8 +44,8 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 7
-        Blunt: 3
+        Piercing: 8
+        Blunt: 6
   - type: Construction
     graph: PickaxeGraph
     node: diamond pickaxe
