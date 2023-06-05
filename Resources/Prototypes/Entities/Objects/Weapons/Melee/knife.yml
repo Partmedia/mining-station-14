@@ -26,6 +26,8 @@
       - Slicing
     useSound:
       path: /Audio/Items/Culinary/chop.ogg
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: kitchen knife

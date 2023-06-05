@@ -79,6 +79,15 @@
   group: market
 
 - type: cargoProduct
+  id: SurvivalKnifeC
+  icon:
+    sprite: Objects/Weapons/Melee/survival_knife.rsi
+    state: icon
+  product: SurvivalKnife
+  category: Salvage
+  group: market
+
+- type: cargoProduct
   id: GeigerCounterC
   icon:
     sprite: Objects/Tools/geiger.rsi
