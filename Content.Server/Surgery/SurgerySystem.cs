@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Shared.CombatMode;
@@ -17,6 +18,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Organ;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Surgery
 {
@@ -29,6 +31,7 @@ namespace Content.Server.Surgery
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -174,7 +177,157 @@ namespace Content.Server.Surgery
             UpdateUiState(uid);
         }
 
-        private void OnSurgeryButtonPressed(EntityUid uid, SurgeryComponent component, SurgerySlotButtonPressed args)
+        private async void RemoveToolFromPart(EntityUid user, SurgeryToolComponent tool, EntityUid target, BodyPartComponent bodyPart, HandsComponent userHands)
+        {
+            if (bodyPart.Attachment == null)
+                return;
+
+            if (!(await ProcedureDoAfter(user, target, tool.RetractorTime * tool.RetractorTimeMod, tool))) return;
+
+            var attachmentContainer = _containerSystem.EnsureContainer<Container>(bodyPart.Owner, "attachment");
+            attachmentContainer.Insert(tool.Owner);
+
+            bodyPart.Attachment = null;
+
+            _handsSystem.PickupOrDrop(user, tool.Owner);
+
+            _bodySystem.RemovePartAttachment(bodyPart);
+
+            UpdateUiState(target);
+        }
+
+        private async void RemoveToolFromPartSlot(EntityUid user, SurgeryToolComponent tool, EntityUid target, BodyPartSlot bodyPartSlot, HandsComponent userHands)
+        {
+            if (bodyPartSlot.Attachment == null)
+                return;
+
+            if (!(await ProcedureDoAfter(user, target, tool.RetractorTime * tool.RetractorTimeMod, tool))) return;
+
+            var attachmentContainer = _containerSystem.EnsureContainer<Container>(bodyPartSlot.Parent, "slotAttachment");
+            attachmentContainer.Insert(tool.Owner);
+
+            _bodySystem.RemovePartSlotAttachment(bodyPartSlot);
+
+            _handsSystem.PickupOrDrop(user, tool.Owner);
+
+            UpdateUiState(target);
+        }
+
+        private void AttachToolToPart(EntityUid user, SurgeryToolComponent tool, BodyPartComponent bodyPart, HandsComponent userHands)
+        {
+            if (userHands.ActiveHand?.HeldEntity is { } held
+                 && _handsSystem.TryDrop(user, userHands.ActiveHand, handsComp: userHands))
+            {
+                var attachmentContainer = _containerSystem.EnsureContainer<Container>(bodyPart.Owner, "attachment");
+                attachmentContainer.Insert(tool.Owner);
+                _bodySystem.AttachPartAttachment(tool.Owner, bodyPart);
+            }
+        }
+
+        private void AttachToolToPartSlot(EntityUid user, SurgeryToolComponent tool, BodyPartSlot bodyPartSlot, HandsComponent userHands)
+        {
+            if (userHands.ActiveHand?.HeldEntity is { } held
+                 && _handsSystem.TryDrop(user, userHands.ActiveHand, handsComp: userHands))
+            {
+
+                Logger.Debug("Attaching tool to part slot");
+
+                var attachmentContainer = _containerSystem.EnsureContainer<Container>(bodyPartSlot.Parent, "slotAttachment");
+                attachmentContainer.Insert(tool.Owner);
+                _bodySystem.AttachPartSlotAttachment(tool.Owner, bodyPartSlot);
+
+            }
+        }
+
+        private async Task<bool> ProcedureDoAfter(EntityUid user, EntityUid target, float time, SurgeryToolComponent tool)
+        {
+
+            if (tool.Applying)
+                return false;
+
+            tool.Applying = true;
+
+            var doAfterArgs = new DoAfterEventArgs(user, time, CancellationToken.None, target)
+            {
+                BreakOnStun = true,
+                BreakOnDamage = true,
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+            };
+
+            var result = await _doAfterSystem.WaitDoAfter(doAfterArgs);
+
+            tool.Applying = false;
+
+            if (result != DoAfterStatus.Finished) return false;
+            return true;
+        }
+
+        private async Task<bool> AttachRetractor(EntityUid user, SurgeryToolComponent tool, EntityUid target, BodyPartComponent bodyPart, HandsComponent userHands, bool timeOverride)
+        {
+            //check for incisable (technically everything is incisable, but we only care about organ containers for now)
+           if (!bodyPart.Incisable)
+                return false;
+
+            //check for attachment entity
+            if (bodyPart.Attachment != null)
+            {
+                user.PopupMessageCursor(Loc.GetString("surgery-part-already-has-attachment"));
+                return false;
+            }
+
+            //check for incised
+            if (!bodyPart.Incised)
+            {
+                user.PopupMessageCursor(Loc.GetString("surgery-part-not-incised-retractor"));
+                return false;
+            }
+
+            //attach retractor
+            if (!timeOverride)
+                if (!(await ProcedureDoAfter(user, target, tool.RetractorTime*tool.RetractorTimeMod, tool))) return false;
+
+            AttachToolToPart(user, tool, bodyPart, userHands);
+
+            //TODO update player sprite if possible
+
+            UpdateUiState(target);
+
+            return true;
+        }
+
+        private async Task<bool> AttachLargeClamp(EntityUid user, SurgeryToolComponent tool, EntityUid target, BodyPartSlot bodyPartSlot, HandsComponent userHands, bool timeOverride)
+        {
+
+            Logger.Debug("AttachLargeClamp");
+
+            //check for isRoot - large clamps should only be attached to the slots of parts that can be removed
+            if (bodyPartSlot.IsRoot)
+                return false;
+
+            //check for attachment entity
+            if (bodyPartSlot.Attachment != null)
+            {
+                user.PopupMessageCursor(Loc.GetString("surgery-part-already-has-attachment"));
+                return false;
+            }
+
+            //attach clamp
+            if (!timeOverride)
+                if (!(await ProcedureDoAfter(user, target, tool.LargeClampTime * tool.LargeClampTimeMod, tool))) return false;
+
+            Logger.Debug("AttachLargeClamp checks passed");
+
+            AttachToolToPartSlot(user, tool, bodyPartSlot, userHands);
+
+            //TODO update player sprite if possible
+
+            UpdateUiState(target);
+
+            return true;
+        }
+
+        private async void OnSurgeryButtonPressed(EntityUid uid, SurgeryComponent component, SurgerySlotButtonPressed args)
         {
             if (args.Session.AttachedEntity is not { Valid: true } user ||
                 !TryComp<HandsComponent>(user, out var userHands))
@@ -191,42 +344,49 @@ namespace Content.Server.Surgery
 
                 var timeOverride = false; //if a tool has multiple functions, the timing should reflect that - use the time of whatever function completes first and override for remainder
 
+                //track number of utilities applied, if the time override is false but utilityCounter is greater than 0, cancel
+                //could also lets us cancel certain utilities that should not occur after others if necessary
+                var utilityCounter = 0; 
+
+                if (!(args.Slot.Child != null && TryComp<BodyPartComponent>(args.Slot.Child, out var part)))
+                    return;
+
                 //checks are ordered so attachment occurs first, followed by opening, and then closing
 
                 //retractor - used to open an organ container part after it has been incised (used as an attachment to the part)
                 if (tool.Retractor)
                 {
-                    //timeOverride = attachRetractor();
+                    timeOverride = await AttachRetractor(user, tool, uid, part, userHands, timeOverride);
                     Logger.Debug("attachRetractor");
                 }
 
                 //large clamp - intended to prevent bleeding on part removal (used as an attachment to the slot)
-                if (tool.LargeClamp)
+                if (tool.LargeClamp && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
-                    //timeOverride = attachLargeClamp(); //does not work on slots with IsRoot
+                    timeOverride = await AttachLargeClamp(user, tool, uid, args.Slot, userHands, timeOverride); //does not work on slots with IsRoot
                     Logger.Debug("attachLargeClamp");
                 }
 
                 //incisor - incisors part if incisable (or removes organ if used with a manipulator)
-                if (tool.Incisor)
+                if (tool.Incisor && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
                     //timeOverride = incisePart();
                     Logger.Debug("incisePart");
                 }
 
                 //saw - removes body parts and opens skeletons (exo or endo) - if the part is incised DON'T remove it
-                if (tool.Saw)
+                if (tool.Saw && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
                     //timeOverride = sawPart(); //will either remove a part or open a skeleton depending on status of selected part - will not detach root parts (but will open their skeletons)
                     Logger.Debug("sawPart");
                 }
 
                 //drill - used to reattach part to body
-                if (tool.Drill)
+                if (tool.Drill && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
                     foreach (var hand in userHands.Hands.Values)
                     {
-                        if (hand.HeldEntity != null && TryComp<BodyPartComponent>(hand.HeldEntity, out var part))
+                        if (hand.HeldEntity != null && TryComp<BodyPartComponent>(hand.HeldEntity, out var heldPart))
                         {
                             //timeOverride = attachPart();
                             Logger.Debug("attachPart");
@@ -236,21 +396,21 @@ namespace Content.Server.Surgery
                 }
 
                 //suture - used to close incisions and re-attach organs
-                if (tool.Suture)
+                if (tool.Suture && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
                     //timeOverride = closeIncision();
                     Logger.Debug("closeIncision");
                 }
 
                 //hard suture - used to close skeletons (exo or endo)
-                if (tool.HardSuture)
+                if (tool.HardSuture && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
                     //timeOverride = closeHardIncision() //can call closeIncision(); depending on the status of the selected part
                     Logger.Debug("closeHardIncision");
                 }
 
                 //cauterizer - used to stop bleeding
-                if (tool.Cauterizer)
+                if (tool.Cauterizer && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
                     //timeOverride = cauterizePartSlot(); //will only work if said slot is empty
                     Logger.Debug("cauterizePartSlot");
@@ -260,17 +420,20 @@ namespace Content.Server.Surgery
             }
             else if (userHands.ActiveHandEntity == null && args.Slot != null)
             {
+                Logger.Debug("Empty Handed");
+                Console.WriteLine(args.Slot.Attachment);
                 //if hand empty check for attached tool on either the part or slot - remove tool if present (prioritise part over slot)
-                var checkAttachment = false;
                 if (args.Slot.Child != null && TryComp<BodyPartComponent>(args.Slot.Child, out var part) && part.Attachment != null)
                 {
                     //remove part attachment
-                    //removePartAttachment();
+                    if (TryComp<SurgeryToolComponent>(part.Attachment, out var attachedTool))
+                        RemoveToolFromPart(user, attachedTool, component.Owner, part, userHands);
                     Logger.Debug("removePartAttachment");
                 } else if (args.Slot.Attachment != null)
                 {
                     //remove part slot attachment
-                    //removePartSlotAttachment();
+                    if (TryComp<SurgeryToolComponent>(args.Slot.Attachment, out var attachedTool))
+                        RemoveToolFromPartSlot(user, attachedTool, component.Owner, args.Slot, userHands);
                     Logger.Debug("removePartSlotAttachment");
                 }
 
@@ -309,6 +472,10 @@ namespace Content.Server.Surgery
 
                 var timeOverride = false; //if a tool has multiple functions, the timing should reflect that - use the time of whatever function completes first and override for remainder
 
+                //track number of utilities applied, if the time override is false but utilityCounter is greater than 0, cancel
+                //could also lets us cancel certain utilities that should not occur after others if necessary
+                var utilityCounter = 0;
+
                 //incisor - incisors part if incisable (or removes organ if used with a manipulator)
                 //manipulator - used to remove organs (must be used with incisor in other hand) (will obviously not go in hand)
                 if (tool.Incisor || tool.Manipulator)
@@ -328,13 +495,13 @@ namespace Content.Server.Surgery
                 }
 
                 //small clamp - intended to prevent bleeding upon organ removal (used as an attachment to the slot)
-                if (tool.SmallClamp)
+                if (tool.SmallClamp && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
                     //timeOverride = attachSmallClamp();
                 }
 
                 //suture - used to close incisions and re-attach organs
-                if (tool.Suture || tool.HardSuture)
+                if (tool.Suture || tool.HardSuture && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
                     foreach (var hand in userHands.Hands.Values)
                     {
@@ -347,7 +514,7 @@ namespace Content.Server.Surgery
                 }
 
                 //cauterizer - used to stop bleeding
-                if (tool.Cauterizer)
+                if (tool.Cauterizer && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
                     //timeOverride = cauterizeOrganSlot();
                 }

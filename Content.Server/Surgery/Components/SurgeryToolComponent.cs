@@ -6,6 +6,8 @@ namespace Content.Server.Surgery
     public sealed class SurgeryToolComponent : Component
     {
 
+        public bool Applying = false;
+
         [DataField("incisor")]
         public bool Incisor = false;
 

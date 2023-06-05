@@ -398,28 +398,43 @@ public partial class SharedBodySystem
         return true;
     }
 
-    public virtual bool AttachPartAttachment()
+    public void AttachPartAttachment(EntityUid uid, BodyPartComponent part)
     {
+        if (part.Attachment == null)
+            part.Attachment = uid;
 
-        return true;
+        //TODO handle status change for part
     }
 
-    public virtual bool RemovePartAttachment()
+    public void RemovePartAttachment(BodyPartComponent part)
     {
+        part.Attachment = null;
 
-        return true;
+        //TODO handle status change for part
     }
 
-    public virtual bool AttachPartSlotAttachment()
+    public void AttachPartSlotAttachment(EntityUid uid, BodyPartSlot slot)
     {
+        Logger.Debug("AttachPartSlotAttachment");
+        Logger.Debug(slot.Id);
 
-        return true;
+        if (slot.Attachment == null)
+            slot.Attachment = uid;
+
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Children[slot.Id] = slot;
+
+        //TODO handle status change for part slot parent/child
     }
 
-    public virtual bool RemovePartSlotAttachment()
+    public void RemovePartSlotAttachment(BodyPartSlot slot)
     {
+        slot.Attachment = null;
 
-        return true;
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Children[slot.Id] = slot;
+
+        //TODO handle status change for part slot parent/child
     }
 
     public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildrenOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)

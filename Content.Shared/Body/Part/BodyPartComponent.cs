@@ -48,10 +48,11 @@ public sealed class BodyPartComponent : Component
     public bool Container = false;
 
     [DataField("incisable")]
-    public bool Incisable = true; //can this part be cut open?
+    public bool Incisable = false; //can this part be cut open?
 
     public bool Incised = false; //whether or not an incision has been made
 
+    //TODO remove this in favour of checking for a retractor (?)
     public bool Opened = false; //whether or not the body part has been opened up (any obstructing endoskeleton not yet factored)
 
     /// <summary>
