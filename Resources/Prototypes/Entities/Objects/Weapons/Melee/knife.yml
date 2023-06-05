@@ -14,7 +14,8 @@
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 12
+        Slash: 14
+        Piercing: 4
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
