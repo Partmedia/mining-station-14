@@ -15,7 +15,6 @@
         - SalvageSpecialist
       availableJobs:
         Quartermaster: [ 1, 1 ]
-        AtmosphericTechnician: [ 1, 1 ]
-        StationEngineer: [ 1, 1 ]
+        StationEngineer: [ 1, 2 ]
         SalvageSpecialist: [ -1, -1 ]
         CorpSec: [ 1, 1 ]
