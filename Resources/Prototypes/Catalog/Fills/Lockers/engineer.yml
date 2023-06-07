@@ -100,9 +100,11 @@
       - id: ClothingOuterHardsuitEngineering
       - id: ClothingHandsGlovesColorYellow
       - id: ClothingMaskGas
-      - id: OxygenTankFilled
-      - id: NitrogenTankFilled
+      - id: AirTankFilled
       - id: ClothingShoesBootsMag
+      - id: GasAnalyzer
+      - id: trayScanner
+        prob: 0.3
 
 - type: entity
   id: ClosetRadiationSuitFilled
