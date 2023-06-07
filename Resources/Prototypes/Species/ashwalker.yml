@@ -1,0 +1,13 @@
+- type: species
+  id: Ashwalker
+  name: species-name-ashwalker
+  roundStart: true
+  prototype: MobAshwalker
+  sprites: MobReptilianSprites
+  defaultSkinTone: '#5b5bb6ff'
+  markingLimits: MobReptilianMarkingLimits
+  dollPrototype: MobReptilianDummy
+  skinColoration: TintedHues
+  maleFirstNames: names_reptilian_male
+  femaleFirstNames: names_reptilian_female
+  naming: FirstDashFirst

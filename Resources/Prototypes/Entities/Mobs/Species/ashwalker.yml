@@ -1,0 +1,42 @@
+- type: entity
+  save: false
+  name: Urisst' Mzhand
+  parent: BaseMobReptilian
+  id: BaseMobAshwalker
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    noRot: true
+    drawdepth: Mobs
+    scale: 1.2, 1.2
+  - type: Temperature # override Reptilian
+    heatDamageThreshold: 303 # 30C
+    coldDamageThreshold: 0
+    specificHeat: 300
+    coldDamage:
+      types:
+        Cold : 0.33
+    heatDamage:
+      types:
+        Heat : 0.33
+  - type: MeleeWeapon # override Reptilian
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Piercing: 15
+
+- type: entity
+  save: false
+  name: Urist McHands
+  parent: MobReptilianDummy
+  id: MobAshwalkerDummy
+  noSpawn: true
+  description: A dummy ashwalker meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: Ashwalker
