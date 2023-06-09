@@ -40,6 +40,7 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly PricingSystem _pricingSystem = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
 
         private readonly HttpClient _httpClient = new();
 
@@ -175,11 +176,16 @@ namespace Content.Server.StationEvents
         }
 
         /// <summary>
-        /// Reset the event timer once the event is done.
+        /// Set the time for the next meteor swarm. Meteor swarms increase in frequency
+        /// as the round goes on.
         /// </summary>
         private void ResetTimer()
         {
-            _timeUntilNextEvent = _random.Next(20*60, 40*60);
+            var minsInRound = _gameTicker.RoundDuration().TotalMinutes;
+            var mt = Math.Max(30-2*Math.Sqrt(minsInRound), 5);
+            var st = mt/3;
+            _timeUntilNextEvent = _random.Next(60*(int)(mt-st), 60*(int)(mt+st));
+            Logger.InfoS("mining", $"Next meteor storm in {(int)(_timeUntilNextEvent/60)} minutes (mean {mt}, s {st})");
         }
 
         private void OnRoundEndText(RoundEndTextAppendEvent ev)
