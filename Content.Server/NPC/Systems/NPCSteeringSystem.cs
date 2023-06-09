@@ -13,6 +13,8 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Events;
 using Content.Shared.Physics;
+using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling;
 using Content.Shared.Weapons.Melee;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -55,6 +57,7 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
         private const float TileTolerance = 0.40f;
@@ -315,6 +318,13 @@ namespace Content.Server.NPC.Systems
             var agentRadius = steering.Radius;
             var worldPos = xform.WorldPosition;
             var (layer, mask) = _physics.GetHardCollision(uid);
+
+            // Break pulling to prevent holding an NPC from working
+            if (TryComp<SharedPullableComponent>(uid, out var pullable) && pullable.BeingPulled)
+            {
+                if (_random.NextFloat() < 0.1)
+                    _pullSystem.TryStopPull(pullable);
+            }
 
             // Use rotation relative to parent to rotate our context vectors by.
             var offsetRot = -_mover.GetParentGridAngle(mover);
