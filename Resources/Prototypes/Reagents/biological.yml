@@ -61,3 +61,28 @@
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 0.5
+
+- type: reagent
+  id: Xenoblood
+  name: reagent-name-xenoblood
+  group: Biological
+  desc: reagent-desc-xenoblood
+  physicalDesc: reagent-physical-desc-acidic
+  flavor: acidic
+  color: "#a5cf27"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 3
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
