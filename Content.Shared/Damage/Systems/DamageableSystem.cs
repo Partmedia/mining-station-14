@@ -159,10 +159,6 @@ namespace Content.Shared.Damage
                 return damage;
             }
 
-            // Don't do any more damage if total damage exceeds this limit
-            if (!unblockable && damageable.Damage.Total > 400 && damage.Total > 0)
-                return null;
-
             // Apply resistances
             if (!ignoreResistances)
             {
