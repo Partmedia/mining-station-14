@@ -59,11 +59,13 @@
   - type: MobState
     allowedStates:
       - Alive
+      - Critical
       - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
-      130: Dead
+      130: Critical
+      200: Dead
   - type: Stamina
     excess: 200
   - type: Bloodstream
@@ -137,11 +139,13 @@
   - type: MobState
     allowedStates:
       - Alive
+      - Critical
       - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Dead
+      300: Critical
+      350: Dead
   - type: Stamina
     excess: 300
   - type: SlowOnDamage
@@ -176,11 +180,13 @@
   - type: MobState
     allowedStates:
       - Alive
+      - Critical
       - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
-      200: Dead
+      200: Critical
+      250: Dead
   - type: Stamina
     excess: 200
   - type: MovementSpeedModifier
@@ -221,11 +227,13 @@
   - type: MobState
     allowedStates:
       - Alive
+      - Critical
       - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
-      1500: Dead
+      1250: Critical
+      1350: Dead
   - type: Stamina
     excess: 1500
   - type: MovementSpeedModifier
@@ -271,11 +279,13 @@
   - type: MobState
     allowedStates:
       - Alive
+      - Critical
       - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
-      550: Dead
+      550: Critical
+      600: Dead
   - type: Stamina
     excess: 550
   - type: MovementSpeedModifier
@@ -321,11 +331,13 @@
   - type: MobState
     allowedStates:
       - Alive
+      - Critical
       - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
-      250: Dead
+      250: Critical
+      300: Dead
   - type: Stamina
     excess: 250
   - type: MovementSpeedModifier
@@ -378,11 +390,13 @@
   - type: MobState
     allowedStates:
       - Alive
+      - Critical
       - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Dead
+      300: Critical
+      350: Dead
   - type: Stamina
     excess: 300
   - type: SlowOnDamage
