@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -404,6 +404,10 @@ public partial class SharedBodySystem
             part.Attachment = uid;
 
         //TODO handle status change for part
+
+        //TODO update body part sprite when implemented
+
+        //TODO update player sprite if possible
     }
 
     public void RemovePartAttachment(BodyPartComponent part)
@@ -411,13 +415,14 @@ public partial class SharedBodySystem
         part.Attachment = null;
 
         //TODO handle status change for part
+
+        //TODO update body part sprite when implemented
+
+        //TODO update player sprite if possible
     }
 
     public void AttachPartSlotAttachment(EntityUid uid, BodyPartSlot slot)
     {
-        Logger.Debug("AttachPartSlotAttachment");
-        Logger.Debug(slot.Id);
-
         if (slot.Attachment == null)
             slot.Attachment = uid;
 
@@ -435,6 +440,45 @@ public partial class SharedBodySystem
             part.Children[slot.Id] = slot;
 
         //TODO handle status change for part slot parent/child
+    }
+
+    public void SetBodyPartIncised(BodyPartComponent part, bool incised)
+    {
+        if (part.Incisable)
+        {
+            //change body part incised to true
+            part.Incised = incised;
+
+            //TODO update body part sprite when implemented
+
+            //TODO update player sprite if possible
+        }
+    }
+
+    public void SetBodyPartEndoOpen(BodyPartComponent part, bool opened)
+    {
+        if (part.EndoSkeleton)
+        {
+            //change body part incised to true
+            part.EndoSkeleton = opened;
+
+            //TODO update body part sprite when implemented
+
+            //TODO update player sprite if possible
+        }
+    }
+
+    public void SetBodyPartExoOpen(BodyPartComponent part, bool opened)
+    {
+        if (part.ExoSkeleton)
+        {
+            //change body part incised to true
+            part.ExoSkeleton = opened;
+
+            //TODO update body part sprite when implemented
+
+            //TODO update player sprite if possible
+        }
     }
 
     public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildrenOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)

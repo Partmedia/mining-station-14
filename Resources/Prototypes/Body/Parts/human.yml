@@ -42,6 +42,8 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
+    incisable: true
+    container: true
 
 - type: entity
   id: HeadHuman
