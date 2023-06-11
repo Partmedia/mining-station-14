@@ -52,6 +52,10 @@
         Miasma: stationMiasma
         NitrousOxide: stationNO
         Frezon: danger
+        Chlorine: danger
+        Fluorine: danger
+        Hydrogen: danger
+        CLF3: danger
     - type: Tag
       tags:
         - GasVent
@@ -143,6 +147,10 @@
         Miasma: stationMiasma
         NitrousOxide: stationNO
         Frezon: danger
+        Chlorine: danger
+        Fluorine: danger
+        Hydrogen: danger
+        CLF3: danger
     - type: Tag
       tags:
         - GasScrubber
