@@ -449,6 +449,8 @@ public partial class SharedBodySystem
             //change body part incised to true
             part.Incised = incised;
 
+            //TODO handle status change for part
+
             //TODO update body part sprite when implemented
 
             //TODO update player sprite if possible
@@ -462,6 +464,8 @@ public partial class SharedBodySystem
             //change body part incised to true
             part.EndoSkeleton = opened;
 
+            //TODO handle status change for part
+
             //TODO update body part sprite when implemented
 
             //TODO update player sprite if possible
@@ -474,6 +478,8 @@ public partial class SharedBodySystem
         {
             //change body part incised to true
             part.ExoSkeleton = opened;
+
+            //TODO handle status change for part
 
             //TODO update body part sprite when implemented
 
