@@ -18,16 +18,13 @@
   components:
   - type: StorageFill
     contents:
-      - id: ToolboxEmergencyFilled
-        prob: 1.0
-      - id: ClothingMaskBreath
-        prob: 1.0
-      - id: EmergencyOxygenTankFilled
-        prob: 1.0
+      - id: CrowbarRed
       - id: ClothingOuterSuitEmergency
-        prob: 1.0
-      - id: BoxMRE
-        prob: 0.1
+      - id: ClothingMaskBreath
+      - id: EmergencyOxygenTankFilled
+      - id: FlashlightLantern
+      - id: EmergencyMedipen
+      - id: SpaceMedipen
 
 - type: entity
   id: ClosetEmergencyFilledRandom
