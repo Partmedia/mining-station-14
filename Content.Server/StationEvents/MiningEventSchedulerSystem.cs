@@ -74,7 +74,7 @@ namespace Content.Server.StationEvents
         public override void Started()
         {
             players = new SortedSet<string>();
-            ResetTimer();
+            ResetTimer(true);
             _soundSystem.DispatchGlobalEventMusic(RandomExtensions.Pick(_random, 音乐));
             ReportRound(Loc.GetString("round-started"));
         }
@@ -154,7 +154,7 @@ namespace Content.Server.StationEvents
 
             string result = RunMiningEvent();
             Logger.Debug(result);
-            ResetTimer();
+            ResetTimer(false);
         }
 
         /// <summary>
@@ -178,14 +178,18 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// Set the time for the next meteor swarm. Meteor swarms increase in frequency
         /// as the round goes on.
+        ///
+        /// We need to be told whether or not we just got started, because RoundDuration is
+        /// only updated after the first Update of a round, i.e. reading RoundDuration gets
+        /// us the duration of the last round when starting a new one.
         /// </summary>
-        private void ResetTimer()
+        private void ResetTimer(bool start)
         {
-            var minsInRound = _gameTicker.RoundDuration().TotalMinutes;
+            var minsInRound = start ? 0 : _gameTicker.RoundDuration().TotalMinutes;
             var mt = Math.Max(30-2*Math.Sqrt(minsInRound), 5);
             var st = mt/3;
             _timeUntilNextEvent = _random.Next(60*(int)(mt-st), 60*(int)(mt+st));
-            Logger.InfoS("mining", $"Next meteor storm in {(int)(_timeUntilNextEvent/60)} minutes (mean {mt}, s {st})");
+            Logger.InfoS("mining", $"Next meteor storm in {(int)(_timeUntilNextEvent/60)} minutes ({minsInRound} mins in round, mean {mt}, s {st})");
         }
 
         private void OnRoundEndText(RoundEndTextAppendEvent ev)
