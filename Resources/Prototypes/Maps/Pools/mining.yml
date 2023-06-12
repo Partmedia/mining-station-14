@@ -3,6 +3,7 @@
   maps:
   - MiningTiny
   - MiningPill
+  - MiningSuspension
   - Mining
   - MiningCrashed
   - MiningScience
