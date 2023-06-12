@@ -22,6 +22,8 @@
       - id: HandLabeler
       - id: AppraisalTool
       - id: BoxFolderBase
+      - id: HandheldCrewMonitor
+      - id: CrewMonitoringServerMachineCircuitboard
 
 - type: entity
   id: LockerCaptainFilled
