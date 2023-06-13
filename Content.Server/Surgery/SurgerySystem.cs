@@ -418,6 +418,32 @@ namespace Content.Server.Surgery
             return true;
         }
 
+        private async Task<bool> CauterisePartSlot(EntityUid user, SurgeryToolComponent tool, EntityUid target, BodyPartSlot bodyPartSlot, HandsComponent userHands, bool timeOverride)
+        {
+            //root slots cannot be cauterised
+            //part slots can only be cauterised if the slot is empty
+            if (bodyPartSlot.IsRoot || bodyPartSlot.Child is not null)
+                return false;
+
+
+            if (bodyPartSlot.Cauterised)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("surgery-slot-already-cauterised"), user, user);
+                return false;
+            }
+
+            if (!timeOverride)
+                if (!(await ProcedureDoAfter(user, target, tool.CauterizerTime * tool.CauterizerTimeMod, tool))) return false;
+
+            //TODO sound
+
+            _bodySystem.SetCauterisedPartSlot(bodyPartSlot,true);
+
+            UpdateUiState(target);
+
+            return true;
+        }
+
         private async void OnSurgeryButtonPressed(EntityUid uid, SurgeryComponent component, SurgerySlotButtonPressed args)
         {
             if (args.Session.AttachedEntity is not { Valid: true } user ||
@@ -471,7 +497,7 @@ namespace Content.Server.Surgery
                 //saw - removes body parts and opens skeletons (exo or endo) - if the part is incised DON'T remove it
                 if (tool.Saw && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
-                    //timeOverride = sawPart(); //will either remove a part or open a skeleton depending on status of selected part - will not detach root parts (but will open their skeletons)
+                    //timeOverride = await SawPart(user, tool, uid, part, userHands, timeOverride); //will either remove a part or open a skeleton depending on status of selected part - will not detach root parts (but will open their skeletons)
                     Logger.Debug("sawPart");
                 }
 
@@ -482,7 +508,7 @@ namespace Content.Server.Surgery
                     {
                         if (hand.HeldEntity != null && TryComp<BodyPartComponent>(hand.HeldEntity, out var heldPart))
                         {
-                            //timeOverride = attachPart();
+                            //timeOverride = await AttachPart(user, tool, uid, part, userHands, timeOverride);
                             Logger.Debug("attachPart");
                             break;
                         }
@@ -506,8 +532,7 @@ namespace Content.Server.Surgery
                 //cauterizer - used to stop bleeding
                 if (tool.Cauterizer && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
-                    //timeOverride = cauterizePartSlot(); //will only work if said slot is empty
-                    Logger.Debug("cauterizePartSlot");
+                    timeOverride = await CauterisePartSlot(user, tool, uid, args.Slot, userHands, timeOverride); //will only work if said slot is empty
                 }
 
 
@@ -539,8 +564,7 @@ namespace Content.Server.Surgery
                 {
                     if (hand.HeldEntity != null && TryComp<SurgeryToolComponent>(hand.HeldEntity, out var offTool) && offTool.Drill)
                     {
-                        //attachPart();
-                        Logger.Debug("attachPart");
+                        //await AttachPart(user, offTool, component.Owner, args.Slot, userHands, false);
                         break;
                     }
                 }

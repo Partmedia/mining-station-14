@@ -487,6 +487,17 @@ public partial class SharedBodySystem
         }
     }
 
+    public void SetCauterisedPartSlot(BodyPartSlot slot, bool cauterised)
+    {
+
+        slot.Cauterised = cauterised;
+
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Children[slot.Id] = slot;
+
+        //TODO handle status change for part slot parent/child
+    }
+
     public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildrenOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)
     {
         foreach (var part in GetBodyChildren(bodyId, body))

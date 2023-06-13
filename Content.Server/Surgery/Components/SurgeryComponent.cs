@@ -65,6 +65,6 @@ namespace Content.Server.Surgery
         ///     Note that sleep is not necessarily the same as sedation and that one may outlast the other if they happen to occur at the same time
         ///     <see cref="SurgeryComponent"/>
         /// </summary>
-        public bool SedationTime = 0f;
+        public float SedationTime = 0f;
     }
 }
