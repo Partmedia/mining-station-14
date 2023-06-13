@@ -29,7 +29,7 @@
   - type: Physics
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
-    baseSprintSpeed : 4
+    baseSprintSpeed : 4.3
   - type: Fixtures
     fixtures:
     - shape:
@@ -63,6 +63,7 @@
     - id: FoodMeatXeno
       amount: 1
   - type: Bloodstream
+    bloodReagent: Xenoblood
     bloodMaxVolume: 50
   - type: CombatMode
     disarmAction:
@@ -76,8 +77,8 @@
     angle: 0
     animation: WeaponArcBite
     damage:
-      groups:
-        Brute: 2
+      types:
+        Piercing: 2
   - type: SolutionContainerManager
     solutions:
       melee:

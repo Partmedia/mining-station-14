@@ -68,8 +68,8 @@
         path: /Audio/Effects/bite.ogg
       damage:
         types:
-          Piercing: 5
-          Slash: 10
+          Piercing: 6
+          Slash: 4
     - type: TypingIndicator
       proto: alien
     - type: NoSlip
