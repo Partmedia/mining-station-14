@@ -427,3 +427,26 @@ Entries:
       message: "Lathed welders now start empty" }
   id: 2548
   time: '2023-05-15T15:05:53-07:00'
+
+- author: v1.2.9
+  changes:
+  - { type: Add, message: "New maps: Mining Pill and Mining Suspension" }
+  - { type: Add, message: "Add control rods. It is now possible to build nuclear reactors" }
+  - { type: Add, message: "Add shielded uranium and graphene" }
+  - { type: Add, message: "Station appreciation is now counted towards round-end profit" }
+  - { type: Add, message: "Material prices may now fluctuate" }
+  - { type: Add, message: "Add waist bags" }
+  - { type: Add, message: "Scientists now have anomaly locators available" }
+  - { type: Tweak, message: "Meteor storms increase in frequency as round progresses" }
+  - { type: Tweak, message: "Map selection is based on readied players" }
+  - { type: Tweak, message: "Mine carts are now easier to pull" }
+  - { type: Tweak, message: "Adjust melee balance" }
+  - { type: Tweak, message: "Spiders no longer die from spacing" }
+  - { type: Tweak, message: "Monster corpses sell for more" }
+  - { type: Tweak, message: "Monsters now break out of being pulled" }
+  - { type: Tweak, message: "Radiators are now constructible" }
+  - { type: Tweak, message: "Jester shoes now jingle" }
+  - { type: Fix, message: "Ghost roles are no longer included in the round-end profit summary" }
+  - { type: Fix, message: "Unlit welders no longer start fires" }
+  id: 2549
+  time: '2023-06-13T11:04:24-07:00'
