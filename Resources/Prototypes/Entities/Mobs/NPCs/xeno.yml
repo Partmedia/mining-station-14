@@ -68,6 +68,9 @@
       200: Dead
   - type: Stamina
     excess: 200
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.0
+    baseSprintSpeed : 3.5
   - type: Bloodstream
     bloodReagent: Xenoblood
     bloodlossDamage:
@@ -85,8 +88,9 @@
      collection: AlienClaw
     animation: WeaponArcBite
     damage:
-      groups:
-        Brute: 12
+      types:
+        Piercing: 5
+        Slash: 10
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true

@@ -71,8 +71,8 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Brute: 5
-        Slash: 10
+        Brute: 10
+        Slash: 5
   - type: Tag
     tags:
     - DoorBumpOpener
