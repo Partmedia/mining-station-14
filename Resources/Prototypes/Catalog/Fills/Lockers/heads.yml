@@ -24,6 +24,7 @@
       - id: BoxFolderBase
       - id: HandheldCrewMonitor
       - id: CrewMonitoringServerMachineCircuitboard
+      - id: IDComputerCircuitboard
 
 - type: entity
   id: LockerCaptainFilled
