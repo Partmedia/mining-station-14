@@ -1,0 +1,19 @@
+- type: gameMap
+  id: MiningBozo
+  mapName: 'Mining Bozo'
+  mapPath: /Mining/Maps/miningbozo.yml
+  minPlayers: 2
+  maxPlayers: 8
+  stations:
+    Mining:
+      mapNameTemplate: '{0} Mining Bozo {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: '14'
+      overflowJobs:
+        - SalvageSpecialist
+      availableJobs:
+        Quartermaster: [ 1, 1 ]
+        StationEngineer: [ 1, 2 ]
+        SalvageSpecialist: [ -1, -1 ]
+        CorpSec: [ 1, 1 ]
