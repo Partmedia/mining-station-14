@@ -55,6 +55,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
     public virtual void RemoveHand(EntityUid uid, string handName, SharedHandsComponent? handsComp = null)
     {
+
         if (!Resolve(uid, ref handsComp, false))
             return;
 

@@ -281,11 +281,30 @@ public partial class SharedBodySystem
             var partRemovedEvent = new BodyPartRemovedEvent(slot.Id, part);
             RaiseLocalEvent(oldBody, ref partRemovedEvent);
 
-            if (part.PartType == BodyPartType.Leg)
+            if (part.PartType == BodyPartType.Leg || part.PartType == BodyPartType.Foot)
             {
                 UpdateMovementSpeed(oldBody);
                 if(!GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
                     Standing.Down(oldBody);
+                else
+                {
+                    var legs = GetBodyChildrenOfType(oldBody, BodyPartType.Leg);
+                    var emptySlot = 0;
+                    var footSlot = 0;
+                    foreach (var leg in legs) {
+                        foreach (KeyValuePair<string, BodyPartSlot> entry in leg.Component.Children)
+                        {
+                            if (entry.Value.Type == BodyPartType.Foot)
+                            {
+                                footSlot++;
+                                if (entry.Value.Child is null)
+                                    emptySlot++;
+                            }
+                        }                 
+                    }
+                    if (emptySlot == footSlot) //if the legs have a number of footslots and they are all empty, fall over
+                        Standing.Down(oldBody);
+                }
             }
 
             //if (part.IsVital && !GetBodyChildrenOfType(oldBody, part.PartType).Any())
@@ -335,8 +354,20 @@ public partial class SharedBodySystem
         var allLegs = new HashSet<EntityUid>();
         foreach (var slot in allSlots)
         {
-            if (slot.Type == BodyPartType.Leg && slot.Child is {  } child)
-                allLegs.Add(child);
+            if (slot.Type == BodyPartType.Leg && slot.Child is { } child)
+            {
+                var emptySlot = false; //the leg should have a foot to count (unless it is some kind of footless leg, anything is possibe)
+                if (TryComp<BodyPartComponent>(slot.Child, out var leg))
+                {
+                    foreach (KeyValuePair<string, BodyPartSlot> entry in leg.Children)
+                    {
+                        if (entry.Value.Type == BodyPartType.Foot && entry.Value.Child is null)
+                            emptySlot = true;
+                    }
+                }
+                if (!emptySlot)
+                    allLegs.Add(child);
+            }
         }
 
         var walkSpeed = 0f;
