@@ -325,6 +325,8 @@ public partial class SharedBodySystem
             if (part != null && TryComp(oldBody, out HumanoidAppearanceComponent? bodyAppearance) &&
                 !TryComp(part.Owner, out BodyPartAppearanceComponent? existingAppearance))
             {
+
+                //TODO fix this
                 var appearance = AddComp<BodyPartAppearanceComponent>(part.Owner);
                 appearance.OriginalBody = part.OriginalBody;
                 appearance.Color = bodyAppearance.SkinColor;
@@ -332,6 +334,8 @@ public partial class SharedBodySystem
                 Dirty(appearance);
             }
         }
+
+        //TODO apply status effects
 
         Dirty(slot.Parent);
         Dirty(partId.Value);
