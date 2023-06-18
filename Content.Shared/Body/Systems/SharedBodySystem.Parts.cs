@@ -218,6 +218,7 @@ public partial class SharedBodySystem
         if (TryComp(slot.Parent, out BodyPartComponent? parentPart))
         {
             part.Body = parentPart.Body;
+            parentPart.Children[slot.Id] = slot;
         }
         else if (TryComp(slot.Parent, out BodyComponent? parentBody))
         {
@@ -226,7 +227,7 @@ public partial class SharedBodySystem
         else
         {
             part.Body = null;
-        }
+        }       
 
         Dirty(slot.Parent);
         Dirty(partId.Value);
@@ -234,7 +235,27 @@ public partial class SharedBodySystem
         if (part.Body is { } newBody)
         {
             if (part.PartType == BodyPartType.Leg)
+            {
                 UpdateMovementSpeed(newBody);
+
+                //check if leg has a foot slot and foot
+                var hasSlot = false;
+                var slotEmpty = false;
+                foreach (KeyValuePair<string, BodyPartSlot> entry in part.Children)
+                {
+                    if (entry.Value.Type == BodyPartType.Foot)
+                    {
+                        hasSlot = true;
+                        if (entry.Value.Child is null)
+                            slotEmpty = true;
+                    }
+                }
+
+                //stand up
+                if ((!hasSlot || !slotEmpty))
+                    Standing.Stand(newBody);
+
+            }
 
             var partAddedEvent = new BodyPartAddedEvent(slot.Id, part);
             RaiseLocalEvent(newBody, ref partAddedEvent);
@@ -249,6 +270,8 @@ public partial class SharedBodySystem
 
             Dirty(newBody);
         }
+
+        //TODO apply status effects
 
         return true;
     }
