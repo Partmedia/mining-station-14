@@ -16,9 +16,10 @@
         Structural: 50
   - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 0.75
     damage:
       types:
-        Piercing: 6
+        Piercing: 8
         Blunt: 6
   - type: Item
     size: 24
@@ -44,7 +45,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 8
+        Piercing: 10
         Blunt: 6
   - type: Construction
     graph: PickaxeGraph
