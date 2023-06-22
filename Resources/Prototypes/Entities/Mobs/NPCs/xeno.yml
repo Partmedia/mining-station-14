@@ -70,7 +70,7 @@
     excess: 200
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.0
-    baseSprintSpeed : 3.5
+    baseSprintSpeed : 3.0
   - type: Bloodstream
     bloodReagent: Xenoblood
     bloodlossDamage:
