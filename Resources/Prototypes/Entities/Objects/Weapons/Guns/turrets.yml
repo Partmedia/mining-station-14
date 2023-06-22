@@ -175,3 +175,8 @@
       interactFailureString: petting-failure-generic
       interactSuccessSound:
         path: /Audio/Animals/snake_hiss.ogg
+    # remove starting ammo since the ammo is provided internally
+    - type: ItemSlots
+      slots:
+        gun_magazine:
+          name: Magazine
