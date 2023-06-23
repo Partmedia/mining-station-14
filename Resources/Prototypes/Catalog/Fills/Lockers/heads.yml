@@ -25,6 +25,7 @@
       - id: HandheldCrewMonitor
       - id: CrewMonitoringServerMachineCircuitboard
       - id: IDComputerCircuitboard
+      - id: ClothingOuterCoatMscoat
 
 - type: entity
   id: LockerCaptainFilled
