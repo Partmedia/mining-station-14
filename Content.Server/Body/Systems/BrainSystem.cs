@@ -10,11 +10,13 @@ namespace Content.Server.Body.Systems
 {
     public sealed class BrainSystem : EntitySystem
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<BrainComponent, AddedToBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
+            SubscribeLocalEvent<BrainComponent, AddedToBodyEvent>(OnAddedToBody);
             SubscribeLocalEvent<BrainComponent, AddedToPartEvent>((uid, _, args) => HandleMind(args.Part, uid));
             SubscribeLocalEvent<BrainComponent, AddedToPartInBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
             SubscribeLocalEvent<BrainComponent, RemovedFromBodyEvent>(OnRemovedFromBody);
@@ -32,9 +34,18 @@ namespace Content.Server.Body.Systems
             HandleMind(parent, args.Old);
         }
 
+        private void OnAddedToBody(EntityUid uid, BrainComponent component, AddedToBodyEvent args)
+        {
+            // This one needs to be special, okay?
+            if (!EntityManager.TryGetComponent(uid, out OrganComponent? organ) ||
+                organ.ParentSlot is not { Parent: var parent })
+                return;
+
+            HandleMind(args.Body,parent);
+        }
+
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
         {
-
             EntityManager.EnsureComponent<MindComponent>(newEntity);
             var oldMind = EntityManager.EnsureComponent<MindComponent>(oldEntity);
 
