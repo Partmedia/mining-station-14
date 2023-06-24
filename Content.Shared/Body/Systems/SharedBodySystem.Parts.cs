@@ -456,12 +456,16 @@ public partial class SharedBodySystem
         return true;
     }
 
+    public void SetBodyPartOpen(BodyPartComponent part, bool opened)
+    {
+        if (part.Incisable)
+            part.Opened = opened;
+    }
+
     public void AttachPartAttachment(EntityUid uid, BodyPartComponent part)
     {
         if (part.Attachment == null)
             part.Attachment = uid;
-
-        //TODO handle status change for part
 
         //TODO update body part sprite when implemented
 
@@ -471,8 +475,6 @@ public partial class SharedBodySystem
     public void RemovePartAttachment(BodyPartComponent part)
     {
         part.Attachment = null;
-
-        //TODO handle status change for part
 
         //TODO update body part sprite when implemented
 
@@ -486,8 +488,6 @@ public partial class SharedBodySystem
 
         if (TryComp<BodyPartComponent>(slot.Parent, out var part))
             part.Children[slot.Id] = slot;
-
-        //TODO handle status change for part slot parent/child
     }
 
     public void RemovePartSlotAttachment(BodyPartSlot slot)
@@ -507,8 +507,6 @@ public partial class SharedBodySystem
             //change body part incised to true
             part.Incised = incised;
 
-            //TODO handle status change for part
-
             //TODO update body part sprite when implemented
 
             //TODO update player sprite if possible
@@ -520,9 +518,7 @@ public partial class SharedBodySystem
         if (part.EndoSkeleton)
         {
             //change body part incised to true
-            part.EndoSkeleton = opened;
-
-            //TODO handle status change for part
+            part.EndoOpened = opened;
 
             //TODO update body part sprite when implemented
 
@@ -535,9 +531,7 @@ public partial class SharedBodySystem
         if (part.ExoSkeleton)
         {
             //change body part incised to true
-            part.ExoSkeleton = opened;
-
-            //TODO handle status change for part
+            part.ExoOpened = opened;
 
             //TODO update body part sprite when implemented
 

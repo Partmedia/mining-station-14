@@ -12,9 +12,16 @@
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
+    exoSkeleton: true #probably the best representation
+    incisable: false #wood all the way through, no incisions needed just a saw
+    endoSkeleton: false
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
+        ents: []
+      attachment: !type:Container
+        ents: []
+      slotAttachment: !type:Container
         ents: []
   - type: Sprite
     netsync: true
@@ -38,6 +45,7 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
+    container: true
 
 - type: entity
   id: HeadDiona
@@ -53,6 +61,7 @@
     state: "head_m"
   - type: BodyPart
     partType: Head
+    container: true
     vital: true
   - type: Input
     context: "ghost"

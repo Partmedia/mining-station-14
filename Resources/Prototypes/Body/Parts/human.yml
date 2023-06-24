@@ -62,6 +62,8 @@
     state: "head_m"
   - type: BodyPart
     partType: Head
+    incisable: true
+    container: true
     vital: true
   - type: Input
     context: "ghost"

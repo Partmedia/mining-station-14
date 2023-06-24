@@ -52,7 +52,6 @@ public sealed class BodyPartComponent : Component
 
     public bool Incised = false; //whether or not an incision has been made
 
-    //TODO remove this in favour of checking for a retractor (?)
     public bool Opened = false; //whether or not the body part has been opened up (any obstructing endoskeleton not yet factored)
 
     /// <summary>

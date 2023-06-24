@@ -20,6 +20,10 @@
     containers:
       bodypart: !type:Container
         ents: []
+      attachment: !type:Container
+        ents: []
+      slotAttachment: !type:Container
+        ents: []
   - type: StaticPrice
     price: 50
 
@@ -61,5 +65,7 @@
   components:
   - type: BodyPart
     partType: Torso
+    incisable: true
+    container: true
   - type: Damageable
     damageContainer: Biological

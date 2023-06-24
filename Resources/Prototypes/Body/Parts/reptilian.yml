@@ -18,6 +18,10 @@
     containers:
       bodypart: !type:Container
         ents: []
+      attachment: !type:Container
+        ents: []
+      slotAttachment: !type:Container
+        ents: []
 
 - type: entity
   id: TorsoReptilian
@@ -36,6 +40,8 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
+    incisable: true
+    container: true
 
 - type: entity
   id: HeadReptilian
@@ -54,6 +60,8 @@
     state: "head_m"
   - type: BodyPart
     partType: Head
+    incisable: true
+    container: true
     vital: true
   - type: Input
     context: "ghost"

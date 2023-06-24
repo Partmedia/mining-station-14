@@ -13,9 +13,16 @@
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
+    incisable: false #these guys are *just* an endoskeleton - but actually an exoskeleton effectively
+    endoSkeleton: false
+    exoSkeleton: true
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
+        ents: []
+      attachment: !type:Container
+        ents: []
+      slotAttachment: !type:Container
         ents: []
   - type: StaticPrice
     price: 20
@@ -34,6 +41,7 @@
       state: "torso_m"
     - type: BodyPart
       partType: Torso
+      container: true
 
 - type: entity
   id: HeadSkeleton
@@ -49,6 +57,7 @@
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "skull_icon"
     - type: BodyPart
+      container: true
       partType: Head
     - type: Input
       context: "human"
