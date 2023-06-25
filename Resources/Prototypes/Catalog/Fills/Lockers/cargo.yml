@@ -17,3 +17,4 @@
         prob: 0.25
       - id: ClothingNeckCloakSalvager
         prob: 0.2
+      - id: ClothingNeckBodycam
