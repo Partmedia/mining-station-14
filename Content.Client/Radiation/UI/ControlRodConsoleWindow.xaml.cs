@@ -55,7 +55,7 @@ namespace Content.Client.Radiation.UI
 
                         var label = new Label
                         {
-                            Text = "NO. " + controlRodInfo.Rod.ToString() + ": " + rodPercent, //TODO loc
+                            Text = controlRodInfo.Name + ": " + rodPercent, //TODO loc
                             MinSize = new Vector2(300,0)
                         };
 

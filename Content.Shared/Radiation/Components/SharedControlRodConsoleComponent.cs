@@ -17,12 +17,14 @@ namespace Content.Shared.Radiation.Components
     public sealed class ControlRodInfo
     {
         public EntityUid Rod;
+        public string Name;
         public bool InRange;
         public float Extension;
 
-        public ControlRodInfo(EntityUid rod, bool inRange, float extension)
+        public ControlRodInfo(EntityUid rod, string name, bool inRange, float extension)
         {
             Rod = rod;
+            Name = name;
             InRange = inRange;
             Extension = extension;
         }
