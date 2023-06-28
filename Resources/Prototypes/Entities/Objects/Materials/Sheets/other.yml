@@ -147,17 +147,17 @@
   noSpawn: true
   parent: SheetOtherBase
   id: SheetUranium
-  name: uranium
+  name: uranium sheet
+  description: A sheet of unenriched uranium.
   suffix: Full
   components:
   - type: Material
     materials:
-      Uranium: 100
+      Uranium: 500
   - type: RadiationSource
-    N: 16000
-    hl: 7200
-    k: 0.5
-    ktc: -0.0005
+    N: 40000
+    hl: 18000
+    k: 0.05
   - type: Sprite
     state: uranium_3
   - type: Appearance
@@ -188,58 +188,29 @@
     state: uranium
 
 - type: entity
-  noSpawn: true
   parent: SheetOtherBase
-  id: SheetShieldedUranium
-  name: shielded uranium
-  suffix: Full
+  id: SheetShieldedUranium1
+  name: uranium fuel rod
+  description: Unenriched uranium rods surrounded by a graphite moderator, suitable for use in a fission reactor.
   components:
   - type: Material
     materials:
-      Uranium: 10
-      Steel: 10
-      Carbon: 80
+      Uranium: 500
+      Steel: 100
+      Carbon: 500
   - type: RadiationSource
-    N: 800
-    hl: 3600
-    k: 0.05
+    N: 40000
+    hl: 18000
+    k: 0.7
   - type: Sprite
     state: shieldeduranium_3
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - shieldeduranium
-      - shieldeduranium_2
-      - shieldeduranium_3
   - type: Item
     heldPrefix: shieldeduranium
-  - type: Extractable
-    grindableSolutionName: shieldeduranium
-  - type: SolutionContainerManager
-    solutions:
-      shieldeduranium:
-        reagents:
-        - ReagentId: Uranium
-          Quantity: 1
-        - ReagentId: Carbon
-          Quantity: 8
-        - ReagentId: Iron
-          Quantity: 1
-
-- type: entity
-  parent: SheetShieldedUranium
-  id: SheetShieldedUranium1
-  name: shielded uranium
-  suffix: Single
-  components:
-  - type: Sprite
-    state: shieldeduranium
 
 - type: entity
   parent: SheetOtherBase
   id: SheetGraphene
-  name: graphene
+  name: graphite
   suffix: Full
   components:
   - type: StaticPrice
@@ -259,7 +230,7 @@
       - graphene_2
       - graphene_3
   - type: Item
-    heldPrefix: graphene
+    heldPrefix: graphite
   - type: Extractable
     grindableSolutionName: contents
   - type: SolutionContainerManager
@@ -272,7 +243,7 @@
 - type: entity
   parent: SheetGraphene
   id: SheetGraphene1
-  name: graphene
+  name: graphite
   suffix: Single
   components:
   - type: Sprite

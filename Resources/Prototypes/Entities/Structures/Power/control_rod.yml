@@ -81,4 +81,5 @@
   - type: RadiationBlocker
     resistance: 0 #retracted by default
   - type: ControlRod
-    baseResistance: 1
+    controlRange: 0.4
+    shutdownRange: 0.6

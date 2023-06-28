@@ -55,14 +55,6 @@
   price: 15
 
 - type: material
-  id: ShieldedUranium
-  stackEntity: SheetShieldedUranium1
-  name: materials-shieldeduranium
-  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: shieldeduranium }
-  color: "#023802"
-  price: 1.6 # Uranium Price / 10, + Steel price, + Graphene price
-
-- type: material
   id: Graphene
   stackEntity: SheetGraphene1
   name: materials-graphene

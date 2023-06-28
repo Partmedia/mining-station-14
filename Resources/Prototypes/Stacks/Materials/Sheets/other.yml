@@ -27,13 +27,6 @@
   maxCount: 30
 
 - type: stack
-  id: ShieldedUranium
-  name: shielded uranium
-  icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: shieldeduranium }
-  spawn: SheetShieldedUranium1
-  maxCount: 30
-
-- type: stack
   id: Graphene
   name: graphene
   icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: graphene }
