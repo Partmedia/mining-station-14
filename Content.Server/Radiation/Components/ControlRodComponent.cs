@@ -12,8 +12,11 @@ public sealed class ControlRodComponent : Component
     /// <summary>
     ///     This value is multiplied by the current extension value to produce the rads blocked
     /// </summary>
-    [DataField("baseResistance")]
-    public float BaseRadResistance = 10f;
+    [DataField("shutdownRange")]
+    public float ShutdownRange = 0.8f;
+
+    [DataField("controlRange")]
+    public float ControlRange = 0.2f;
 
     /// <summary>
     ///     The current range that the rod is currently extended out too (may not drop below 0)

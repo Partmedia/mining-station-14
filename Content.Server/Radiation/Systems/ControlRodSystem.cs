@@ -197,11 +197,29 @@ namespace Content.Server.Radiation.Systems
             }
         }
 
+        /**
+         * Simulate shutdown vs control rods by operating control rods below
+         * 100% extension (shutdown) in a smaller linear range.
+         */
+        private float ControlLaw(ControlRodComponent rod)
+        {
+            float setting = rod.CurrentExtension;
+            if (setting > 0.99f)
+            {
+                return rod.ShutdownRange + rod.ControlRange;
+            }
+            else {
+                return setting * rod.ControlRange;
+            }
+        }
+
         private void UpdateRodValues(EntityUid uid, ControlRodComponent controlRod)
         {
             //set rad blocker value
             if (TryComp<RadiationBlockerComponent>(uid, out var radBlocker))
-                _radiation.SetBlocking(uid, radBlocker, controlRod.CurrentExtension * controlRod.BaseRadResistance);
+            {
+                _radiation.SetBlocking(uid, radBlocker, ControlLaw(controlRod));
+            }
 
             //determine stage
             var stage = (int)(controlRod.CurrentExtension * (controlRod.MaxExtension / controlRod.ExtensionStep));
