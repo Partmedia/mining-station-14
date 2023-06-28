@@ -185,7 +185,7 @@ namespace Content.Server.Radiation.Systems
             {
                 if (TryComp<ControlRodComponent>(consoleComponent.ControlRods[i], out var rod))
                 {
-                    var controlRodInfo = new ControlRodInfo(consoleComponent.ControlRods[i], consoleComponent.RodsInRange[i], rod.CurrentExtension);
+                    var controlRodInfo = new ControlRodInfo(consoleComponent.ControlRods[i], MetaData(consoleComponent.ControlRods[i]).EntityName, consoleComponent.RodsInRange[i], rod.CurrentExtension);
                     controlRodInfos.Add(controlRodInfo);
                 }
             }
