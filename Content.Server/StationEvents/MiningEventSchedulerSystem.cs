@@ -186,7 +186,7 @@ namespace Content.Server.StationEvents
         private void ResetTimer(bool start)
         {
             var minsInRound = start ? 0 : _gameTicker.RoundDuration().TotalMinutes;
-            var mt = Math.Max(30-2*Math.Sqrt(minsInRound), 5);
+            var mt = Math.Max(35-2*Math.Sqrt(minsInRound), 6);
             var st = mt/3;
             _timeUntilNextEvent = _random.Next(60*(int)(mt-st), 60*(int)(mt+st));
             Logger.InfoS("mining", $"Next meteor storm in {(int)(_timeUntilNextEvent/60)} minutes ({minsInRound} mins in round, mean {mt}, s {st})");
