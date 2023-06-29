@@ -57,6 +57,8 @@ namespace Content.Server.Body.Systems
             EnsureComp<InputMoverComponent>(newEntity);
 
             oldMind.Mind?.TransferTo(newEntity);
+
+            //TODO if a mind already exists in the new entity, transfer it to any brain (or brain container) that it can go to
         }
     }
 }

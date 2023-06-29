@@ -16,11 +16,12 @@ namespace Content.Shared.Surgery
     public sealed class SurgeryBoundUserInterfaceState : BoundUserInterfaceState
     {
         public List<BodyPartSlot> BodyPartSlots;
-        //organSlots
+        public List<OrganSlot> OrganSlots;
 
-        public SurgeryBoundUserInterfaceState(List<BodyPartSlot> bodyPartSlots)
+        public SurgeryBoundUserInterfaceState(List<BodyPartSlot> bodyPartSlots, List<OrganSlot> organSlots)
         {
             BodyPartSlots = bodyPartSlots;
+            OrganSlots = organSlots;
         }
     }
 

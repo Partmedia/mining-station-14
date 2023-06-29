@@ -9,6 +9,7 @@ using Content.Shared.Surgery;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Content.Shared.Body.Part;
+using Content.Shared.Body.Organ;
 using Robust.Client.Graphics;
 using Robust.Client.GameObjects;
 
@@ -20,6 +21,7 @@ namespace Content.Client.Surgery
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         public event Action<BaseButton.ButtonEventArgs, SurgerySlotButton>? OnSurgerySlotButtonPressed;
+        public event Action<BaseButton.ButtonEventArgs, OrganSlotButton>? OnOrganSlotButtonPressed;
         public static int DefaultButtonSize = 112;
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace Content.Client.Surgery
         public void UpdateSurgeryMenu(SurgeryBoundUserInterfaceState state)
         {
 
-            BodyPartSlotList.Children.Clear();
+            SurgeryLayout.Children.Clear();
 
             if (state.BodyPartSlots is null)
             {
@@ -63,6 +65,8 @@ namespace Content.Client.Surgery
 
             List<SurgerySlotButton> slotButtons = new List<SurgerySlotButton>();
 
+            Dictionary<string, OrganSlotCol> partOrgans = new Dictionary<string, OrganSlotCol>();
+
             for (var i = 0; i < state.BodyPartSlots.Count; i++)
             {
                 if (state.BodyPartSlots[i] != null) {
@@ -83,17 +87,18 @@ namespace Content.Client.Surgery
                         }
 
                         if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BodyPartComponent?>(state.BodyPartSlots[i].Child, out var bodyPart))
-                            button.Symmetry = ((BodyPartSymmetry)bodyPart.Symmetry).ToString();
+                            button.Symmetry = ((BodyPartSymmetry) bodyPart.Symmetry).ToString();
+
 
                     }
-                    slotButtons.Add(button);
-                    
+                    slotButtons.Add(button);              
                 }
             }
 
             for (var i = 0; i < slotButtons.Count; i++)
             {
-                //symmetrical part types are added to the start/end of list, rest are placed in centre TODO assign symmetry via part slot
+                //symmetrical part types are added to the start/end of list, rest are placed in centre
+                //TODO assign symmetry via part slot
                 void AddToSlotRow(SurgerySlotButton button, List<SurgerySlotButton> list, bool symmetry)
                 {
                     if (!symmetry)
@@ -132,7 +137,7 @@ namespace Content.Client.Surgery
                             {
                                 button.Counterpart = true;
                                 if (list.Count > 0)
-                                    list.Insert(list.Count - 1, button); //TODO fix still not ideal but better than assuming its position, just wouldn't on something with four arms as well
+                                    list.Insert(list.Count - 1, button); //TODO fix still not ideal but better than assuming its position, just wouldn't work on something with four arms as well
                                 else
                                     list.Insert(0, button);
                             }
@@ -146,8 +151,6 @@ namespace Content.Client.Surgery
                         }
                     }
                 }
-
-                Logger.Debug(slotButtons[i].SlotType);
 
                 switch (slotButtons[i].SlotType)
                 {
@@ -202,6 +205,34 @@ namespace Content.Client.Surgery
             BodyPartSlotList.Children.Add(legTailSlotsRow);
             BodyPartSlotList.Children.Add(footSlotsRow);
 
+            for (var i = 0; i < state.OrganSlots.Count; i++)
+            {
+                //create button
+                var button = new OrganSlotButton(state.OrganSlots[i]);
+                button.OnPressed += args => OnOrganSlotButtonPressed?.Invoke(args, button);
+
+                //add button sprite
+                if (state.OrganSlots[i].Child != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(state.OrganSlots[i].Child, out var sprite))
+                {
+                    var organSprite = new BodyPartSprite();
+                    organSprite.Sprite = sprite;
+                    button.Children.Add(organSprite);
+                }
+
+                if (!partOrgans.ContainsKey(state.OrganSlots[i].Parent.ToString()))
+                {
+                    partOrgans.Add(state.OrganSlots[i].Parent.ToString(), new OrganSlotCol());
+                    //partOrgans[state.OrganSlots[i].Parent.ToString()].Children.Add(new Label { Text = slotType });
+                }
+
+                //add button to dict
+                partOrgans[state.OrganSlots[i].Parent.ToString()].Children.Add(button);
+            }
+
+            //iterate partOrgans, add cols to surgery menu
+            Logger.Debug(partOrgans.Count().ToString());
+            foreach (KeyValuePair<string, OrganSlotCol> entry in partOrgans)
+                SurgeryLayout.Children.Add(entry.Value);
         }
 
         /// <summary>
@@ -226,11 +257,22 @@ namespace Content.Client.Surgery
             {
                 Slot = slot;
                 SlotType = slotType;
-                //Text = slotType; //TODO loc
-                //Scale = (0.75f, 0.75f);
                 MinSize = (DefaultButtonSize, DefaultButtonSize);
                 MaxSize = (DefaultButtonSize, DefaultButtonSize);
-                TextureNormal = Theme.ResolveTexture("/Slots/hand_l");
+                TextureNormal = Theme.ResolveTexture("/Slots/hand_l"); //TODO base on slot type...
+            }
+        }
+
+        public sealed class OrganSlotButton : TextureButton
+        {
+            public OrganSlot Slot { get; }
+
+            public OrganSlotButton(OrganSlot slot)
+            {
+                Slot = slot;
+                MinSize = (DefaultButtonSize, DefaultButtonSize);
+                MaxSize = (DefaultButtonSize, DefaultButtonSize);
+                TextureNormal = Theme.ResolveTexture("/Slots/hand_l"); //TODO base on slot type...
             }
         }
 
@@ -239,6 +281,15 @@ namespace Content.Client.Surgery
             public SurgerySlotRow()
             {
                 Orientation = LayoutOrientation.Horizontal;
+                Align = AlignMode.Center;
+            }
+        }
+
+        public sealed class OrganSlotCol : BoxContainer
+        {
+            public OrganSlotCol()
+            {
+                Orientation = LayoutOrientation.Vertical;
                 Align = AlignMode.Center;
             }
         }

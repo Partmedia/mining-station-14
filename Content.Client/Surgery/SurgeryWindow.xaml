@@ -3,7 +3,7 @@
             Title="Surgery Menu"
             SetSize="525 675"
             MinSize="525 675">
-    <BoxContainer Orientation="Vertical">
+    <BoxContainer Name="SurgeryLayout" Orientation="Horizontal">
         <BoxContainer Name="BodyPartSlotList"
                          Orientation="Vertical"
                          HorizontalExpand="True">

@@ -189,15 +189,23 @@ namespace Content.Server.Surgery
         {
             List<OrganSlot> organSlots = new List<OrganSlot>();
 
+            for (var i = 0; i < bodyPartSlots.Count(); i++)
+            {
+                if (bodyPartSlots[i].Child is not null && TryComp<BodyPartComponent>(bodyPartSlots[i].Child, out var bodyPart)
+                    && bodyPart.Opened)
+                    foreach (KeyValuePair<string, OrganSlot> entry in bodyPart.Organs)
+                        organSlots.Add(entry.Value);
+            }
+            Logger.Debug(organSlots.Count().ToString());
             return organSlots;
         }
 
         private void UpdateUiState(EntityUid uid)
         {
             var bodyPartSlots = GetAllBodyPartSlots(uid);
-            //GetOpenPartOrganSlots
+            var organSlots = GetOpenPartOrganSlots(bodyPartSlots);
 
-            var state = new SurgeryBoundUserInterfaceState(bodyPartSlots); //organPartSlots
+            var state = new SurgeryBoundUserInterfaceState(bodyPartSlots,organSlots);
             _userInterfaceSystem.TrySetUiState(uid, SurgeryUiKey.Key, state);
         }
 
@@ -754,7 +762,7 @@ namespace Content.Server.Surgery
                 {
                     timeOverride = await CauterisePartSlot(user, tool, uid, args.Slot, userHands, timeOverride); //will only work if said slot is empty
                 }
-
+                
                 if (args.Slot.Child != null && TryComp<BodyPartComponent>(args.Slot.Child, out var operatedPart))
                     SetPartStatus(operatedPart);
 
@@ -773,7 +781,7 @@ namespace Content.Server.Surgery
                     if (TryComp<SurgeryToolComponent>(args.Slot.Attachment, out var attachedTool))
                         RemoveToolFromPartSlot(user, attachedTool, component.Owner, args.Slot, userHands);
                 }
-
+                
                 if (args.Slot.Child != null && TryComp<BodyPartComponent>(args.Slot.Child, out var operatedPart))
                     SetPartStatus(operatedPart);
 
@@ -790,7 +798,7 @@ namespace Content.Server.Surgery
                     }
                 }
             }
-
+            UpdateUiState(component.Owner);
         }
 
         private void OnOrganButtonPressed(EntityUid uid, SurgeryComponent component, OrganSlotButtonPressed args)

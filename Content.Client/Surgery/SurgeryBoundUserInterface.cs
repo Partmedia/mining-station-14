@@ -35,7 +35,8 @@ namespace Content.Client.Surgery
 
             // Setup surgery slot button actions.
             _window.OnSurgerySlotButtonPressed += (args, button) => SendMessage(new SurgerySlotButtonPressed(button.Slot));
-            
+            _window.OnOrganSlotButtonPressed += (args, button) => SendMessage(new OrganSlotButtonPressed(button.Slot));
+
         }
 
         /// <summary>

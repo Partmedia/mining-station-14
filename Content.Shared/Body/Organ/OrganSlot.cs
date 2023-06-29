@@ -4,7 +4,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Body.Organ;
 
 [Serializable, NetSerializable]
-[Access(typeof(SharedBodySystem))]
 [DataRecord]
 public sealed record OrganSlot(string Id, EntityUid Parent)
 {
