@@ -1,4 +1,4 @@
-﻿- type: gameRule
+- type: gameRule
   id: AnomalySpawn
   config:
     !type:StationEventRuleConfiguration
@@ -161,6 +161,22 @@
     endAfter: 1
     startAudio:
       path: /Audio/Announcements/attention.ogg
+
+- type: gameRule
+  id: RadiationStorm
+  config:
+    !type:StationEventRuleConfiguration
+    id: RadiationStorm
+    earliestStart: 30
+    weight: 5
+    minimumPlayers: 20
+    startAnnouncement: station-event-radiation-storm-start-announcement
+    endAnnouncement: station-event-radiation-storm-end-announcement
+    startAudio:
+      path: /Audio/Announcements/radiation.ogg
+      params:
+        volume: -4
+    startAfter: 30
 
 - type: gameRule
   id: VentClog

@@ -166,7 +166,7 @@ public sealed class MiningSystem : EntitySystem
     /**
      * Cave in the ceiling centered around entity 'uid' whose CaveInComponent is 'component'.
      */
-    private void CaveIn(EntityUid uid, CaveInComponent component)
+    public void CaveIn(EntityUid uid, CaveInComponent component)
     {
         var pos = Transform(uid).MapPosition;
         var impact = component.CollapseRange;
