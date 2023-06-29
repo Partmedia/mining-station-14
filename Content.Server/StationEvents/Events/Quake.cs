@@ -16,7 +16,7 @@ namespace Content.Server.StationEvents.Events
 
         public override string Prototype => "Quake";
 
-        private const float ChanceOfCollapse = 0.05f;
+        private const float ChanceOfCollapse = 0.01f;
 
         public override void Started()
         {
@@ -48,24 +48,7 @@ namespace Content.Server.StationEvents.Events
                 if (!TryComp<CaveInComponent>(uid, out var timedSpace))
                     continue;
 
-                if (!timedSpace.Timed)
-                    continue;
-                //check if the entity is anchored - if it is ROLL
-                if (Transform(uid).Anchored) {
-                    var roll = (int) RobustRandom.Next(1, 100);
-                    if (roll <= ChanceOfCollapse * 100)
-                        _miningSystem.CaveIn(uid, timedSpace);
-                    else
-                        _replenishQueue.Enqueue(uid);
-                }
-            }
-
-            _checkQueue.Clear();
-
-            foreach (var uid in _replenishQueue)
-                _miningSystem.EventQueue.Enqueue(uid);
-
-            _replenishQueue.Clear();
+            //roll for collapse
 
             ForceEndSelf();
         }
