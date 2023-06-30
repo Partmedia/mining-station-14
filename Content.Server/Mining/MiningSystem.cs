@@ -40,6 +40,7 @@ public sealed class MiningSystem : EntitySystem
     [Dependency] private readonly GravitySystem _gravity = default!;
 
     private Queue<EntityUid> _timerQueue = new(); // entities waiting for their next time event
+    public Queue<EntityUid> EventQueue = new(); //for use by the quake event
 
     /** Directions from center that cave-ins inspect and can spread to. */
     private readonly List<Direction> directions = new List<Direction>{
@@ -234,7 +235,10 @@ public sealed class MiningSystem : EntitySystem
 
         Queue<EntityUid> _checkQueue = new(); // entities that need to be checked for cave-ins
         Queue<EntityUid> _removeQueue = new();
-        foreach (var uid in _timerQueue)
+
+        Queue<EntityUid> _tempTimerQueue = new Queue<EntityUid>(_timerQueue);
+
+        foreach (var uid in _tempTimerQueue)
         {
             if (!TryComp<CaveInComponent>(uid, out var timedSpace))
                 continue;
@@ -251,6 +255,7 @@ public sealed class MiningSystem : EntitySystem
                 _removeQueue.Enqueue(uid);
         }
 
+        _tempTimerQueue.Clear();
         _timerQueue.Clear();
    
         foreach (var uid in _checkQueue)
@@ -395,7 +400,10 @@ public sealed class MiningSystem : EntitySystem
     private void OnMapInit(EntityUid uid, OreVeinComponent component, MapInitEvent args)
     {
         if (TryComp<CaveInComponent>(uid, out var timedSpace) && timedSpace.Timed)
+        {
             _timerQueue.Enqueue(uid);
+            EventQueue.Enqueue(uid);
+        }
 
         if (component.CurrentOre != null || component.OreRarityPrototypeId == null || !_random.Prob(component.OreChance))
             return;

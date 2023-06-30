@@ -153,6 +153,21 @@
     startAfter: 12
 
 - type: gameRule
+  id: Quake
+  config:
+    !type:StationEventRuleConfiguration
+    id: Quake
+    earliestStart: 30
+    weight: 5
+    minimumPlayers: 20
+    startAnnouncement: Seismic activity detected. Be prepared for unexpected cave ins. #TODO loc
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+      params:
+        volume: -4
+    startAfter: 30
+
+- type: gameRule
   id: RandomSentience
   config:
     !type:StationEventRuleConfiguration
