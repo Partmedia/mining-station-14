@@ -46,21 +46,10 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
                     continue;
                 }
 
-                if (value is not ValueDataNode organ)
+                if (value is not MappingDataNode organ)
                 {
                     nodes.Add(new ErrorNode(value, $"Value is not a value data node"));
                     continue;
-                }
-
-                if (!prototypes.TryIndex(organ.Value, out EntityPrototype? organPrototype))
-                {
-                    nodes.Add(new ErrorNode(value, $"No organ entity prototype found with id {organ.Value}"));
-                    continue;
-                }
-
-                if (!organPrototype.HasComponent<OrganComponent>())
-                {
-                    nodes.Add(new ErrorNode(value, $"Organ {organ.Value} does not have a body component"));
                 }
             }
         }
@@ -126,7 +115,7 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
         var name = node.Get<ValueDataNode>("name").Value;
         var root = node.Get<ValueDataNode>("root").Value;
         var slotNodes = node.Get<MappingDataNode>("slots");
-        var allConnections = new Dictionary<string, (string? Part, HashSet<string>? Connections, Dictionary<string, string>? Organs, BodyPartType? SlotType)>();
+        var allConnections = new Dictionary<string, (string? Part, HashSet<string>? Connections, Dictionary<string, OrganPrototypeSlot>? Organs, BodyPartType? SlotType)>();
 
         foreach (var (keyNode, valueNode) in slotNodes)
         {
@@ -150,14 +139,32 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
                 }
             }
 
-            Dictionary<string, string>? organs = null;
-            if (slot.TryGet("organs", out MappingDataNode? slotOrgansNode))
+            Dictionary<string, OrganPrototypeSlot>? organs = new Dictionary<string, OrganPrototypeSlot>();
+            if (slot.TryGet("organs", out MappingDataNode? slotOrgansNode) && part is not null) //must have part to have organs.
             {
-                organs = new Dictionary<string, string>();
 
                 foreach (var (organKeyNode, organValueNode) in slotOrgansNode)
                 {
-                    organs.Add(((ValueDataNode) organKeyNode).Value, ((ValueDataNode) organValueNode).Value);
+                    var organSlot = ((MappingDataNode) organValueNode);
+
+                    string? organ = null;
+                    if (organSlot.TryGet<ValueDataNode>("organ", out var organValue))
+                    {
+                        organ = organValue.Value;
+                    }
+
+                    var organSlotType = OrganType.Other;
+                    if (organSlot.TryGet<ValueDataNode>("type", out var organTypeValue))
+                    {
+                        organSlotType = (OrganType)Enum.Parse(typeof(OrganType), organTypeValue.Value);
+                    }
+
+                    var internalOrgan = true;
+                    if (organSlot.TryGet<ValueDataNode>("internal", out var internalOrganValue))
+                    {
+                        internalOrgan = bool.Parse(internalOrganValue.Value);
+                    }
+                    organs.Add(((ValueDataNode) organKeyNode).Value, new OrganPrototypeSlot(organ, organSlotType, internalOrgan));
                 }
             }
 
@@ -167,12 +174,12 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
                 slotType = (BodyPartType)Enum.Parse(typeof(BodyPartType), slotTypeValue.Value);
             }
 
-
             allConnections.Add(slotId, (part, connections, organs, slotType));
         }
 
-        foreach (var (slotId, (_, connections, _, _)) in allConnections)
+        foreach (var (slotId, (_, connections, organs, _)) in allConnections)
         {
+
             if (connections == null)
                 continue;
 

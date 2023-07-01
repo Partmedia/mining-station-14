@@ -1,4 +1,4 @@
-﻿- type: body
+- type: body
   id: Slime
   name: "slime"
   root: torso
@@ -15,8 +15,12 @@
       - left leg
       - right leg
       organs:
-        core: SentientSlimeCore
-        lungs: OrganSlimeLungs
+        core:
+          organ: SentientSlimeCore
+          type: Brain
+        lungs:
+          organ: OrganSlimeLungs
+          type: Lung
     right arm:
       part: RightArmSlime
       connections:

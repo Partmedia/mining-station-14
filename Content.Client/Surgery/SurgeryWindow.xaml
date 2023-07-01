@@ -4,9 +4,5 @@
             SetSize="525 675"
             MinSize="525 675">
     <BoxContainer Name="SurgeryLayout" Orientation="Horizontal">
-        <BoxContainer Name="BodyPartSlotList"
-                         Orientation="Vertical"
-                         HorizontalExpand="True">
-        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

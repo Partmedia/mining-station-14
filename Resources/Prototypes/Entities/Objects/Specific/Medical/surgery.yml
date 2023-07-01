@@ -279,7 +279,7 @@
 
 - type: entity
   name: metal suture
-  id: Metal Suture
+  id: MetalSuture
   parent: BaseToolSurgery
   description: A harder surgical thread used for sternal closure. Can also be used to close exoskeletons on certain species.
   components:
@@ -296,7 +296,7 @@
 
 - type: entity
   name: tourniquet
-  id: Toruniquet
+  id: Tourniquet
   parent: BaseToolSurgery
   description: A device that is used to apply pressure to a limb or extremity to stop bloodflow.
   components:
@@ -323,7 +323,6 @@
     state: clothtourniquet
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/tourniquet.rsi
-    state: clothtourniquet
   - type: ItemCooldown
   - type: SurgeryTool
     largeClamp: true

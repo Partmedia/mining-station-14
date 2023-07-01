@@ -1,4 +1,4 @@
-﻿- type: body
+- type: body
   id: Animal
   name: "animal"
   root: torso
@@ -8,11 +8,21 @@
       connections:
       - legs
       organs:
-        lungs: OrganAnimalLungs
-        stomach: OrganAnimalStomach
-        liver: OrganAnimalLiver
-        heart: OrganAnimalHeart
-        kidneys: OrganAnimalKidneys
+        lungs:
+          organ: OrganAnimalLungs
+          type: Lung
+        stomach:
+          organ: OrganAnimalStomach
+          type: Stomach
+        liver:
+          organ: OrganAnimalLiver
+          type: Liver
+        heart:
+          organ: OrganAnimalHeart
+          type: Heart
+        kidneys:
+          organ: OrganAnimalKidneys
+          type: Kidney
     legs:
       part: LegsAnimal
       connections:

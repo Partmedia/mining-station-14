@@ -32,10 +32,10 @@
   noSpawn: true
 
 - type: entity
-  name: Urist McHeadless
-  id: MobHeadlessHumanDummy
+  name: Urist McBreathless
+  id: MobLunglessHumanDummy
   parent: BaseMobHuman
   components:
     - type: Body
-      prototype: HeadlessHuman
+      prototype: LunglessHuman
       requiredLegs: 2

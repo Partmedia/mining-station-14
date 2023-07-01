@@ -1,4 +1,4 @@
-﻿- type: body
+- type: body
   name: "reptilian"
   id: HumanoidFox
   root: torso
@@ -8,16 +8,31 @@
       connections:
       - torso
       organs:
-        brain: OrganHumanBrain
-        eyes: OrganHumanEyes
+        brain:
+          organ: OrganHumanBrain
+          type: Brain
+        eyes: 
+          organ: OrganHumanEyes
+          type: Eye
+          internal: false
     torso:
       part: TorsoHumanoidFox
       organs:
-        heart: OrganAnimalHeart
-        lungs: OrganHumanLungs
-        stomach: OrganHumanoidFoxStomach
-        liver: OrganAnimalLiver
-        kidneys: OrganHumanKidneys
+        heart:
+          organ: OrganAnimalHeart
+          type: Heart
+        lungs:
+          organ: OrganHumanLungs
+          type: Lung
+        stomach:
+          organ: OrganHumanoidFoxStomach
+          type: Stomach
+        liver:
+          organ: OrganAnimalLiver
+          type: Liver
+        kidneys:
+          organ: OrganHumanKidneys
+          type: Kidney
       connections:
       - left arm
       - right arm

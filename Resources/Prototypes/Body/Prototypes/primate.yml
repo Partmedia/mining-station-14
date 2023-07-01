@@ -1,4 +1,4 @@
-﻿- type: body
+- type: body
   id: Primate
   name: "primate"
   root: torso
@@ -9,11 +9,21 @@
       - hands
       - legs
       organs:
-        lungs: OrganAnimalLungs
-        stomach: OrganAnimalStomach
-        liver: OrganAnimalLiver
-        heart: OrganAnimalHeart
-        kidneys: OrganAnimalKidneys
+        lungs:
+          organ: OrganAnimalLungs
+          type: Lung
+        stomach:
+          organ: OrganAnimalStomach
+          type: Stomach
+        liver:
+          organ: OrganAnimalLiver
+          type: Liver
+        heart: 
+          organ: OrganAnimalHeart
+          type: Heart
+        kidneys:
+          organ: OrganAnimalKidneys
+          type: Kidney
     hands:
       part: HandsAnimal
     legs:

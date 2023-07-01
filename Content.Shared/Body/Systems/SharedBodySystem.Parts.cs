@@ -272,7 +272,6 @@ public partial class SharedBodySystem
         }
 
         //TODO apply status effects
-
         return true;
     }
 

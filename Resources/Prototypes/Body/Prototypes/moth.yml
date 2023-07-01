@@ -8,8 +8,13 @@
       connections:
       - torso
       organs:
-        brain: OrganHumanBrain
-        eyes: OrganHumanEyes
+        brain:
+          organ: OrganHumanBrain
+          type: Brain
+        eyes: 
+          organ: OrganHumanEyes
+          type: Eye
+          internal: false
     torso:
       part: TorsoMoth
       connections:
@@ -18,9 +23,15 @@
       - left leg
       - right leg
       organs:
-        heart: OrganAnimalHeart
-        lungs: OrganHumanLungs
-        stomach: OrganAnimalStomach
+        heart:
+          organ: OrganAnimalHeart
+          type: Heart
+        lungs:
+          organ: OrganHumanLungs
+          type: Lung
+        stomach:
+          organ: OrganAnimalStomach
+          type: Stomach
     right arm:
       part: RightArmMoth
       connections:

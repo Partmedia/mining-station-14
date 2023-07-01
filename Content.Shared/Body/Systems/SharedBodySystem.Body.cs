@@ -97,6 +97,7 @@ public partial class SharedBodySystem
             {
                 var childPart = Spawn(childSlot.Part, coordinates);
                 var childPartComponent = Comp<BodyPartComponent>(childPart);
+
                 childPartComponent.OriginalBody = parent.Owner;
                 var slot = CreatePartSlot(connection, parent.Owner, childPartComponent.PartType, parent);
                 if (slot == null)
@@ -136,19 +137,24 @@ public partial class SharedBodySystem
                 continue;
         }
 
-        foreach (var (organSlotId, organId) in organs)
+        foreach (KeyValuePair<string, OrganPrototypeSlot> organSlot in organs)
         {
-            var organ = Spawn(organId, coordinates);
-            var organComponent = Comp<OrganComponent>(organ);
-
-            var slot = CreateOrganSlot(organSlotId, parent.Owner, parent);
-            if (slot == null)
+            if (organSlot.Value != null)
             {
-                Logger.Error($"Could not create slot for connection {organSlotId} in body {prototype.ID}");
-                continue;
-            }
+                var slot = CreateOrganSlot(organSlot.Key, parent.Owner, organSlot.Value.SlotType, organSlot.Value.Internal, parent);
+                if (slot == null)
+                {
+                    Logger.Error($"Could not create slot for connection {organSlot.Key} in body {prototype.ID}");
+                    continue;
+                }
 
-            InsertOrgan(organ, slot, organComponent);
+                if (organSlot.Value.Organ != null)
+                {
+                    var organ = Spawn(organSlot.Value.Organ, coordinates);
+                    var organComponent = Comp<OrganComponent>(organ);
+                    InsertOrgan(organ, slot, organComponent);
+                }
+            }
         }
 
         foreach (var connection in subConnections)

@@ -41,10 +41,11 @@ namespace Content.Client.Surgery
         {
 
             SurgeryLayout.Children.Clear();
+            var bodyPartSlotList = new BodyPartSlotList();
 
             if (state.BodyPartSlots is null)
             {
-                BodyPartSlotList.Children.Add(new Label { Text = "Body has no available part slots to operate on." }); //TODO loc
+                bodyPartSlotList.Children.Add(new Label { Text = "Body has no available part slots to operate on." }); //TODO loc
                 return;
             }
 
@@ -199,11 +200,11 @@ namespace Content.Client.Surgery
             for (var i = 0; i < footSlotButtons.Count; i++)
                 footSlotsRow.Children.Add(footSlotButtons[i]);
 
-            BodyPartSlotList.Children.Add(headWingSlotsRow);
-            BodyPartSlotList.Children.Add(armTorsoSlotsRow);
-            BodyPartSlotList.Children.Add(handOtherSlotsRow);
-            BodyPartSlotList.Children.Add(legTailSlotsRow);
-            BodyPartSlotList.Children.Add(footSlotsRow);
+            bodyPartSlotList.Children.Add(headWingSlotsRow);
+            bodyPartSlotList.Children.Add(armTorsoSlotsRow);
+            bodyPartSlotList.Children.Add(handOtherSlotsRow);
+            bodyPartSlotList.Children.Add(legTailSlotsRow);
+            bodyPartSlotList.Children.Add(footSlotsRow);
 
             for (var i = 0; i < state.OrganSlots.Count; i++)
             {
@@ -229,8 +230,8 @@ namespace Content.Client.Surgery
                 partOrgans[state.OrganSlots[i].Parent.ToString()].Children.Add(button);
             }
 
+            SurgeryLayout.Children.Add(bodyPartSlotList);
             //iterate partOrgans, add cols to surgery menu
-            Logger.Debug(partOrgans.Count().ToString());
             foreach (KeyValuePair<string, OrganSlotCol> entry in partOrgans)
                 SurgeryLayout.Children.Add(entry.Value);
         }
@@ -282,6 +283,15 @@ namespace Content.Client.Surgery
             {
                 Orientation = LayoutOrientation.Horizontal;
                 Align = AlignMode.Center;
+            }
+        }
+
+        public sealed class BodyPartSlotList : BoxContainer
+        {
+            public BodyPartSlotList()
+            {
+                Orientation = LayoutOrientation.Vertical;
+                HorizontalExpand = true;
             }
         }
 

@@ -111,16 +111,6 @@ namespace Content.Server.Surgery
         }
 
         /// <summary>
-        /// Get organ slots for a body part (usually the torso and head)
-        /// </summary>
-        private List<OrganSlot> GetOrganSlots()
-        {
-            List<OrganSlot> organSlots = new List<OrganSlot>();
-
-            return organSlots;
-        }
-
-        /// <summary>
         /// Get all body part slots attached to everybody part attached to the initally submitted part (usually the torso to start)
         /// </summary>
         private List<BodyPartSlot> GetAllBodyPartSlots(EntityUid bodyOwner)
@@ -130,8 +120,7 @@ namespace Content.Server.Surgery
 
             //using body uid, get root part slot's child (usually the torso)
             if (TryComp<BodyComponent>(bodyOwner, out var body))
-            {
-                
+            {            
                 if (body.Root == null)
                     return new List<BodyPartSlot>();
 
@@ -191,12 +180,11 @@ namespace Content.Server.Surgery
 
             for (var i = 0; i < bodyPartSlots.Count(); i++)
             {
-                if (bodyPartSlots[i].Child is not null && TryComp<BodyPartComponent>(bodyPartSlots[i].Child, out var bodyPart)
-                    && bodyPart.Opened)
+                if (bodyPartSlots[i].Child is not null && TryComp<BodyPartComponent>(bodyPartSlots[i].Child, out var bodyPart))
                     foreach (KeyValuePair<string, OrganSlot> entry in bodyPart.Organs)
-                        organSlots.Add(entry.Value);
+                        if (bodyPart.Opened || !entry.Value.Internal)
+                            organSlots.Add(entry.Value);
             }
-            Logger.Debug(organSlots.Count().ToString());
             return organSlots;
         }
 
@@ -962,46 +950,6 @@ namespace Content.Server.Surgery
             };
 
             args.Verbs.Add(verb);
-        }
-
-        private sealed class OpenSurgeryCompleteEvent
-        {
-            public readonly EntityUid User;
-
-            public OpenSurgeryCompleteEvent(EntityUid user)
-            {
-                User = user;
-            }
-        }
-
-        private sealed class OpenOrganContainerCompleteEvent
-        {
-            public readonly EntityUid User;
-
-            public OpenOrganContainerCompleteEvent(EntityUid user)
-            {
-                User = user;
-            }
-        }
-
-        private sealed class CloseOrganContainerCompleteEvent
-        {
-            public readonly EntityUid User;
-
-            public CloseOrganContainerCompleteEvent(EntityUid user)
-            {
-                User = user;
-            }
-        }
-
-        private sealed class OpenSurgeryCancelledEvent
-        {
-            public readonly EntityUid User;
-
-            public OpenSurgeryCancelledEvent(EntityUid user)
-            {
-                User = user;
-            }
         }
     }
 }

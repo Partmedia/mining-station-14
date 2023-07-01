@@ -5,7 +5,7 @@ namespace Content.Shared.Body.Organ;
 
 [Serializable, NetSerializable]
 [DataRecord]
-public sealed record OrganSlot(string Id, EntityUid Parent)
+public sealed record OrganSlot(string Id, EntityUid Parent, OrganType? Type, bool Internal)
 {
     public EntityUid? Child { get; set; }
 
@@ -17,12 +17,14 @@ public sealed record OrganSlot(string Id, EntityUid Parent)
     public bool Cauterised = false;
 
     // Rider doesn't suggest explicit properties during deconstruction without this
-    public void Deconstruct(out EntityUid? child, out string id, out EntityUid parent, out EntityUid? attachment, out bool cauterised)
+    public void Deconstruct(out EntityUid? child, out string id, out EntityUid parent, out EntityUid? attachment, out bool cauterised, OrganType? type, bool internalOrgan)
     {
         child = Child;
         id = Id;
         parent = Parent;
         attachment = Attachment;
         cauterised = Cauterised;
+        type = Type;
+        internalOrgan = Internal;  // where an organ slot is internal or not - external organs in these slots can be accessed without having to open the containing body part
     }
 }

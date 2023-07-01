@@ -1,4 +1,4 @@
-﻿using Content.Shared.Body.Systems;
+using Content.Shared.Body.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Body.Organ;
@@ -12,4 +12,10 @@ public sealed class OrganComponent : Component
 
     [DataField("parent")]
     public OrganSlot? ParentSlot;
+
+    [DataField("organType")]
+    public OrganType OrganType = OrganType.Other;
+
+    [DataField("internal")]
+    public bool Internal = true;
 }

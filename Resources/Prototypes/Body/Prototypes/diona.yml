@@ -1,4 +1,4 @@
-﻿- type: body
+- type: body
   id: Diona
   name: diona
   root: torso
@@ -8,8 +8,12 @@
       connections:
       - torso
       organs:
-        brain: OrganDionaBrain
-        eyes: OrganDionaEyes
+        brain:
+          organ: OrganDionaBrain
+          type: Brain
+        eyes:
+          organ: OrganDionaEyes
+          type: Eye
     torso:
       part: TorsoDiona
       connections:
@@ -18,7 +22,9 @@
       - left leg
       - right leg
       organs:
-        stomach: OrganDionaStomach
+        stomach:
+          organ: OrganDionaStomach
+          type: Stomach
     right arm:
       part: RightArmDiona
       connections:
