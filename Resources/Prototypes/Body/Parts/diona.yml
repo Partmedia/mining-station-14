@@ -56,9 +56,9 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 4
   - type: Sprite
-    state: "head_m"
+    state: "head_icon"
   - type: Icon
-    state: "head_m"
+    state: "head_icon"
   - type: BodyPart
     partType: Head
     container: true
@@ -83,9 +83,9 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 3
   - type: Sprite
-    state: "l_arm"
+    state: "l_arm_icon"
   - type: Icon
-    state: "l_arm"
+    state: "l_arm_icon"
   - type: BodyPart
     partType: Arm
     symmetry: Left
@@ -99,9 +99,9 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 3
   - type: Sprite
-    state: "r_arm"
+    state: "r_arm_icon"
   - type: Icon
-    state: "r_arm"
+    state: "r_arm_icon"
   - type: BodyPart
     partType: Arm
     symmetry: Right
@@ -115,9 +115,9 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 0.1
   - type: Sprite
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: Icon
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Left
@@ -131,9 +131,9 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 0.1
   - type: Sprite
-    state: "r_hand"
+    state: "r_hand_icon"
   - type: Icon
-    state: "r_hand"
+    state: "r_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Right
@@ -147,9 +147,9 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 4.5
   - type: Sprite
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: Icon
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: BodyPart
     partType: Leg
     symmetry: Left
@@ -166,9 +166,9 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 4.5
   - type: Sprite
-    state: "r_leg"
+    state: "r_leg_icon"
   - type: Icon
-    state: "r_leg"
+    state: "r_leg_icon"
   - type: BodyPart
     partType: Leg
     symmetry: Right
@@ -185,9 +185,9 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 0.2
   - type: Sprite
-    state: "l_foot"
+    state: "l_foot_icon"
   - type: Icon
-    state: "l_foot"
+    state: "l_foot_icon"
   - type: BodyPart
     partType: Foot
     symmetry: Left
@@ -201,9 +201,9 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 0.2
   - type: Sprite
-    state: "r_foot"
+    state: "r_foot_icon"
   - type: Icon
-    state: "r_foot"
+    state: "r_foot_icon"
   - type: BodyPart
     partType: Foot
     symmetry: Right

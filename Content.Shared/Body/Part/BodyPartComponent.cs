@@ -50,8 +50,10 @@ public sealed class BodyPartComponent : Component
     [DataField("incisable")]
     public bool Incisable = false; //can this part be cut open?
 
+    [ViewVariables]
     public bool Incised = false; //whether or not an incision has been made
 
+    [ViewVariables]
     public bool Opened = false; //whether or not the body part has been opened up (any obstructing endoskeleton not yet factored)
 
     /// <summary>
@@ -60,16 +62,19 @@ public sealed class BodyPartComponent : Component
     /// instead it may have an exoskeleton (see below) or no skeleton at all (slimes for example)!
     /// </summary>
     [DataField("endoSkeleton")]
-    public bool EndoSkeleton = true; 
+    public bool EndoSkeleton = true;
+
     /// <summary>
     /// but what if its skelly is on the outside?
     /// if the part has an exoskeleton it must be opened prior to any incision
     /// </summary>
     [DataField("exoSkeleton")]
-    public bool ExoSkeleton = false; 
+    public bool ExoSkeleton = false;
 
+    [ViewVariables]
     public bool EndoOpened = false; //gotta get through the bones (if they have them)
 
+    [ViewVariables]
     public bool ExoOpened = false; //gotta get through the shell or whatever it is (if they have them)
 
 

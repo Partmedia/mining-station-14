@@ -182,8 +182,10 @@ namespace Content.Server.Surgery
             {
                 if (bodyPartSlots[i].Child is not null && TryComp<BodyPartComponent>(bodyPartSlots[i].Child, out var bodyPart))
                     foreach (KeyValuePair<string, OrganSlot> entry in bodyPart.Organs)
+                    {
                         if (bodyPart.Opened || !entry.Value.Internal)
                             organSlots.Add(entry.Value);
+                    }
             }
             return organSlots;
         }
@@ -639,7 +641,7 @@ namespace Content.Server.Surgery
                 return await RemovePart(user, tool, target, bodyPart, userHands, timeOverride);
             }
             //else if it's incised (or not inciseable), crack open that endoskeleton (if they have one)
-            else if ((!bodyPart.Incisable || (bodyPart.Incised) && bodyPart.EndoSkeleton && !bodyPart.EndoOpened))
+            else if ((!bodyPart.Incisable || bodyPart.Incised) && bodyPart.EndoSkeleton && !bodyPart.EndoOpened)
             {
                 if (bodyPart.Incisable && (bodyPart.Attachment is null || !TryComp<SurgeryToolComponent>(bodyPart.Attachment, out var attachedTool) || !attachedTool.Retractor))
                 {

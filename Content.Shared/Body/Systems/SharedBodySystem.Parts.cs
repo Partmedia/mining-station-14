@@ -457,7 +457,6 @@ public partial class SharedBodySystem
 
     public void SetBodyPartOpen(BodyPartComponent part, bool opened)
     {
-        if (part.Incisable)
             part.Opened = opened;
     }
 
