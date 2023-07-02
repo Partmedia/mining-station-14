@@ -210,7 +210,9 @@ namespace Content.Client.Surgery
             for (var i = 0; i < state.OrganSlots.Count; i++)
             {
                 //create button
-                var button = new OrganSlotButton(state.OrganSlots[i]);
+                var typeVal = state.OrganSlots[i].Type ?? 0;
+                var organSlotType = ((OrganType) typeVal).ToString();
+                var button = new OrganSlotButton(state.OrganSlots[i],organSlotType);
                 button.OnPressed += args => OnOrganSlotButtonPressed?.Invoke(args, button);
 
                 //add button sprite
@@ -268,20 +270,22 @@ namespace Content.Client.Surgery
                 SlotType = slotType;
                 MinSize = (DefaultButtonSize, DefaultButtonSize);
                 MaxSize = (DefaultButtonSize, DefaultButtonSize);
-                TextureNormal = Theme.ResolveTexture("/Slots/hand_l"); //TODO base on slot type...
+                TextureNormal = Theme.ResolveTexture("/SurgerySlots/" + SlotType); //TODO base on slot type...
             }
         }
 
         public sealed class OrganSlotButton : TextureButton
         {
             public OrganSlot Slot { get; }
+            public string SlotType { get; }
 
-            public OrganSlotButton(OrganSlot slot)
+            public OrganSlotButton(OrganSlot slot, string slotType)
             {
                 Slot = slot;
+                SlotType = slotType;
                 MinSize = (DefaultButtonSize, DefaultButtonSize);
                 MaxSize = (DefaultButtonSize, DefaultButtonSize);
-                TextureNormal = Theme.ResolveTexture("/Slots/hand_l"); //TODO base on slot type...
+                TextureNormal = Theme.ResolveTexture("/SurgerySlots/" + SlotType); //TODO base on slot type...
             }
         }
 
