@@ -13,15 +13,39 @@ namespace Content.Shared.Surgery
     }
 
     [Serializable, NetSerializable]
+    public sealed class SharedPartStatus
+    {
+
+        public BodyPartType PartType;
+        public bool Retracted;
+        public bool Incised;
+        public bool Opened;
+        public bool EndoOpened;
+        public bool ExoOpened;
+
+        public SharedPartStatus(BodyPartType partType, bool retracted, bool incised, bool opened, bool endoOpened, bool exoOpened)
+        {
+            PartType = partType;
+            Retracted = retracted;
+            Incised = incised;
+            Opened = opened;
+            EndoOpened = endoOpened;
+            ExoOpened = exoOpened;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public sealed class SurgeryBoundUserInterfaceState : BoundUserInterfaceState
     {
         public List<BodyPartSlot> BodyPartSlots;
         public List<OrganSlot> OrganSlots;
+        public Dictionary<EntityUid, SharedPartStatus> SlotPartsStatus;
 
-        public SurgeryBoundUserInterfaceState(List<BodyPartSlot> bodyPartSlots, List<OrganSlot> organSlots)
+        public SurgeryBoundUserInterfaceState(List<BodyPartSlot> bodyPartSlots, List<OrganSlot> organSlots, Dictionary<EntityUid, SharedPartStatus> slotPartsStatus)
         {
             BodyPartSlots = bodyPartSlots;
             OrganSlots = organSlots;
+            SlotPartsStatus = slotPartsStatus;
         }
     }
 

@@ -193,7 +193,16 @@ namespace Content.Server.Surgery
             var bodyPartSlots = GetAllBodyPartSlots(uid);
             var organSlots = GetOpenPartOrganSlots(bodyPartSlots);
 
-            var state = new SurgeryBoundUserInterfaceState(bodyPartSlots,organSlots);
+            Dictionary<EntityUid,SharedPartStatus> slotParts = new Dictionary<EntityUid, SharedPartStatus>();
+            foreach (var slot in bodyPartSlots)
+                if (slot.Child is not null)
+                    if (TryComp<BodyPartComponent>(slot.Child, out var bodyPart))
+                    {
+                        var retracted = (bodyPart.Attachment != null && TryComp<SurgeryToolComponent>(bodyPart.Attachment, out var tool) && tool.Retractor);
+                        slotParts.Add(slot.Child.Value, new SharedPartStatus(bodyPart.PartType,retracted,bodyPart.Incised,bodyPart.Opened,bodyPart.EndoOpened,bodyPart.ExoOpened));
+                    }
+
+            var state = new SurgeryBoundUserInterfaceState(bodyPartSlots,organSlots, slotParts);
             _userInterfaceSystem.TrySetUiState(uid, SurgeryUiKey.Key, state);
         }
 

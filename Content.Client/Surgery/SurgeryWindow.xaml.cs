@@ -42,6 +42,7 @@ namespace Content.Client.Surgery
 
             SurgeryLayout.Children.Clear();
             var bodyPartSlotList = new BodyPartSlotList();
+            var slotParts = state.SlotPartsStatus;
 
             if (state.BodyPartSlots is null)
             {
@@ -223,7 +224,8 @@ namespace Content.Client.Surgery
                 if (!partOrgans.ContainsKey(state.OrganSlots[i].Parent.ToString()))
                 {
                     partOrgans.Add(state.OrganSlots[i].Parent.ToString(), new OrganSlotCol());
-                    //partOrgans[state.OrganSlots[i].Parent.ToString()].Children.Add(new Label { Text = slotType });
+                    if (slotParts.ContainsKey(state.OrganSlots[i].Parent))
+                        partOrgans[state.OrganSlots[i].Parent.ToString()].Children.Add(new Label { Text = slotParts[state.OrganSlots[i].Parent].PartType.ToString() }); ;
                 }
 
                 //add button to dict
@@ -232,8 +234,14 @@ namespace Content.Client.Surgery
 
             SurgeryLayout.Children.Add(bodyPartSlotList);
             //iterate partOrgans, add cols to surgery menu
+            var width = 525;
             foreach (KeyValuePair<string, OrganSlotCol> entry in partOrgans)
+            {
+                width += 50;
+                SurgeryLayout.Children.Add(new Padding());
                 SurgeryLayout.Children.Add(entry.Value);
+            }
+            SetSize = (width, 675);
         }
 
         /// <summary>
@@ -274,6 +282,14 @@ namespace Content.Client.Surgery
                 MinSize = (DefaultButtonSize, DefaultButtonSize);
                 MaxSize = (DefaultButtonSize, DefaultButtonSize);
                 TextureNormal = Theme.ResolveTexture("/Slots/hand_l"); //TODO base on slot type...
+            }
+        }
+
+        public sealed class Padding : Control
+        {
+            public Padding()
+            {
+                MinSize = (0, 10);
             }
         }
 
