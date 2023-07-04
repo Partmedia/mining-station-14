@@ -54,7 +54,7 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "head_m"
+    state: "head_icon"
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: "head_m"
@@ -85,10 +85,10 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_arm"
+    state: "l_arm_icon"
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_arm"
+    state: "l_arm_icon"
   - type: BodyPart
     partType: Arm
     symmetry: Left
@@ -104,10 +104,10 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "r_arm"
+    state: "r_arm_icon"
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "r_arm"
+    state: "r_arm_icon"
   - type: BodyPart
     partType: Arm
     symmetry: Right
@@ -123,10 +123,10 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Left
@@ -142,10 +142,10 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "r_hand"
+    state: "r_hand_icon"
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "r_hand"
+    state: "r_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Right
@@ -161,10 +161,10 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: BodyPart
     partType: Leg
     symmetry: Left
@@ -183,10 +183,10 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "r_leg"
+    state: "r_leg_icon"
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "r_leg"
+    state: "r_leg_icon"
   - type: BodyPart
     partType: Leg
     symmetry: Right
@@ -205,10 +205,10 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_foot"
+    state: "l_foot_icon"
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_foot"
+    state: "l_foot_icon"
   - type: BodyPart
     partType: Foot
     symmetry: Left
@@ -224,10 +224,10 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "r_foot"
+    state: "r_foot_icon"
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "r_foot"
+    state: "r_foot_icon"
   - type: BodyPart
     partType: Foot
     symmetry: Right

@@ -9,7 +9,6 @@ namespace Content.Shared.Surgery
     /// </summary>
     public sealed class SharedSurgery
     {
-  
     }
 
     [Serializable, NetSerializable]
