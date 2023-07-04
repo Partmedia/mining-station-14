@@ -8,7 +8,7 @@
   name: "animal body part"
   abstract: true
   components:
-  - type: Surgery
+  #- type: Surgery disbaled surgery for animals for now
   - type: UserInterface
     interfaces:
       - key: enum.SurgeryUiKey.Key
