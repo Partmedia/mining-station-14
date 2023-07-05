@@ -14,7 +14,7 @@ namespace Content.Server.Medical.SuitSensors
         ///     Choose a random sensor mode when item is spawned.
         /// </summary>
         [DataField("randomMode")]
-        public bool RandomMode = true;
+        public bool RandomMode = false;
 
         /// <summary>
         ///     If true user can't change suit sensor mode
@@ -26,7 +26,7 @@ namespace Content.Server.Medical.SuitSensors
         ///     Current sensor mode. Can be switched by user verbs.
         /// </summary>
         [DataField("mode")]
-        public SuitSensorMode Mode = SuitSensorMode.SensorOff;
+        public SuitSensorMode Mode = SuitSensorMode.SensorCords;
 
         /// <summary>
         ///     Activate sensor if user wear it in this slot.
