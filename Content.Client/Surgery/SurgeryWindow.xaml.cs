@@ -34,6 +34,38 @@ namespace Content.Client.Surgery
 
         }
 
+        private string GetPartStatusStr(BodyPartComponent part, SharedPartStatus status)
+        {
+            if (!part.Container)
+                return "";
+
+            if (status.Opened && part.Container)
+                return "_opened";
+            else if (status.EndoOpened && part.EndoSkeleton)
+                return "_endo_open";
+            else if (status.Retracted && part.Incisable)
+                return "_retracted";
+            else if (status.Incised && part.Incisable)
+                return "_incised";
+            else if (status.ExoOpened && part.ExoSkeleton)
+                return "_exo_opened";
+            else
+                return "";
+        }
+
+        //TODO probably should use an actual visualiser here but it works for now
+        private string FormatState(string symmetry, string type, string status)
+        {
+            var symString = "";
+
+            if (symmetry == "Left")
+                symString = "l_";
+            else if (symmetry == "Right")
+                symString = "r_";
+
+            return symString + type.ToLower() + status + "_icon";
+        }
+
         /// <summary>
         /// Adding body part slots to interface, part slot buttons are assigned to rows based on their type
         /// </summary>
@@ -72,26 +104,32 @@ namespace Content.Client.Surgery
             for (var i = 0; i < state.BodyPartSlots.Count; i++)
             {
                 if (state.BodyPartSlots[i] != null) {
-
+                    
                     var typeVal = state.BodyPartSlots[i].Type ?? 0;
                     var slotType = ((BodyPartType)typeVal).ToString();
 
                     var button = new SurgerySlotButton(state.BodyPartSlots[i], slotType);
                     button.OnPressed += args => OnSurgerySlotButtonPressed?.Invoke(args, button);
 
-                    if (state.BodyPartSlots[i].Child != null)
+                    var partUid = state.BodyPartSlots[i].Child;
+
+                    if (partUid is not null)
                     {
-                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(state.BodyPartSlots[i].Child, out var sprite)) {
-
-                            var bodyPartSprite = new BodyPartSprite();
-                            bodyPartSprite.Sprite = sprite;
-                            button.Children.Add(bodyPartSprite);
-                        }
-
                         if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BodyPartComponent?>(state.BodyPartSlots[i].Child, out var bodyPart))
                             button.Symmetry = ((BodyPartSymmetry) bodyPart.Symmetry).ToString();
 
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(state.BodyPartSlots[i].Child, out var sprite)) {
 
+                            var bodyPartSprite = new BodyPartSprite();
+                            if (bodyPart is not null)
+                            {
+                                var status = GetPartStatusStr(bodyPart, slotParts[partUid.Value]);
+                                sprite.LayerSetState(0, FormatState(((BodyPartSymmetry) bodyPart.Symmetry).ToString(), slotType, status));
+                            }
+                            bodyPartSprite.Sprite = sprite;
+                            
+                            button.Children.Add(bodyPartSprite);
+                        }
                     }
                     slotButtons.Add(button);              
                 }

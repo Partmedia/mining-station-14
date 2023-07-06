@@ -1,6 +1,34 @@
 {"version": 1, "license": "CC-BY-SA-3.0", "copyright": "Taken from Occulus-Eris (https://github.com/Occulus-Server/Occulus-Eris)", "size": {"x": 32, "y": 32}, "states": [
     {
+      "name": "torso_icon",
+      "directions": 1
+    },
+    {
+      "name": "torso_incised_icon",
+      "directions": 1
+    },
+    {
+      "name": "torso_retracted_icon",
+      "directions": 1
+    },
+    {
+      "name": "torso_opened_icon",
+      "directions": 1
+    },
+    {
       "name": "head_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_incised_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_retracted_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_opened_icon",
       "directions": 1
     },
     {

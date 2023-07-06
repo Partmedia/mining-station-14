@@ -59,7 +59,35 @@
             "directions": 4
         },
         {
+          "name": "torso_icon",
+          "directions": 1
+        },
+        {
+          "name": "torso_incised_icon",
+          "directions": 1
+        },
+        {
+          "name": "torso_retracted_icon",
+          "directions": 1
+        },
+        {
+          "name": "torso_opened_icon",
+          "directions": 1
+        },
+        {
           "name": "head_icon",
+          "directions": 1
+        },
+        {
+          "name": "head_incised_icon",
+          "directions": 1
+        },
+        {
+          "name": "head_retracted_icon",
+          "directions": 1
+        },
+        {
+          "name": "head_opened_icon",
           "directions": 1
         },
         {
