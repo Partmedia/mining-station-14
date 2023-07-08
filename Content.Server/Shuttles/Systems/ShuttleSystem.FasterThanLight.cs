@@ -219,6 +219,7 @@ public sealed partial class ShuttleSystem
             var xform = Transform(comp.Owner);
             PhysicsComponent? body;
             ShuttleComponent? shuttle;
+            TryComp(comp.Owner, out shuttle);
 
             switch (comp.State)
             {
@@ -276,11 +277,13 @@ public sealed partial class ShuttleSystem
                     {
                         _physics.SetLinearVelocity(comp.Owner, Vector2.Zero, body: body);
                         _physics.SetAngularVelocity(comp.Owner, 0f, body: body);
-                        _physics.SetLinearDamping(body, ShuttleLinearDamping);
-                        _physics.SetAngularDamping(body, ShuttleAngularDamping);
+                        if (shuttle != null)
+                        {
+                            _physics.SetLinearDamping(body, shuttle.LinearDamping);
+                            _physics.SetAngularDamping(body, shuttle.AngularDamping);
+                        }
                     }
 
-                    TryComp(comp.Owner, out shuttle);
 
                     if (comp.TargetUid != null && shuttle != null)
                     {
