@@ -9,7 +9,7 @@
       types:
         Heat: 34
   - type: Sprite
-    color: "#d742f5"
+    color: "#ff22d9"
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
     layers:
     - state: omnilaser
