@@ -30,6 +30,8 @@
     size: 5
   - type: Temperature
     currentTemperature: 290
+  - type: StaticPrice
+    price: 200
 
 - type: Tag
   id: Raw
