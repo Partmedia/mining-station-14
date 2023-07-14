@@ -1,7 +1,7 @@
 - type: entity
-  name: plasma carbine
+  name: plasma rifle
   parent: BaseItem
-  id: WeaponPlasmaCarbine
+  id: WeaponPlasmaRifle
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
   - type: Sprite
