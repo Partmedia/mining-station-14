@@ -9,6 +9,8 @@
     - PlasmaShell
   - type: CartridgeAmmo
     proto: BulletPlasmaRifle
+    soundEject:
+      collection: ShellEject
   - type: Sprite
     sprite: Objects\Weapons\Guns\Ammunition\Casings\plasma_casing.rsi
     layers:
