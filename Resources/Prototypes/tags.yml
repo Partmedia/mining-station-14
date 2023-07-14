@@ -370,6 +370,9 @@
 
 - type: Tag
   id: MagazinePistolSubMachineGunTopMounted
+  
+- type: Tag
+  id: MagazinePlasmaRifle
 
 - type: Tag
   id: MagazineRifle
@@ -467,6 +470,9 @@
 - type: Tag
   id: PlantSampleTaker
 
+- type: Tag
+  id: PlasmaSHell
+  
 - type: Tag
   id: Plastic
 
