@@ -720,7 +720,7 @@
 - type: entity
   parent: BaseComputer
   id: ComputerControlRodConsole
-  name: control rod management computer
+  name: control rod console
   description: Allows the extending and retraction of any number of linked control rods.
   components:
   - type: ControlRodConsole

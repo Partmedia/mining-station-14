@@ -293,12 +293,39 @@
   group: market
 
 - type: cargoProduct
+  id: ControlRodC
+  icon:
+    sprite: Structures/Power/Reactor/control_rod.rsi
+    state: stage0
+  product: ControlRod
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: ComputerControlRodConsoleC
+  icon:
+    sprite: Structures/Machines/computers.rsi
+    state: computer-datatheory
+  product: ComputerControlRodConsole
+  category: Engineering
+  group: market
+
+- type: cargoProduct
   id: HolofanProjectorC
   icon:
     sprite: Objects/Devices/Holoprojectors/atmos.rsi
     state: icon
   product: HolofanProjector
   cost: 1200
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: ClothingEyesGlassesMesonC
+  icon:
+    sprite: Clothing/Eyes/Glasses/meson.rsi
+    state: icon
+  product: ClothingEyesGlassesMeson
   category: Engineering
   group: market
 
