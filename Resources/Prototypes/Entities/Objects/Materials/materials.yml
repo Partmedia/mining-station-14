@@ -173,6 +173,8 @@
     energy: 1.5
     color: "#4faffb"
     slots:
+  - type: StaticPrice
+    price: 300
 
 - type: entity
   parent: MaterialBase
