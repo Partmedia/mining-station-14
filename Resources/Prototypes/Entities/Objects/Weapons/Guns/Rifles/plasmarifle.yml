@@ -5,7 +5,7 @@
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
   - type: Sprite
-    sprite: Objects\Weapons\Guns\Rifles\plasma_rifle.rsi
+    sprite: Objects/Weapons/Guns/Rifles/plasma_rifle.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]

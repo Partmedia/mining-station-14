@@ -12,7 +12,7 @@
     soundEject:
       collection: ShellEject
   - type: Sprite
-    sprite: Objects\Weapons\Guns\Ammunition\Casings\plasma_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/plasma_casing.rsi
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
