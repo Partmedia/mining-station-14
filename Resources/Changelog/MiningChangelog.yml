@@ -450,3 +450,20 @@ Entries:
   - { type: Fix, message: "Unlit welders no longer start fires" }
   id: 2549
   time: '2023-06-13T11:04:24-07:00'
+
+- author: v1.2.10
+  changes:
+  - { type: Add, message: "New map: Mining Bozo" }
+  - { type: Add, message: "Add body cameras" }
+  - { type: Add, message: "Add ID card computer board to the mine supervisor's locker" }
+  - { type: Tweak, message: "Uranium is now safe; add fuel rods for reactors" }
+  - { type: Tweak, message: "Improve nuclear fission reactors" }
+  - { type: Tweak, message: "Monsters now need to be butchered to give the best price" }
+  - { type: Tweak, message: "Turrets can now be shot at and take damage" }
+  - { type: Tweak, message: "Suit sensors are set to coordinates by default" }
+  - { type: Tweak, message: "Sell engineering goggles and reactor components in the cargo catalog" }
+  - { type: Tweak, message: "Adjust pickaxe damage" }
+  - { type: Tweak, message: "Adjust radiator heat exchange rates" }
+  - { type: Fix, message: "Fix memory leak when using the crew monitor" }
+  id: 2550
+  time: '2023-07-15T11:04:41-07:00'
