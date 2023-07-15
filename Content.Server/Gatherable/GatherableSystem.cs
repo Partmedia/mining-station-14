@@ -53,6 +53,7 @@ public sealed class GatherableSystem : EntitySystem
             TargetFinishedEvent = new GatheringDoafterSuccess { Tool = args.Used, Resource = uid, Player = args.User }
         };
 
+        _audio.PlayPvs(tool.GatheringSound, uid);
         _doAfterSystem.DoAfter(doAfter);
     }
 
