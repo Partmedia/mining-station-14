@@ -82,6 +82,7 @@
       types:
         Structural: 150
     gatheringTime: 2
+    sound: /Audio/Items/drill_use.ogg
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
