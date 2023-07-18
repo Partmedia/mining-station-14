@@ -330,12 +330,15 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         var displayRot = -worldRot.Reduced();
 
         GridPosition.Text = $"{worldPos.X:0.0}, {worldPos.Y:0.0}";
-        GridOrientation.Text = $"{displayRot.Degrees:0.0}";
+
+        // displayRot is between -180 and 180 deg, but aviation people like 0 to 360.
+        GridOrientation.Text = $"{((displayRot.Degrees+360) % 360):000}";
 
         var gridVelocity = gridBody.LinearVelocity;
         gridVelocity = displayRot.RotateVec(gridVelocity);
         // Get linear velocity relative to the console entity
-        GridLinearVelocity.Text = $"{gridVelocity.X:0.0}, {gridVelocity.Y:0.0}";
-        GridAngularVelocity.Text = $"{-gridBody.AngularVelocity:0.0}";
+        GridLinearVelocity.Text = $"{gridVelocity.Y:00}";
+        GridAbsVelocity.Text = $"{gridVelocity.X:00}";
+        GridAngularVelocity.Text = $"{-MathHelper.RadiansToDegrees(gridBody.AngularVelocity):0}";
     }
 }
