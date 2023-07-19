@@ -13,3 +13,8 @@
     layers:
     - state: plasmabolt
       shader: unshaded
+  - type: PointLight
+    enabled: true
+    color: "#ff22d9"
+    radius: 1.6
+    energy: 9.0
