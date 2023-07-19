@@ -9,8 +9,7 @@
       types:
         Heat: 34
   - type: Sprite
-    color: "#ff22d9"
-    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/plasmabolt.rsi
     layers:
-    - state: blastwave
+    - state: plasmabolt
       shader: unshaded
