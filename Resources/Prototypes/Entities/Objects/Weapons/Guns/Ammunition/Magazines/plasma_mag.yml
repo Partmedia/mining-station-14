@@ -31,3 +31,13 @@
     steps: 7
     zeroVisible: false
   - type: Appearance
+
+  - type: entity
+  id: MagazinePlasmaRifleEmpty
+  name: plasma magazine
+  suffix: Empty
+  parent: MagazinePlasmaRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: 
+
