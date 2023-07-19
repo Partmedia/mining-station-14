@@ -88,6 +88,8 @@
       - UtilityBelt
       - Pickaxe
       - BaseChemistryEmptyJug
+      - PlasmaShell
+      - MagazinePlasmaRifle
   - type: StaticPrice
     price: 800
 
