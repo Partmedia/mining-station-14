@@ -17,6 +17,11 @@
     tags:
       - HideContextMenu
   - type: AnimationPlayer
+  - type: PointLight
+    enabled: true
+    color: "#ff22d9"
+    radius: 1.9
+    energy: 4.0
 
 - type: entity
   parent: BaseCartridge
