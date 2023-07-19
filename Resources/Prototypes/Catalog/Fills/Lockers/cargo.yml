@@ -13,8 +13,9 @@
       - id: SurvivalKnife
       - id: lantern
         prob: 0.5
-      - id: WeaponProtoKineticAccelerator
-        prob: 0.25
+      - id: WeaponPlasmaRifle
+      - id: MagazinePlasmaRifle
+        prob: 0.50
       - id: ClothingNeckCloakSalvager
         prob: 0.2
       - id: ClothingNeckBodycam
