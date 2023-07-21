@@ -32,7 +32,7 @@
     zeroVisible: false
   - type: Appearance
 
-  - type: entity
+- type: entity
   id: MagazinePlasmaRifleEmpty
   name: plasma magazine
   suffix: Empty
