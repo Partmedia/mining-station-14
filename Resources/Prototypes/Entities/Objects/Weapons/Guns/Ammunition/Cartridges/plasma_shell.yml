@@ -1,0 +1,46 @@
+- type: entity
+  id: PlasmaMuzzleFlashEffect
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Objects/Weapons/Guns/Projectiles/plasmaflash.rsi
+      state: muzzle_plasma
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer
+  - type: PointLight
+    enabled: true
+    color: "#ff22d9"
+    radius: 1.9
+    energy: 4.0
+
+- type: entity
+  parent: BaseCartridge
+  id: PlasmaShell
+  name: plasma shell
+  components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - PlasmaShell
+  - type: CartridgeAmmo
+    muzzleFlash: PlasmaMuzzleFlashEffect
+    proto: BulletPlasmaRifle
+    soundEject:
+      collection: ShellEject
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/plasma_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals

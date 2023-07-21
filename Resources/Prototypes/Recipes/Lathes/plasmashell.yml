@@ -1,0 +1,15 @@
+- type: latheRecipe
+  id: PlasmaShell
+  result: PlasmaShell
+  completetime: 2
+  materials:
+    Plasma: 100
+    Steel: 20
+
+- type: latheRecipe
+  id: MagazinePlasmaRifle
+  result: MagazinePlasmaRifleEmpty
+  completetime: 5
+  materials:
+    Plasteel: 200
+    Steel: 500
