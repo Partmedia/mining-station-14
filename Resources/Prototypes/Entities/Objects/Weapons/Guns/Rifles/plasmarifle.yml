@@ -1,0 +1,51 @@
+- type: entity
+  name: plasma rifle
+  parent: BaseItem
+  id: WeaponPlasmaRifle
+  description: A high tech energy carbine favoured by the NT-ERT operatives.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/plasma_rifle.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: 30
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 2
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePlasmaRifle
+        priority: 2
+        whitelist:
+          tags:
+          - MagazinePlasmaRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineAmmoProvider
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 500
