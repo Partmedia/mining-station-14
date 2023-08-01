@@ -14,6 +14,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
+using Content.Server.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Robust.Server;
@@ -38,6 +39,10 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly ArrivalsSystem _arrivals = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly GhostSystem _ghost = default!;
+        [Dependency] private readonly MindSystem _mind = default!;
+        [Dependency] private readonly MindTrackerSystem _mindTracker = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
 
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;
@@ -90,7 +95,8 @@ namespace Content.Server.GameTicking
 
         private void SendServerMessage(string message)
         {
-            _chatManager.ChatMessageToAll(ChatChannel.Server, message, "", default, false, true);
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+            _chatManager.ChatMessageToAll(ChatChannel.Server, message, wrappedMessage, default, false, true);
         }
 
         public override void Update(float frameTime)
