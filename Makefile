@@ -37,7 +37,7 @@ test:
 	dotnet test ${DOTNET_FLAGS}
 
 package: libRL RL
-	python3 Tools/package_server_build.py --hybrid-acz
+	python3 Tools/package_server_build.py --hybrid-acz ${PACKAGE_BUILD_ARGS}
 
 deploy: package
 	mv release/* ~ss14/downloads
