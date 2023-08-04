@@ -1,7 +1,7 @@
 all: libRL.so
 
-CFLAGS=-I/usr/local/include
-LDFLAGS=-L/usr/local/lib
+CFLAGS=-I/usr/local/include -I/usr/include
+LDFLAGS=-L/usr/local/lib -L/usr/lib64
 
 RL_wrap.c: RL.i
 	swig $(CFLAGS) -csharp RL.i
