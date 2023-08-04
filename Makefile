@@ -1,6 +1,6 @@
 .PHONY: build client server lint deploy
 
-DOTNET_FLAGS=-c Release -v quiet -maxcpucount:5 /property:WarningLevel=0
+DOTNET_FLAGS=${DOTNET_FLAGS} -c Release -v quiet -maxcpucount:5 /property:WarningLevel=0
 DOTNET_BUILD=dotnet build ${DOTNET_FLAGS}
 
 fast: build fastserver fastclient
