@@ -213,6 +213,7 @@ public partial class SharedBodySystem
             return false;
 
         slot.Child = partId;
+        slot.Cauterised = false; //override cauterisation on new part attachment
         part.ParentSlot = slot;
 
         if (TryComp(slot.Parent, out BodyPartComponent? parentPart))

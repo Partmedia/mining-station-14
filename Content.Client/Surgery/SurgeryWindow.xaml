@@ -1,8 +1,8 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             Title="Surgery Menu"
-            SetSize="525 675"
-            MinSize="525 675">
+            SetSize="625 675"
+            MinSize="625 675">
     <BoxContainer Name="SurgeryLayout" Orientation="Horizontal">
     </BoxContainer>
 </DefaultWindow>

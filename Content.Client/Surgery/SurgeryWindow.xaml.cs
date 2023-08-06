@@ -12,6 +12,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Organ;
 using Robust.Client.Graphics;
 using Robust.Client.GameObjects;
+using static Content.Client.Surgery.SurgeryWindow;
 
 namespace Content.Client.Surgery
 {
@@ -83,40 +84,74 @@ namespace Content.Client.Surgery
             }
 
             var headWingSlotsRow = new SurgerySlotRow();
-            List<SurgerySlotButton> headWingSlotButtons = new List<SurgerySlotButton>();
+            List<SlotButtonContainer> headWingSlotButtons = new List<SlotButtonContainer>();
 
             var armTorsoSlotsRow = new SurgerySlotRow();
-            List<SurgerySlotButton> armTorsoSlotButtons = new List<SurgerySlotButton>();
+            List<SlotButtonContainer> armTorsoSlotButtons = new List<SlotButtonContainer>();
 
             var handOtherSlotsRow = new SurgerySlotRow();
-            List<SurgerySlotButton> handOtherSlotButtons = new List<SurgerySlotButton>();
+            List<SlotButtonContainer> handOtherSlotButtons = new List<SlotButtonContainer>();
 
             var legTailSlotsRow = new SurgerySlotRow();
-            List<SurgerySlotButton> legTailSlotButtons = new List<SurgerySlotButton>();
+            List<SlotButtonContainer> legTailSlotButtons = new List<SlotButtonContainer>();
 
             var footSlotsRow = new SurgerySlotRow();
-            List<SurgerySlotButton> footSlotButtons = new List<SurgerySlotButton>();
+            List<SlotButtonContainer> footSlotButtons = new List<SlotButtonContainer>();
 
-            List<SurgerySlotButton> slotButtons = new List<SurgerySlotButton>();
+            List<SlotButtonContainer> slotButtons = new List<SlotButtonContainer>();
 
             Dictionary<string, OrganSlotCol> partOrgans = new Dictionary<string, OrganSlotCol>();
 
             for (var i = 0; i < state.BodyPartSlots.Count; i++)
             {
                 if (state.BodyPartSlots[i] != null) {
-                    
+
+                   
+                    var iconRow = new SlotButtonIconRow();
+
                     var typeVal = state.BodyPartSlots[i].Type ?? 0;
                     var slotType = ((BodyPartType)typeVal).ToString();
 
-                    var button = new SurgerySlotButton(state.BodyPartSlots[i], slotType);
+                    var buttonContainer = new SlotButtonContainer(state.BodyPartSlots[i], slotType);
+                    var button = new SurgerySlotButton(state.BodyPartSlots[i],slotType);
                     button.OnPressed += args => OnSurgerySlotButtonPressed?.Invoke(args, button);
 
+                    var attachmentUid = state.BodyPartSlots[i].Attachment;
+
+                    var cautIcon = new SlotIconContainer("Cauterised");
+                    var attchIcon = new SlotIconContainer("Attachment");
+                    var bleedIcon = new SlotIconContainer("Bleeding");
+
+                    if (attachmentUid is not null)
+                    {
+                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(state.BodyPartSlots[i].Attachment, out var sprite))
+                        {
+                            var attachmentSprite = new StatusIconSprite();
+                            attachmentSprite.Sprite = sprite;
+                            attchIcon.Children.Add(attachmentSprite);
+                        }
+                    }
+
+                    if (state.BodyPartSlots[i].Cauterised)
+                    {
+                        cautIcon.TextureNormal = Theme.ResolveTexture("/SurgerySlots/Cauterised_Icon");
+                    }
+
                     var partUid = state.BodyPartSlots[i].Child;
+
+                    if (!state.BodyPartSlots[i].Cauterised && attachmentUid is null && partUid is null) //this is currently assuming any attachment will prevent bleeding... which is fine for now but may need to change
+                    {
+                        bleedIcon.TextureNormal = Theme.ResolveTexture("/SurgerySlots/Bleeding_Icon");
+                    }
+
+                    iconRow.Children.Add(attchIcon);
+                    iconRow.Children.Add(cautIcon);
+                    iconRow.Children.Add(bleedIcon);
 
                     if (partUid is not null)
                     {
                         if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BodyPartComponent?>(state.BodyPartSlots[i].Child, out var bodyPart))
-                            button.Symmetry = ((BodyPartSymmetry) bodyPart.Symmetry).ToString();
+                            buttonContainer.Symmetry = ((BodyPartSymmetry) bodyPart.Symmetry).ToString();
 
                         if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(state.BodyPartSlots[i].Child, out var sprite)) {
 
@@ -131,7 +166,11 @@ namespace Content.Client.Surgery
                             button.Children.Add(bodyPartSprite);
                         }
                     }
-                    slotButtons.Add(button);              
+
+                    buttonContainer.Children.Add(iconRow);
+                    buttonContainer.Children.Add(button);
+
+                    slotButtons.Add(buttonContainer);              
                 }
             }
 
@@ -139,7 +178,7 @@ namespace Content.Client.Surgery
             {
                 //symmetrical part types are added to the start/end of list, rest are placed in centre
                 //TODO assign symmetry via part slot
-                void AddToSlotRow(SurgerySlotButton button, List<SurgerySlotButton> list, bool symmetry)
+                void AddToSlotRow(SlotButtonContainer button, List<SlotButtonContainer> list, bool symmetry)
                 {
                     if (!symmetry)
                     {
@@ -248,10 +287,44 @@ namespace Content.Client.Surgery
             for (var i = 0; i < state.OrganSlots.Count; i++)
             {
                 //create button
+                var iconRow = new SlotButtonIconRow();
+                var buttonContainer = new OrganSlotButtonContainer();
+
                 var typeVal = state.OrganSlots[i].Type ?? 0;
                 var organSlotType = ((OrganType) typeVal).ToString();
                 var button = new OrganSlotButton(state.OrganSlots[i],organSlotType);
                 button.OnPressed += args => OnOrganSlotButtonPressed?.Invoke(args, button);
+
+                var attachmentUid = state.OrganSlots[i].Attachment;
+
+                var cautIcon = new SlotIconContainer("Cauterised");
+                var attchIcon = new SlotIconContainer("Attachment");
+                var bleedIcon = new SlotIconContainer("Bleeding");
+
+                if (attachmentUid is not null)
+                {
+                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(state.OrganSlots[i].Attachment, out var isprite))
+                    {
+                        var attachmentSprite = new StatusIconSprite();
+                        attachmentSprite.Sprite = isprite;
+
+                        attchIcon.Children.Add(attachmentSprite);
+                    }
+                }
+
+                if (state.OrganSlots[i].Cauterised)
+                {
+                    cautIcon.TextureNormal = Theme.ResolveTexture("/SurgerySlots/Cauterised_Icon");
+                }
+
+                if (!state.OrganSlots[i].Cauterised && attachmentUid is null && state.OrganSlots[i].Child is null)
+                {
+                    bleedIcon.TextureNormal = Theme.ResolveTexture("/SurgerySlots/Bleeding_Icon");
+                }
+
+                iconRow.Children.Add(attchIcon);
+                iconRow.Children.Add(cautIcon);
+                iconRow.Children.Add(bleedIcon);
 
                 //add button sprite
                 if (state.OrganSlots[i].Child != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(state.OrganSlots[i].Child, out var sprite))
@@ -268,16 +341,19 @@ namespace Content.Client.Surgery
                         partOrgans[state.OrganSlots[i].Parent.ToString()].Children.Add(new Label { Text = slotParts[state.OrganSlots[i].Parent].PartType.ToString() }); ;
                 }
 
+                buttonContainer.Children.Add(iconRow);
+                buttonContainer.Children.Add(button);
+
                 //add button to dict
-                partOrgans[state.OrganSlots[i].Parent.ToString()].Children.Add(button);
+                partOrgans[state.OrganSlots[i].Parent.ToString()].Children.Add(buttonContainer);
             }
 
             SurgeryLayout.Children.Add(bodyPartSlotList);
             //iterate partOrgans, add cols to surgery menu
-            var width = 525;
+            var width = 625;
             foreach (KeyValuePair<string, OrganSlotCol> entry in partOrgans)
             {
-                width += 50;
+                width += 100;
                 SurgeryLayout.Children.Add(new Padding());
                 SurgeryLayout.Children.Add(entry.Value);
             }
@@ -292,15 +368,57 @@ namespace Content.Client.Surgery
         {
             var castState = (SurgeryBoundUserInterfaceState) state;
             UpdateSurgeryMenu(castState);
+        }
 
+        public sealed class SlotButtonContainer : BoxContainer
+        {
+            public BodyPartSlot Slot { get; }
+            public string Symmetry = "None";
+            public bool Counterpart = false;
+            public string SlotType { get; }
+
+            public SlotButtonContainer(BodyPartSlot slot, string slotType)
+            {
+                Slot = slot;
+                SlotType = slotType;
+                Orientation = LayoutOrientation.Horizontal;
+                Align = AlignMode.Center;
+            }
+
+        }
+
+        public sealed class OrganSlotButtonContainer : BoxContainer
+        {
+            public OrganSlotButtonContainer()
+            {
+                Orientation = LayoutOrientation.Horizontal;
+                Align = AlignMode.Center;
+            }
+
+        }
+
+        public sealed class SlotButtonIconRow : BoxContainer
+        {
+            public SlotButtonIconRow()
+            {
+                Orientation = LayoutOrientation.Vertical;
+            }
+        }
+
+        public sealed class SlotIconContainer : TextureButton
+        {
+            public SlotIconContainer(string iconType)
+            {
+                MinSize = (DefaultButtonSize/3, DefaultButtonSize/3);
+                MaxSize = (DefaultButtonSize/3, DefaultButtonSize/3);
+                TextureNormal = Theme.ResolveTexture("/SurgerySlots/"+iconType);
+            }
         }
 
         public sealed class SurgerySlotButton : TextureButton
         {
             public BodyPartSlot Slot { get; }
             public string SlotType { get; }
-            public string Symmetry = "None";
-            public bool Counterpart = false;
 
             public SurgerySlotButton(BodyPartSlot slot, string slotType)
             {
@@ -308,7 +426,7 @@ namespace Content.Client.Surgery
                 SlotType = slotType;
                 MinSize = (DefaultButtonSize, DefaultButtonSize);
                 MaxSize = (DefaultButtonSize, DefaultButtonSize);
-                TextureNormal = Theme.ResolveTexture("/SurgerySlots/" + SlotType); //TODO base on slot type...
+                TextureNormal = Theme.ResolveTexture("/SurgerySlots/" + SlotType);
             }
         }
 
@@ -323,7 +441,7 @@ namespace Content.Client.Surgery
                 SlotType = slotType;
                 MinSize = (DefaultButtonSize, DefaultButtonSize);
                 MaxSize = (DefaultButtonSize, DefaultButtonSize);
-                TextureNormal = Theme.ResolveTexture("/SurgerySlots/" + SlotType); //TODO base on slot type...
+                TextureNormal = Theme.ResolveTexture("/SurgerySlots/" + SlotType);
             }
         }
 
@@ -368,6 +486,15 @@ namespace Content.Client.Surgery
             {
                 OverrideDirection = Direction.South;
                 Scale = (3, 3);
+            }
+        }
+
+        public sealed class StatusIconSprite : SpriteView
+        {
+            public StatusIconSprite()
+            {
+                OverrideDirection = Direction.South;
+                Scale = (2, 2);
             }
         }
 
