@@ -4,6 +4,7 @@ using Content.Shared.Administration;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Popups;
+using Content.Shared.Storage.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Chemistry;
@@ -271,7 +272,7 @@ namespace Content.Server.Chemistry.EntitySystems
         }
 
         /// <summary>
-        ///     work similar to the centrifuge electrolysis, except that it keeps going until only base elements remains  
+        ///     work similar to the centrifuge electrolysis, except that it keeps going until only base elements remains
         /// </summary>
         private List<Solution.ReagentQuantity> BreakdownReagents(List<Solution.ReagentQuantity> reagents)
         {
@@ -305,7 +306,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
                 else if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? p) && _moleculeGroups.TryGetValue(p.MoleculeGroup, out var productMoleculeGroups))
                 {
-                    
+
                     foreach (var productMolecules in productMoleculeGroups)
                     {
                         FixedPoint2 totalCoeff = 0f;
@@ -376,7 +377,7 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <summary>
         ///     Get all entities in container
         ///     Get all entities in containers that are also in this container EXCEPT if the container is ALIVE
-        ///     (or if live-able and does NOT have the BiopressHarvest component)    
+        ///     (or if live-able and does NOT have the BiopressHarvest component)
         /// </summary>
         private Tuple<List<EntityUid>, List<Solution.ReagentQuantity>, List<EntityUid>> GetContainerEntitities(EntityUid uid)
         {
@@ -400,7 +401,7 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 //relocate any living (or potentially living) entities out to the mainContainer
                 var containedEntities = new List<EntityUid>();
-                
+
                 foreach (var entityUid in container.Contents.ContainedEntities)
                 {
                     if (TryComp(entityUid, out MobStateComponent? containedMob))
@@ -555,8 +556,8 @@ namespace Content.Server.Chemistry.EntitySystems
                     {
                             var coordinates = Transform(entityUid).Coordinates;
                             //spawn junk
-                            var ent = EntityManager.SpawnEntity("junk", coordinates); //TODO make junk a component var 
-                            _entityStorageSystem.Insert(ent, uid);    
+                            var ent = EntityManager.SpawnEntity("junk", coordinates); //TODO make junk a component var
+                            _entityStorageSystem.Insert(ent, uid);
                     }
                 }
 
@@ -574,7 +575,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         /// <summary>
         ///     Applies Blunt damage to all damageable entities inside hopper
-        /// </summary>    
+        /// </summary>
         private void HandleLargeMatter(EntityUid uid, BiopressComponent biopress) {
             biopress.ProcessingTimer = 0;
             biopress.Stage = BiopressStage.LargeMatter;
@@ -599,7 +600,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         /// <summary>
         ///     Check for "non-gibbable" but living entities in hopper
-        /// </summary> 
+        /// </summary>
         private bool CheckSmallMatter(EntityUid uid, BiopressComponent biopress)
         {
 
@@ -621,7 +622,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         /// <summary>
         ///     Check for gibbable entities in hopper
-        /// </summary> 
+        /// </summary>
         private bool CheckLargeMatter(EntityUid uid, BiopressComponent biopress) {
 
             if (TryComp(uid, out EntityStorageComponent? container))
@@ -641,7 +642,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         /// <summary>
         ///     Remove remaining entities, add ashes to hopper for each junk * AshFactor rounded
-        /// </summary> 
+        /// </summary>
         private void FinalStage(EntityUid uid, BiopressComponent biopress) {
             biopress.ProcessingTimer = 0;
             biopress.Stage = BiopressStage.Final;
@@ -743,7 +744,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (storage.Open)
                 _entityStorageSystem.CloseStorage(uid, storage);
-            else 
+            else
                 _entityStorageSystem.OpenStorage(uid, storage);
         }
 
