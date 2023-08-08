@@ -113,6 +113,17 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLabViro
+  name: lab coat (viro)
+  description: A suit that protects against bacteria and viruses. Has an green stripe on the shoulder.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_viro.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_viro.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabCmo
   name: chief medical officer's lab coat
   description: Bluer than the standard model.
@@ -154,20 +165,14 @@
         Slash: 0.8
         Piercing: 0.4
         Heat: 0.8
-        
+
 - type: entity
   parent: ClothingOuterStorageBase
-  id: ClothingOuterCoatMscoat
-  name: mining supervisor's armored jacket
-  description: A sturdy, utilitarian jacket designed to protect a supervisor from any non-humanoid threats.
+  id: ClothingOuterDameDane
+  name: dame dane coat
+  description: Friday...
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/ms_coat.rsi
+    sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/ms_coat.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6
-        Slash: 0.5
-        Piercing: 0.4
+    sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi

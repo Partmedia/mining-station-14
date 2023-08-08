@@ -152,7 +152,7 @@ namespace Content.Server.MachineLinking.System
 
             component.lastState = state;
             foreach (var receiver in receivers)
-                RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port, state), false);
+                RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port, state, uid), false);
         }
 
         private void OnTransmitterStartup(EntityUid uid, SignalTransmitterComponent transmitter, ComponentStartup args)

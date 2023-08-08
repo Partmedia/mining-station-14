@@ -48,3 +48,5 @@
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
+  - type: GuideHelp
+    guides: [ Singularity, Power ]
