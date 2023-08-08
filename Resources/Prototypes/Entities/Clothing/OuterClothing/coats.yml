@@ -176,3 +176,21 @@
     sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatMscoat
+  name: mining supervisor's armored jacket
+  description: A sturdy, utilitarian jacket designed to protect a supervisor from any non-humanoid threats.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/ms_coat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/ms_coat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.5
+        Piercing: 0.4
+
