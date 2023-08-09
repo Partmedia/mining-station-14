@@ -731,7 +731,7 @@ namespace Content.Server.Chemistry.EntitySystems
             ClickSound(Biopress);
         }
 
-        private void OnStorageOpened(EntityUid uid, BiopressComponent component, StorageBeforeOpenEvent args)
+        private void OnStorageOpened(EntityUid uid, BiopressComponent component, ref StorageBeforeOpenEvent args)
         {
             if (component.Active)
                 component.Active = false;
