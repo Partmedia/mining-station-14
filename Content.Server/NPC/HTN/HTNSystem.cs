@@ -225,7 +225,7 @@ public sealed class HTNSystem : EntitySystem
                             var root = _prototypeManager.Index<HTNCompoundTask>(comp.RootTask);
                             var btr = new List<int>();
                             var level = -1;
-                            AppendDebugText(root, text, comp.Plan.BranchTraversalRecord, btr, ref level);
+                            AppendDebugText(root, text, ref comp.Plan, btr, ref level);
                         }
 
                         RaiseNetworkEvent(new HTNMessage()
@@ -245,9 +245,10 @@ public sealed class HTNSystem : EntitySystem
         }
     }
 
-    private void AppendDebugText(HTNTask task, StringBuilder text, List<int> planBtr, List<int> btr, ref int level)
+    private void AppendDebugText(HTNTask task, StringBuilder text, ref HTNPlan plan, List<int> btr, ref int level)
     {
         // If it's the selected BTR then highlight.
+        var planBtr = plan.BranchTraversalRecord;
         for (var i = 0; i < btr.Count; i++)
         {
             text.Append('-');
@@ -272,9 +273,9 @@ public sealed class HTNSystem : EntitySystem
                 btr.Add(i++);
                 text.AppendLine($" branch {string.Join(" ", btr)}:");
 
-                foreach (var sub in branch.Tasks)
+                foreach (var sub in plan.Tasks)
                 {
-                    AppendDebugText(sub, text, planBtr, btr, ref level);
+                    AppendDebugText(sub, text, ref plan, btr, ref level);
                 }
 
                 btr.RemoveAt(btr.Count - 1);
