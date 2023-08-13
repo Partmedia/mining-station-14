@@ -18,7 +18,6 @@ using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -28,7 +27,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
 
         public override void Initialize()
@@ -78,7 +76,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            var timeDelta =  (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+            var timeDelta =  args.dt;
             var pressureDelta = (float) timeDelta * vent.TargetPressureChange;
 
             if (vent.PumpDirection == VentPumpDirection.Releasing)

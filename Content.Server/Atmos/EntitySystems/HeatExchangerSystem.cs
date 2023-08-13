@@ -53,7 +53,8 @@ public sealed class HeatExchangerSystem : EntitySystem
             return;
         }
 
-        var dt = _atmosphereSystem.AtmosTickRate;
+        // Positive dN flows from inlet to outlet
+        var dt = args.dt;
 
         // Let n = moles(inlet) - moles(outlet), really a Δn
         var P = inlet.Air.Pressure - outlet.Air.Pressure; // really a ΔP
