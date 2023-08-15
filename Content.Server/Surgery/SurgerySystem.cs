@@ -700,10 +700,16 @@ namespace Content.Server.Surgery
                 return false;
 
             if (!timeOverride)
+            {
                 if (tool.Suture)
+                {
                     if (!(await ProcedureDoAfter(user, target, tool.SutureTime * tool.SutureTimeMod, tool))) return false;
+                }
                 else if (tool.HardSuture)
+                {
                     if (!(await ProcedureDoAfter(user, target, tool.HardSutureTime * tool.HardSutureTimeMod, tool))) return false;
+                }
+            }
 
             //TODO sound
 
@@ -1022,6 +1028,19 @@ namespace Content.Server.Surgery
                 }
 
             }
+            else if (userHands.ActiveHandEntity != null && TryComp<OrganComponent>(userHands.ActiveHandEntity, out var organ))
+            {
+                //if there is a part or organ in hand, check if it can be placed in slot and check if there is a tool in the other hand to attach it
+                foreach (var hand in userHands.Hands.Values)
+                {
+                    if (hand.HeldEntity != null && TryComp<SurgeryToolComponent>(hand.HeldEntity, out var offTool) && (offTool.Suture || offTool.HardSuture) && args.Slot != null)
+                    {
+                        var timeOverride = await AttachOrgan(user, offTool, uid, args.Slot, organ, userHands, false);
+                        break;
+                    }
+                }
+            }
+            UpdateUiState(component.Owner);
 
         }
 

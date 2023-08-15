@@ -482,19 +482,19 @@ public partial class SharedBodySystem
 
     public void AttachPartSlotAttachment(EntityUid uid, BodyPartSlot slot)
     {
-        if (slot.Attachment == null)
-            slot.Attachment = uid;
-
         if (TryComp<BodyPartComponent>(slot.Parent, out var part))
-            part.Children[slot.Id] = slot;
+        {
+            if (part.Children[slot.Id].Attachment == null)
+                part.Children[slot.Id].Attachment = uid;
+        }
     }
 
     public void RemovePartSlotAttachment(BodyPartSlot slot)
     {
-        slot.Attachment = null;
-
         if (TryComp<BodyPartComponent>(slot.Parent, out var part))
-            part.Children[slot.Id] = slot;
+        {
+            part.Children[slot.Id].Attachment = null;
+        }
 
         //TODO handle status change for part slot parent/child
     }
@@ -541,11 +541,8 @@ public partial class SharedBodySystem
     public void SetCauterisedPartSlot(BodyPartSlot slot, bool cauterised)
     {
 
-        slot.Cauterised = cauterised;
-
         if (TryComp<BodyPartComponent>(slot.Parent, out var part))
-            part.Children[slot.Id] = slot;
-
+            part.Children[slot.Id].Cauterised = cauterised;
         //TODO handle status change for part slot parent/child
     }
 

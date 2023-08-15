@@ -44,6 +44,7 @@
       - state: lung-l
       - state: lung-r
   - type: Organ
+    organType: Lung
   - type: Lung
   - type: Metabolizer
     removeEmpty: true

@@ -21,6 +21,7 @@
       - state: lung-l
       - state: lung-r
   - type: Organ
+    organType: Lung
   - type: Lung
   - type: Metabolizer
     removeEmpty: true
@@ -44,6 +45,7 @@
   - type: Sprite
     state: stomach
   - type: Organ
+    organType: Stomach
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -65,6 +67,7 @@
   - type: Sprite
     state: liver
   - type: Organ
+    organType: Liver
   - type: Metabolizer
     maxReagents: 1
     metabolizerTypes: [ Animal ]
@@ -80,6 +83,7 @@
   - type: Sprite
     state: heart-on
   - type: Organ
+    organType: Heart
   - type: Metabolizer
     maxReagents: 2
     metabolizerTypes: [ Animal ]
@@ -98,6 +102,7 @@
       - state: kidney-l
       - state: kidney-r
   - type: Organ
+    organType: Kidney
   - type: Metabolizer
     maxReagents: 5
     metabolizerTypes: [ Animal ]

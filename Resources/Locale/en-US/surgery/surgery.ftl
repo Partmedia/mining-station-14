@@ -21,4 +21,4 @@ surgery-exoskeleton-opened = Obstructing exoskeleton opened!
 surgery-organ-removed = Organ removed!
 surgery-organ-already-has-attachment = Organ already has a tool attached to it!
 surgery-small-clamp-attached = Small clamp attached.
-surgery-body-part-attached = Organ attached.
+surgery-organ-attached = Organ attached.

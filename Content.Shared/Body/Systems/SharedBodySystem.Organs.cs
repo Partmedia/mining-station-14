@@ -68,6 +68,10 @@ public partial class SharedBodySystem
 
         slot.Child = organId;
         slot.Cauterised = false;
+
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Organs[slot.Id] = slot;
+
         organ.ParentSlot = slot;
         organ.Body = CompOrNull<BodyPartComponent>(slot.Parent)?.Body;
 
@@ -120,6 +124,10 @@ public partial class SharedBodySystem
         var oldParent = CompOrNull<BodyPartComponent>(organ.ParentSlot.Parent);
 
         slot.Child = null;
+
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Organs[slot.Id] = slot;
+
         organ.ParentSlot = null;
         organ.Body = null;
 
@@ -173,30 +181,25 @@ public partial class SharedBodySystem
 
     public void AttachOrganSlotAttachment(EntityUid uid, OrganSlot slot)
     {
-        if (slot.Attachment == null)
-            slot.Attachment = uid;
-
         if (TryComp<BodyPartComponent>(slot.Parent, out var part))
-            part.Organs[slot.Id] = slot;
+        {
+            if (part.Organs[slot.Id].Attachment == null)
+                part.Organs[slot.Id].Attachment = uid;
+        }
     }
 
     public void RemoveOrganSlotAttachment(OrganSlot slot)
     {
-        slot.Attachment = null;
-
         if (TryComp<BodyPartComponent>(slot.Parent, out var part))
-            part.Organs[slot.Id] = slot;
-
-        //TODO handle status change for part slot parent/child
+        {
+            part.Organs[slot.Id].Attachment = null;
+        }
     }
 
     public void SetCauterisedOrganSlot(OrganSlot slot, bool cauterised)
     {
-
-        slot.Cauterised = cauterised;
-
         if (TryComp<BodyPartComponent>(slot.Parent, out var part))
-            part.Organs[slot.Id] = slot;
+            part.Organs[slot.Id].Cauterised = cauterised;
 
         //TODO handle status change for part slot parent/child
     }

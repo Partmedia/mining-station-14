@@ -30,6 +30,7 @@
   - type: Sprite
     state: brain
   - type: Organ
+    organType: Brain
   - type: Input
     context: "ghost"
   - type: InputMover
@@ -69,6 +70,7 @@
       - state: eyeball-l
       - state: eyeball-r
   - type: Organ
+    organType: Eye
 
 - type: entity
   id: OrganDionaStomach
@@ -79,6 +81,7 @@
   - type: Sprite
     state: stomach
   - type: Organ
+    organType: Stomach
   - type: SolutionContainerManager
     solutions:
       stomach:
