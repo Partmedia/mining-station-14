@@ -2,7 +2,7 @@ surgery-part-already-has-attachment = Body part already has a tool attached to i
 surgery-part-not-incised-retractor = No incision made on body part, nothing to retract yet!
 surgery-exo-skeleton-blocking = Exoskeleton must be opened first!
 surgery-endo-skeleton-opened = Endoskeleton must be closed first!
-surgery-slot-already-cauterised = Body part area already cauterised!
+surgery-slot-already-cauterised = Area already cauterised!
 surgery-no-retractor = Endoskeleton cannot be opened or closed without a retractor!
 surgery-retractor-block-stitch = The retractor must be removed before closing the incision!
 
@@ -17,3 +17,8 @@ surgery-body-part-removed = Body part removed!
 surgery-body-part-attached = Body part attached.
 surgery-endoskeleton-opened = Obstructing skeleton opened!
 surgery-exoskeleton-opened = Obstructing exoskeleton opened!
+
+surgery-organ-removed = Organ removed!
+surgery-organ-already-has-attachment = Organ already has a tool attached to it!
+surgery-small-clamp-attached = Small clamp attached.
+surgery-body-part-attached = Organ attached.

@@ -67,6 +67,7 @@ public partial class SharedBodySystem
             return false;
 
         slot.Child = organId;
+        slot.Cauterised = false;
         organ.ParentSlot = slot;
         organ.Body = CompOrNull<BodyPartComponent>(slot.Parent)?.Body;
 
@@ -168,6 +169,36 @@ public partial class SharedBodySystem
 
         Del(id.Value);
         return true;
+    }
+
+    public void AttachOrganSlotAttachment(EntityUid uid, OrganSlot slot)
+    {
+        if (slot.Attachment == null)
+            slot.Attachment = uid;
+
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Organs[slot.Id] = slot;
+    }
+
+    public void RemoveOrganSlotAttachment(OrganSlot slot)
+    {
+        slot.Attachment = null;
+
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Organs[slot.Id] = slot;
+
+        //TODO handle status change for part slot parent/child
+    }
+
+    public void SetCauterisedOrganSlot(OrganSlot slot, bool cauterised)
+    {
+
+        slot.Cauterised = cauterised;
+
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Organs[slot.Id] = slot;
+
+        //TODO handle status change for part slot parent/child
     }
 
     /// <summary>

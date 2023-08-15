@@ -38,7 +38,6 @@ namespace Content.Server.Surgery
             base.Initialize();
 
             SubscribeLocalEvent<SurgeryComponent, GetVerbsEvent<Verb>>(AddSurgeryVerb);
-            SubscribeLocalEvent<SurgeryComponent, GetVerbsEvent<ExamineVerb>>(AddSurgeryExamineVerb);
 
             SubscribeLocalEvent<SurgeryComponent, AddedToBodyEvent>((_, _, args) => UpdateUiState(args.Body));
             SubscribeLocalEvent<SurgeryComponent, AddedToPartEvent>((_, _, args) => UpdateUiState(args.Part));
@@ -248,12 +247,31 @@ namespace Content.Server.Surgery
             if (bodyPartSlot.Attachment == null)
                 return;
 
-            if (!(await ProcedureDoAfter(user, target, tool.RetractorTime * tool.RetractorTimeMod, tool))) return;
+            if (!(await ProcedureDoAfter(user, target, tool.LargeClampTime * tool.LargeClampTimeMod, tool))) return;
 
             var attachmentContainer = _containerSystem.EnsureContainer<Container>(bodyPartSlot.Parent, "slotAttachment");
             attachmentContainer.Insert(tool.Owner);
 
             _bodySystem.RemovePartSlotAttachment(bodyPartSlot);
+
+            _handsSystem.PickupOrDrop(user, tool.Owner);
+
+            SetBodyStatusFromPartSlotChange();
+
+            UpdateUiState(target);
+        }
+
+        private async void RemoveToolFromOrganSlot(EntityUid user, SurgeryToolComponent tool, EntityUid target, OrganSlot organSlot, HandsComponent userHands)
+        {
+            if (organSlot.Attachment == null)
+                return;
+
+            if (!(await ProcedureDoAfter(user, target, tool.SmallClampTime * tool.SmallClampTimeMod, tool))) return;
+
+            var attachmentContainer = _containerSystem.EnsureContainer<Container>(organSlot.Parent, "slotAttachment");
+            attachmentContainer.Insert(tool.Owner);
+
+            _bodySystem.RemoveOrganSlotAttachment(organSlot);
 
             _handsSystem.PickupOrDrop(user, tool.Owner);
 
@@ -281,7 +299,17 @@ namespace Content.Server.Surgery
                 var attachmentContainer = _containerSystem.EnsureContainer<Container>(bodyPartSlot.Parent, "slotAttachment");
                 attachmentContainer.Insert(tool.Owner);
                 _bodySystem.AttachPartSlotAttachment(tool.Owner, bodyPartSlot);
+            }
+        }
 
+        private void AttachToolToOrganSlot(EntityUid user, SurgeryToolComponent tool, OrganSlot organSlot, HandsComponent userHands)
+        {
+            if (userHands.ActiveHand?.HeldEntity is { } held
+                 && _handsSystem.TryDrop(user, userHands.ActiveHand, handsComp: userHands))
+            {
+                var attachmentContainer = _containerSystem.EnsureContainer<Container>(organSlot.Parent, "slotAttachment");
+                attachmentContainer.Insert(tool.Owner);
+                _bodySystem.AttachOrganSlotAttachment(tool.Owner, organSlot);
             }
         }
 
@@ -369,6 +397,33 @@ namespace Content.Server.Surgery
             _popupSystem.PopupEntity(Loc.GetString("surgery-large-clamp-attached"), user, user);
 
             AttachToolToPartSlot(user, tool, bodyPartSlot, userHands);
+
+            SetBodyStatusFromPartSlotChange();
+
+            UpdateUiState(target);
+
+            return true;
+        }
+
+        private async Task<bool> AttachSmallClamp(EntityUid user, SurgeryToolComponent tool, EntityUid target, OrganSlot organSlot, HandsComponent userHands, bool timeOverride)
+        {
+
+            //check for attachment entity
+            if (organSlot.Attachment != null)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("surgery-organ-already-has-attachment"), user, user);
+                return false;
+            }
+
+            //attach clamp
+            if (!timeOverride)
+                if (!(await ProcedureDoAfter(user, target, tool.SmallClampTime * tool.SmallClampTimeMod, tool))) return false;
+
+            //TODO sound
+
+            _popupSystem.PopupEntity(Loc.GetString("surgery-small-clamp-attached"), user, user);
+
+            AttachToolToOrganSlot(user, tool, organSlot, userHands);
 
             SetBodyStatusFromPartSlotChange();
 
@@ -530,6 +585,34 @@ namespace Content.Server.Surgery
             return true;
         }
 
+        private async Task<bool> CauteriseOrganSlot(EntityUid user, SurgeryToolComponent tool, EntityUid target, OrganSlot organSlot, HandsComponent userHands, bool timeOverride)
+        {
+            //part slots can only be cauterised if the slot is empty
+            if (organSlot.Child is not null)
+                return false;
+
+            if (organSlot.Cauterised)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("surgery-slot-already-cauterised"), user, user);
+                return false;
+            }
+
+            if (!timeOverride)
+                if (!(await ProcedureDoAfter(user, target, tool.CauterizerTime * tool.CauterizerTimeMod, tool))) return false;
+
+            //TODO sound
+
+            _popupSystem.PopupEntity(Loc.GetString("surgery-wound-cauterised"), user, user);
+
+            _bodySystem.SetCauterisedOrganSlot(organSlot, true);
+
+            SetBodyStatusFromPartSlotChange();
+
+            UpdateUiState(target);
+
+            return true;
+        }
+
         private async Task<bool> RemovePart(EntityUid user, SurgeryToolComponent tool, EntityUid target, BodyPartComponent bodyPart, HandsComponent userHands, bool timeOverride)
         {
             //check if part is actually attached to a slot
@@ -548,6 +631,30 @@ namespace Content.Server.Surgery
             _popupSystem.PopupEntity(Loc.GetString("surgery-body-part-removed"), user, user);
 
             SetBodyStatusFromPartSlotChange(); //redundant?
+
+            UpdateUiState(target);
+
+            return true;
+        }
+
+        private async Task<bool> RemoveOrgan(EntityUid user, SurgeryToolComponent tool, EntityUid target, OrganComponent organ, HandsComponent userHands, bool timeOverride)
+        {
+            //check if part is actually attached to a slot
+            if (organ.ParentSlot is null)
+                return false;
+
+            if (!timeOverride)
+                if (!(await ProcedureDoAfter(user, target, tool.ManipulatorTime * tool.ManipulatorTimeMod, tool))) return false;
+
+            //TODO sound
+
+            if (!(_bodySystem.DropOrgan(organ.Owner, organ))) return false;
+
+            _handsSystem.PickupOrDrop(user, organ.Owner);
+
+            _popupSystem.PopupEntity(Loc.GetString("surgery-organ-removed"), user, user);
+
+            SetBodyStatusFromPartSlotChange(); //redundant? - use for organs too or have separate func?
 
             UpdateUiState(target);
 
@@ -573,6 +680,36 @@ namespace Content.Server.Surgery
             if (!(_bodySystem.AttachPart(bodyPart.Owner, bodyPartSlot, bodyPart))) return false;
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-body-part-attached"), user, user);
+
+            SetBodyStatusFromPartSlotChange(); //redundant?
+
+            UpdateUiState(target);
+
+            return true;
+        }
+
+        private async Task<bool> AttachOrgan(EntityUid user, SurgeryToolComponent tool, EntityUid target, OrganSlot organSlot, OrganComponent organ, HandsComponent userHands, bool timeOverride)
+        {
+
+            //check if part slot is empty
+            if (organSlot.Child is not null)
+                return false;
+
+            //ensure part type matches the slot type
+            if (organ.OrganType != organSlot.Type)
+                return false;
+
+            if (!timeOverride)
+                if (tool.Suture)
+                    if (!(await ProcedureDoAfter(user, target, tool.SutureTime * tool.SutureTimeMod, tool))) return false;
+                else if (tool.HardSuture)
+                    if (!(await ProcedureDoAfter(user, target, tool.HardSutureTime * tool.HardSutureTimeMod, tool))) return false;
+
+            //TODO sound
+
+            if (!(_bodySystem.InsertOrgan(organ.Owner, organSlot, organ))) return false;
+
+            _popupSystem.PopupEntity(Loc.GetString("surgery-organ-attached"), user, user);
 
             SetBodyStatusFromPartSlotChange(); //redundant?
 
@@ -800,7 +937,7 @@ namespace Content.Server.Surgery
             UpdateUiState(component.Owner);
         }
 
-        private void OnOrganButtonPressed(EntityUid uid, SurgeryComponent component, OrganSlotButtonPressed args)
+        private async void OnOrganButtonPressed(EntityUid uid, SurgeryComponent component, OrganSlotButtonPressed args)
         {
             if (args.Session.AttachedEntity is not { Valid: true } user ||
                 !TryComp<HandsComponent>(user, out var userHands))
@@ -826,16 +963,23 @@ namespace Content.Server.Surgery
                 //manipulator - used to remove organs (must be used with incisor in other hand) (will obviously not go in hand)
                 if (tool.Incisor || tool.Manipulator)
                 {
-                    if (tool.Manipulator && tool.Incisor) {
-                        //timeOverride = removeOrgan();
-                    }
-                    foreach (var hand in userHands.Hands.Values)
+                    if (args.Slot.Child != null && TryComp<OrganComponent>(args.Slot.Child, out var organ))
                     {
-                        if (hand.HeldEntity != null && TryComp<SurgeryToolComponent>(hand.HeldEntity, out var secondTool)
-                            && ((secondTool.Manipulator && tool.Incisor) || (tool.Manipulator && secondTool.Incisor)))
+                        if (tool.Manipulator && tool.Incisor)
                         {
-                            //timeOverride = removeOrgan();
-                            break;
+                            timeOverride = await RemoveOrgan(user, tool, uid, organ, userHands, timeOverride);
+                        }
+                        foreach (var hand in userHands.Hands.Values)
+                        {
+                            if (hand.HeldEntity != null && TryComp<SurgeryToolComponent>(hand.HeldEntity, out var secondTool)
+                                && ((secondTool.Manipulator && tool.Incisor) || (tool.Manipulator && secondTool.Incisor)))
+                            {
+                                if (tool.Manipulator)
+                                    timeOverride = await RemoveOrgan(user, tool, uid, organ, userHands, timeOverride);
+                                else if (secondTool.Manipulator)
+                                    timeOverride = await RemoveOrgan(user, secondTool, uid, organ, userHands, timeOverride);
+                                break;
+                            }
                         }
                     }
                 }
@@ -843,7 +987,7 @@ namespace Content.Server.Surgery
                 //small clamp - intended to prevent bleeding upon organ removal (used as an attachment to the slot)
                 if (tool.SmallClamp && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
-                    //timeOverride = attachSmallClamp();
+                    timeOverride = await AttachSmallClamp(user, tool, uid, args.Slot, userHands, timeOverride);
                 }
 
                 //suture - used to close incisions and re-attach organs
@@ -853,7 +997,7 @@ namespace Content.Server.Surgery
                     {
                         if (hand.HeldEntity != null && TryComp<OrganComponent>(hand.HeldEntity, out var organ))
                         {
-                            //timeOverride = attachOrgan();
+                            timeOverride = await AttachOrgan(user, tool, uid, args.Slot, organ, userHands, timeOverride);
                             break;
                         }
                     }
@@ -862,9 +1006,8 @@ namespace Content.Server.Surgery
                 //cauterizer - used to stop bleeding
                 if (tool.Cauterizer && (timeOverride || (!timeOverride && utilityCounter == 0)))
                 {
-                    //timeOverride = cauterizeOrganSlot();
+                    timeOverride = await CauteriseOrganSlot(user, tool, uid, args.Slot, userHands, timeOverride);
                 }
-
 
             }
             else if (userHands.ActiveHandEntity == null)
@@ -874,21 +1017,10 @@ namespace Content.Server.Surgery
                 if (args.Slot.Attachment != null && args.Slot != null)
                 {
                     //remove organ slot attachment
-                    //removeOrganSlotAttachment();
+                    if (TryComp<SurgeryToolComponent>(args.Slot.Attachment, out var attachedTool))
+                        RemoveToolFromOrganSlot(user, attachedTool, component.Owner, args.Slot, userHands);
                 }
 
-            }
-            else if (userHands.ActiveHandEntity != null && TryComp<OrganComponent>(userHands.ActiveHandEntity, out var part))
-            {
-                //if there is a part or organ in hand, check if it can be placed in slot and check if there a tool in the other hand to attach it
-                foreach (var hand in userHands.Hands.Values)
-                {
-                    if (hand.HeldEntity != null && TryComp<SurgeryToolComponent>(hand.HeldEntity, out var offTool) && (offTool.Suture || offTool.HardSuture))
-                    {
-                        //attachOrgan();
-                        break;
-                    }
-                }
             }
 
         }
@@ -910,24 +1042,6 @@ namespace Content.Server.Surgery
             }
         }
 
-        /// <summary>
-        /// Adds additional surgery buttons for when an organ container is opened
-        /// </summary>
-        public void StartOpeningOrganContainer(EntityUid user, SurgeryComponent component, SurgerySlotButtonPressed args)
-        {
-
-            //get all organs in body part
-
-        }
-
-        /// <summary>
-        /// Removes surgery buttons for when an organ container is closed
-        /// </summary>
-        public void StartClosingOrganContainer(EntityUid user, SurgeryComponent component, SurgerySlotButtonPressed args)
-        {
-
-        }
-
         private void AddSurgeryVerb(EntityUid uid, SurgeryComponent component, GetVerbsEvent<Verb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract || args.Target == args.User)
@@ -944,7 +1058,7 @@ namespace Content.Server.Surgery
             args.Verbs.Add(verb);
         }
 
-        private void AddSurgeryExamineVerb(EntityUid uid, SurgeryComponent component, GetVerbsEvent<ExamineVerb> args)
+        /*private void AddSurgeryExamineVerb(EntityUid uid, SurgeryComponent component, GetVerbsEvent<ExamineVerb> args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract || args.Target == args.User)
                 return;
@@ -961,6 +1075,6 @@ namespace Content.Server.Surgery
             };
 
             args.Verbs.Add(verb);
-        }
+        }*/
     }
 }
