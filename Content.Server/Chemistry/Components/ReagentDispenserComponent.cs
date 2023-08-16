@@ -21,12 +21,11 @@ namespace Content.Server.Chemistry.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public string? PackPrototypeId = default!;
 
-        /**[DataField("emagPack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))]
+        /**
+        [DataField("emagPack", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentDispenserInventoryPrototype>))]
         [ViewVariables(VVAccess.ReadWrite)]
         public string? EmagPackPrototypeId = default!;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool IsEmagged = false;**/
+        **/
 
         [DataField("numStorageSlots")]
         public int NumSlots = 25;
@@ -43,7 +42,6 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("storageSlots")]
         public List<ItemSlot> StorageSlots = new List<ItemSlot>();
-
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 

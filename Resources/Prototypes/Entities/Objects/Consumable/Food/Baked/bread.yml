@@ -28,6 +28,8 @@
   id: FoodBreadSliceBase
   abstract: true
   components:
+  - type: Item
+    size: 1
   - type: BiopressHarvest
     id: Carbohydrate
     totalReagentUnits: 0.2

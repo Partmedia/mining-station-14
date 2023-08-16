@@ -20,6 +20,7 @@ using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -32,9 +33,9 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
@@ -73,7 +74,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // Interactions
             SubscribeLocalEvent<DisposalUnitComponent, ActivateInWorldEvent>(HandleActivate);
             SubscribeLocalEvent<DisposalUnitComponent, AfterInteractUsingEvent>(HandleAfterInteractUsing);
-            SubscribeLocalEvent<DisposalUnitComponent, DragDropEvent>(HandleDragDropOn);
+            SubscribeLocalEvent<DisposalUnitComponent, DragDropTargetEvent>(HandleDragDropOn);
             SubscribeLocalEvent<DisposalUnitComponent, DestructionEventArgs>(HandleDestruction);
 
             // Verbs
@@ -82,7 +83,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<Verb>>(AddClimbInsideVerb);
 
             // Units
-            SubscribeLocalEvent<DoInsertDisposalUnitEvent>(DoInsertDisposalUnit);
+            SubscribeLocalEvent<DisposalUnitComponent, DoAfterEvent>(OnDoAfter);
 
             //UI
             SubscribeLocalEvent<DisposalUnitComponent, SharedDisposalUnitComponent.UiButtonPressedMessage>(OnUiButtonPressed);
@@ -100,7 +101,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 AlternativeVerb flushVerb = new();
                 flushVerb.Act = () => Engage(uid, component);
                 flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-                flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
+                flushVerb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"));
                 flushVerb.Priority = 1;
                 args.Verbs.Add(flushVerb);
 
@@ -159,28 +160,21 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     _handsSystem.TryDropIntoContainer(args.User, args.Using.Value, component.Container, checkActionBlocker: false, args.Hands);
                     _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Using.Value)} into {ToPrettyString(uid)}");
-                    AfterInsert(uid, component, args.Using.Value);
+                    AfterInsert(uid, component, args.Using.Value, args.User);
                 }
             };
 
             args.Verbs.Add(insertVerb);
         }
 
-        private void DoInsertDisposalUnit(DoInsertDisposalUnitEvent ev)
+        private void OnDoAfter(EntityUid uid, DisposalUnitComponent component, DoAfterEvent args)
         {
-            var toInsert = ev.ToInsert;
-
-            if (!TryComp(ev.Unit, out DisposalUnitComponent? unit))
-            {
+            if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
                 return;
-            }
 
-            if (!unit.Container.Insert(toInsert))
-                return;
-            if (ev.User != null)
-                _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                    $"{ToPrettyString(ev.User.Value):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(ev.Unit)}");
-            AfterInsert(ev.Unit, unit, toInsert);
+            AfterInsert(uid, component, args.Args.Target.Value, args.Args.User);
+
+            args.Handled = true;
         }
 
         public void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, DisposalUnitComponent? disposal = null)
@@ -192,7 +186,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
 
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
-            AfterInsert(uid, disposal, toInsert);
+            AfterInsert(uid, disposal, toInsert, user);
         }
 
         public override void Update(float frameTime)
@@ -277,7 +271,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Used)} into {ToPrettyString(uid)}");
-            AfterInsert(uid, component, args.Used);
+            AfterInsert(uid, component, args.Used, args.User);
             args.Handled = true;
         }
 
@@ -395,7 +389,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             TryEjectContents(uid, component);
         }
 
-        private void HandleDragDropOn(EntityUid uid, DisposalUnitComponent component, DragDropEvent args)
+        private void HandleDragDropOn(EntityUid uid, DisposalUnitComponent component, ref DragDropTargetEvent args)
         {
             args.Handled = TryInsert(uid, args.Dragged, args.User);
         }
@@ -458,6 +452,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     TryComp(ejectedId, out PhysicsComponent? body))
                 {
                     // TODO: We need to use a specific collision method (which sloth hasn't coded yet) for actual bounds overlaps.
+                    // TODO: Come do this sloth :^)
                     // Check for itemcomp as we won't just block the disposal unit "sleeping" for something it can't collide with anyway.
                     if (!HasComp<ItemComponent>(ejectedId)
                         && _lookup.GetWorldAABB(ejectedId).Intersects(disposalsBounds!.Value))
@@ -492,24 +487,22 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
 
             var delay = userId == toInsertId ? unit.EntryDelay : unit.DraggedEntryDelay;
-            var ev = new DoInsertDisposalUnitEvent(userId, toInsertId, unitId);
 
             if (delay <= 0 || userId == null)
             {
-                DoInsertDisposalUnit(ev);
+                AfterInsert(unitId, unit, toInsertId, userId);
                 return true;
             }
 
             // Can't check if our target AND disposals moves currently so we'll just check target.
             // if you really want to check if disposals moves then add a predicate.
-            var doAfterArgs = new DoAfterEventArgs(userId.Value, delay, default, toInsertId)
+            var doAfterArgs = new DoAfterEventArgs(userId.Value, delay, target:toInsertId, used:unitId)
             {
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 NeedHand = false,
-                BroadcastFinishedEvent = ev
             };
 
             _doAfterSystem.DoAfter(doAfterArgs);
@@ -734,8 +727,14 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }, component.AutomaticEngageToken.Token);
         }
 
-        public void AfterInsert(EntityUid uid, DisposalUnitComponent component, EntityUid inserted)
+        public void AfterInsert(EntityUid uid, DisposalUnitComponent component, EntityUid inserted, EntityUid? user = null)
         {
+            if (!component.Container.Insert(inserted))
+                return;
+
+            if (user != inserted && user != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user.Value):player} inserted {ToPrettyString(inserted)} into {ToPrettyString(uid)}");
+
             TryQueueEngage(uid, component);
 
             if (TryComp(inserted, out ActorComponent? actor))

@@ -179,6 +179,17 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterClownPriest
+  name: robes of the honkmother
+  description: Meant for a clown of the cloth.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
+    
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatMscoat
   name: mining supervisor's armored jacket
   description: A sturdy, utilitarian jacket designed to protect a supervisor from any non-humanoid threats.
@@ -193,4 +204,3 @@
         Blunt: 0.6
         Slash: 0.5
         Piercing: 0.4
-

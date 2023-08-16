@@ -9,6 +9,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;

@@ -57,6 +57,7 @@
       proper: true
       gender: male
 
+
 - type: entity
   name: Lisa
   parent: MobCorgi
@@ -413,8 +414,6 @@
     description: ghost-role-information-hamlet-description
   - type: InteractionPopup
     successChance: 1
-  - type: Puller
-    needsHands: false
   - type: Butcherable
     spawned:
     - id: FoodMeat
