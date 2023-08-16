@@ -6,9 +6,11 @@
 
 - type: guideEntry
   id: Controls
-  name: Controls
-  text: "/Server Info/Guidebook/Controls.xml"
+  name: guide-entry-controls
+  text: "/Server Info/Guidebook/Controls/Controls.xml"
   priority: -9
+  children:
+  - Radio  
 
 - type: guideEntry
   id: KeyDifferences
