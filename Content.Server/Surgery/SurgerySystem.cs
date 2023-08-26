@@ -19,6 +19,10 @@ using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Organ;
 using Robust.Shared.Containers;
+using Content.Shared.Buckle.Components;
+using Content.Shared.Standing;
+using Content.Shared.Damage;
+using Content.Server.Body.Systems;
 
 namespace Content.Server.Surgery
 {
@@ -32,11 +36,14 @@ namespace Content.Server.Surgery
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<SurgeryComponent, ComponentInit>(OnSurgeryInit);
             SubscribeLocalEvent<SurgeryComponent, GetVerbsEvent<Verb>>(AddSurgeryVerb);
 
             SubscribeLocalEvent<SurgeryComponent, AddedToBodyEvent>((_, _, args) => UpdateUiState(args.Body));
@@ -54,17 +61,124 @@ namespace Content.Server.Surgery
             SubscribeLocalEvent<SurgeryComponent, OrganSlotButtonPressed>(OnOrganButtonPressed);
         }
 
-        /// <summary>
-        /// Handles status effects such as bleeding and opened for when a part is affected
-        /// Applies "shock" (airloss) damage is the body is not sedated
-        /// </summary>
-        private void SetBodyStatusFromPartChange() { }
+
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+
+            foreach (var surgery in EntityManager.EntityQuery<SurgeryComponent>(false))
+            {
+                //Opened Check
+                if (surgery.Opened)
+                {
+                    surgery.OpenedLastChecked += frameTime;
+                    if (surgery.OpenedLastChecked >= surgery.OpenedCheckInterval)
+                    {
+                        CheckOpenedBuckled(surgery.Owner, surgery);
+                        surgery.OpenedLastChecked = 0f;
+                    }
+                }
+                //Bleed Check
+                CalculateBleed();
+
+                //Clamped Check
+                var clampedTimes = surgery.ClampedTimes.Values.ToArray();
+            }
+        }
+
+        public void CheckOpenedBuckled(EntityUid uid, SurgeryComponent surgery)
+        {
+            //is the body "opened"?
+            if (!surgery.Opened)
+                return;
+
+            //is the entity buckled?
+            if (!TryComp<BuckleComponent>(uid, out var buckle) || buckle.Buckled)
+                return;
+
+            //is the entity standing?
+            if (!TryComp<StandingStateComponent>(uid, out var standing) || !standing.Standing)
+                return;
+
+            _damageableSystem.TryChangeDamage(uid, surgery.OpenedDamage, ignoreResistances: true);
+        }
 
         /// <summary>
-        /// Handles status effects such as bleeding and opened for when a part slot is affected
+        /// Handle Bleeding to occur (eventually replace this when either Woundmed or something like it is implemented)
+        /// Routinely run this function via update
+        /// Keep track of surgery incurred bleeding via surgery component
+        /// Ensure bleed is equal to b + s where b is the entity bleed outside of surgery and s is surgery bleed (part or organ)
+        /// If the surgery bleeding is stopped and all surgical wounds sealed, reduce bleed by s
+        /// </summary>
+        private void CalculateBleed()
+        {
+
+            //Get entity bleed damage bloodstream component
+
+            //Get last SurgeryBleed value from surgery component
+
+            //Negate SurgeryBleed from EntityBleed to determine Bleed independent of surgery (minium 0)
+
+            //Add that value with organ bleed or part bleed, which ever is greater (and applicable)
+
+            //Modify Bleed for bloodstream component to be equal to that value
+            //_bloodstreamSystem.TryModifyBleedAmount()
+
+            //The result should ensure that entity bleeding is allowed to occur normally while surgery bleed is continuously maintained
+            //Entity bleed heals over time on its own or via other methods, but surgery bleed can only be stopped by direct surgical interaction - effectively being constant
+            //But once addressed, surgery bleed is taken away immediately
+        }
+
+        /// <summary>
+        /// Handles status effects such as bleeding and opened for when a part/organ/slot is affected
         /// Applies "shock" (airloss) damage is the body is not sedated
         /// </summary>
-        private void SetBodyStatusFromPartSlotChange() { }
+        private void SetBodyStatusFromChange(EntityUid uid, ToolUsage toolUsage)
+        {
+
+            //get surgery component
+            if (!TryComp<SurgeryComponent>(uid, out var surgery))
+                return;
+
+            //check if entity sedated
+
+            //if not sedated, apply airloss based on tool usage (use PainShockDamage())
+
+            //get all entity body part slots and organ slots (and constituent parts and organs)
+            var bodyPartSlots = GetAllBodyPartSlots(uid);
+            var organSlots = GetOpenPartOrganSlots(bodyPartSlots);
+
+            //check if any are opened - set surgery Opened to true if any are
+            foreach (var slot in bodyPartSlots)
+            {
+                if (slot.Child is not null)
+                {
+                    var open = false;
+                    if (TryComp<BodyPartComponent>(slot.Child, out var bodyPart))
+                    {
+                        
+                        if ((bodyPart.Incisable && bodyPart.Incised) || (bodyPart.EndoSkeleton && bodyPart.EndoOpened) || (bodyPart.ExoSkeleton && bodyPart.ExoOpened) || bodyPart.Opened)
+                        {
+                            surgery.Opened = true;
+                            surgery.OpenedLastChecked = 0f;
+                            open = true;
+                            break;
+                        } 
+                    }
+                    if (!open) {
+                        surgery.Opened = false;
+                    }
+                }
+            }
+            
+            //check if any are clamped - set surgery Clamped to true if any are and update ClampedTime dict to include Clamped parts/organs
+            //remove any that are no longer clamped if they are in the clamped dict
+
+            //check clamp/cauterised/occupied status of all slots - if any are empty and not cauterised/clamped set either part or organ bleeding to true
+
+        }
 
         /// <summary>
         /// Sets the status of the part, whether it is open or not
@@ -98,7 +212,8 @@ namespace Content.Server.Surgery
 
             if (TryComp<BodyPartComponent>(bodyPart, out var bodyPartComp))
             {
-                if (bodyPartComp.Children != null) {
+                if (bodyPartComp.Children != null)
+                {
                     foreach (KeyValuePair<string, BodyPartSlot> partSlot in bodyPartComp.Children)
                     {
                         bodyPartSlots.Add(partSlot.Value);
@@ -119,7 +234,7 @@ namespace Content.Server.Surgery
 
             //using body uid, get root part slot's child (usually the torso)
             if (TryComp<BodyComponent>(bodyOwner, out var body))
-            {            
+            {
                 if (body.Root == null)
                     return new List<BodyPartSlot>();
 
@@ -128,16 +243,19 @@ namespace Content.Server.Surgery
                 if (rootPart == null)
                     return new List<BodyPartSlot>();
 
-            } else if (TryComp<BodyPartComponent>(bodyOwner, out var bodyPart)) {
+            }
+            else if (TryComp<BodyPartComponent>(bodyOwner, out var bodyPart))
+            {
                 rootPart = bodyOwner;
-            } else
+            }
+            else
                 return new List<BodyPartSlot>();
 
             //proceed to get all part slots
             var initialPartList = GetBodyPartSlots(rootPart);
             List<BodyPartSlot> additionalPartList = new List<BodyPartSlot>();
             //then check all parts from that
-            for (var i = 0; i<initialPartList.Count; i++)
+            for (var i = 0; i < initialPartList.Count; i++)
             {
                 void RecursiveGetSlots(BodyPartSlot bodyPartSlot)
                 {
@@ -194,30 +312,30 @@ namespace Content.Server.Surgery
             var bodyPartSlots = GetAllBodyPartSlots(uid);
             var organSlots = GetOpenPartOrganSlots(bodyPartSlots);
 
-            Dictionary<EntityUid,SharedPartStatus> slotParts = new Dictionary<EntityUid, SharedPartStatus>();
+            Dictionary<EntityUid, SharedPartStatus> slotParts = new Dictionary<EntityUid, SharedPartStatus>();
             foreach (var slot in bodyPartSlots)
                 if (slot.Child is not null)
                     if (TryComp<BodyPartComponent>(slot.Child, out var bodyPart))
                     {
                         var retracted = (bodyPart.Attachment != null && TryComp<SurgeryToolComponent>(bodyPart.Attachment, out var tool) && tool.Retractor);
-                        slotParts.Add(slot.Child.Value, new SharedPartStatus(bodyPart.PartType,retracted,bodyPart.Incised,bodyPart.Opened,bodyPart.EndoOpened,bodyPart.ExoOpened));
+                        slotParts.Add(slot.Child.Value, new SharedPartStatus(bodyPart.PartType, retracted, bodyPart.Incised, bodyPart.Opened, bodyPart.EndoOpened, bodyPart.ExoOpened));
                     }
 
-            var state = new SurgeryBoundUserInterfaceState(bodyPartSlots,organSlots, slotParts);
+            var state = new SurgeryBoundUserInterfaceState(bodyPartSlots, organSlots, slotParts);
             _userInterfaceSystem.TrySetUiState(uid, SurgeryUiKey.Key, state);
         }
 
         private void OnBodyPartAdded(EntityUid uid, SurgeryComponent component, ref BodyPartAddedEvent args)
         {
-            SetBodyStatusFromPartChange();
-            SetBodyStatusFromPartSlotChange();
+            //SetBodyStatusFromChange();
+            //SetBodyStatusFromChange();
             UpdateUiState(uid);
         }
 
         private void OnBodyPartRemoved(EntityUid uid, SurgeryComponent component, ref BodyPartRemovedEvent args)
         {
-            SetBodyStatusFromPartChange();
-            SetBodyStatusFromPartSlotChange();
+            //SetBodyStatusFromChange(uid, );
+            //SetBodyStatusFromChange();
             UpdateUiState(uid);
         }
 
@@ -237,7 +355,7 @@ namespace Content.Server.Surgery
 
             _bodySystem.RemovePartAttachment(bodyPart);
 
-            SetBodyStatusFromPartChange();
+            SetBodyStatusFromChange(target, ToolUsage.Retractor);
 
             UpdateUiState(target);
         }
@@ -256,7 +374,7 @@ namespace Content.Server.Surgery
 
             _handsSystem.PickupOrDrop(user, tool.Owner);
 
-            SetBodyStatusFromPartSlotChange();
+            SetBodyStatusFromChange(target, ToolUsage.LargeClamp);
 
             UpdateUiState(target);
         }
@@ -275,7 +393,7 @@ namespace Content.Server.Surgery
 
             _handsSystem.PickupOrDrop(user, tool.Owner);
 
-            SetBodyStatusFromPartSlotChange();
+            SetBodyStatusFromChange(target, ToolUsage.SmallClamp);
 
             UpdateUiState(target);
         }
@@ -340,13 +458,13 @@ namespace Content.Server.Surgery
         private async Task<bool> AttachRetractor(EntityUid user, SurgeryToolComponent tool, EntityUid target, BodyPartComponent bodyPart, HandsComponent userHands, bool timeOverride)
         {
             //check for incisable (technically everything is incisable, but we only care about organ containers for now)
-           if (!bodyPart.Incisable)
+            if (!bodyPart.Incisable)
                 return false;
 
             //check for attachment entity
             if (bodyPart.Attachment != null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("surgery-part-already-has-attachment"),user,user);
+                _popupSystem.PopupEntity(Loc.GetString("surgery-part-already-has-attachment"), user, user);
                 return false;
             }
 
@@ -359,7 +477,7 @@ namespace Content.Server.Surgery
 
             //attach retractor
             if (!timeOverride)
-                if (!(await ProcedureDoAfter(user, target, tool.RetractorTime*tool.RetractorTimeMod, tool))) return false;
+                if (!(await ProcedureDoAfter(user, target, tool.RetractorTime * tool.RetractorTimeMod, tool))) return false;
 
             //TODO sound
 
@@ -367,7 +485,7 @@ namespace Content.Server.Surgery
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-retractor-applied"), user, user);
 
-            SetBodyStatusFromPartChange();
+            SetBodyStatusFromChange(target, ToolUsage.Retractor);
 
             UpdateUiState(target);
 
@@ -398,7 +516,7 @@ namespace Content.Server.Surgery
 
             AttachToolToPartSlot(user, tool, bodyPartSlot, userHands);
 
-            SetBodyStatusFromPartSlotChange();
+            SetBodyStatusFromChange(target, ToolUsage.LargeClamp);
 
             UpdateUiState(target);
 
@@ -425,7 +543,7 @@ namespace Content.Server.Surgery
 
             AttachToolToOrganSlot(user, tool, organSlot, userHands);
 
-            SetBodyStatusFromPartSlotChange();
+            SetBodyStatusFromChange(target, ToolUsage.SmallClamp);
 
             UpdateUiState(target);
 
@@ -439,7 +557,8 @@ namespace Content.Server.Surgery
             if (!(bodyPart.Incisable) || bodyPart.Incised)
                 return false;
 
-            if (bodyPart.ExoSkeleton && !bodyPart.ExoOpened) {
+            if (bodyPart.ExoSkeleton && !bodyPart.ExoOpened)
+            {
                 _popupSystem.PopupEntity(Loc.GetString("surgery-exo-skeleton-blocking"), user, user);
                 return false;
             }
@@ -453,7 +572,7 @@ namespace Content.Server.Surgery
 
             _bodySystem.SetBodyPartIncised(bodyPart, true);
 
-            SetBodyStatusFromPartChange();
+            SetBodyStatusFromChange(target, ToolUsage.Incisor);
 
             UpdateUiState(target);
 
@@ -503,7 +622,14 @@ namespace Content.Server.Surgery
 
             _bodySystem.SetBodyPartIncised(bodyPart, false);
 
-            SetBodyStatusFromPartChange();
+            if (hardStitch)
+            {
+                SetBodyStatusFromChange(target, ToolUsage.HardSuture);
+            }
+            else
+            {
+                SetBodyStatusFromChange(target, ToolUsage.Suture);
+            }
 
             UpdateUiState(target);
 
@@ -524,7 +650,7 @@ namespace Content.Server.Surgery
             else if (bodyPart.ExoSkeleton)
                 endo = false;
             else
-                return false;        
+                return false;
 
             if (endo)
             {
@@ -548,7 +674,7 @@ namespace Content.Server.Surgery
                 _popupSystem.PopupEntity(Loc.GetString("surgery-exoskeleton-closed"), user, user);
             }
 
-            SetBodyStatusFromPartChange();
+            SetBodyStatusFromChange(target, ToolUsage.HardSuture);
 
             UpdateUiState(target);
 
@@ -576,9 +702,9 @@ namespace Content.Server.Surgery
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-wound-cauterised"), user, user);
 
-            _bodySystem.SetCauterisedPartSlot(bodyPartSlot,true);
+            _bodySystem.SetCauterisedPartSlot(bodyPartSlot, true);
 
-            SetBodyStatusFromPartSlotChange();
+            SetBodyStatusFromChange(target, ToolUsage.Cauterizer);
 
             UpdateUiState(target);
 
@@ -606,7 +732,7 @@ namespace Content.Server.Surgery
 
             _bodySystem.SetCauterisedOrganSlot(organSlot, true);
 
-            SetBodyStatusFromPartSlotChange();
+            SetBodyStatusFromChange(target, ToolUsage.Cauterizer);
 
             UpdateUiState(target);
 
@@ -630,7 +756,7 @@ namespace Content.Server.Surgery
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-body-part-removed"), user, user);
 
-            SetBodyStatusFromPartSlotChange(); //redundant?
+            SetBodyStatusFromChange(target, ToolUsage.Saw);
 
             UpdateUiState(target);
 
@@ -654,7 +780,7 @@ namespace Content.Server.Surgery
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-organ-removed"), user, user);
 
-            SetBodyStatusFromPartSlotChange(); //redundant? - use for organs too or have separate func?
+            SetBodyStatusFromChange(target, ToolUsage.Manipulator);
 
             UpdateUiState(target);
 
@@ -681,7 +807,7 @@ namespace Content.Server.Surgery
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-body-part-attached"), user, user);
 
-            SetBodyStatusFromPartSlotChange(); //redundant?
+            SetBodyStatusFromChange(target, ToolUsage.Drill);
 
             UpdateUiState(target);
 
@@ -717,7 +843,14 @@ namespace Content.Server.Surgery
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-organ-attached"), user, user);
 
-            SetBodyStatusFromPartSlotChange(); //redundant?
+            if (tool.Suture)
+            {
+                SetBodyStatusFromChange(target, ToolUsage.Suture);
+            }
+            else if (tool.HardSuture)
+            {
+                SetBodyStatusFromChange(target, ToolUsage.HardSuture);
+            }
 
             UpdateUiState(target);
 
@@ -738,7 +871,7 @@ namespace Content.Server.Surgery
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-endoskeleton-opened"), user, user);
 
-            SetBodyStatusFromPartChange();
+            SetBodyStatusFromChange(target, ToolUsage.Saw);
 
             UpdateUiState(target);
 
@@ -759,7 +892,7 @@ namespace Content.Server.Surgery
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-exoskeleton-opened"), user, user);
 
-            SetBodyStatusFromPartChange();
+            SetBodyStatusFromChange(target, ToolUsage.Saw);
 
             UpdateUiState(target);
 
@@ -779,7 +912,7 @@ namespace Content.Server.Surgery
                 return await OpenExo(user, tool, target, bodyPart, userHands, timeOverride);
             }
             //if its not incised, has no exo or an open exo, is not a root part, then remove the part from its slot
-            else if (!bodyPart.Incised && (!bodyPart.ExoSkeleton || bodyPart.ExoOpened) && bodyPart.ParentSlot is not null &&!bodyPart.ParentSlot.IsRoot)
+            else if (!bodyPart.Incised && (!bodyPart.ExoSkeleton || bodyPart.ExoOpened) && bodyPart.ParentSlot is not null && !bodyPart.ParentSlot.IsRoot)
             {
                 return await RemovePart(user, tool, target, bodyPart, userHands, timeOverride);
             }
@@ -793,7 +926,7 @@ namespace Content.Server.Surgery
                 }
 
                 return await OpenEndo(user, tool, target, bodyPart, userHands, timeOverride);
-            }      
+            }
             else
             {
                 return false;
@@ -805,8 +938,6 @@ namespace Content.Server.Surgery
             if (args.Session.AttachedEntity is not { Valid: true } user ||
                 !TryComp<HandsComponent>(user, out var userHands))
                 return;
-
-            Logger.Debug(user.ToString());
 
             //TODO check if patient is standing
 
@@ -904,7 +1035,7 @@ namespace Content.Server.Surgery
                 {
                     timeOverride = await CauterisePartSlot(user, tool, uid, args.Slot, userHands, timeOverride); //will only work if said slot is empty
                 }
-                
+
                 if (args.Slot.Child != null && TryComp<BodyPartComponent>(args.Slot.Child, out var operatedPart))
                     SetPartStatus(operatedPart);
 
@@ -917,13 +1048,14 @@ namespace Content.Server.Surgery
                     //remove part attachment
                     if (TryComp<SurgeryToolComponent>(part.Attachment, out var attachedTool))
                         RemoveToolFromPart(user, attachedTool, component.Owner, part, userHands);
-                } else if (args.Slot.Attachment != null)
+                }
+                else if (args.Slot.Attachment != null)
                 {
                     //remove part slot attachment
                     if (TryComp<SurgeryToolComponent>(args.Slot.Attachment, out var attachedTool))
                         RemoveToolFromPartSlot(user, attachedTool, component.Owner, args.Slot, userHands);
                 }
-                
+
                 if (args.Slot.Child != null && TryComp<BodyPartComponent>(args.Slot.Child, out var operatedPart))
                     SetPartStatus(operatedPart);
 
@@ -948,8 +1080,6 @@ namespace Content.Server.Surgery
             if (args.Session.AttachedEntity is not { Valid: true } user ||
                 !TryComp<HandsComponent>(user, out var userHands))
                 return;
-
-            Logger.Debug(user.ToString());
 
             //check for surgical tool in active hand   
             if (userHands.ActiveHandEntity != null && TryComp<SurgeryToolComponent>(userHands.ActiveHandEntity, out var tool))
@@ -1095,5 +1225,19 @@ namespace Content.Server.Surgery
 
             args.Verbs.Add(verb);
         }*/
+
+        private void OnSurgeryInit(EntityUid uid, SurgeryComponent body, ComponentInit args)
+        {
+            body.UsageShock[ToolUsage.Incisor] = body.IncisorShockDamage;
+            body.UsageShock[ToolUsage.SmallClamp] = body.SmallClampShockDamage;
+            body.UsageShock[ToolUsage.LargeClamp] = body.LargeClampShockDamage;
+            body.UsageShock[ToolUsage.Saw] = body.SawShockDamage;
+            body.UsageShock[ToolUsage.Drill] = body.DrillShockDamage;
+            body.UsageShock[ToolUsage.Suture] = body.SutureShockDamage;
+            body.UsageShock[ToolUsage.HardSuture] = body.HardSutureShockDamage;
+            body.UsageShock[ToolUsage.Cauterizer] = body.CauterizerShockDamage;
+            body.UsageShock[ToolUsage.Manipulator] = body.ManipulatorShockDamage;
+            body.UsageShock[ToolUsage.Retractor] = body.RetractorShockDamage;
+        }
     }
 }

@@ -6,7 +6,6 @@
   parent: PartAnimal
   noSpawn: true
   components:
-  - type: Surgery
   - type: UserInterface
     interfaces:
       - key: enum.SurgeryUiKey.Key

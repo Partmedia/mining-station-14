@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 
 namespace Content.Server.Surgery
 {
@@ -8,18 +9,49 @@ namespace Content.Server.Surgery
         /// <summary>
         ///     Update whenever a part or organ is removed, replaced, or whenever a clamp or cautery is used
         ///     Check all parts and determine if the owner is still bleeding
-        ///     Periodically apply bleeding damage if they are
         ///     <see cref="SurgeryComponent"/>
         /// </summary>
         public bool Bleeding = false;
+        public float SurgeryBleed = 0f;
+        public float BasePartBleed = 10f;
+        public float BaseOrganBleed = 5f;
+
+        public float BleedLastChecked = 0f;
+        public float BleedCheckInterval = 5f;
+
+        /// <summary>
+        ///     Necrosis timers
+        ///     If a clamp has been on for too long and a part/organ is still attached to slot then deal cellular damage to the entity
+        ///     When part/organ damage implemented, apply to part/organ in slot
+        ///     <see cref="SurgeryComponent"/>
+        /// </summary>
+        public bool Clamped = false;
+        public Dictionary<EntityUid, float> ClampedTimes = new Dictionary<EntityUid, float>();
+        public float BaseNecrosisTimeThreshold = 600f; //give them a decent amount of time to figure it out, say 10 minutes?
+        public bool Necrosis = false;
+
+        [DataField("necrosisDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier NecrosisDamage = default!; //if necrosis starts happening, give them time to work it out before they incur too much cellular damage
+
+        public float ClampLastChecked = 0f;
+        public float ClampCheckInterval = 1f;
 
         /// <summary>
         ///     Update whenever a part or skeleton is opened or closed
         ///     Check all parts and determine if the owner is still open or partially opened
-        ///     Periodically apply blunt damage if owner moves and is not buckled (they can move from one buckle to another if done carefully)
+        ///     Periodically apply blunt damage if owner is not buckled/prone (they can move from one buckle to another if done carefully)
         ///     <see cref="SurgeryComponent"/>
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool Opened = false;
+
+        [DataField("openedDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier OpenedDamage = default!;
+
+        public float OpenedLastChecked = 0f;
+        public float OpenedCheckInterval = 15f; //give them enough time to move someone to another bed, with an effective (but not actually) random chance of hurting them during
 
         /// <summary>
         ///     Update whenever the owner is sedated or the sedation timer runs out
@@ -29,35 +61,47 @@ namespace Content.Server.Surgery
         /// </summary>
         public bool Sedated = false;
 
-        [DataField("incisorShockDamage")]
-        public float IncisorShockDamage = 20f;
+        [DataField("incisorShockDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier IncisorShockDamage = default!;//20f;
 
-        [DataField("smallClampShockDamage")]
-        public float SmallClampShockDamage = 0f;
+        [DataField("smallClampShockDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier SmallClampShockDamage = default!;//0f;
 
-        [DataField("largeClampShockDamage")]
-        public float LargeClampShockDamage = 0f;
+        [DataField("largeClampShockDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier LargeClampShockDamage = default!;//0f;
 
-        [DataField("sawShockDamage")]
-        public float SawShockDamage = 75f;
+        [DataField("sawShockDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier SawShockDamage = default!;//75f;
 
-        [DataField("drillShockDamage")]
-        public float DrillShockDamage = 25f;
+        [DataField("drillShockDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier DrillShockDamage = default!;//25f;
 
-        [DataField("sutureShockDamage")]
-        public float SutureShockDamage = 10f;
+        [DataField("sutureShockDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier SutureShockDamage = default!;//10f;
 
-        [DataField("hardSutureShockDamage")]
-        public float HardSutureShockDamage = 15f;
+        [DataField("hardSutureShockDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier HardSutureShockDamage = default!;//15f;
 
-        [DataField("cauterizerShockDamage")]
-        public float CauterizerShockDamage = 15f;
+        [DataField("cauterizerShockDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier CauterizerShockDamage = default!;//15f;
 
-        [DataField("manipulatorShockDamage")]
-        public float ManipulatorShockDamage = 10f;
+        [DataField("manipulatorShockDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier ManipulatorShockDamage = default!;//10f;
 
-        [DataField("retractorShockDamage")]
-        public float RetractorShockDamage = 10f;
+        [DataField("retractorShockDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier RetractorShockDamage = default!;//10f;
+
+        public Dictionary<ToolUsage, DamageSpecifier> UsageShock = new Dictionary<ToolUsage, DamageSpecifier>();
 
         /// <summary>
         ///     Update based on the sedative applied, then periodically update

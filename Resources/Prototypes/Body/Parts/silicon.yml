@@ -4,7 +4,6 @@
   name: "silicon body part"
   abstract: true
   components:
-  - type: Surgery
   - type: UserInterface
     interfaces:
       - key: enum.SurgeryUiKey.Key
