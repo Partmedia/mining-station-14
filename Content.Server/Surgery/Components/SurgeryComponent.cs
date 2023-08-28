@@ -11,10 +11,15 @@ namespace Content.Server.Surgery
         ///     Check all parts and determine if the owner is still bleeding
         ///     <see cref="SurgeryComponent"/>
         /// </summary>
-        public bool Bleeding = false;
+        public bool OrganBleeding = false;
+        public bool PartBleeding = false;
+
+        public float InitialOrganBloodloss = 15f;
+        public float InitialPartBloodloss = 30f;
+
         public float SurgeryBleed = 0f;
-        public float BasePartBleed = 10f;
-        public float BaseOrganBleed = 5f;
+        public float BasePartBleed = 20f;
+        public float BaseOrganBleed = 15f;
 
         public float BleedLastChecked = 0f;
         public float BleedCheckInterval = 5f;

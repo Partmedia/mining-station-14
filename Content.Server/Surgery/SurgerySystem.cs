@@ -14,7 +14,9 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Body.Systems;
+using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
+using Content.Server.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Organ;
@@ -22,7 +24,6 @@ using Robust.Shared.Containers;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Standing;
 using Content.Shared.Damage;
-using Content.Server.Body.Systems;
 using Content.Shared.Bed.Sleep;
 using Content.Server.Bed.Sleep;
 using Content.Server.Speech.Components;
@@ -83,7 +84,14 @@ namespace Content.Server.Surgery
                     }
                 }
                 //Bleed Check
-                CalculateBleed();
+                if (surgery.OrganBleeding || surgery.PartBleeding)
+                {
+                    surgery.BleedLastChecked += frameTime;
+                    if (surgery.BleedLastChecked >= surgery.BleedCheckInterval)
+                    {
+                        CalculateBleed(surgery.Owner, surgery);
+                    }
+                }
 
                 //Clamped Check
                 var clampedTimes = surgery.ClampedTimes.Values.ToArray();
@@ -121,19 +129,30 @@ namespace Content.Server.Surgery
         /// Ensure bleed is equal to b + s where b is the entity bleed outside of surgery and s is surgery bleed (part or organ)
         /// If the surgery bleeding is stopped and all surgical wounds sealed, reduce bleed by s
         /// </summary>
-        private void CalculateBleed()
+        private void CalculateBleed(EntityUid uid, SurgeryComponent body)
         {
 
             //Get entity bleed damage bloodstream component
+            if (!TryComp<BloodstreamComponent>(uid, out var bloodstream))
+                return;
 
             //Get last SurgeryBleed value from surgery component
+            var currentBleed = body.SurgeryBleed;
 
             //Negate SurgeryBleed from EntityBleed to determine Bleed independent of surgery (minium 0)
+            var nonSurgeryBleed = Math.Max(bloodstream.BleedAmount - body.SurgeryBleed, 0f);
 
             //Add that value with organ bleed or part bleed, which ever is greater (and applicable)
+            var newBleed = nonSurgeryBleed;
+            if (body.PartBleeding)
+                newBleed += body.BasePartBleed;
+            else if (body.OrganBleeding)
+                newBleed += body.BaseOrganBleed;
+
 
             //Modify Bleed for bloodstream component to be equal to that value
-            //_bloodstreamSystem.TryModifyBleedAmount()
+            if (_bloodstreamSystem.TryModifyBleedAmount(uid, newBleed - bloodstream.BleedAmount, bloodstream))
+                body.SurgeryBleed = newBleed;
 
             //The result should ensure that entity bleeding is allowed to occur normally while surgery bleed is continuously maintained
             //Entity bleed heals over time on its own or via other methods, but surgery bleed can only be stopped by direct surgical interaction - effectively being constant
@@ -181,33 +200,63 @@ namespace Content.Server.Surgery
             var organSlots = GetOpenPartOrganSlots(bodyPartSlots);
 
             //check if any are opened - set surgery Opened to true if any are
+            var open = false;
             foreach (var slot in bodyPartSlots)
             {
-                if (slot.Child is not null)
+                if (slot.Child is not null && TryComp<BodyPartComponent>(slot.Child, out var bodyPart))
                 {
-                    var open = false;
-                    if (TryComp<BodyPartComponent>(slot.Child, out var bodyPart))
+                    if ((bodyPart.Incisable && bodyPart.Incised) || (bodyPart.EndoSkeleton && bodyPart.EndoOpened) || (bodyPart.ExoSkeleton && bodyPart.ExoOpened) || bodyPart.Opened)
                     {
-                        
-                        if ((bodyPart.Incisable && bodyPart.Incised) || (bodyPart.EndoSkeleton && bodyPart.EndoOpened) || (bodyPart.ExoSkeleton && bodyPart.ExoOpened) || bodyPart.Opened)
-                        {
-                            surgery.Opened = true;
-                            surgery.OpenedLastChecked = 0f;
-                            open = true;
-                            break;
-                        } 
-                    }
-                    if (!open) {
-                        surgery.Opened = false;
-                    }
+                        surgery.OpenedLastChecked = 0f;
+                        open = true;
+                        break;
+                    } 
                 }
             }
-            
+            surgery.Opened = open;
+
             //check if any are clamped - set surgery Clamped to true if any are and update ClampedTime dict to include Clamped parts/organs
             //remove any that are no longer clamped if they are in the clamped dict
 
-            //check clamp/cauterised/occupied status of all slots - if any are empty and not cauterised/clamped set either part or organ bleeding to true
+            if (TryComp<BloodstreamComponent>(uid, out var bloodstream)) {
+                //check clamp/cauterised/occupied status of all slots - if any are empty and not cauterised/clamped set either part or organ bleeding to true
+                var partNotClamped = false;
+                var currentPartBleed = surgery.PartBleeding;
+                var currentOrganBleed = surgery.OrganBleeding;
+                foreach (var slot in bodyPartSlots)
+                {
+                    if (slot.Child is null && !slot.Cauterised && (slot.Attachment is null || !TryComp<SurgeryToolComponent>(slot.Attachment, out var tool) || !tool.LargeClamp))
+                    {
+                        partNotClamped = true;
+                        break;
+                    }
+                }
 
+                surgery.PartBleeding = partNotClamped;
+                //if the patient has gone from not bleeding to bleeding, run an initial bloodloss
+                if (!currentPartBleed && surgery.PartBleeding) {
+                    //if the part bleed is new but there was a bleeding organ, only make up the difference
+                    if (!currentOrganBleed)
+                        _bloodstreamSystem.TryModifyBloodLevel(uid, -surgery.InitialPartBloodloss, bloodstream);
+                    else
+                        _bloodstreamSystem.TryModifyBloodLevel(uid, -(Math.Abs(surgery.InitialPartBloodloss - surgery.InitialOrganBloodloss)), bloodstream);
+                }
+
+                var organNotClamped = false;
+
+                foreach (var slot in organSlots)
+                {
+                    if (slot.Child is null && !slot.Cauterised && (slot.Attachment is null || !TryComp<SurgeryToolComponent>(slot.Attachment, out var tool) || !tool.SmallClamp))
+                    {
+                        organNotClamped = true;
+                        break;
+                    }
+                }
+                surgery.OrganBleeding = organNotClamped;
+                //if the patient has gone from not bleeding to bleeding, run an initial bloodloss
+                if (!currentPartBleed && !currentOrganBleed && surgery.OrganBleeding)
+                    _bloodstreamSystem.TryModifyBloodLevel(uid, -surgery.InitialOrganBloodloss, bloodstream);
+            }
         }
 
         /// <summary>
