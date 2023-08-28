@@ -59,6 +59,7 @@ namespace Content.Server.Surgery
         ///     Airloss applied should be based on relevant shock values multiplied by any time mods (a slow or improper procedure will lead to more pain)
         ///     <see cref="SurgeryComponent"/>
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool Sedated = false;
 
         [DataField("incisorShockDamage", required: true)]
@@ -103,12 +104,5 @@ namespace Content.Server.Surgery
 
         public Dictionary<ToolUsage, DamageSpecifier> UsageShock = new Dictionary<ToolUsage, DamageSpecifier>();
 
-        /// <summary>
-        ///     Update based on the sedative applied, then periodically update
-        ///     Sedative will stop working whenever this value reaches or otherwise equals 0
-        ///     Note that sleep is not necessarily the same as sedation and that one may outlast the other if they happen to occur at the same time
-        ///     <see cref="SurgeryComponent"/>
-        /// </summary>
-        public float SedationTime = 0f;
     }
 }

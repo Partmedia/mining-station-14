@@ -23,6 +23,9 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Standing;
 using Content.Shared.Damage;
 using Content.Server.Body.Systems;
+using Content.Shared.Bed.Sleep;
+using Content.Server.Bed.Sleep;
+using Content.Server.Speech.Components;
 
 namespace Content.Server.Surgery
 {
@@ -38,6 +41,7 @@ namespace Content.Server.Surgery
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+        [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
 
         public override void Initialize()
         {
@@ -61,8 +65,6 @@ namespace Content.Server.Surgery
             SubscribeLocalEvent<SurgeryComponent, OrganSlotButtonPressed>(OnOrganButtonPressed);
         }
 
-
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -85,7 +87,14 @@ namespace Content.Server.Surgery
 
                 //Clamped Check
                 var clampedTimes = surgery.ClampedTimes.Values.ToArray();
-            }
+
+                //check if entity has the forced sleep status effect, if they do set Sedated = true, else false
+                //TODO forced sleep =/= sedation, will include a dedicated status effect at some point for non-sleeping sedatives (also narcolepsy should not be as useful as anaesthetic)
+                if (TryComp<ForcedSleepingComponent>(surgery.Owner, out var sleep))
+                    surgery.Sedated = true;
+                else
+                    surgery.Sedated = false;
+            }   
         }
 
         public void CheckOpenedBuckled(EntityUid uid, SurgeryComponent surgery)
@@ -131,6 +140,28 @@ namespace Content.Server.Surgery
             //But once addressed, surgery bleed is taken away immediately
         }
 
+        private void CheckPainShockDamage(EntityUid uid, ToolUsage toolUsage, SurgeryComponent body)
+        {
+            //check if entity is sedacted
+            if (body.Sedated)
+                return;
+
+            //if not, deal damage based on tool usage
+            if (body.UsageShock.ContainsKey(toolUsage) && body.UsageShock[toolUsage].Total > 0)
+                _damageableSystem.TryChangeDamage(uid, body.UsageShock[toolUsage], ignoreResistances: true);
+            else
+                return;
+
+            //force the entity awake
+            if (TryComp<SleepingComponent>(uid, out var sleeping))
+                _sleepingSystem.TryWaking(uid, sleeping);
+
+            //make them scream
+            if (TryComp<VocalComponent>(uid, out var vocal))
+                RaiseLocalEvent(uid, new ScreamActionEvent());
+
+        }
+
         /// <summary>
         /// Handles status effects such as bleeding and opened for when a part/organ/slot is affected
         /// Applies "shock" (airloss) damage is the body is not sedated
@@ -142,9 +173,8 @@ namespace Content.Server.Surgery
             if (!TryComp<SurgeryComponent>(uid, out var surgery))
                 return;
 
-            //check if entity sedated
-
             //if not sedated, apply airloss based on tool usage (use PainShockDamage())
+            CheckPainShockDamage(uid, toolUsage, surgery);
 
             //get all entity body part slots and organ slots (and constituent parts and organs)
             var bodyPartSlots = GetAllBodyPartSlots(uid);
