@@ -11,7 +11,7 @@
         Blunt: 5
     necrosisDamage:
       types:
-        Cellular: 5
+        Cellular: 0.25
     incisorShockDamage:
       types:
         Asphyxiation: 20

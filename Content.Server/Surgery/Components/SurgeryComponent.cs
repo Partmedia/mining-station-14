@@ -30,9 +30,12 @@ namespace Content.Server.Surgery
         ///     When part/organ damage implemented, apply to part/organ in slot
         ///     <see cref="SurgeryComponent"/>
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool Clamped = false;
+        [ViewVariables(VVAccess.ReadWrite)]
         public Dictionary<EntityUid, float> ClampedTimes = new Dictionary<EntityUid, float>();
         public float BaseNecrosisTimeThreshold = 600f; //give them a decent amount of time to figure it out, say 10 minutes?
+
         public bool Necrosis = false;
 
         [DataField("necrosisDamage", required: true)]

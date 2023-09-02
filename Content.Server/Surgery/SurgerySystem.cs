@@ -94,7 +94,27 @@ namespace Content.Server.Surgery
                 }
 
                 //Clamped Check
-                var clampedTimes = surgery.ClampedTimes.Values.ToArray();
+                if (surgery.Clamped)
+                {
+                    surgery.ClampLastChecked += frameTime;
+                    if (surgery.ClampLastChecked >= surgery.ClampCheckInterval)
+                    {
+                        var clampedEntities = surgery.ClampedTimes.Keys.ToArray();
+                        foreach (var entity in clampedEntities)
+                        {
+                            if (surgery.ClampedTimes.ContainsKey(entity))
+                            {
+                                surgery.ClampedTimes[entity] += surgery.ClampLastChecked;
+                            }
+                        }
+
+                        var clampedTimes = surgery.ClampedTimes.Values.ToArray();
+
+                        CheckClampNecrosis(surgery.Owner, surgery, clampedTimes);
+
+                        surgery.ClampLastChecked = 0;
+                    }
+                }
 
                 //check if entity has the forced sleep status effect, if they do set Sedated = true, else false
                 //TODO forced sleep =/= sedation, will include a dedicated status effect at some point for non-sleeping sedatives (also narcolepsy should not be as useful as anaesthetic)
@@ -103,6 +123,29 @@ namespace Content.Server.Surgery
                 else
                     surgery.Sedated = false;
             }   
+        }
+
+        public void CheckClampNecrosis(EntityUid uid, SurgeryComponent surgery, float[] clampTimes)
+        {
+            var necrosis = false;
+            foreach (var time in clampTimes)
+            {
+                if (time > surgery.BaseNecrosisTimeThreshold)
+                {
+                    necrosis = true;
+                    break;
+                }
+
+            }
+            if (necrosis)
+            {
+                _damageableSystem.TryChangeDamage(uid, surgery.NecrosisDamage, ignoreResistances: true);
+                if (!surgery.Necrosis)
+                {
+                    surgery.Necrosis = true;
+                    _popupSystem.PopupEntity("you feel a tingling pain followed by numbness", uid, uid); //TODO loc
+                }
+            }
         }
 
         public void CheckOpenedBuckled(EntityUid uid, SurgeryComponent surgery)
@@ -217,6 +260,43 @@ namespace Content.Server.Surgery
 
             //check if any are clamped - set surgery Clamped to true if any are and update ClampedTime dict to include Clamped parts/organs
             //remove any that are no longer clamped if they are in the clamped dict
+            List<EntityUid> newClampedEntities = new List<EntityUid>();
+            foreach (var slot in bodyPartSlots)
+            {
+                if (slot.Child is not null && (slot.Attachment is not null && TryComp<SurgeryToolComponent>(slot.Attachment, out var tool) && tool.LargeClamp))
+                {
+                    newClampedEntities.Add(slot.Child.Value);
+                }
+            }
+            foreach (var slot in organSlots)
+            {
+                if (slot.Child is not null && (slot.Attachment is not null && TryComp<SurgeryToolComponent>(slot.Attachment, out var tool) && tool.SmallClamp))
+                {
+                    newClampedEntities.Add(slot.Child.Value);
+                }
+            }
+
+            if (newClampedEntities.Count() > 0)
+                surgery.Clamped = true;
+            else
+            {
+                surgery.Clamped = false;
+                surgery.Necrosis = false;
+            }
+
+            if (surgery.Clamped)
+            {
+                //add new clamped entities
+                foreach (var entity in newClampedEntities)
+                {
+                    if (!surgery.ClampedTimes.ContainsKey(entity))
+                        surgery.ClampedTimes[entity] = 0f;
+                }
+                //remove no longer clamped entities
+                foreach (var entity in surgery.ClampedTimes.Keys.ToArray())
+                    if (!newClampedEntities.Contains(entity))
+                        surgery.ClampedTimes.Remove(entity);
+            }
 
             if (TryComp<BloodstreamComponent>(uid, out var bloodstream)) {
                 //check clamp/cauterised/occupied status of all slots - if any are empty and not cauterised/clamped set either part or organ bleeding to true
