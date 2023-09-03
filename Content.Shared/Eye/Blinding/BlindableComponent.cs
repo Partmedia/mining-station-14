@@ -31,6 +31,8 @@ namespace Content.Shared.Eye.Blinding
         [ViewVariables]
         public bool EyeTooDamaged = false;
 
+        public int MaxDamage = 8;
+
         /// <description>
         /// Used to ensure that this doesn't break with sandbox or admin tools.
         /// This is not "enabled/disabled".

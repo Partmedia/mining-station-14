@@ -7,6 +7,10 @@
       part: HeadSlime
       connections:
       - torso
+      organs:
+        eyes:
+          type: Eye
+          internal: false
     torso:
       part: TorsoSlime
       connections:

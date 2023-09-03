@@ -51,6 +51,7 @@
       - state: eyeball-r
   - type: Organ
     organType: Eye
+  - type: EyeSight
 
 - type: entity
   id: OrganHumanTongue

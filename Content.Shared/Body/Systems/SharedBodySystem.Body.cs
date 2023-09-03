@@ -125,12 +125,13 @@ public partial class SharedBodySystem
             }
             else if (childSlot.SlotType != null)
             {
-                var slot = CreatePartSlot(connection, parent.Owner, childSlot.SlotType.Value, parent);
+                var slot = CreatePartSlot(connection, parent.Owner, childSlot.SlotType.Value, parent);          
                 if (slot == null)
                 {
                     Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
                     continue;
                 }
+                slot.Cauterised = true;
                 AttachPart(null, slot);
             }           
             else
@@ -153,6 +154,9 @@ public partial class SharedBodySystem
                     var organ = Spawn(organSlot.Value.Organ, coordinates);
                     var organComponent = Comp<OrganComponent>(organ);
                     InsertOrgan(organ, slot, organComponent);
+                } else
+                {
+                    slot.Cauterised = true;
                 }
             }
         }
