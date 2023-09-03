@@ -134,6 +134,7 @@
       types:
         Asphyxiation: 30
     embedded: true
+  - type: EyeSight
   - type: DiseaseCarrier
     naturalImmunities:
     - Ultragigacancer
