@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Systems;
+using Content.Server.Body.Systems;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -63,6 +63,12 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField("groups")]
         public List<MetabolismGroupEntry>? MetabolismGroups = default!;
+
+        public List<string> Toxins = new List<string> { "Poison", "Alcohol", "Narcotic" }; //these groups require special treatment
+
+        public float BaseToxinRemovalRate = 0.25f; //if the body has no kidneys (or equiv), this is the rate of removal for toxins
+        public float UnfilteredToxinRate = 0.1f; //if the body has no liver (or equiv), this is rate of additional toxins added
+        public string UnfilteredToxinReagent = "Toxin";
     }
 
     /// <summary>

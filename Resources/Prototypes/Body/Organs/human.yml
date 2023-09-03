@@ -173,6 +173,9 @@
     state: liver
   - type: Organ
     organType: Liver
+  - type: Liver
+  - type: ToxinFilter
+    embedded: true
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
     maxReagents: 1
     metabolizerTypes: [Human]
@@ -192,6 +195,9 @@
       - state: kidney-r
   - type: Organ
     organType: Kidney
+  - type: Kidney
+  - type: ToxinRemover
+    embedded: true
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
   - type: Metabolizer
     maxReagents: 5
