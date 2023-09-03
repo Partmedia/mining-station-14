@@ -100,6 +100,12 @@
     notWorkingDamage:
       types:
         Asphyxiation: 30
+  - type: Liver #if its brain is also its lungs, then I'm making its stomach also its liver and kidneys okay?
+  - type: Kidney
+  - type: ToxinRemover 
+    embedded: true
+  - type: ToxinFilter
+    embedded: true
   - type: Metabolizer
     maxReagents: 6
     metabolizerTypes: [ Plant ]
