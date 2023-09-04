@@ -91,6 +91,20 @@
     FluorosulfuricAcid: 4
 
 - type: reaction
+  id: FerrochromicAcid
+  reactants:
+    Iron:
+      amount: 2
+    Copper:
+      amount: 1
+    Hydrogen:
+      amount: 1
+    Oxygen:
+      amount: 2
+  products:
+    FerrochromicAcid: 6
+
+- type: reaction
   id: PotassiumExplosion
   impact: High
   priority: 20

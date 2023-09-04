@@ -26,6 +26,20 @@
     Sodium: 0.09
     Chlorine: 0.09
 
+- type: bioReagentGroup
+  id: ArgoCreature
+  reagentProportions:
+    Nitrogen: 9.25
+    Silicon: 8.32
+    Hydrogen: 4.5
+    Oxygen: 1.44
+    Iron: 5
+    Copper: 5
+    Phosphorus: 5
+    Potassium: 1.8
+    Sulfur: 5
+    Sodium: 0.9
+    Chlorine: 0.9
 
 #foods already have reagents assigned to them - these are for husks that are left...
 
