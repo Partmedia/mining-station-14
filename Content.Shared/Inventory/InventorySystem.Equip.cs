@@ -11,11 +11,13 @@ using Content.Shared.Item;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
+using Content.Shared.Body.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Shared.Body.Part;
 
 namespace Content.Shared.Inventory;
 
@@ -34,6 +36,7 @@ public abstract partial class InventorySystem
         //these events ensure that the client also gets its proper events raised when getting its containerstate updated
         SubscribeLocalEvent<InventoryComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        SubscribeLocalEvent<InventoryComponent, BodyPartRemovedEvent>(OnBodyPartRemoved);
 
         SubscribeAllEvent<UseSlotNetworkMessage>(OnUseSlot);
     }
@@ -97,6 +100,26 @@ public abstract partial class InventorySystem
 
         var gotEquippedEvent = new GotEquippedEvent(uid, args.Entity, slotDef);
         RaiseLocalEvent(args.Entity, gotEquippedEvent, true);
+    }
+
+    private void OnBodyPartRemoved(EntityUid uid, InventoryComponent component, ref BodyPartRemovedEvent args)
+    {
+        var bodyPartTypes = GetBodyPartTypes(uid);
+
+        if (!TryComp(uid, out InventoryComponent? inv)
+            || !_prototypeManager.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var prototype))
+            return;
+
+        foreach (var slotDef in prototype.Slots)
+        {
+
+            if(slotDef.BodyPart != null && !bodyPartTypes.Contains(slotDef.BodyPart))
+            {
+                TryUnequip(uid, slotDef.Name, true, true, false);
+            }
+            
+        }
+
     }
 
     /// <summary>
@@ -248,6 +271,95 @@ public abstract partial class InventorySystem
             HasComp<SharedHandsComponent>(actor);
     }
 
+    private List<BodyPartSlot> GetBodyPartSlots(EntityUid? bodyPart)
+    {
+        List<BodyPartSlot> bodyPartSlots = new List<BodyPartSlot>();
+
+        if (TryComp<BodyPartComponent>(bodyPart, out var bodyPartComp))
+        {
+            if (bodyPartComp.Children != null)
+            {
+                foreach (KeyValuePair<string, BodyPartSlot> partSlot in bodyPartComp.Children)
+                {
+                    bodyPartSlots.Add(partSlot.Value);
+                }
+            }
+        }
+
+        return bodyPartSlots;
+    }
+
+    private List<string> GetBodyPartTypes(EntityUid bodyOwner)
+    {
+        EntityUid? rootPart;
+
+        //using body uid, get root part slot's child (usually the torso)
+        if (TryComp<BodyComponent>(bodyOwner, out var body))
+        {
+            if (body.Root == null)
+                return new List<string>();
+
+            rootPart = body.Root.Child;
+
+            if (rootPart == null)
+                return new List<string>();
+
+        }
+        else if (TryComp<BodyPartComponent>(bodyOwner, out var bodyPart))
+        {
+            rootPart = bodyOwner;
+        }
+        else
+            return new List<string>();
+
+        //proceed to get all part slots
+        var bodyPartList = GetBodyPartSlots(rootPart);
+        List<BodyPartSlot> additionalPartList = new List<BodyPartSlot>();
+        //then check all parts from that
+        for (var i = 0; i < bodyPartList.Count; i++)
+        {
+            void RecursiveGetSlots(BodyPartSlot bodyPartSlot)
+            {
+                if (bodyPartSlot.Child == null)
+                    return;
+
+                var subPartList = GetBodyPartSlots(bodyPartSlot.Child);
+                for (var j = 0; j < subPartList.Count; j++)
+                {
+                    RecursiveGetSlots(subPartList[j]);
+                }
+                additionalPartList.AddRange(subPartList);
+            }
+            RecursiveGetSlots(bodyPartList[i]);
+        }
+        bodyPartList.AddRange(additionalPartList);
+
+        if (TryComp<BodyPartComponent>(rootPart, out var bodyPartComp) && bodyPartComp.ParentSlot != null)
+        {
+            bodyPartList.Add(bodyPartComp.ParentSlot);
+        }
+        else if (bodyPartComp != null && rootPart != null)
+        {
+            var tempSelfSlot = new BodyPartSlot("self", rootPart.Value, bodyPartComp.PartType);
+            tempSelfSlot.Child = rootPart;
+            tempSelfSlot.IsRoot = true;
+            bodyPartList.Add(tempSelfSlot);
+        }
+
+        List<string> bodyPartTypeList = new List<string>();
+        foreach (var partSlot in bodyPartList)
+        {
+            if (partSlot.Child != null && partSlot.Type != null)
+            {
+                var bodyPartType = Enum.GetName(partSlot.Type.GetType(), partSlot.Type);
+                if (bodyPartType != null)
+                    bodyPartTypeList.Add(bodyPartType);
+            }
+        }
+
+        return bodyPartTypeList;
+    }
+
     public bool CanEquip(EntityUid uid, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason,
         SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null,
         ClothingComponent? clothing = null, ItemComponent? item = null) =>
@@ -266,6 +378,11 @@ public abstract partial class InventorySystem
             return false;
 
         if (slotDefinition.DependsOn != null && !TryGetSlotEntity(target, slotDefinition.DependsOn, out _, inventory))
+            return false;
+
+        var bodyPartTypes = GetBodyPartTypes(target);
+
+        if (slotDefinition.BodyPart != null && !bodyPartTypes.Contains(slotDefinition.BodyPart))
             return false;
 
         var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) && item is { Size: <= (int) ReferenceSizes.Pocket };
