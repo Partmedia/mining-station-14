@@ -11,6 +11,7 @@ namespace Content.Server.Body.Systems
     public sealed class BrainSystem : EntitySystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly CirculatoryPumpSystem _pumpSystem = default!;
 
         public override void Initialize()
         {
@@ -59,6 +60,10 @@ namespace Content.Server.Body.Systems
             oldMind.Mind?.TransferTo(newEntity);
 
             //TODO if a mind already exists in the new entity, transfer it to any brain (or brain container) that it can go to
+
+            //if the new entity has a circulatory pump system, set it to working - TODO remove once defibs are ported (or we keep this as an alternate jump start? lets see how we go.)
+            if (TryComp<CirculatoryPumpComponent>(newEntity, out var pump))
+                _pumpSystem.StartPump(newEntity, pump);
         }
     }
 }

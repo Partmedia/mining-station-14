@@ -32,8 +32,11 @@
   id: HandsAnimal
   name: "animal hands"
   parent: PartAnimal
-  noSpawn: true
   components:
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: "l_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Left
@@ -42,8 +45,11 @@
   id: LegsAnimal
   name: "animal legs"
   parent: PartAnimal
-  noSpawn: true
   components:
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: "l_leg_icon"
   - type: BodyPart
     partType: Leg
   - type: MovementSpeedModifier
@@ -52,8 +58,11 @@
   id: FeetAnimal
   name: "animal feet"
   parent: PartAnimal
-  noSpawn: true
   components:
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: "l_foot_icon"
   - type: BodyPart
     partType: Foot
 
@@ -61,8 +70,11 @@
   id: TorsoAnimal
   name: "animal torso"
   parent: PartAnimal
-  noSpawn: true
   components:
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: "torso_m"
   - type: BodyPart
     partType: Torso
     incisable: true

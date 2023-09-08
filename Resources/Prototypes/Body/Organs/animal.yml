@@ -85,6 +85,8 @@
   components:
   - type: Sprite
     state: heart-on
+  - type: Heart
+  - type: CirculatoryPump
   - type: Organ
     organType: Heart
   - type: Metabolizer

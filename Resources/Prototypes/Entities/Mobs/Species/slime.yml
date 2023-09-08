@@ -83,6 +83,8 @@
   - type: ToxinFilter
     embedded: true
   - type: EyeSight
+  - type: CirculatoryPump
+    embedded: true
   - type: DiseaseCarrier
     naturalImmunities:
     - Ultragigacancer

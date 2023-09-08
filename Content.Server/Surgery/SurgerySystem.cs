@@ -466,13 +466,28 @@ namespace Content.Server.Surgery
             return organSlots;
         }
 
+        private List<OrganSlot> GetAllPartOrganSlots(List<BodyPartSlot> bodyPartSlots)
+        {
+            List<OrganSlot> organSlots = new List<OrganSlot>();
+
+            for (var i = 0; i < bodyPartSlots.Count(); i++)
+            {
+                if (bodyPartSlots[i].Child is not null && TryComp<BodyPartComponent>(bodyPartSlots[i].Child, out var bodyPart))
+                    foreach (KeyValuePair<string, OrganSlot> entry in bodyPart.Organs)
+                    {
+                        organSlots.Add(entry.Value);
+                    }
+            }
+            return organSlots;
+        }
+
         /// <summary>
         /// Get all organs in a body, useful for checking if a body has a certain organ or for any kind of body scanners
         /// </summary>
         public List<EntityUid> GetAllBodyOrgans(EntityUid uid)
         {
             var bodyPartSlots = GetAllBodyPartSlots(uid);
-            var organSlots = GetOpenPartOrganSlots(bodyPartSlots);
+            var organSlots = GetAllPartOrganSlots(bodyPartSlots);
 
             List<EntityUid> organs = new List<EntityUid>();
 

@@ -8,6 +8,13 @@
       connections:
       - legs
       organs:
+        brain:
+          organ: OrganHumanBrain
+          type: Brain
+        eyes: 
+          organ: OrganHumanEyes
+          type: Eye
+          internal: false
         lungs:
           organ: OrganAnimalLungs
           type: Lung

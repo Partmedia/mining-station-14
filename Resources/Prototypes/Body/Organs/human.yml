@@ -124,6 +124,8 @@
   components:
   - type: Sprite
     state: heart-on
+  - type: Heart
+  - type: CirculatoryPump
   - type: Organ
     organType: Heart
   # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
