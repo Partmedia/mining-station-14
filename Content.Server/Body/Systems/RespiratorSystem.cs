@@ -57,7 +57,7 @@ namespace Content.Server.Body.Systems
                 respirator.AccumulatedFrametime -= respirator.CycleDelay;
                 UpdateSaturation(respirator.Owner, -respirator.CycleDelay, respirator);
 
-                if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
+                if (!_mobState.IsIncapacitated(uid) && (TryComp<CirculatoryPumpComponent>(uid, out var pump) && pump.Working)) // cannot breathe in crit or without a heart.
                 {
                     switch (respirator.Status)
                     {

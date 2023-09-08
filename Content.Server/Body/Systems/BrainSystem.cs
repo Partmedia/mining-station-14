@@ -10,6 +10,9 @@ namespace Content.Server.Body.Systems
 {
     public sealed class BrainSystem : EntitySystem
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly CirculatoryPumpSystem _pumpSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();

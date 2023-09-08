@@ -73,6 +73,10 @@
   name: heart
   noSpawn: true
   components:
+  - type: Sprite
+    state: heart-on
+  - type: Heart
+  - type: CirculatoryPump
   - type: Organ
   - type: Metabolizer
     maxReagents: 2
