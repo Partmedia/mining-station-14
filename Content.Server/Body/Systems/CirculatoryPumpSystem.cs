@@ -11,6 +11,7 @@ using Content.Shared.Rejuvenate;
 using Content.Server.Surgery;
 using Content.Shared.Damage;
 using Content.Shared.Rejuvenate;
+using Content.Server.Surgery;
 
 namespace Content.Server.Body.Systems
 {
@@ -21,6 +22,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SurgerySystem _surgerySystem = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly SurgerySystem _surgerySystem = default!;
 
         public override void Initialize()
         {
@@ -63,7 +65,28 @@ namespace Content.Server.Body.Systems
                         }
                         if (!pump.Working && !_mobState.IsDead(uid))
                             _damageable.TryChangeDamage(uid, pump.NotWorkingDamage, true, origin: uid);
+                    if (!pump.Brainless)
+                    {
+                        //mob MUST have a brain, else stop the pump  
+                        var organs = _surgerySystem.GetAllBodyOrgans(uid);
+                        var hasBrain = false;
+                        foreach (var organ in organs)
+                        {
+                            if (TryComp<BrainComponent>(organ, out var brain))
+                            {
+                                hasBrain = true;
+                                break;
+                            }
+                        }
 
+                        if (!pump.Working && !_mobState.IsDead(uid))
+                            _damageable.TryChangeDamage(uid, pump.NotWorkingDamage, true, origin: uid);
+
+                        if (!hasBrain)
+                        {
+                            StopPump(uid, pump);
+                        }
+                    }
                     pump.IntervalLastChecked = 0;
                 }
             }

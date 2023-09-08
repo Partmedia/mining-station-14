@@ -37,7 +37,7 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Left
@@ -50,7 +50,7 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: BodyPart
     partType: Leg
   - type: MovementSpeedModifier
@@ -63,7 +63,7 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_foot"
+    state: "l_foot_icon"
   - type: BodyPart
     partType: Foot
 
