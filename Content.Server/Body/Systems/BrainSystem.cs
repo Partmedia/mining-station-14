@@ -4,6 +4,7 @@ using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
+using Content.Shared.Standing;
 using Content.Shared.Movement.Components;
 
 namespace Content.Server.Body.Systems
@@ -12,6 +13,7 @@ namespace Content.Server.Body.Systems
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly CirculatoryPumpSystem _pumpSystem = default!;
+        [Dependency] private readonly StandingStateSystem _standingSystem = default!;
 
         public override void Initialize()
         {
@@ -52,7 +54,13 @@ namespace Content.Server.Body.Systems
 
             EnsureComp<GhostOnMoveComponent>(newEntity);
             if (HasComp<BodyComponent>(newEntity))
+            {
                 Comp<GhostOnMoveComponent>(newEntity).MustBeDead = true;
+                _standingSystem.Stand(newEntity);
+            }
+
+            if (HasComp<BodyComponent>(oldEntity))
+                _standingSystem.Down(oldEntity);
 
             // TODO: This is an awful solution.
             EnsureComp<InputMoverComponent>(newEntity);

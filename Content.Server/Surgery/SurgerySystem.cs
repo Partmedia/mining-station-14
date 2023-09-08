@@ -208,6 +208,21 @@ namespace Content.Server.Surgery
             if (body.Sedated)
                 return;
 
+            //check if body has a brain (no brain, no pain)
+            var organs = GetAllBodyOrgans(uid);
+            var hasBrain = false;
+            foreach (var organ in organs)
+            {
+                if (TryComp<BrainComponent>(organ, out var brain))
+                {
+                    hasBrain = true;
+                    break;
+                }
+            }
+
+            if (!hasBrain)
+                return;
+
             //if not, deal damage based on tool usage
             if (body.UsageShock.ContainsKey(toolUsage) && body.UsageShock[toolUsage].Total > 0)
                 _damageableSystem.TryChangeDamage(uid, body.UsageShock[toolUsage], ignoreResistances: true);
