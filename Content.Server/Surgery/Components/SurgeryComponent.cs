@@ -112,5 +112,22 @@ namespace Content.Server.Surgery
 
         public Dictionary<ToolUsage, DamageSpecifier> UsageShock = new Dictionary<ToolUsage, DamageSpecifier>();
 
+        /// <summary>
+        ///    The species of organs compatible with the entity (other than its own species)
+        ///    Part mismatches are tracked per part and deal damage periodically n number of times
+        /// </summary>
+        [DataField("compatibleSpecies", required: true)]
+        public List<string> CompatibleSpecies = new List<string>();
+
+        [DataField("cellularRejectionDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier CellularRejectionDamage = default!;
+
+        [DataField("rejectionCheckInterval")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float RejectionCheckInterval = 600f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float RejectionLastChecked = 0f;
     }
 }

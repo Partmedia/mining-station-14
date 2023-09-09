@@ -62,7 +62,7 @@ public partial class SharedBodySystem
             body.Root != null)
             return false;
 
-        slot = new BodyPartSlot(slotId, bodyId.Value, null);
+        slot = new BodyPartSlot(slotId, bodyId.Value, null, body.Species);
         body.Root = slot;
 
         return true;
@@ -99,7 +99,7 @@ public partial class SharedBodySystem
                 var childPartComponent = Comp<BodyPartComponent>(childPart);
 
                 childPartComponent.OriginalBody = parent.Owner;
-                var slot = CreatePartSlot(connection, parent.Owner, childPartComponent.PartType, parent);
+                var slot = CreatePartSlot(connection, parent.Owner, childPartComponent.PartType, parent.Species, parent);
                 if (slot == null)
                 {
                     Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
@@ -125,7 +125,7 @@ public partial class SharedBodySystem
             }
             else if (childSlot.SlotType != null)
             {
-                var slot = CreatePartSlot(connection, parent.Owner, childSlot.SlotType.Value, parent);          
+                var slot = CreatePartSlot(connection, parent.Owner, childSlot.SlotType.Value, parent.Species, parent);          
                 if (slot == null)
                 {
                     Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");

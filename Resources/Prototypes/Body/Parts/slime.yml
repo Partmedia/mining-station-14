@@ -42,6 +42,14 @@
     retractorShockDamage:
       types:
         Asphyxiation: 5
+    cellularRejectionDamage:
+      types:
+        Cellular: 5
+    compatibleSpecies:
+      - slime
+      - human
+      - animal
+      - universal
   - type: UserInterface
     interfaces:
       - key: enum.SurgeryUiKey.Key
@@ -50,6 +58,7 @@
     damageContainer: Biological
   - type: BodyPart
     endoSkeleton: false #no bones here!
+    species: slime
   - type: ContainerContainer
     containers:
       bodypart: !type:Container

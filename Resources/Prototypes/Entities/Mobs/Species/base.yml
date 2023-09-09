@@ -42,6 +42,13 @@
     retractorShockDamage:
       types:
         Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 10
+    compatibleSpecies:
+      - human
+      - skeleton
+      - universal
   - type: Carriable
   - type: LagCompensation
   - type: RangedDamageSound
@@ -204,6 +211,7 @@
     species: Human
   - type: Body
     prototype: Human
+    species: Human
     requiredLegs: 2
   - type: Damageable
     damageContainer: Biological

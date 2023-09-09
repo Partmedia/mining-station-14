@@ -1,5 +1,6 @@
 - type: body
-  name: "reptilian"
+  name: "fox"
+  species: fox
   id: HumanoidFox
   root: torso
   slots:

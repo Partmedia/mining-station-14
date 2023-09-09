@@ -340,7 +340,7 @@ public abstract partial class InventorySystem
         }
         else if (bodyPartComp != null && rootPart != null)
         {
-            var tempSelfSlot = new BodyPartSlot("self", rootPart.Value, bodyPartComp.PartType);
+            var tempSelfSlot = new BodyPartSlot("self", rootPart.Value, bodyPartComp.PartType, bodyPartComp.Species);
             tempSelfSlot.Child = rootPart;
             tempSelfSlot.IsRoot = true;
             bodyPartList.Add(tempSelfSlot);

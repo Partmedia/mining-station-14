@@ -1,6 +1,7 @@
 - type: body
   id: Vox
   name: "vox"
+  species: vox
   root: torso
   slots:
     head:

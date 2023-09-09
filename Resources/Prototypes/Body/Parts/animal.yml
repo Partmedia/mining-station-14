@@ -16,6 +16,7 @@
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
+    species: animal
   - type: ContainerContainer
     containers:
       bodypart: !type:Container

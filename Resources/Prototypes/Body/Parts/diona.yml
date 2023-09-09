@@ -41,6 +41,12 @@
     retractorShockDamage:
       types:
         Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 5
+    compatibleSpecies:
+      - diona
+      - universal
   - type: UserInterface
     interfaces:
       - key: enum.SurgeryUiKey.Key
@@ -51,6 +57,7 @@
     exoSkeleton: true #probably the best representation
     incisable: false #wood all the way through, no incisions needed just a saw
     endoSkeleton: false
+    species: diona
   - type: ContainerContainer
     containers:
       bodypart: !type:Container

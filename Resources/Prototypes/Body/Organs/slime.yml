@@ -13,6 +13,7 @@
       state: brain
     - type: Organ
       organType: Brain
+      species: slime
     - type: Brain
     - type: Stomach
     - type: Metabolizer
@@ -46,6 +47,7 @@
       - state: lung-r
   - type: Organ
     organType: Lung
+    species: slime
   - type: Lung
   - type: Metabolizer
     removeEmpty: true

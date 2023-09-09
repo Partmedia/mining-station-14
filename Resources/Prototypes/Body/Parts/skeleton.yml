@@ -42,6 +42,12 @@
     retractorShockDamage:
       types:
         Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 5
+    compatibleSpecies:
+      - skeleton
+      - universal
   - type: UserInterface
     interfaces:
       - key: enum.SurgeryUiKey.Key
@@ -52,6 +58,7 @@
     incisable: false #these guys are *just* an endoskeleton - but actually an exoskeleton effectively
     endoSkeleton: false
     exoSkeleton: true
+    species: skeleton
   - type: ContainerContainer
     containers:
       bodypart: !type:Container

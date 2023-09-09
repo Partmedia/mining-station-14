@@ -1,6 +1,7 @@
 - type: body
   id: Primate
   name: "primate"
+  species: primate
   root: torso
   slots:
     torso:

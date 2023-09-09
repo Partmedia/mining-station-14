@@ -23,7 +23,7 @@ public partial class SharedBodySystem
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var slot = new OrganSlot(slotId, parent, type, internalOrgan);
+        var slot = new OrganSlot(slotId, parent, type, internalOrgan, part.Species);
         part.Organs.Add(slotId, slot);
 
         return slot;
@@ -130,6 +130,7 @@ public partial class SharedBodySystem
 
         organ.ParentSlot = null;
         organ.Body = null;
+        organ.RejectionCounter = 0;
 
         if (Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container))
             container.Remove(organId.Value);
@@ -200,8 +201,11 @@ public partial class SharedBodySystem
     {
         if (TryComp<BodyPartComponent>(slot.Parent, out var part))
             part.Organs[slot.Id].Cauterised = cauterised;
+    }
 
-        //TODO handle status change for part slot parent/child
+    public void IncrementRejectionCounter(OrganComponent organ, int count = 1)
+    {
+        organ.RejectionCounter += count;
     }
 
     /// <summary>

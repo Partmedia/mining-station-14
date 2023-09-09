@@ -4,6 +4,50 @@
   id: BaseMobMoth
   abstract: true
   components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 30 #internal organs are more sensitive due to exoskeleton
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 65 #exo skeleton offers pain resistance here
+    drillShockDamage:
+      types:
+        Asphyxiation: 25
+    sutureShockDamage:
+      types:
+        Asphyxiation: 10
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 15
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 15
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 10
+    compatibleSpecies:
+      - moth
+      - animal
+      - universal
   - type: HumanoidAppearance
     species: Moth
   - type: Hunger
@@ -13,6 +57,7 @@
     state: full
   - type: Body
     prototype: Moth
+    species: moth
     requiredLegs: 2
   - type: Temperature
     heatDamageThreshold: 319 # 46C

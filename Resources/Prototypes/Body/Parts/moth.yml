@@ -43,6 +43,13 @@
     retractorShockDamage:
       types:
         Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 10
+    compatibleSpecies:
+      - moth
+      - animal
+      - universal
   - type: UserInterface
     interfaces:
       - key: enum.SurgeryUiKey.Key
@@ -51,6 +58,7 @@
     damageContainer: Biological
   - type: BodyPart
     exoSkeleton: true
+    species: moth
   - type: ContainerContainer
     containers:
       bodypart: !type:Container

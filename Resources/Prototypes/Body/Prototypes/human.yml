@@ -2,6 +2,7 @@
   id: Human
   name: "human"
   root: torso
+  species: human
   slots:
     head:
       part: HeadHuman
@@ -68,6 +69,7 @@
   id: LunglessHuman
   name: "lungless human"
   root: torso
+  species: human
   slots:
     head:
       part: HeadHuman

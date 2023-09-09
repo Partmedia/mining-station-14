@@ -12,6 +12,7 @@
     damageContainer: Inorganic
   - type: BodyPart
     exoSkeleton: true
+    species: universal
   - type: ContainerContainer
     containers:
       bodypart: !type:Container

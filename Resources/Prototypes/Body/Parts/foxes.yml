@@ -43,6 +43,13 @@
     retractorShockDamage:
       types:
         Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 10
+    compatibleSpecies:
+      - fox
+      - animal
+      - universal
   - type: UserInterface
     interfaces:
       - key: enum.SurgeryUiKey.Key
@@ -50,6 +57,7 @@
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
+    species: fox
   - type: ContainerContainer
     containers:
       bodypart: !type:Container

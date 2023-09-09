@@ -5,6 +5,50 @@
   id: BaseMobReptilian
   abstract: true
   components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 15 #lizards are a little tougher
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 65 #lizards are a little tougher
+    drillShockDamage:
+      types:
+        Asphyxiation: 25
+    sutureShockDamage:
+      types:
+        Asphyxiation: 10
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 15
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 15
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 10
+    compatibleSpecies:
+      - reptilian
+      - animal
+      - universal
   - type: HumanoidAppearance
     species: Reptilian
   - type: Hunger
@@ -14,6 +58,7 @@
     state: full
   - type: Body
     prototype: Reptilian
+    species: reptilian
     requiredLegs: 2
   - type: LizardAccent
   - type: Speech

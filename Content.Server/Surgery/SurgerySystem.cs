@@ -116,6 +116,15 @@ namespace Content.Server.Surgery
                     }
                 }
 
+                //Cellular Rejection Check
+                if (surgery.RejectionLastChecked >= surgery.RejectionCheckInterval)
+                {
+                    CheckCellularRejection(surgery.Owner, surgery);
+                    surgery.RejectionLastChecked = 0;
+                } else {
+                    surgery.RejectionLastChecked += frameTime;
+                }
+
                 //check if entity has the forced sleep status effect, if they do set Sedated = true, else false
                 //TODO forced sleep =/= sedation, will include a dedicated status effect at some point for non-sleeping sedatives (also narcolepsy should not be as useful as anaesthetic)
                 if (TryComp<ForcedSleepingComponent>(surgery.Owner, out var sleep))
@@ -123,6 +132,55 @@ namespace Content.Server.Surgery
                 else
                     surgery.Sedated = false;
             }   
+        }
+
+        public void CheckCellularRejection(EntityUid uid, SurgeryComponent surgery)
+        {
+            //get all slots (part and organ)
+            var bodyPartSlots = GetAllBodyPartSlots(uid);
+            var organSlots = GetOpenPartOrganSlots(bodyPartSlots);
+
+            //check if slot species matches with part/organ species
+            List<BodyPartComponent> misMatchedParts = new List<BodyPartComponent>();
+            List<OrganComponent> misMatchedOrgans = new List<OrganComponent>();
+
+            foreach (var slot in bodyPartSlots)
+            {
+                if (slot.Child is not null && TryComp<BodyPartComponent>(slot.Child, out var part) && slot.Species != part.Species)
+                {
+                    misMatchedParts.Add(part);
+                }
+            }
+            foreach (var slot in organSlots)
+            {
+                if (slot.Child is not null && TryComp<OrganComponent>(slot.Child, out var organ) && slot.Species != organ.Species)
+                {
+                    misMatchedOrgans.Add(organ);
+                }
+            }
+
+            //check if mismatches in surgery compatible species
+            //if rejected, deal damage and increment rejection counter IF counter < rounds
+            foreach (var part in misMatchedParts)
+            {
+                if (!surgery.CompatibleSpecies.Contains(part.Species) && part.RejectionCounter < part.RejectionRounds)
+                {
+                    _damageableSystem.TryChangeDamage(uid, surgery.CellularRejectionDamage, ignoreResistances: true);
+                    _popupSystem.PopupEntity("you feel a sharp pain in your joints", uid, uid); //TODO LOC
+                    _bodySystem.IncrementRejectionCounter(part);
+                }
+            }
+
+            foreach (var organ in misMatchedOrgans)
+            {
+                if (!surgery.CompatibleSpecies.Contains(organ.Species) && organ.RejectionCounter < organ.RejectionRounds)
+                {
+                    _damageableSystem.TryChangeDamage(uid, surgery.CellularRejectionDamage, ignoreResistances: true);
+                    _popupSystem.PopupEntity("you feel a sharp pain from within", uid, uid); //TODO LOC
+                    _bodySystem.IncrementRejectionCounter(organ);
+                }
+            }
+
         }
 
         public void CheckClampNecrosis(EntityUid uid, SurgeryComponent surgery, float[] clampTimes)
@@ -453,7 +511,7 @@ namespace Content.Server.Surgery
             }
             else if (bodyPartComp != null && rootPart != null)
             {
-                var tempSelfSlot = new BodyPartSlot("self", rootPart.Value, bodyPartComp.PartType);
+                var tempSelfSlot = new BodyPartSlot("self", rootPart.Value, bodyPartComp.PartType, bodyPartComp.Species);
                 tempSelfSlot.Child = rootPart;
                 tempSelfSlot.IsRoot = true;
                 initialPartList.Add(tempSelfSlot);

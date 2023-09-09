@@ -1,6 +1,7 @@
 - type: body
   id: Diona
   name: diona
+  species: diona
   root: torso
   slots:
     head:

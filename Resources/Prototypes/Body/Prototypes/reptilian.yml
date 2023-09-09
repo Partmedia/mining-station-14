@@ -1,6 +1,7 @@
 - type: body
   name: "reptilian"
   id: Reptilian
+  species: reptilian
   root: torso
   slots:
     head:

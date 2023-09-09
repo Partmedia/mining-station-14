@@ -43,6 +43,14 @@
     retractorShockDamage:
       types:
         Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 10
+    compatibleSpecies:
+      - vox
+      - human
+      - animal
+      - universal
   - type: UserInterface
     interfaces:
       - key: enum.SurgeryUiKey.Key
@@ -50,6 +58,7 @@
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
+    species: vox
   - type: ContainerContainer
     containers:
       bodypart: !type:Container

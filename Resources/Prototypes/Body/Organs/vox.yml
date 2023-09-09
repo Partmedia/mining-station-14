@@ -3,6 +3,8 @@
   parent: OrganHumanLungs
   suffix: "vox"
   components:
+  - type: Organ
+    species: vox
   - type: Metabolizer
     metabolizerTypes: [ Vox ]
 

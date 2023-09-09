@@ -11,6 +11,7 @@
       - key: enum.SurgeryUiKey.Key
         type: SurgeryBoundUserInterface
   - type: BodyPart
+    species: animal
     partType: Torso
     incisable: true
     container: true

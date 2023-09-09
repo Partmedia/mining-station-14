@@ -18,4 +18,15 @@ public sealed class OrganComponent : Component
 
     [DataField("internal")]
     public bool Internal = true;
+
+    [DataField("species", required: true)]
+    public string Species = "";
+
+    //number of times cellular damage should be dealt because of species mismatch
+    [DataField("rejectionRounds")]
+    public int RejectionRounds = 3;
+
+    //number of times cellular damage has been dealt because of species mismatch - should be reset to 0 on removal
+    [DataField("rejectionCounter")]
+    public int RejectionCounter = 0;
 }

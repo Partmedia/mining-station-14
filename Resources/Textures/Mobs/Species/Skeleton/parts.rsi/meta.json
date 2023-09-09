@@ -93,6 +93,22 @@
         {
           "name": "r_foot_icon",
           "directions": 1
+        },
+        {
+            "name": "head_icon",
+            "directions": 1
+        },
+        {
+            "name": "head_opened_icon",
+            "directions": 1
+        },
+        {
+            "name": "torso_icon",
+            "directions": 1
+        },
+        {
+            "name": "torso_opened_icon",
+            "directions": 1
         }
     ]
 }

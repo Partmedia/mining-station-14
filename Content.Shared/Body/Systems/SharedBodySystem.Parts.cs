@@ -89,12 +89,13 @@ public partial class SharedBodySystem
         string slotId,
         EntityUid parent,
         BodyPartType partType,
+        string species,
         BodyPartComponent? part = null)
     {
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var slot = new BodyPartSlot(slotId, parent, partType);
+        var slot = new BodyPartSlot(slotId, parent, partType,species);
         part.Children.Add(slotId, slot);
 
         return slot;
@@ -112,7 +113,7 @@ public partial class SharedBodySystem
             !Resolve(parentId.Value, ref parent, false))
             return false;
 
-        slot = new BodyPartSlot(id, parentId.Value, null);
+        slot = new BodyPartSlot(id, parentId.Value, null,parent.Species);
         if (!parent.Children.TryAdd(id, slot))
         {
             slot = null;
@@ -220,6 +221,7 @@ public partial class SharedBodySystem
         {
             part.Body = parentPart.Body;
             parentPart.Children[slot.Id] = slot;
+
         }
         else if (TryComp(slot.Parent, out BodyComponent? parentBody))
         {
@@ -228,7 +230,24 @@ public partial class SharedBodySystem
         else
         {
             part.Body = null;
-        }       
+        }
+
+        foreach (var childSlot in part.Children.Values)
+        {
+            if (childSlot.Child is not { } child || !TryComp<BodyPartComponent>(child, out var childPart))
+                continue;
+
+            childPart.OriginalBody = childPart.Body;
+            childPart.Body = part.Body;
+        }
+
+        foreach (var organSlot in part.Organs.Values)
+        {
+            if (organSlot.Child is not { } child || !TryComp<OrganComponent>(child, out var childOrgan))
+                continue;
+
+            childOrgan.Body = part.Body;
+        }
 
         Dirty(slot.Parent);
         Dirty(partId.Value);
@@ -272,7 +291,6 @@ public partial class SharedBodySystem
             Dirty(newBody);
         }
 
-        //TODO apply status effects
         return true;
     }
 
@@ -290,6 +308,7 @@ public partial class SharedBodySystem
         part.ParentSlot = null;
         part.OriginalBody = part.Body;
         part.Body = null;
+        part.RejectionCounter = 0;
 
         if (Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container))
             container.Remove(partId.Value);
@@ -330,18 +349,21 @@ public partial class SharedBodySystem
                 }
             }
 
-            //if (part.IsVital && !GetBodyChildrenOfType(oldBody, part.PartType).Any())
-            //{
-                // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
-            //    var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
-                //Damageable.TryChangeDamage(part.Owner, damage);
-            //}
+            foreach (var childSlot in part.Children.Values)
+            {
+                if (childSlot.Child is not { } child || !TryComp<BodyPartComponent>(child, out var childPart))
+                    continue;
+
+                childPart.OriginalBody = childPart.Body;
+                childPart.Body = part.Body;
+            }
 
             foreach (var organSlot in part.Organs.Values)
             {
-                if (organSlot.Child is not { } child)
+                if (organSlot.Child is not { } child || !TryComp<OrganComponent>(child, out var childOrgan))
                     continue;
 
+                childOrgan.Body = part.Body;
                 RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody));
             }
 
@@ -357,8 +379,6 @@ public partial class SharedBodySystem
                 Dirty(appearance);
             }
         }
-
-        //TODO apply status effects
 
         Dirty(slot.Parent);
         Dirty(partId.Value);
@@ -495,8 +515,6 @@ public partial class SharedBodySystem
         {
             part.Children[slot.Id].Attachment = null;
         }
-
-        //TODO handle status change for part slot parent/child
     }
 
     public void SetBodyPartIncised(BodyPartComponent part, bool incised)
@@ -543,7 +561,11 @@ public partial class SharedBodySystem
 
         if (TryComp<BodyPartComponent>(slot.Parent, out var part))
             part.Children[slot.Id].Cauterised = cauterised;
-        //TODO handle status change for part slot parent/child
+    }
+
+    public void IncrementRejectionCounter(BodyPartComponent part, int count = 1)
+    {
+        part.RejectionCounter += count;
     }
 
     public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildrenOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)

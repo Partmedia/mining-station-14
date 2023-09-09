@@ -10,6 +10,7 @@
     netsync: false
     sprite: Mobs/Species/Diona/organs.rsi
   - type: Organ
+    species: diona
   - type: Food
   - type: Extractable
     grindableSolutionName: organ

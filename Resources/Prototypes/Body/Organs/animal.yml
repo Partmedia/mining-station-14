@@ -4,12 +4,12 @@
   abstract: true
   components:
   - type: Organ
+    species: animal
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
   - type: StaticPrice
     price: 50
-
 
 - type: entity
   id: OrganAnimalLungs

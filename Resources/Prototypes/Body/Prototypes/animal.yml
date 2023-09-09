@@ -1,6 +1,7 @@
 - type: body
   id: Animal
   name: "animal"
+  species: animal
   root: torso
   slots:
     torso:

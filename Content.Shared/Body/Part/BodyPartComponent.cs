@@ -2,6 +2,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
 using Robust.Shared.GameStates;
+using System.ComponentModel.DataAnnotations;
 
 namespace Content.Shared.Body.Part;
 
@@ -25,6 +26,17 @@ public sealed class BodyPartComponent : Component
 
     [DataField("partType")]
     public BodyPartType PartType = BodyPartType.Other;
+
+    [DataField("species", required: true)]
+    public string Species = "";
+
+    //number of times cellular damage should be dealt because of species mismatch
+    [DataField("rejectionRounds")]
+    public int RejectionRounds = 3;
+
+    //number of times cellular damage has been dealt because of species mismatch - should be reset to 0 on removal
+    [DataField("rejectionCounter")]
+    public int RejectionCounter = 0;
 
     // TODO BODY Replace with a simulation of organs
     /// <summary>
