@@ -41,13 +41,5 @@
       part: LeftHandDiona
     right leg:
       part: RightLegDiona
-      connections:
-      - right foot
     left leg:
       part: LeftLegDiona
-      connections:
-      - left foot
-    right foot:
-      part: RightFootDiona
-    left foot:
-      part: LeftFootDiona

@@ -90,7 +90,7 @@
         layer:
           - MobLayer
   - type: Inventory
-    templateId: diona
+    templateId: human
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5
