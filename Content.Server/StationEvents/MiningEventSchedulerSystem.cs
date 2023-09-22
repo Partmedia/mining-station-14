@@ -162,7 +162,7 @@ namespace Content.Server.StationEvents
         /// </summary>
         public string RunMiningEvent()
         {
-            List<string> events = new List<string>{"MeteorSwarm"};
+            List<string> events = new List<string>{"MeteorSwarm","RadiationStorm","Quake"};
             string randomEvent = _random.Pick(events);
             if (!_prototype.TryIndex<GameRulePrototype>(randomEvent, out var proto))
             {
@@ -189,7 +189,7 @@ namespace Content.Server.StationEvents
             var mt = Math.Max(35-2*Math.Sqrt(minsInRound), 6);
             var st = mt/3;
             _timeUntilNextEvent = _random.Next(60*(int)(mt-st), 60*(int)(mt+st));
-            Logger.InfoS("mining", $"Next meteor storm in {(int)(_timeUntilNextEvent/60)} minutes ({minsInRound} mins in round, mean {mt}, s {st})");
+            Logger.InfoS("mining", $"Next station event in {(int)(_timeUntilNextEvent/60)} minutes ({minsInRound} mins in round, mean {mt}, s {st})");
         }
 
         private void OnRoundEndText(RoundEndTextAppendEvent ev)
