@@ -88,8 +88,10 @@
       - UtilityBelt
       - Pickaxe
       - BaseChemistryEmptyJug
+      - MagazinePistolSubMachineGunTopMounted
+      - MagazinePlasmaRifleFilled
       - PlasmaShell
-      - MagazinePlasmaRifle
+      - ShellShotgun
   - type: StaticPrice
     price: 800
 
