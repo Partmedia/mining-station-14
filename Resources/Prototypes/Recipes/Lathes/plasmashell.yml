@@ -13,3 +13,12 @@
   materials:
     Plasteel: 200
     Steel: 500
+
+- type: latheRecipe
+  id: MagazinePlasmaRifleFilled
+  result: MagazinePlasmaRifle
+  completetime: 5
+  materials:
+    Plasma: 1400
+    Plasteel: 200
+    Steel: 780
