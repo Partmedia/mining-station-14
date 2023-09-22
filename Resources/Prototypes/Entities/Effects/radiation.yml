@@ -1,13 +1,14 @@
 - type: entity
   name: shimmering anomaly
   id: RadiationPulse
-  noSpawn: true
   description: Looking at this anomaly makes you feel strange, like something is pushing at your eyes.
+  nospawn: true
   components:
   - type: RadiationSource
-    intensity: 5
+    intensity: 10
+    slope: 2
   - type: TimedDespawn
-    lifetime: 2
+    lifetime: 5
   - type: EmitSoundOnSpawn
     sound:
       collection:
