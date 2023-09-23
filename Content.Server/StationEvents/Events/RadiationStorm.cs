@@ -11,6 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Maths;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -32,6 +33,12 @@ namespace Content.Server.StationEvents.Events
         private int _pulseCounter;
         private const int MinimumPulses = 180;
         private const int MaximumPulses = 540;
+
+        private const int MinArea = 250;
+        private Box2 _workingBounds;
+
+        private const int MaxFail = 1080;
+        private int _failCounter;
 
         private void ResetTimeUntilPulse()
         {
@@ -73,10 +80,17 @@ namespace Content.Server.StationEvents.Events
 
                 foreach (var grid in MapManager.GetAllMapGrids(mapId))
                 {
-                    if (!TryFindRandomGrid(grid, out var coordinates))
+                    if (!TryFindRandomGrid(grid, out var coordinates)) {
+                        _failCounter++;
+                        if (_failCounter > MaxFail)
+                            ForceEndSelf();
                         return;
+                    }
+                        
+                    _failCounter = 0;
                     _pulseCounter--;
                     SpawnPulse(coordinates);
+                    ResetTimeUntilPulse();
                 }   
             }
         }
@@ -89,8 +103,20 @@ namespace Content.Server.StationEvents.Events
 
         private bool TryFindRandomGrid(MapGridComponent mapGrid, out EntityCoordinates coordinates)
         {
-
             var bounds = mapGrid.LocalAABB;
+            if (Box2.Area(bounds) < MinArea)
+            {
+                if ((Box2.Area(_workingBounds) < MinArea))
+                {
+                    coordinates = default;
+                    return false;
+                }
+                bounds = _workingBounds;
+            } else
+            {
+                _workingBounds = bounds;
+            }
+            
             var randomX = _robustRandom.Next((int) bounds.Left, (int) bounds.Right);
             var randomY = _robustRandom.Next((int) bounds.Bottom, (int) bounds.Top);
 
