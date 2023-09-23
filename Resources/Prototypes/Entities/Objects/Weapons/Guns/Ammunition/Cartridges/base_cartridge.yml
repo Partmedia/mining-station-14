@@ -13,3 +13,5 @@
     size: 1
   - type: Recyclable
   - type: SpaceGarbage
+  - type: StaticPrice
+    price: 1
