@@ -2,7 +2,7 @@
   name: shimmering anomaly
   id: RadiationPulse
   description: Looking at this anomaly makes you feel strange, like something is pushing at your eyes.
-  nospawn: true
+  noSpawn: true
   components:
   - type: RadiationSource
     intensity: 10
