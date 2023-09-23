@@ -1,7 +1,15 @@
 - type: entity
+  id: BaseMagazine
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: StaticPrice
+    price: 1
+
+- type: entity
   id: BaseMagazinePistol
   name: pistol magazine (.35 auto)
-  parent: BaseItem
+  parent: BaseMagazine
   abstract: true
   components:
   - type: Tag
@@ -35,7 +43,7 @@
 - type: entity
   id: BaseMagazinePistolHighCapacity
   name: machine pistol magazine (.35 auto)
-  parent: BaseItem
+  parent: BaseMagazine
   abstract: true
   components:
   - type: Tag
@@ -69,7 +77,7 @@
 - type: entity
   id: BaseMagazinePistolSubMachineGun  # Yeah it's weird but it's pistol caliber
   name: SMG magazine (.35 auto)
-  parent: BaseItem
+  parent: BaseMagazine
   abstract: true
   components:
   - type: Tag
@@ -103,7 +111,7 @@
 - type: entity
   id: MagazinePistolSubMachineGunTopMounted
   name: WT550 magazine (.35 auto top-mounted)
-  parent: BaseItem
+  parent: BaseMagazine
   components:
   - type: Tag
     tags:
