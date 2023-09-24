@@ -14,3 +14,8 @@
       collection:
         RadiationPulse
   - type: RadiationPulse
+  - type: Marker
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    netsync: false
+    state: green
