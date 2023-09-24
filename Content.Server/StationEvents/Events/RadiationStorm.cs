@@ -34,7 +34,7 @@ namespace Content.Server.StationEvents.Events
         private const int MinimumPulses = 180;
         private const int MaximumPulses = 540;
 
-        private const int MinArea = 250;
+        private const int MinArea = 500;
         private Box2 _workingBounds;
 
         private const int MaxFail = 1080;
