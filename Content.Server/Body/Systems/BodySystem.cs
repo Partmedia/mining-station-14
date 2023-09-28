@@ -20,6 +20,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Server.Construction.Completions;
 
 namespace Content.Server.Body.Systems;
 
@@ -162,8 +163,15 @@ public sealed class BodySystem : SharedBodySystem
                     else
                     {
                         cont.Remove(ent, EntityManager, force: true);
-                        Transform(ent).Coordinates = coordinates;
-                        ent.RandomOffset(0.25f);
+                        if (body.Root != null && ent == body.Root.Child)
+                        {
+                            QueueDel(ent);
+                        }
+                        else
+                        {
+                            Transform(ent).Coordinates = coordinates;
+                            ent.RandomOffset(0.25f);
+                        }
                     }
                 }
             }
