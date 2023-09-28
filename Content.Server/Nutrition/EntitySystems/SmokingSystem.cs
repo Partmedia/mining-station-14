@@ -3,7 +3,9 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -28,6 +30,8 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly SharedItemSystem _items = default!;
+        [Dependency] private readonly LungSystem _lungSystem = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
 
         private const float UpdateTimer = 3f;
 
@@ -136,6 +140,27 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 _reactiveSystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
                 _bloodstreamSystem.TryAddToChemicals(containerManager.Owner, inhaledSolution, bloodstream);
+
+                //get owner body and lungs
+                if (TryComp<BodyComponent>(containerManager.Owner, out var body)) {
+
+                    var lungs = _bodySystem.GetBodyOrganComponents<LungComponent>(body.Owner, body);
+                    var numLungs = lungs.Count;
+
+                    foreach (var (lung, _) in lungs) {
+                        //go through solution, check if it does any lung damage
+                        foreach (var reagent in inhaledSolution.Contents)
+                        {
+                            var damageLoss = lung.Damage;
+                            if (damageLoss > 1.0f)
+                                damageLoss = 1.0f;
+
+                            var amount = (((float)reagent.Quantity) / numLungs) * (1.0f-damageLoss);
+
+                            _lungSystem.CheckLungDamage(lung.Owner, lung, reagent.ReagentId, amount);
+                        }
+                    }
+                }
             }
 
             _timer -= UpdateTimer;

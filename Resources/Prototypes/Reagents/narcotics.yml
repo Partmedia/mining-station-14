@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Desoxyephedrine
   name: reagent-name-desoxyephedrine
   group: Narcotics
@@ -144,6 +144,12 @@
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: Stutter
+        type: Remove
 
 - type: reagent
   id: Impedrezene

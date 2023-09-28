@@ -114,8 +114,25 @@ namespace Content.Server.Body.Systems
             var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
             foreach (var (lung, _) in organs)
             {
+
+                // Remove for lung damage
+                var damageLoss = lung.Damage;
+                if (damageLoss > 1.0f)
+                    damageLoss = 1.0f;
+
+                // TODO implement coughing at a certain amount of lung damage
+
                 // Merge doesn't remove gas from the giver.
-                _atmosSys.Merge(lung.Air, gas);
+                if (damageLoss > 0)
+                {
+                    var remainderGas = gas.RemoveRatio(1.0f - damageLoss);
+                    var removedGas = gas.RemoveRatio(damageLoss);
+                    _atmosSys.Merge(lung.Air, remainderGas);
+                    _atmosSys.Merge(ev.Gas, removedGas);
+                }
+                else
+                    _atmosSys.Merge(lung.Air, gas);
+
                 _lungSystem.GasToReagent(lung.Owner, lung);
             }
         }
