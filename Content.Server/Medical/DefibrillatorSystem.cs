@@ -196,8 +196,6 @@ public sealed class DefibrillatorSystem : EntitySystem
             // notify them they're being revived.
             if (mindComp.Mind != null && mindComp.Mind.CurrentEntity != target)
             {
-                _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-ghosted"),
-                    InGameICChatType.Speak, true, true);
                 _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
             }
         }
