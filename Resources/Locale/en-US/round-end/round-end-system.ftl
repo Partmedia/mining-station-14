@@ -7,3 +7,5 @@ round-end-system-round-restart-eta-announcement = Restarting the round in {$minu
 
 eta-units-minutes = minutes
 eta-units-seconds = seconds
+
+round-end-system-shuttle-reminder = The shuttle is arriving soon.
