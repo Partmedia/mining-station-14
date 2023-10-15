@@ -205,6 +205,12 @@ namespace Content.Server.RoundEnd
             _countdownTokenSource.Cancel();
             _countdownTokenSource = null;
 
+            if (_countdownWarningTokenSource != null)
+            {
+                _countdownWarningTokenSource.Cancel();
+                _countdownWarningTokenSource = null;
+            }
+
             if (requester != null)
             {
                 _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value):user}");
