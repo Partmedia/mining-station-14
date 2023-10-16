@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Structures/Walls/mountain_rock.rsi
     state: full
-  - type: CaveSupport
   - type: CaveIn
     damage:
       types:
@@ -22,7 +21,6 @@
   - type: Sprite
     sprite: Structures/Walls/mountain_rock.rsi
     state: full
-  - type: CaveSupport
   - type: CaveIn
     damage:
       types:

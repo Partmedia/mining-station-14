@@ -50,8 +50,13 @@ namespace Content.Server.StationEvents.Events
 
                 if (!timedSpace.Timed)
                     continue;
-                //check if the entity is anchored - if it is ROLL
-                if (Transform(uid).Anchored) {
+                // check if the entity is anchored - prevents floating squares as a result of station drifting triggering cave-ins
+                if (!Transform(uid).Anchored)
+                    continue;
+                if (_miningSystem.CaveInCheck(uid, timedSpace, true))
+                    continue;
+
+                {
                     var roll = (int) RobustRandom.Next(1, 100);
                     if (roll <= ChanceOfCollapse * 100)
                         _miningSystem.CaveIn(uid, timedSpace);
