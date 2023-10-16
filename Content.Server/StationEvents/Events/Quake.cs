@@ -16,7 +16,7 @@ namespace Content.Server.StationEvents.Events
 
         public override string Prototype => "Quake";
 
-        private const float ChanceOfCollapse = 0.05f;
+        private const float ChanceOfCollapse = 0.02f;
 
         public override void Started()
         {
