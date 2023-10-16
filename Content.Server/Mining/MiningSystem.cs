@@ -70,7 +70,11 @@ public sealed class MiningSystem : EntitySystem
         SubscribeLocalEvent<OreVeinComponent, DestructionEventArgs>(OnDestruction);
     }
 
-    private bool CaveInCheck(EntityUid uid, CaveInComponent component)
+    /**
+     * Return true if uid is supported and should NOT cave in. If quake is set to true, ignore
+     * supports that are not quake-proof.
+     */
+    public bool CaveInCheck(EntityUid uid, CaveInComponent component, bool quake=false)
     {
         if (!TryComp<TransformComponent>(uid, out var xform))
             return true;
@@ -136,7 +140,8 @@ public sealed class MiningSystem : EntitySystem
                         {
                             if (entity != uid)
                             {
-                                if (EntityManager.TryGetComponent<CaveSupportComponent?>(entity, out var support))
+                                if (EntityManager.TryGetComponent<CaveSupportComponent?>(entity, out var support)
+                                        && (!quake || support.QuakeProof)) // not quaking, or this support is quake-proof
                                     supported = true;
                             }
                         }
