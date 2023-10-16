@@ -58,7 +58,8 @@ namespace Content.Server.StationEvents.Events
 
                 {
                     var roll = (int) RobustRandom.Next(1, 100);
-                    if (roll <= ChanceOfCollapse * 100)
+                    if (roll <= ChanceOfCollapse * 100
+                            || GetSeverityModifier() > 1f) // debugging
                         _miningSystem.CaveIn(uid, timedSpace);
                     else
                         _replenishQueue.Enqueue(uid);
