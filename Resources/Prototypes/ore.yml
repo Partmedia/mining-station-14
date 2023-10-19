@@ -53,6 +53,12 @@
   maxOreYield: 7
 
 - type: ore
+  id: OreDiamond
+  oreEntity: MaterialDiamond1
+  minOreYield: 1
+  maxOreYield: 1
+
+- type: ore
   id: OreCinnabar
   oreEntity: CinnabarOre1
   minOreYield: 1
