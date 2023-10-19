@@ -287,6 +287,28 @@
         - state: rock_uranium
 
 - type: entity
+  id: WallRockDiamond
+  parent: WallRock
+  description: An ore vein with diamonds!
+  suffix: Diamond
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreDiamond
+    - type: Sprite
+      layers:
+        - state: rock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_west
+        - state: rock_diamond
+
+- type: entity
   id: TimedSpace
   name: Mined Space
   parent: MarkerBase
