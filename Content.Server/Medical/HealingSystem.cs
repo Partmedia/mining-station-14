@@ -41,8 +41,6 @@ public sealed class HealingSystem : EntitySystem
 
     private void OnHealingComplete(EntityUid uid, DamageableComponent component, HealingCompleteEvent args)
     {
-        if (_mobStateSystem.IsDead(uid))
-            return;
 
         if (TryComp<StackComponent>(args.Component.Owner, out var stack) && stack.Count < 1)
             return;
@@ -106,9 +104,6 @@ public sealed class HealingSystem : EntitySystem
         {
             return false;
         }
-
-        if (_mobStateSystem.IsDead(target))
-            return false;
 
         if (!TryComp<DamageableComponent>(target, out var targetDamage))
             return false;
