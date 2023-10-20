@@ -52,7 +52,13 @@ namespace Content.Server.Body.Systems
 
             //next, add the toxin filter to the entity
             var newToxinFilter = EntityManager.EnsureComponent<ToxinFilterComponent>(newEntity);
-            //if the ToxinFilter ever gets any more properties, ensure those properties are transferred here (except embedded which must be false (and is by default))
+            //carry over properties of old to new
+            newToxinFilter.ToxinThreshold = toxinFilter.ToxinThreshold;
+            newToxinFilter.RegenerationAmount = toxinFilter.RegenerationAmount;
+            newToxinFilter.RegenerationInterval = toxinFilter.RegenerationInterval;
+            newToxinFilter.IntervalLastChecked = toxinFilter.IntervalLastChecked;
+            newToxinFilter.ToxinBuildUp = toxinFilter.ToxinBuildUp;
+            newToxinFilter.Working = toxinFilter.Working;
 
             //if the old ToxinFilter is NOT embedded, remove the component
             if (!toxinFilter.Embedded)

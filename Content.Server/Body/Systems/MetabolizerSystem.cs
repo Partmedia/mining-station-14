@@ -181,6 +181,13 @@ namespace Content.Server.Body.Systems
                     var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, effectAmount,
                         EntityManager, null, scale);
 
+                    if (meta.Toxins.Contains(group.Id))
+                    {
+                        //put strain on the toxinFilter if any
+                        if (TryComp<ToxinFilterComponent>(solutionEntityUid.Value, out var toxinFilter))
+                            toxinFilter.ToxinBuildUp += scale;
+                    }
+
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
@@ -206,7 +213,7 @@ namespace Content.Server.Body.Systems
                     _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId,
                         mostToRemove);
                     //If no toxin filter (liver) add toxin reagent (by scale determined by UnfilteredToxinRate from MetabolizerComponent (0.1))
-                    if (!TryComp<ToxinFilterComponent>(solutionEntityUid.Value, out var toxinRemover))
+                    if (!TryComp<ToxinFilterComponent>(solutionEntityUid.Value, out var toxinFilter) || !toxinFilter.Working)
                         _solutionContainerSystem.TryAddReagent(solutionEntityUid.Value, solution, meta.UnfilteredToxinReagent,
                         mostToRemove*meta.UnfilteredToxinRate, out var accepted);
                 }
