@@ -6,6 +6,8 @@ using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Shared.Damage;
+using Content.Shared.Rejuvenate;
 using Content.Server.Surgery;
 using Content.Shared.Damage;
 using Content.Shared.Rejuvenate;
@@ -16,6 +18,7 @@ namespace Content.Server.Body.Systems
     public sealed class CirculatoryPumpSystem : EntitySystem
     {
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SurgerySystem _surgerySystem = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
 
@@ -41,9 +44,10 @@ namespace Content.Server.Body.Systems
                     if (_mobState.IsDead(uid) && pump.Working)
                     {
                         StopPump(uid, pump);
-                        continue;
                     }
 
+                    if (!pump.Working && !_mobState.IsDead(uid))
+                        _damageable.TryChangeDamage(uid, pump.NotWorkingDamage, true, origin: uid);
                     if (!pump.Brainless)
                     {
                         //mob MUST have a brain, else stop the pump  
@@ -57,14 +61,9 @@ namespace Content.Server.Body.Systems
                                 break;
                             }
                         }
-                    if (!pump.Working && !_mobState.IsDead(uid))
-                        _damageable.TryChangeDamage(uid, pump.NotWorkingDamage, true, origin: uid);
+                        if (!pump.Working && !_mobState.IsDead(uid))
+                            _damageable.TryChangeDamage(uid, pump.NotWorkingDamage, true, origin: uid);
 
-                        if (!hasBrain)
-                        {
-                            StopPump(uid, pump);
-                        }
-                    }
                     pump.IntervalLastChecked = 0;
                 }
             }
