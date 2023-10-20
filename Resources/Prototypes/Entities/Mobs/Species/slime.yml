@@ -130,6 +130,9 @@
     embedded: true
   - type: EyeSight
   - type: CirculatoryPump
+    notWorkingDamage:
+      types:
+        Asphyxiation: 30
     embedded: true
   - type: DiseaseCarrier
     naturalImmunities:
