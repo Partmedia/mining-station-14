@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseAnimalOrgan
   parent: BaseItem
   abstract: true
@@ -15,8 +15,11 @@
   id: OrganAnimalLungs
   parent: BaseAnimalOrgan
   name: lungs
-  noSpawn: true
   components:
+  - type: Sprite
+    layers:
+      - state: lung-l
+      - state: lung-r
   - type: Organ
   - type: Lung
   - type: Metabolizer
@@ -37,8 +40,9 @@
   id: OrganAnimalStomach
   parent: BaseAnimalOrgan
   name: stomach
-  noSpawn: true
   components:
+  - type: Sprite
+    state: stomach
   - type: Organ
   - type: SolutionContainerManager
     solutions:
@@ -57,8 +61,9 @@
   id: OrganAnimalLiver
   parent: BaseAnimalOrgan
   name: liver
-  noSpawn: true
   components:
+  - type: Sprite
+    state: liver
   - type: Organ
   - type: Metabolizer
     maxReagents: 1
@@ -71,12 +76,14 @@
   id: OrganAnimalHeart
   parent: BaseAnimalOrgan
   name: heart
-  noSpawn: true
   components:
   - type: Sprite
     state: heart-on
   - type: Heart
   - type: CirculatoryPump
+    notWorkingDamage:
+      types:
+        Asphyxiation: 30
   - type: Organ
   - type: Metabolizer
     maxReagents: 2
@@ -90,8 +97,11 @@
   id: OrganAnimalKidneys
   parent: BaseAnimalOrgan
   name: kidneys
-  noSpawn: true
   components:
+  - type: Sprite
+    layers:
+      - state: kidney-l
+      - state: kidney-r
   - type: Organ
   - type: Metabolizer
     maxReagents: 5

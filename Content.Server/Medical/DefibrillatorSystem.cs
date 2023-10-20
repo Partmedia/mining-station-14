@@ -12,13 +12,17 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Medical;
 using Content.Server.Mind;
+using Content.Server.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
+using Robust.Server.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
+using Content.Server.Body.Systems;
+using Content.Server.Body.Components;
 
 namespace Content.Server.Medical;
 
@@ -28,6 +32,7 @@ namespace Content.Server.Medical;
 public sealed class DefibrillatorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ChatSystem _chatManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -40,6 +45,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly CirculatoryPumpSystem _pump = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -139,9 +145,6 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (!TryComp<MobStateComponent>(target, out var mobState))
             return false;
 
-        if (_mobState.IsAlive(target, mobState))
-            return false;
-
         return true;
     }
 
@@ -177,16 +180,41 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (!Resolve(uid, ref component) || !Resolve(target, ref mob, ref thresholds, false))
             return;
 
+        if (!TryComp<CirculatoryPumpComponent>(target, out var pump))
+            return;
+
         _audio.PlayPvs(component.ZapSound, uid);
         _electrocution.TryDoElectrocution(target, null, component.ZapDamage, component.WritheDuration, true, ignoreInsulation: true);
         component.NextZapTime = _timing.CurTime + component.ZapDelay;
         _appearance.SetData(uid, DefibrillatorVisuals.Ready, false);
 
-        ICommonSession? session = null;
+        IPlayerSession? session = null;
+        if (TryComp<MindComponent>(target, out var mindComp) &&
+            mindComp.Mind?.UserId != null &&
+            _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out session))
+        {
+            // notify them they're being revived.
+            if (mindComp.Mind != null && mindComp.Mind.CurrentEntity != target)
+            {
+                _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-ghosted"),
+                    InGameICChatType.Speak, true, true);
+                _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind), session);
+            }
+        }
+        else
+        {
+            _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-no-mind"),
+                InGameICChatType.Speak, true, true);
+        }
 
-        var sound = _mobState.IsDead(target, mob) || session == null
-            ? component.FailureSound
-            : component.SuccessSound;
+        if (_mobState.IsDead(target, mob))
+            _damageable.TryChangeDamage(target, component.ZapHeal, true, origin: uid);
+
+        _pump.StartPump(target, pump);
+
+        var sound = pump.Working
+            ? component.SuccessSound
+            : component.FailureSound;
         _audio.PlayPvs(sound, uid);
     }
 

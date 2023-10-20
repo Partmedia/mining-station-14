@@ -1,4 +1,4 @@
-﻿# Just copypasta of some human basic body parts for interaction,
+# Just copypasta of some human basic body parts for interaction,
 # only differences for now is that limbs work in pairs,
 # they are unextractable and can't be spawned (no surgery on Animals!?).
 
@@ -27,7 +27,7 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_hand_icon"
+    state: "l_hand"
   - type: BodyPart
     partType: Hand
     symmetry: Left
@@ -40,7 +40,7 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_leg_icon"
+    state: "l_leg"
   - type: BodyPart
     partType: Leg
   - type: MovementSpeedModifier
@@ -53,7 +53,7 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_foot_icon"
+    state: "l_foot"
   - type: BodyPart
     partType: Foot
 

@@ -6,7 +6,8 @@ using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Content.Server.Surgery;
+using Content.Shared.Damage;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Server.Body.Systems
 {
@@ -14,11 +15,12 @@ namespace Content.Server.Body.Systems
     public sealed class CirculatoryPumpSystem : EntitySystem
     {
         [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly SurgerySystem _surgerySystem = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<CirculatoryPumpComponent, RejuvenateEvent>(OnRejuvenate);
         }
 
         public override void Update(float frameTime)
@@ -37,28 +39,11 @@ namespace Content.Server.Body.Systems
                     if (_mobState.IsDead(uid) && pump.Working)
                     {
                         StopPump(uid, pump);
-                        continue;
                     }
 
-                    if (!pump.Brainless)
-                    {
-                        //mob MUST have a brain, else stop the pump  
-                        var organs = _surgerySystem.GetAllBodyOrgans(uid);
-                        var hasBrain = false;
-                        foreach (var organ in organs)
-                        {
-                            if (TryComp<BrainComponent>(organ, out var brain))
-                            {
-                                hasBrain = true;
-                                break;
-                            }
-                        }
+                    if (!pump.Working && !_mobState.IsDead(uid))
+                        _damageable.TryChangeDamage(uid, pump.NotWorkingDamage, true, origin: uid);
 
-                        if (!hasBrain)
-                        {
-                            StopPump(uid, pump);
-                        }
-                    }
                     pump.IntervalLastChecked = 0;
                 }
             }
@@ -77,6 +62,11 @@ namespace Content.Server.Body.Systems
             {
                 pump.Working = true;
             }
+        }
+
+        private void OnRejuvenate(EntityUid uid, CirculatoryPumpComponent pump, RejuvenateEvent args)
+        {
+            pump.Working = true;
         }
     }  
 }

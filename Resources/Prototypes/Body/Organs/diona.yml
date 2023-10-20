@@ -86,6 +86,9 @@
   - type: Stomach
   - type: Heart #also its heart until we port over other diona organs (or not)
   - type: CirculatoryPump
+    notWorkingDamage:
+      types:
+        Asphyxiation: 30
   - type: Metabolizer
     maxReagents: 6
     metabolizerTypes: [ Plant ]

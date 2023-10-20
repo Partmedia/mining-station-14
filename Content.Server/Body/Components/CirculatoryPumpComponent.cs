@@ -1,4 +1,5 @@
 using Content.Server.Body.Systems;
+using Content.Shared.Damage;
 
 namespace Content.Server.Body.Components
 {
@@ -15,6 +16,9 @@ namespace Content.Server.Body.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Working = true;
+
+        [DataField("notWorkingDamage", required: true), ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier NotWorkingDamage = default!;
 
         public float CheckInterval = 5f; //check every 5 seconds that the heart can pump
         public float IntervalLastChecked = 0f;

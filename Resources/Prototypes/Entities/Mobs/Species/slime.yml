@@ -79,6 +79,9 @@
         Asphyxiation: -1.0
     maxSaturation: 15
   - type: CirculatoryPump
+    notWorkingDamage:
+      types:
+        Asphyxiation: 30
     embedded: true
   - type: DiseaseCarrier
     naturalImmunities:
