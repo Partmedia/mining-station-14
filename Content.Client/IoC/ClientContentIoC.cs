@@ -44,6 +44,8 @@ namespace Content.Client.IoC
             IoCManager.Register<ExtendedDisconnectInformationManager>();
             IoCManager.Register<PlayTimeTrackingManager>();
             IoCManager.Register<DocumentParsingManager>();
+
+            IoCManager.Register<IAutoAdmin, SharedAutoAdmin>();
         }
     }
 }
