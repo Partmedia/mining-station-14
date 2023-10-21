@@ -622,6 +622,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
 
+        public static readonly CVarDef<bool> AutoAdmin =
+            CVarDef.Create("admin.auto", true, CVar.SERVERONLY);
+
         /*
          * Explosions
          */
