@@ -171,6 +171,10 @@ namespace Content.Server.Atmos.Miasma
                 EnsureComp<RottingComponent>(uid);
                 component.TimeOfDeath = _timing.CurTime;
             }
+            else
+            {
+                RemComp<RottingComponent>(uid);
+            }
         }
 
         /// <summary>
