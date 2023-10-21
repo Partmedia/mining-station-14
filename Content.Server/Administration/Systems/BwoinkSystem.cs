@@ -412,6 +412,10 @@ namespace Content.Server.Administration.Systems
             if (admins.Count != 0)
                 return;
 
+            // if auto admin is enabled, don't let them know that no admins are online
+            if (_config.GetCVar(CCVars.AutoAdmin))
+                return;
+
             // No admin online, let the player know
             var systemText = sendsWebhook ?
                 Loc.GetString("bwoink-system-starmute-message-no-other-users-webhook") :
