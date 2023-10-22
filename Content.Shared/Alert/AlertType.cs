@@ -23,6 +23,7 @@ namespace Content.Shared.Alert
         HumanDead,
         HumanHealth,
         PilotingShuttle,
+        Overfed,
         Peckish,
         Starving,
         Thirsty,

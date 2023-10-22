@@ -48,13 +48,23 @@ namespace Content.Server.Nutrition.Components
         [DataField("startingHunger")]
         private float _currentHunger = -1f;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverfedStrain
+        {
+            get => _overfedStrain;
+            set => _overfedStrain = value;
+        }
+        private float _overfedStrain = 0f;
+
+        private float _maximumHunger = 600.0f;
+
         [ViewVariables(VVAccess.ReadOnly)]
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
 
         [DataField("thresholds", customTypeSerializer: typeof(DictionarySerializer<HungerThreshold, float>))]
         private Dictionary<HungerThreshold, float> _hungerThresholds = new()
         {
-            { HungerThreshold.Overfed, 200.0f },
+            { HungerThreshold.Overfed, 400.0f },
             { HungerThreshold.Okay, 150.0f },
             { HungerThreshold.Peckish, 100.0f },
             { HungerThreshold.Starving, 50.0f },
@@ -63,6 +73,7 @@ namespace Content.Server.Nutrition.Components
 
         public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new()
         {
+            { HungerThreshold.Overfed, AlertType.Overfed },
             { HungerThreshold.Peckish, AlertType.Peckish },
             { HungerThreshold.Starving, AlertType.Starving },
             { HungerThreshold.Dead, AlertType.Starving },
@@ -145,7 +156,7 @@ namespace Content.Server.Nutrition.Components
         public HungerThreshold GetHungerThreshold(float food)
         {
             HungerThreshold result = HungerThreshold.Dead;
-            var value = HungerThresholds[HungerThreshold.Overfed];
+            var value = _maximumHunger;
             foreach (var threshold in _hungerThresholds)
             {
                 if (threshold.Value <= value && threshold.Value >= food)
@@ -160,7 +171,7 @@ namespace Content.Server.Nutrition.Components
 
         public void UpdateFood(float amount)
         {
-            _currentHunger = Math.Clamp(_currentHunger + amount, HungerThresholds[HungerThreshold.Dead], HungerThresholds[HungerThreshold.Overfed]);
+            _currentHunger = Math.Clamp(_currentHunger + amount, HungerThresholds[HungerThreshold.Dead], _maximumHunger);
         }
 
         // TODO: If mob is moving increase rate of consumption?
@@ -169,6 +180,15 @@ namespace Content.Server.Nutrition.Components
         {
             UpdateFood(- frametime * ActualDecayRate);
             UpdateCurrentThreshold();
+            UpdateOverfedStrain();
+        }
+
+        private void UpdateOverfedStrain()
+        {
+            if (_currentHungerThreshold == HungerThreshold.Overfed) 
+                _overfedStrain = _currentHunger;
+            else
+                _overfedStrain = 0f;
         }
 
         private void UpdateCurrentThreshold()

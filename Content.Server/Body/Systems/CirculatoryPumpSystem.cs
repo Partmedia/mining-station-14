@@ -9,6 +9,8 @@ using Robust.Shared.Timing;
 using Content.Shared.Damage;
 using Content.Shared.Rejuvenate;
 using Content.Server.Surgery;
+using Content.Server.Nutrition.Components;
+using Robust.Shared.Random;
 using Content.Shared.Damage;
 using Content.Shared.Rejuvenate;
 using Content.Server.Surgery;
@@ -21,6 +23,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SurgerySystem _surgerySystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SurgerySystem _surgerySystem = default!;
 
@@ -87,6 +90,51 @@ namespace Content.Server.Body.Systems
                             StopPump(uid, pump);
                         }
                     }
+
+                    if (pump.Working && TryComp<HungerComponent>(uid, out var hunger))
+                    {
+                        //check overfed ceiling
+                        if (hunger.OverfedStrain > 0) {
+                            //if the current strain is less than the overfed ceiling, update the strain to equal the overfed ceiling
+                            if (pump.Strain < hunger.OverfedStrain - pump.StrainMod && pump.StrainCeiling < hunger.OverfedStrain - pump.StrainMod)
+                            {
+                                pump.Strain = hunger.OverfedStrain - pump.StrainMod;
+                                pump.StrainCeiling = pump.Strain;
+                            } 
+
+                        }
+                        else
+                            pump.StrainCeiling = 0;
+
+                        if (pump.Strain > 0)
+                        {
+                            pump.Strain -= pump.StrainRecovery;
+                            if (pump.Strain < 0)
+                                pump.Strain = 0f;
+                        }
+
+                        //take the current strain and roll to apply damage
+                        if (pump.Strain > 0) {
+                            var roll = (int) _random.Next(1, 100);
+                            if (roll <= (pump.Strain*pump.StrainDamageMod) * 100)
+                            {
+                                pump.Damage += pump.Strain * pump.StrainDamageMod;
+                                if (pump.Damage > pump.MaxDamage)
+                                    pump.Damage = pump.MaxDamage;
+                            }
+                        }
+
+                        //take the current damage and roll to incur a heart attack
+                        if (pump.Damage >= pump.MinDamageThreshold)
+                        {
+                            var roll = (int) _random.Next(1, 100);
+                            if (roll <= ((pump.Damage-pump.MinDamageThreshold) * pump.DamageMod) * 100)
+                            {
+                                StopPump(uid, pump);
+                            }
+                        }
+                    }
+
                     pump.IntervalLastChecked = 0;
                 }
             }
