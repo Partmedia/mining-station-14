@@ -6,10 +6,11 @@ using Robust.Shared.Network;
 using Content.Server.Administration.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 
 namespace Content.Server.Administration;
 
-public sealed class AutoAdmin : IAutoAdmin
+public sealed class AutoAdmin : EntitySystem, IAutoAdmin
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -17,6 +18,12 @@ public sealed class AutoAdmin : IAutoAdmin
     [Dependency] private readonly IServerNetManager _netManager = default!;
     
     private Dictionary<NetUserId, int> record = new Dictionary<NetUserId, int>();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
+    }
 
     public void CheckCombat(EntityUid attacker, EntityUid attacked)
     {
@@ -48,6 +55,11 @@ public sealed class AutoAdmin : IAutoAdmin
 
         record[id] += 1;
         return record[id];
+    }
+
+    private void OnReset(RoundRestartCleanupEvent ev)
+    {
+        record.Clear();
     }
 
     private void AdminAction(IPlayerSession session, int n)
