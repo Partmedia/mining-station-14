@@ -16,7 +16,7 @@ public sealed class AutoAdmin : EntitySystem, IAutoAdmin
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     [Dependency] private readonly IServerNetManager _netManager = default!;
-    
+
     private Dictionary<NetUserId, int> record = new Dictionary<NetUserId, int>();
 
     public override void Initialize()
@@ -64,15 +64,16 @@ public sealed class AutoAdmin : EntitySystem, IAutoAdmin
 
     private void AdminAction(IPlayerSession session, int n)
     {
-        if (n >= 5 && _cfg.GetCVar(CCVars.AutoAdmin) >= 2)
+        var _bwoinkSystem = _entitySystemManager.GetEntitySystem<BwoinkSystem>();
+        if (n >= 4 && _cfg.GetCVar(CCVars.AutoAdmin) >= 2)
         {
             // kick
             _netManager.DisconnectChannel(session.ConnectedClient, "Kicked by admin");
+            _bwoinkSystem.Bwoink(session.UserId, "You were kicked by an admin.");
         }
-        else if (n == 3)
+        else if (n >= 2)
         {
             // warn
-            var _bwoinkSystem = _entitySystemManager.GetEntitySystem<BwoinkSystem>();
             _bwoinkSystem.Bwoink(session.UserId, Loc.GetString("autoadmin-no-rdm"));
         }
     }
