@@ -753,10 +753,6 @@ namespace Content.Server.Surgery
 
             SetBodyStatusFromChange(target, ToolUsage.Retractor);
 
-            _popupSystem.PopupEntity(Loc.GetString("surgery-retractor-applied"), user, user);
-
-            SetBodyStatusFromPartChange();
-
             UpdateUiState(target);
 
             return true;

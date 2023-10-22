@@ -22,7 +22,6 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<BodyPartComponent, ComponentRemove>(OnPartRemoved);
         SubscribeLocalEvent<BodyPartComponent, ComponentGetState>(OnPartGetState);
         SubscribeLocalEvent<BodyPartComponent, ComponentHandleState>(OnPartHandleState);
-        SubscribeLocalEvent<BodyPartComponent, MindTransferredEvent>(OnMindTransfer);
     }
 
     private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
@@ -379,27 +378,12 @@ public partial class SharedBodySystem
 
                 Dirty(appearance);
             }
-
-            if (part.PartType == BodyPartType.Head)
-            {
-                if (!GetBodyChildrenOfType(oldBody, BodyPartType.Head).Any()) //TODO do this by mind component move instead
-                    Standing.Down(oldBody);
-            }
         }
 
         Dirty(slot.Parent);
         Dirty(partId.Value);
 
         return true;
-    }
-
-    ///<summary>
-    ///make body fall over if its mind has been removed
-    ///</summary>
-    public void OnMindTransfer(EntityUid uid, BodyPartComponent component, MindTransferredEvent args)
-    {
-        if (args.Removed && TryComp(args.OldBody, out BodyComponent? oldBody))
-            Standing.Down(args.OldBody);
     }
 
     public void UpdateMovementSpeed(EntityUid body, BodyComponent? component = null, MovementSpeedModifierComponent? movement = null)

@@ -124,17 +124,6 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
-  - type: ToxinRemover 
-    embedded: true
-  - type: ToxinFilter
-    embedded: true
-  - type: EyeSight
-  - type: CirculatoryPump
-    notWorkingDamage:
-      types:
-        Asphyxiation: 30
-    embedded: true
-  - type: EyeSight
   - type: CirculatoryPump
     notWorkingDamage:
       types:

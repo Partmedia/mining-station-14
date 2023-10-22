@@ -30,12 +30,3 @@
   id: MobHumanDummy
   parent: BaseMobOrganicDummy
   noSpawn: true
-
-- type: entity
-  name: Urist McHeadless
-  id: MobHeadlessHumanDummy
-  parent: BaseMobHuman
-  components:
-    - type: Body
-      prototype: HeadlessHuman
-      requiredLegs: 2
