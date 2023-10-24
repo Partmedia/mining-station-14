@@ -54,6 +54,12 @@ namespace Content.Server.Body.Systems
             var newToxinRemover = EntityManager.EnsureComponent<ToxinRemoverComponent>(newEntity);
             //carry over properties of old to new
             newToxinRemover.ToxinRemovalRate = toxinRemover.ToxinRemovalRate;
+            newToxinRemover.ToxinThreshold = toxinRemover.ToxinThreshold;
+            newToxinRemover.RegenerationAmount = toxinRemover.RegenerationAmount;
+            newToxinRemover.RegenerationInterval = toxinRemover.RegenerationInterval;
+            newToxinRemover.IntervalLastChecked = toxinRemover.IntervalLastChecked;
+            newToxinRemover.ToxinBuildUp = toxinRemover.ToxinBuildUp;
+            newToxinRemover.Working = toxinRemover.Working;
 
             //if the old ToxinRemover is NOT embedded, remove the component
             if (!toxinRemover.Embedded)

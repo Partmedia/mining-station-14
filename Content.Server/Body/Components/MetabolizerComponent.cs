@@ -64,7 +64,8 @@ namespace Content.Server.Body.Components
         [DataField("groups")]
         public List<MetabolismGroupEntry>? MetabolismGroups = default!;
 
-        public List<string> Toxins = new List<string> { "Poison", "Alcohol", "Narcotic" }; //these groups require special treatment
+        public List<string> FilterToxins = new List<string> { "Poison", "Alcohol", "Narcotic" }; //these groups require special treatment RE liver
+        public List<string> RemoverToxins = new List<string> { "Poison", "Alcohol", "Narcotic", "Medicine" }; //these groups require special treatment RE kidneys
 
         public float BaseToxinRemovalRate = 0.25f; //if the body has no kidneys (or equiv), this is the rate of removal for toxins
         public float UnfilteredToxinRate = 0.1f; //if the body has no liver (or equiv), this is rate of additional toxins added

@@ -153,12 +153,22 @@ namespace Content.Server.Body.Systems
                         mostToRemove = entry.MetabolismRate;
 
                     var toxinRemovalRate = 1f;
-                    if (meta.Toxins.Contains(group.Id))
+                    if (meta.RemoverToxins.Contains(group.Id))
                     {
                         //if no toxin remover, set add BaseToxinRemovalRate from MetabolizerComponent (0.25)
                         //otherwise set modifier from ToxinRemoverComponent
-                        if (TryComp<ToxinRemoverComponent>(solutionEntityUid.Value, out var toxinRemover))
-                            toxinRemovalRate = toxinRemover.ToxinRemovalRate;
+                        if (TryComp<ToxinRemoverComponent>(solutionEntityUid.Value, out var toxinRemover) && toxinRemover.Working) {
+
+                            //determine if there is enough build up to diminish the remover's effectiveness
+                            var toxinRemovalPenalty = 0f;
+                            if (toxinRemover.ToxinBuildUp >= toxinRemover.BuildUpThreshold)
+                                toxinRemovalPenalty = (toxinRemover.ToxinBuildUp * toxinRemover.BuildUpRemovalMod) - (toxinRemover.BuildUpThreshold * toxinRemover.BuildUpRemovalMod);
+
+                            toxinRemovalRate = toxinRemover.ToxinRemovalRate - toxinRemovalPenalty;
+                            //always maintain a minimum removal rate
+                            if (toxinRemovalRate < meta.BaseToxinRemovalRate)
+                                toxinRemovalRate = meta.BaseToxinRemovalRate;
+                        }
                         else
                             toxinRemovalRate = meta.BaseToxinRemovalRate;
                     }
@@ -181,11 +191,19 @@ namespace Content.Server.Body.Systems
                     var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, effectAmount,
                         EntityManager, null, scale);
 
-                    if (meta.Toxins.Contains(group.Id))
+                    if (meta.FilterToxins.Contains(group.Id))
                     {
                         //put strain on the toxinFilter if any
                         if (TryComp<ToxinFilterComponent>(solutionEntityUid.Value, out var toxinFilter))
                             toxinFilter.ToxinBuildUp += scale;
+                    }
+
+                    if (meta.RemoverToxins.Contains(group.Id))
+                    {
+                        //put strain on the toxinRemover if any
+                        //TODO cleanup don't get this component twice...
+                        if (TryComp<ToxinRemoverComponent>(solutionEntityUid.Value, out var toxinRemover))
+                            toxinRemover.ToxinBuildUp += scale;
                     }
 
                     // do all effects, if conditions apply

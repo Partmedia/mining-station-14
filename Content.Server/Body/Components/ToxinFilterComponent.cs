@@ -23,7 +23,7 @@ namespace Content.Server.Body.Components
         [ViewVariables]
         public float ToxinBuildUp = 0f;
 
-        //if this is true, the organ does not work
+        //if this is false, the organ does not work
         [ViewVariables]
         public bool Working = true;
 

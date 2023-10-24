@@ -142,6 +142,9 @@ namespace Content.Server.Body.Systems
         private void OnRejuvenate(EntityUid uid, CirculatoryPumpComponent pump, RejuvenateEvent args)
         {
             pump.Working = true;
+            pump.Damage = 0f;
+            pump.Strain = 0f;
+            pump.StrainCeiling = 0f;
         }
     }  
 }

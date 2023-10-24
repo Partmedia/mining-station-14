@@ -2,6 +2,7 @@ using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
 using Robust.Shared.Timing;
 using JetBrains.Annotations;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Server.Body.Systems
 {
@@ -12,6 +13,7 @@ namespace Content.Server.Body.Systems
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<ToxinFilterComponent, RejuvenateEvent>(OnRejuvenate);
         }
 
         public override void Update(float frameTime)
@@ -44,6 +46,12 @@ namespace Content.Server.Body.Systems
         public void StopFilter(EntityUid uid, ToxinFilterComponent filter)
         {
             filter.Working = false;
+        }
+
+        private void OnRejuvenate(EntityUid uid, ToxinFilterComponent filter, RejuvenateEvent args)
+        {
+            filter.Working = true;
+            filter.ToxinBuildUp = 0f;
         }
     }  
 }
