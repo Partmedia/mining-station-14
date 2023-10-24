@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Systems;
+using Content.Server.Body.Systems;
 using Content.Shared.FixedPoint;
 
 namespace Content.Server.Body.Components
@@ -32,6 +32,34 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField("digestionDelay")]
         public float DigestionDelay = 20;
+
+        //if the organ accumulates this much toxicity at once, it fails
+        [DataField("toxinThreshold")]
+        public float ToxinThreshold = 100f;
+
+        //if the organ accumulates this much toxicity at once, it temporarily becomes worse
+        [DataField("buildUpThreshold")]
+        public float BuildUpThreshold = 50f;
+
+        //the organ self heals over time
+        [DataField("regenerationAmount")]
+        [ViewVariables]
+        public float RegenerationAmount = 10f;
+
+        [DataField("regenerationInterval")]
+        public float RegenerationInterval = 60f;
+
+        [ViewVariables]
+        public float IntervalLastChecked = 0f;
+
+        [ViewVariables]
+        public float ToxinBuildUp = 0f;
+
+        //if this is false, the organ does not work
+        [ViewVariables]
+        public bool Working = true;
+
+        public List<string> Toxins = new List<string> { "Poison" };
 
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach
