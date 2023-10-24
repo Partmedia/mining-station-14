@@ -153,7 +153,7 @@ namespace Content.Server.Body.Systems
                         mostToRemove = entry.MetabolismRate;
 
                     var toxinRemovalRate = 1f;
-                    if (meta.RemoverToxins.Contains(group.Id))
+                    if (meta.FilterToxins.Contains(group.Id))
                     {
                         //if no toxin remover, set add BaseToxinRemovalRate from MetabolizerComponent (0.25)
                         //otherwise set modifier from ToxinRemoverComponent
