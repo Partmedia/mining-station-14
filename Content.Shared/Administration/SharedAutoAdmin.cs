@@ -2,7 +2,7 @@ namespace Content.Shared.Administration;
 
 public interface IAutoAdmin
 {
-    public void CheckCombat(EntityUid attacker, EntityUid attacked);
+    public void CheckCombat(EntityUid attacker, EntityUid attacked, float damage);
 }
 
 /**
@@ -13,7 +13,7 @@ public interface IAutoAdmin
 [Virtual]
 public class SharedAutoAdmin : IAutoAdmin
 {
-    public virtual void CheckCombat(EntityUid attacker, EntityUid attacked)
+    public virtual void CheckCombat(EntityUid attacker, EntityUid attacked, float damage)
     {
     }
 }

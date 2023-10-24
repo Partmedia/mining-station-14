@@ -461,7 +461,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
             PlayHitSound(ev.Target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
 
-            _autoadmin.CheckCombat(user, ev.Target.Value);
+            _autoadmin.CheckCombat(user, ev.Target.Value, damageResult.Total.Float());
         }
         else
         {

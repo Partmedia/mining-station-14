@@ -62,7 +62,7 @@ namespace Content.Server.Projectiles
                     HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
                     $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter):user} hit {otherName:target} and dealt {modifiedDamage.Total:damage} damage");
 
-                _autoadmin.CheckCombat(component.Shooter, otherEntity);
+                _autoadmin.CheckCombat(component.Shooter, otherEntity, modifiedDamage.Total.Float());
             }
 
             if (!deleted)

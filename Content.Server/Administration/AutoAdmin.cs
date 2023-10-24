@@ -17,7 +17,7 @@ public sealed class AutoAdmin : EntitySystem, IAutoAdmin
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     [Dependency] private readonly IServerNetManager _netManager = default!;
 
-    private Dictionary<NetUserId, int> record = new Dictionary<NetUserId, int>();
+    private Dictionary<NetUserId, float> record = new Dictionary<NetUserId, float>();
 
     public override void Initialize()
     {
@@ -25,35 +25,39 @@ public sealed class AutoAdmin : EntitySystem, IAutoAdmin
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
     }
 
-    public void CheckCombat(EntityUid attacker, EntityUid attacked)
+    public void CheckCombat(EntityUid attacker, EntityUid attacked, float damage)
     {
         if (!Enabled())
-            return;
-
-        // victim is not a player, ignore
-        if (!IsPlayer(attacked))
             return;
 
         // attacker is not a player, ignore
         if (!_entityManager.TryGetComponent<ActorComponent>(attacker, out var attackerActor))
             return;
 
+        var attackerId = attackerActor.PlayerSession.UserId;
+
+        // victim is not a player, reduce player's RDM score
+        if (!IsPlayer(attacked))
+        {
+            Score(attackerId, -damage);
+            return;
+        }
+
         // if either attacker or attacked is an antag, there's a reason to fight
         if (IsAntag(attacker) || IsAntag(attacked))
             return;
 
-        var attackerId = attackerActor.PlayerSession.UserId;
-        int n = RecordHit(attackerId);
+        float n = Score(attackerId, damage);
         Logger.InfoS("autoadmin", $"auto-admin violation {n} for {attackerId}");
         AdminAction(attackerActor.PlayerSession, n);
     }
 
-    private int RecordHit(NetUserId id)
+    private float Score(NetUserId id, float score)
     {
         if (!record.ContainsKey(id))
-            record.Add(id, 0);
+            record.Add(id, 0f);
 
-        record[id] += 1;
+        record[id] = MathF.Max(record[id] + score, 0f);
         return record[id];
     }
 
@@ -62,16 +66,16 @@ public sealed class AutoAdmin : EntitySystem, IAutoAdmin
         record.Clear();
     }
 
-    private void AdminAction(IPlayerSession session, int n)
+    private void AdminAction(IPlayerSession session, float n)
     {
         var _bwoinkSystem = _entitySystemManager.GetEntitySystem<BwoinkSystem>();
-        if (n >= 4 && _cfg.GetCVar(CCVars.AutoAdmin) >= 2)
+        if (n >= 70f && _cfg.GetCVar(CCVars.AutoAdmin) >= 2)
         {
             // kick
             _netManager.DisconnectChannel(session.ConnectedClient, "Kicked by admin");
             _bwoinkSystem.Bwoink(session.UserId, "You were kicked by an admin.");
         }
-        else if (n >= 2)
+        else if (n >= 50f)
         {
             // warn
             _bwoinkSystem.Bwoink(session.UserId, Loc.GetString("autoadmin-no-rdm"));
