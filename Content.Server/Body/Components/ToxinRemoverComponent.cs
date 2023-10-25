@@ -1,4 +1,5 @@
 using Content.Server.Body.Systems;
+using Content.Shared.Body.Organ;
 
 namespace Content.Server.Body.Components
 {
@@ -35,6 +36,16 @@ namespace Content.Server.Body.Components
         public float ToxinRemovalRate = 1.0f;
 
         public float BuildUpRemovalMod = 0.01f;
+
+        //Current Condition
+        [ViewVariables]
+        public OrganCondition Condition = OrganCondition.Good;
+
+        //Warning Damage
+        public float WarningDamage = 150f;
+
+        //Critical Damage
+        public float CriticalDamage = 250f;
 
         //if the ToxinRemover is embedded, do not remove it from its host whenever an organ is removed
         [DataField("embedded")]

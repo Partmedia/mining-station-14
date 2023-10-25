@@ -12,11 +12,15 @@ namespace Content.Shared.MedicalScanner
         {
             public readonly EntityUid? TargetEntity;
             public float Temperature;
+            public Dictionary<string, string> OrganConditions;
+            public bool Sedated;
 
-            public HealthAnalyzerScannedUserMessage(EntityUid? targetEntity, float temperature)
+            public HealthAnalyzerScannedUserMessage(EntityUid? targetEntity, float temperature, Dictionary<string,string> organConditions, bool sedated)
             {
                 TargetEntity = targetEntity;
                 Temperature = temperature;
+                OrganConditions = organConditions;
+                Sedated = sedated;
             }
         }
 

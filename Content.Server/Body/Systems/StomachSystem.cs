@@ -7,6 +7,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Prototypes;
 using Content.Shared.Chemistry.Reagent;
+using Content.Server.Popups;
 
 namespace Content.Server.Body.Systems
 {
@@ -15,6 +16,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public const string DefaultSolutionName = "stomach";
 
@@ -111,6 +113,8 @@ namespace Content.Server.Body.Systems
                     if (stomach.ToxinBuildUp >= stomach.ToxinThreshold)
                         stomach.Working = false;
 
+                    UpdateStomachStatus(body, stomach);
+
                     foreach (var item in queue)
                     {
                         stomach.ReagentDeltas.Remove(item);
@@ -119,6 +123,33 @@ namespace Content.Server.Body.Systems
                     // Transfer everything to the body solution!
                     _solutionContainerSystem.TryAddSolution(body, bodySolution, transferSolution);
                 }
+            }
+        }
+
+        private void UpdateStomachStatus(EntityUid body, StomachComponent stomach)
+        {
+            //Update and signal damage
+            if (!stomach.Working)
+            {
+                if (stomach.Condition != OrganCondition.Failure)
+                    _popupSystem.PopupEntity("you feel a short sharp pain in your stomach", body, body); //TODO loc
+                stomach.Condition = OrganCondition.Failure;
+            }
+            else if (stomach.ToxinBuildUp >= stomach.CriticalDamage)
+            {
+                if (stomach.Condition != OrganCondition.Critical)
+                    _popupSystem.PopupEntity("you feel a sharp pain in your stomach", body, body); //TODO loc
+                stomach.Condition = OrganCondition.Critical;
+            }
+            else if (stomach.ToxinBuildUp >= stomach.WarningDamage)
+            {
+                if (stomach.Condition != OrganCondition.Critical && stomach.Condition != OrganCondition.Warning)
+                    _popupSystem.PopupEntity("you feel a slight pain in your stomach", body, body); //TODO loc
+                stomach.Condition = OrganCondition.Warning;
+            }
+            else
+            {
+                stomach.Condition = OrganCondition.Good;
             }
         }
 
@@ -184,6 +215,7 @@ namespace Content.Server.Body.Systems
         {
             stomach.Working = true;
             stomach.ToxinBuildUp = 0f;
+            stomach.Condition = OrganCondition.Good;
         }
     }
 }

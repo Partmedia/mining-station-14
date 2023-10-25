@@ -56,7 +56,7 @@ namespace Content.Server.Nutrition.Components
         }
         private float _overfedStrain = 0f;
 
-        private float _maximumHunger = 600.0f;
+        private float _maximumHunger = 400.0f;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;

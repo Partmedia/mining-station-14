@@ -23,6 +23,7 @@ namespace Content.Client.HealthAnalyzer.UI
         public void Populate(HealthAnalyzerScannedUserMessage msg)
         {
             var text = new StringBuilder();
+            var text2 = new StringBuilder();
             var entities = IoCManager.Resolve<IEntityManager>();
 
             if (msg.TargetEntity != null && entities.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
@@ -47,6 +48,9 @@ namespace Content.Client.HealthAnalyzer.UI
                 {
                     text.Append($"{Loc.GetString("disease-scanner-not-diseased")}\n");
                 }
+
+                if (msg.Sedated)
+                    text.Append(String.Format("\nSEDATED\n")); //TODO LOC
 
                 // Damage
                 text.Append($"\n{Loc.GetString("health-analyzer-window-entity-damage-total-text", ("amount", damageable.TotalDamage))}\n");
@@ -76,7 +80,18 @@ namespace Content.Client.HealthAnalyzer.UI
                     text.AppendLine();
                 }
                 Diagnostics.Text = text.ToString();
-                SetSize = (250, 600);
+
+                //TODO LOC
+                text2.Append("\nOrgan Conditions\n");
+
+                foreach (KeyValuePair<string, string> entry in msg.OrganConditions)
+                {
+                    text2.Append(String.Format("\n{0}: {1}\n", entry.Key, entry.Value));
+                }
+
+                OrganStatus.Text = text2.ToString();
+
+                SetSize = (550, 800);
             }
             else
             {

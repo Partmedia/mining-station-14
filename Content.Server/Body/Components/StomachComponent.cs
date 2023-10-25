@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Body.Organ;
 
 namespace Content.Server.Body.Components
 {
@@ -54,6 +55,17 @@ namespace Content.Server.Body.Components
 
         [ViewVariables]
         public float ToxinBuildUp = 0f;
+
+        //Current Condition
+        [ViewVariables]
+        [Access(typeof(StomachSystem), Other = AccessPermissions.ReadExecute)]
+        public OrganCondition Condition = OrganCondition.Good;
+
+        //Warning Damage
+        public float WarningDamage = 50f;
+
+        //Critical Damage
+        public float CriticalDamage = 80f;
 
         //if this is false, the organ does not work
         [ViewVariables]

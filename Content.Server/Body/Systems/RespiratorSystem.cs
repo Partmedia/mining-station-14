@@ -114,13 +114,12 @@ namespace Content.Server.Body.Systems
             var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
             foreach (var (lung, _) in organs)
             {
+                _lungSystem.UpdateLungStatus(uid,lung);
 
                 // Remove for lung damage
                 var damageLoss = lung.Damage;
                 if (damageLoss > 1.0f)
                     damageLoss = 1.0f;
-
-                // TODO implement coughing at a certain amount of lung damage
 
                 // Merge doesn't remove gas from the giver.
                 if (damageLoss > 0)

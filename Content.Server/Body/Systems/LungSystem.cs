@@ -6,6 +6,9 @@ using Content.Shared.Atmos;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Prototypes;
 using Content.Shared.Chemistry.Reagent;
+using Content.Server.Popups;
+using Content.Shared.Rejuvenate;
+using Content.Shared.Body.Organ;
 
 namespace Content.Server.Body.Systems;
 
@@ -15,6 +18,7 @@ public sealed class LungSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public static string LungSolutionName = "Lung";
 
@@ -24,6 +28,7 @@ public sealed class LungSystem : EntitySystem
         SubscribeLocalEvent<LungComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BreathToolComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<BreathToolComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<LungComponent, RejuvenateEvent>(OnRejuvenate);
     }
 
     private void OnGotUnequipped(EntityUid uid, BreathToolComponent component, GotUnequippedEvent args)
@@ -100,5 +105,32 @@ public sealed class LungSystem : EntitySystem
 
             CheckLungDamage(uid, lung, reagent, amount);           
         }
+    }
+
+    public void UpdateLungStatus(EntityUid body, LungComponent lung)
+    {
+        //Update and signal damage
+        if (lung.Damage >= lung.CriticalDamage)
+        {
+            if (lung.Condition != OrganCondition.Critical)
+                _popupSystem.PopupEntity("you struggle to breath and your chest hurts", body, body); //TODO loc
+            lung.Condition = OrganCondition.Critical;
+        }
+        else if (lung.Damage >= lung.WarningDamage)
+        {
+            if (lung.Condition != OrganCondition.Critical && lung.Condition != OrganCondition.Warning)
+                _popupSystem.PopupEntity("you find it slightly harder to breath", body, body); //TODO loc
+            lung.Condition = OrganCondition.Warning;
+        }
+        else
+        {
+            lung.Condition = OrganCondition.Good;
+        }
+    }
+
+    private void OnRejuvenate(EntityUid uid, LungComponent lung, RejuvenateEvent args)
+    {
+        lung.Damage = 0f;
+        lung.Condition = OrganCondition.Good;
     }
 }

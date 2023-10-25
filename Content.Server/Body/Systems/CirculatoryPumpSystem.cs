@@ -14,6 +14,8 @@ using Robust.Shared.Random;
 using Content.Shared.Damage;
 using Content.Shared.Rejuvenate;
 using Content.Server.Surgery;
+using Content.Server.Popups;
+using Content.Shared.Body.Organ;
 
 namespace Content.Server.Body.Systems
 {
@@ -24,6 +26,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SurgerySystem _surgerySystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -114,9 +117,12 @@ namespace Content.Server.Body.Systems
                             var roll = (int) _random.Next(1, 100);
                             if (roll <= ((pump.Damage-pump.MinDamageThreshold) * pump.DamageMod) * 100)
                             {
+                                _popupSystem.PopupEntity("you feel an intense tight pain in your chest", uid, uid); //TODO loc
                                 StopPump(uid, pump);
                             }
                         }
+
+                        UpdatePumpStatus(uid, pump);
                     }
 
                     pump.IntervalLastChecked = 0;
@@ -127,6 +133,7 @@ namespace Content.Server.Body.Systems
         //Stop the pump i.e. the heart no longer works for whatever reason
         public void StopPump(EntityUid uid, CirculatoryPumpComponent pump)
         {
+            pump.Condition = OrganCondition.Failure;
             pump.Working = false;
         }
 
@@ -136,6 +143,28 @@ namespace Content.Server.Body.Systems
             if (!_mobState.IsDead(uid))
             {
                 pump.Working = true;
+                UpdatePumpStatus(uid, pump);
+            }
+        }
+
+        public void UpdatePumpStatus(EntityUid body, CirculatoryPumpComponent pump)
+        {
+            //Update and signal damage
+            if (pump.Damage >= pump.CriticalDamage && pump.Working)
+            {
+                if (pump.Condition != OrganCondition.Critical && pump.Condition != OrganCondition.Failure)
+                    _popupSystem.PopupEntity("you constantly feel out of breath", body, body); //TODO loc
+                pump.Condition = OrganCondition.Critical;
+            }
+            else if (pump.Damage >= pump.WarningDamage && pump.Working)
+            {
+                if (pump.Condition != OrganCondition.Critical && pump.Condition != OrganCondition.Warning)
+                    _popupSystem.PopupEntity("you find it slightly harder to breath", body, body); //TODO loc
+                pump.Condition = OrganCondition.Warning;
+            }
+            else if (pump.Working)
+            {
+                pump.Condition = OrganCondition.Good;
             }
         }
 
@@ -145,6 +174,7 @@ namespace Content.Server.Body.Systems
             pump.Damage = 0f;
             pump.Strain = 0f;
             pump.StrainCeiling = 0f;
+            pump.Condition = OrganCondition.Good;
         }
     }  
 }

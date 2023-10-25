@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Damage;
+using Content.Shared.Body.Organ;
 
 namespace Content.Server.Body.Components
 {
@@ -44,5 +45,15 @@ namespace Content.Server.Body.Components
         public float MinDamageThreshold = 2f; //minimum heart damage before heart attacks can occur
         //consider max heart attack damage
         public float MaxDamage = 10f;
+
+        //Current Condition
+        [ViewVariables]
+        public OrganCondition Condition = OrganCondition.Good;
+
+        //Warning Damage
+        public float WarningDamage = 1f;
+
+        //Critical Damage
+        public float CriticalDamage = 2f;
     }
 }

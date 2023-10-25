@@ -11,6 +11,12 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Content.Server.Body.Systems;
+using Content.Shared.Eye.Blinding;
+using Content.Server.Body.Components;
+using Content.Shared.Body.Components;
+using Content.Server.Surgery;
+using Content.Shared.Body.Organ;
 using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
 
 namespace Content.Server.Medical
@@ -21,6 +27,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
 
         public override void Initialize()
         {
@@ -29,6 +36,71 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<TargetScanSuccessfulEvent>(OnTargetScanSuccessful);
             SubscribeLocalEvent<ScanCancelledEvent>(OnScanCancelled);
+        }
+
+        public Dictionary<string, string> GetOrganFunctions(EntityUid uid)
+        {
+            var organFunctionConditions = new Dictionary<string, string>();
+            if (!TryComp<BodyComponent>(uid, out var body))
+                return organFunctionConditions;
+
+            //organ conditions - these are tied to organs directly
+            //bodies can have multiple of these
+            var lungs = _bodySystem.GetBodyOrganComponents<LungComponent>(uid, body);
+            var stomaches = _bodySystem.GetBodyOrganComponents<StomachComponent>(uid, body);
+
+            //get all organ functions and their respective operating conditions
+            //TODO LOC on all of these (keys used as is)
+
+            //eyes
+            if (TryComp<BlindableComponent>(uid, out var eyes))
+                organFunctionConditions["Eyes (or equiv)"] = eyes.Condition.ToString(); //TODO
+
+            //lungs
+            if (lungs.Count > 1)
+            {
+                for (var i = 0; i <= lungs.Count; i++)
+                {
+                    organFunctionConditions["Lung "+(i+1)+" (or equiv)"] = lungs[i].Comp.Condition.ToString();
+                }
+            }
+            else if (lungs.Count == 0)
+                organFunctionConditions["Lungs (or equiv)"] = OrganCondition.Missing.ToString();
+            else
+                organFunctionConditions["Lungs (or equiv)"] = lungs[0].Comp.Condition.ToString();
+
+            //stomach
+            if (stomaches.Count > 1)
+            {
+                for (var i = 0; i <= stomaches.Count; i++)
+                {
+                    organFunctionConditions["Stomach " + (i + 1) + " (or equiv)"] = stomaches[i].Comp.Condition.ToString();
+                }
+            }
+            else if (stomaches.Count == 0)
+                organFunctionConditions["Stomach (or equiv)"] = OrganCondition.Missing.ToString();
+            else
+                organFunctionConditions["Stomach (or equiv)"] = stomaches[0].Comp.Condition.ToString();
+
+            //heart
+            if (!TryComp<CirculatoryPumpComponent>(uid, out var heart))
+                organFunctionConditions["Heart (or equiv)"] = OrganCondition.Missing.ToString();
+            else
+                organFunctionConditions["Heart (or equiv)"] = heart.Condition.ToString(); 
+
+            //liver
+            if (!TryComp<ToxinFilterComponent>(uid, out var liver))
+                organFunctionConditions["Liver (or equiv)"] = OrganCondition.Missing.ToString();
+            else
+                organFunctionConditions["Liver (or equiv)"] = liver.Condition.ToString();
+
+            //kidneys
+            if (!TryComp<ToxinRemoverComponent>(uid, out var kidneys))
+                organFunctionConditions["Kidneys (or equiv)"] = OrganCondition.Missing.ToString();
+            else
+                organFunctionConditions["Kidneys (or equiv)"] = kidneys.Condition.ToString(); 
+
+            return organFunctionConditions;
         }
 
         private void HandleActivateInWorld(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, ActivateInWorldEvent args)
@@ -117,9 +189,12 @@ namespace Content.Server.Medical
                 return;
 
             TryComp<TemperatureComponent>(target, out var temp);
+            TryComp<SurgeryComponent>(target, out var surgery);
+
+            var organFunctionConditions = GetOrganFunctions(target.Value);
 
             OpenUserInterface(user, healthAnalyzer);
-            healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : 0));
+            healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, surgery != null ? surgery.Sedated : false));
         }
 
         private static void OnScanCancelled(ScanCancelledEvent args)

@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Content.Shared.Body.Organ;
 
 namespace Content.Shared.Eye.Blinding
 {
@@ -43,6 +44,15 @@ namespace Content.Shared.Eye.Blinding
         /// Gives an extra frame of blindness to reenable light manager during
         /// </description>
         public bool GraceFrame = false;
+
+        [ViewVariables]
+        public OrganCondition Condition = OrganCondition.Good;
+
+        //Warning Damage
+        public float WarningDamage = 4f;
+
+        //Critical Damage
+        public float CriticalDamage = 6f;
     }
 
     [Serializable, NetSerializable]

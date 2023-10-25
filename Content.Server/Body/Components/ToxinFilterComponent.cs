@@ -1,4 +1,5 @@
 using Content.Server.Body.Systems;
+using Content.Shared.Body.Organ;
 
 namespace Content.Server.Body.Components
 {
@@ -22,6 +23,16 @@ namespace Content.Server.Body.Components
 
         [ViewVariables]
         public float ToxinBuildUp = 0f;
+
+        //Current Condition
+        [ViewVariables]
+        public OrganCondition Condition = OrganCondition.Good;
+
+        //Warning Damage
+        public float WarningDamage = 25f;
+
+        //Critical Damage
+        public float CriticalDamage = 50f;
 
         //if this is false, the organ does not work
         [ViewVariables]
