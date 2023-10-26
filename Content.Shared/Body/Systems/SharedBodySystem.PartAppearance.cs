@@ -8,9 +8,9 @@ using Content.Shared.Humanoid.Prototypes;
 
 namespace Content.Shared.Body.Systems;
 
-public abstract class SharedBodyPartAppearanceSystem : EntitySystem
+public partial class SharedBodySystem
 {
-    public override void Initialize()
+    private void InitializePartAppearances()
     {
         base.Initialize();
 
@@ -78,7 +78,7 @@ public abstract class SharedBodyPartAppearanceSystem : EntitySystem
             var part = args.Part;
             var customLayers = bodyAppearance.CustomBaseLayers;
             var visualLayer = BodyPartVisualLayers[(part.PartType, part.Symmetry)];
-            customLayers[visualLayer] = new CustomBaseLayerInfo(component.ID, customLayers[visualLayer].Color);       
+            customLayers[visualLayer] = new CustomBaseLayerInfo(component.ID, customLayers[visualLayer].Color);
         }
     }
 
@@ -97,7 +97,7 @@ public abstract class SharedBodyPartAppearanceSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, BodyPartAppearanceComponent component, ref ComponentGetState args)
     {
-        args.State = new BodyPartAppearanceComponentState(component.ID,component.Color,component.OriginalBody);
+        args.State = new BodyPartAppearanceComponentState(component.ID, component.Color, component.OriginalBody);
     }
 
     protected abstract void UpdateAppearance(EntityUid uid, BodyPartAppearanceComponent component);

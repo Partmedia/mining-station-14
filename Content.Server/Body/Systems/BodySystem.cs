@@ -136,6 +136,11 @@ public sealed class BodySystem : SharedBodySystem
         InitPart(partComponent, prototype, prototype.Root);
     }
 
+    protected override void UpdateAppearance(EntityUid uid, BodyPartAppearanceComponent component)
+    {
+        return;
+    }
+
     public override HashSet<EntityUid> GibBody(EntityUid? bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false)
     {
         if (bodyId == null || !Resolve(bodyId.Value, ref body, false))

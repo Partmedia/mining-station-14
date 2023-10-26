@@ -249,6 +249,15 @@ public partial class SharedBodySystem
             childOrgan.Body = part.Body;
         }
 
+        if (TryComp(part.Body, out HumanoidAppearanceComponent? bodyAppearance) &&
+                !TryComp(part.Owner, out BodyPartAppearanceComponent? existingAppearance))
+        {
+            var appearance = AddComp<BodyPartAppearanceComponent>(part.Owner);
+            appearance.OriginalBody = part.Body;
+            appearance.Color = bodyAppearance.SkinColor;
+            UpdateAppearance(part.Owner, appearance);
+        }
+
         Dirty(slot.Parent);
         Dirty(partId.Value);
 
@@ -370,13 +379,10 @@ public partial class SharedBodySystem
             if (part != null && TryComp(oldBody, out HumanoidAppearanceComponent? bodyAppearance) &&
                 !TryComp(part.Owner, out BodyPartAppearanceComponent? existingAppearance))
             {
-
-                //TODO fix this
                 var appearance = AddComp<BodyPartAppearanceComponent>(part.Owner);
                 appearance.OriginalBody = part.OriginalBody;
                 appearance.Color = bodyAppearance.SkinColor;
-
-                Dirty(appearance);
+                UpdateAppearance(part.Owner, appearance);
             }
         }
 
@@ -486,16 +492,12 @@ public partial class SharedBodySystem
         if (part.Attachment == null)
             part.Attachment = uid;
 
-        //TODO update body part sprite when implemented
-
         //TODO update player sprite if possible
     }
 
     public void RemovePartAttachment(BodyPartComponent part)
     {
         part.Attachment = null;
-
-        //TODO update body part sprite when implemented
 
         //TODO update player sprite if possible
     }
@@ -524,8 +526,6 @@ public partial class SharedBodySystem
             //change body part incised to true
             part.Incised = incised;
 
-            //TODO update body part sprite when implemented
-
             //TODO update player sprite if possible
         }
     }
@@ -537,8 +537,6 @@ public partial class SharedBodySystem
             //change body part incised to true
             part.EndoOpened = opened;
 
-            //TODO update body part sprite when implemented
-
             //TODO update player sprite if possible
         }
     }
@@ -549,8 +547,6 @@ public partial class SharedBodySystem
         {
             //change body part incised to true
             part.ExoOpened = opened;
-
-            //TODO update body part sprite when implemented
 
             //TODO update player sprite if possible
         }

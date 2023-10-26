@@ -11,7 +11,9 @@ namespace Content.Server.Surgery
         ///     Check all parts and determine if the owner is still bleeding
         ///     <see cref="SurgeryComponent"/>
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool OrganBleeding = false;
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool PartBleeding = false;
 
         public float InitialOrganBloodloss = 15f;
