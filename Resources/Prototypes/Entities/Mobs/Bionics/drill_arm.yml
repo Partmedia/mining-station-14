@@ -10,7 +10,7 @@
 - type: entity
   name: Right Drill Arm
   id: RightDrillArmHand
-  parent: RightDrillArmHand
+  parent: RightDrillArm
   components:
   - type: Body
     prototype: RightDrillArmHand

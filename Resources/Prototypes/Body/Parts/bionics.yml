@@ -67,7 +67,7 @@
 
 - type: entity
   id: LeftDrillArm
-  name: "left drill arm part"
+  name: "left drill arm"
   parent: PartBionic
   components:
   - type: DrillArm
@@ -90,8 +90,8 @@
     symmetry: Left
 
 - type: entity
-  id: RightDrillHuman
-  name: "right drill arm part"
+  id: RightDrillArm
+  name: "right drill arm"
   parent: PartBionic
   components:
   - type: DrillArm
