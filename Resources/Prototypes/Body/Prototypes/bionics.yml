@@ -1,0 +1,27 @@
+- type: body
+  id: LeftDrillArmHand
+  name: "left drill arm"
+  root: left arm
+  rootOverride: true
+  species: universal
+  slots:
+    left arm:
+      part: LeftDrillArm
+      connections:
+      - left hand
+    left hand:
+      part: LeftHandSynth
+
+- type: body
+  id: RightDrillArmHand
+  name: "right drill arm"
+  root: right arm
+  rootOverride: true
+  species: universal
+  slots:
+    right arm:
+      part: RightDrillArm
+      connections:
+      - right hand
+    right hand:
+      part: RightHandSynth

@@ -19,12 +19,17 @@ public sealed class BodyPrototype : IPrototype
 
     private BodyPrototype() { }
 
-    public BodyPrototype(string id, string name, string root, Dictionary<string, BodyPrototypeSlot> slots)
+    //if true, overrides and removes root body - designed for body parts with slots
+    [DataField("rootOverride")]
+    public bool RootOverride = false;
+
+    public BodyPrototype(string id, string name, string root, Dictionary<string, BodyPrototypeSlot> slots, bool rootOverride)
     {
         ID = id;
         Name = name;
         Root = root;
         Slots = slots;
+        RootOverride = rootOverride;
     }
 }
 

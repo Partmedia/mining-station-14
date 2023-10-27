@@ -85,4 +85,23 @@ namespace Content.Shared.Body.Events
         }
     }
 
+    public sealed class PartAddedToBodyEvent : EntityEventArgs
+    {
+        public EntityUid Body;
+
+        public PartAddedToBodyEvent(EntityUid body)
+        {
+            Body = body;
+        }
+    }
+
+    public sealed class PartRemovedFromBodyEvent : EntityEventArgs
+    {
+        public EntityUid Body;
+
+        public PartRemovedFromBodyEvent(EntityUid body)
+        {
+            Body = body;
+        }
+    }
 }

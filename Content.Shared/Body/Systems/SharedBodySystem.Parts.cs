@@ -289,6 +289,8 @@ public partial class SharedBodySystem
             var partAddedEvent = new BodyPartAddedEvent(slot.Id, part);
             RaiseLocalEvent(newBody, ref partAddedEvent);
 
+            RaiseLocalEvent(partId.Value, new PartAddedToBodyEvent(newBody), true);
+
             // TODO: Body refactor. Somebody is doing it
             //EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
 
@@ -331,6 +333,8 @@ public partial class SharedBodySystem
         {
             var partRemovedEvent = new BodyPartRemovedEvent(slot.Id, part);
             RaiseLocalEvent(oldBody, ref partRemovedEvent);
+
+            RaiseLocalEvent(partId.Value, new PartRemovedFromBodyEvent(oldBody), true);
 
             if (part.PartType == BodyPartType.Leg || part.PartType == BodyPartType.Foot)
             {

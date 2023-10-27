@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/blob/8024397cc81c5f47f74cf4279e35728487d0a1a7/icons/mob/human_parts_greyscale.dmi and modified by DrSmugleaf",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "head_f",
+      "directions": 4
+    },
+    {
+      "name": "head_m",
+      "directions": 4
+    },
+    {
+      "name": "l_arm",
+      "directions": 4
+    },
+    {
+      "name": "l_foot",
+      "directions": 4
+    },
+    {
+      "name": "l_hand",
+      "directions": 4
+    },
+    {
+      "name": "l_leg",
+      "directions": 4
+    },
+    {
+      "name": "r_arm",
+      "directions": 4
+    },
+    {
+      "name": "r_foot",
+      "directions": 4
+    },
+    {
+      "name": "r_hand",
+      "directions": 4
+    },
+    {
+      "name": "r_leg",
+      "directions": 4
+    },
+    {
+      "name": "torso_f",
+      "directions": 4
+    },
+    {
+      "name": "torso_m",
+      "directions": 4
+    },
+    {
+      "name": "torso_icon",
+      "directions": 1
+    },
+    {
+      "name": "torso_incised_icon",
+      "directions": 1
+    },
+    {
+      "name": "torso_retracted_icon",
+      "directions": 1
+    },
+    {
+      "name": "torso_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_incised_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_retracted_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_arm_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_arm_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_leg_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_leg_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_hand_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_hand_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_foot_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_foot_icon",
+      "directions": 1
+    }
+  ]
+}

@@ -134,6 +134,13 @@ public sealed class BodySystem : SharedBodySystem
 
         AttachPart(bodyId, slot, partComponent);
         InitPart(partComponent, prototype, prototype.Root);
+
+        //drop the part and remove the root
+        if (prototype.RootOverride)
+        {
+            DropPart(partComponent.Owner, partComponent);
+            Del(body.Owner);
+        }
     }
 
     protected override void UpdateAppearance(EntityUid uid, BodyPartAppearanceComponent component)

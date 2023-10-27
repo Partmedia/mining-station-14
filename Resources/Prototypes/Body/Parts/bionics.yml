@@ -1,0 +1,114 @@
+- type: entity
+  id: PartBionic
+  parent: BaseItem
+  name: "bionic body part"
+  abstract: true
+  components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 0
+    necrosisDamage:
+      types:
+        Cellular: 0
+    incisorShockDamage:
+      types:
+        Asphyxiation: 0
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 0
+    drillShockDamage:
+      types:
+        Asphyxiation: 0
+    sutureShockDamage:
+      types:
+        Asphyxiation: 0
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 0
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 0
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 0
+    retractorShockDamage:
+      types:
+        Asphyxiation: 0
+    cellularRejectionDamage:
+      types:
+        Cellular: 0
+    compatibleSpecies:
+      - universal
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
+  - type: Damageable
+    damageContainer: Biological
+  - type: BodyPart
+    species: universal
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+      attachment: !type:Container
+        ents: []
+      slotAttachment: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  id: LeftDrillArm
+  name: "left drill arm part"
+  parent: PartBionic
+  components:
+  - type: DrillArm
+  - type: GatheringTool
+    damage:
+      types:
+        Structural: 150
+    sound: /Audio/Items/drill_use.ogg
+    gatheringTime: 1
+    maxEntities: 2
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/drill_arm.rsi
+    state: "l_arm_icon"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/drill_arm.rsi
+    state: "l_arm_icon"
+  - type: BodyPart
+    partType: Arm
+    symmetry: Left
+
+- type: entity
+  id: RightDrillHuman
+  name: "right drill arm part"
+  parent: PartBionic
+  components:
+  - type: DrillArm
+  - type: GatheringTool
+    damage:
+      types:
+        Structural: 150
+    sound: /Audio/Items/drill_use.ogg
+    gatheringTime: 1
+    maxEntities: 2
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/drill_arm.rsi
+    state: "r_arm_icon"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/drill_arm.rsi
+    state: "r_arm_icon"
+  - type: BodyPart
+    partType: Arm
+    symmetry: Right

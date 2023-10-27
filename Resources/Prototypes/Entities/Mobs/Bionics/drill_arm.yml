@@ -1,0 +1,17 @@
+- type: entity
+  name: Left Drill Arm
+  id: LeftDrillArmHand
+  parent: LeftDrillArm
+  components:
+  - type: Body
+    prototype: LeftDrillArmHand
+    species: Universal
+
+- type: entity
+  name: Right Drill Arm
+  id: RightDrillArmHand
+  parent: RightDrillArmHand
+  components:
+  - type: Body
+    prototype: RightDrillArmHand
+    species: Universal

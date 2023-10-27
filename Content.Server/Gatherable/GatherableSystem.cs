@@ -23,9 +23,51 @@ public sealed class GatherableSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<GatherableComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<GatherableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<GatheringDoafterCancel>(OnDoafterCancel);
         SubscribeLocalEvent<GatherableComponent, GatheringDoafterSuccess>(OnDoafterSuccess);
+    }
+
+    public void TransferToolValues(GatheringToolComponent tool, GatheringToolComponent newTool)
+    {
+        newTool.GatheringSound = tool.GatheringSound;
+        newTool.GatheringTime = tool.GatheringTime;
+        newTool.Damage = tool.Damage;
+        newTool.MaxGatheringEntities = tool.MaxGatheringEntities;
+    }
+
+    //on interact hand event for entities with the a drill arm Component
+    private void OnInteractHand(EntityUid uid, GatherableComponent component, InteractHandEvent args)
+    {
+        Logger.Debug("rock punch");
+
+        if (!TryComp<GatheringToolComponent>(args.User, out var tool) ||
+            tool.GatheringEntities.TryGetValue(args.User, out var cancelToken))
+            return;
+
+        Logger.Debug("rock punch with bionic!");
+
+        // Can't gather too many entities at once.
+        if (tool.MaxGatheringEntities < tool.GatheringEntities.Count + 1)
+            return;
+
+        cancelToken = new CancellationTokenSource();
+        tool.GatheringEntities[uid] = cancelToken;
+
+        var doAfter = new DoAfterEventArgs(args.User, tool.GatheringTime, cancelToken.Token, uid)
+        {
+            BreakOnDamage = true,
+            BreakOnStun = true,
+            BreakOnTargetMove = true,
+            BreakOnUserMove = true,
+            MovementThreshold = 0.25f,
+            BroadcastCancelledEvent = new GatheringDoafterCancel { Tool = args.User, Resource = uid },
+            TargetFinishedEvent = new GatheringDoafterSuccess { Tool = args.User, Resource = uid, Player = args.User }
+        };
+
+        _audio.PlayPvs(tool.GatheringSound, uid);
+        _doAfterSystem.DoAfter(doAfter);
     }
 
     private void OnInteractUsing(EntityUid uid, GatherableComponent component, InteractUsingEvent args)

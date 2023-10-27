@@ -116,6 +116,10 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
         var root = node.Get<ValueDataNode>("root").Value;
         var slotNodes = node.Get<MappingDataNode>("slots");
         var allConnections = new Dictionary<string, (string? Part, HashSet<string>? Connections, Dictionary<string, OrganPrototypeSlot>? Organs, BodyPartType? SlotType)>();
+        var rootOverride = false;
+
+        if (node.TryGet("rootOverride", out var rootOverrideSet))
+            rootOverride = bool.Parse(node.Get<ValueDataNode>("rootOverride").Value);
 
         foreach (var (keyNode, valueNode) in slotNodes)
         {
@@ -199,6 +203,6 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
             slots.Add(slotId, slot);
         }
 
-        return new BodyPrototype(id, name, root, slots);
+        return new BodyPrototype(id, name, root, slots, rootOverride);
     }
 }
