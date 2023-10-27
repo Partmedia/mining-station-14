@@ -85,6 +85,10 @@
       - HandheldGPSBasic
       - TRayScanner
       - GasAnalyzer
+      - LightTube
+      - LightBulb
+      - LightReplacer
+      - ClothingNeckBodycam
       - UtilityBelt
       - Pickaxe
       - BaseChemistryEmptyJug
