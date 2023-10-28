@@ -37,6 +37,9 @@
     qualities:
       - Prying
   - type: TilePrying
+  - type: SurgeryTool
+    saw: true
+    sawTimeMod: 1.5
 
 - type: entity
   id: FireAxeFlaming
@@ -54,3 +57,8 @@
     quickEquip: false
     slots:
     - back
+  - type: SurgeryTool
+    saw: true
+    sawTimeMod: 1.5
+    cauterizer: true
+    cauterizerTimeMod: 1.5

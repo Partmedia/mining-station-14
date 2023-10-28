@@ -93,6 +93,9 @@
     graph: MiningDrillGraph
     node: drill
     defaultTarget: diamond drill
+  - type: SurgeryTool
+    drill: true
+    drillTimeMod: 2
 
 - type: entity
   name: diamond mining drill
