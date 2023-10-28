@@ -16,6 +16,7 @@
       species: slime
     - type: Brain
     - type: Stomach
+      toxinThreshold: 200 #make this a bit more resilient due to the multiple functions
     - type: Metabolizer
       maxReagents: 6
       metabolizerTypes: [ Slime ]

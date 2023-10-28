@@ -33,6 +33,12 @@
         stomach:
           organ: OrganAnimalStomach
           type: Stomach
+        liver:
+          organ: OrganAnimalLiver
+          type: Liver
+        kidneys:
+          organ: OrganHumanKidneys
+          type: Kidney
     right arm:
       part: RightArmMoth
       connections:
