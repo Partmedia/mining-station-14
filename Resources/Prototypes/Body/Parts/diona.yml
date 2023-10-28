@@ -132,6 +132,7 @@
   - type: BodyPart
     partType: Arm
     symmetry: Left
+    exoSkeleton: false
 
 - type: entity
   id: RightArmDiona
@@ -148,6 +149,7 @@
   - type: BodyPart
     partType: Arm
     symmetry: Right
+    exoSkeleton: false
 
 - type: entity
   id: LeftHandDiona
@@ -164,6 +166,7 @@
   - type: BodyPart
     partType: Hand
     symmetry: Left
+    exoSkeleton: false
 
 - type: entity
   id: RightHandDiona
@@ -180,6 +183,7 @@
   - type: BodyPart
     partType: Hand
     symmetry: Right
+    exoSkeleton: false
 
 - type: entity
   id: LeftLegDiona
@@ -196,6 +200,7 @@
   - type: BodyPart
     partType: Leg
     symmetry: Left
+    exoSkeleton: false
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5
@@ -215,6 +220,7 @@
   - type: BodyPart
     partType: Leg
     symmetry: Right
+    exoSkeleton: false
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5

@@ -37,9 +37,6 @@ namespace Content.Client.Surgery
 
         private string GetPartStatusStr(BodyPartComponent part, SharedPartStatus status)
         {
-            if (!part.Container)
-                return "";
-
             if (status.Opened && part.Container)
                 return "_opened";
             else if (status.EndoOpened && part.EndoSkeleton)
@@ -148,13 +145,13 @@ namespace Content.Client.Surgery
                     iconRow.Children.Add(cautIcon);
                     iconRow.Children.Add(bleedIcon);
 
+
                     if (partUid is not null)
                     {
                         if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BodyPartComponent?>(state.BodyPartSlots[i].Child, out var bodyPart))
                             buttonContainer.Symmetry = ((BodyPartSymmetry) bodyPart.Symmetry).ToString();
 
                         if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(state.BodyPartSlots[i].Child, out var sprite)) {
-
                             var bodyPartSprite = new BodyPartSprite();
                             if (bodyPart is not null)
                             {
@@ -162,7 +159,7 @@ namespace Content.Client.Surgery
                                 sprite.LayerSetState(0, FormatState(((BodyPartSymmetry) bodyPart.Symmetry).ToString(), slotType, status));
                             }
                             bodyPartSprite.Sprite = sprite;
-                            
+
                             button.Children.Add(bodyPartSprite);
                         }
                     }

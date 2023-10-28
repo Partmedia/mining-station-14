@@ -1459,7 +1459,7 @@ namespace Content.Server.Surgery
 
         private void AddSurgeryVerb(EntityUid uid, SurgeryComponent component, GetVerbsEvent<Verb> args)
         {
-            if (args.Hands == null || !args.CanAccess || !args.CanInteract || args.Target == args.User)
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
 
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))

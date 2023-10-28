@@ -254,6 +254,30 @@
     {
       "name": "r_hand_icon",
       "directions": 1
+    },
+    {
+      "name": "l_arm_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_arm_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_leg_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_leg_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_hand_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_hand_exo_opened_icon",
+      "directions": 1
     }
   ]
 }
