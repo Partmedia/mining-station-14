@@ -7,11 +7,17 @@
   - type: StorageFill
     contents:
       - id: Hemostat
+        amount: 4
       - id: Saw
       - id: Drill
       - id: Cautery
       - id: Retractor
+        amount: 4
       - id: Scalpel
+      - id: Tourniquet
+        amount: 2
+      - id: Suture
+      - id: MetalSuture
 
 - type: entity
   id: ClothingBackpackDuffelCBURN
@@ -38,11 +44,17 @@
   - type: StorageFill
     contents:
       - id: Hemostat
+        amount: 4
       - id: SawAdvanced
       - id: Drill
       - id: Cautery
       - id: Retractor
+        amount: 4
       - id: ScalpelAdvanced
+      - id: Tourniquet
+        amount: 2
+      - id: Suture
+      - id: MetalSuture
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmoBundle
