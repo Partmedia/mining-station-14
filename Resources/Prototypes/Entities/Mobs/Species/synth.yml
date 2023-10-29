@@ -1,0 +1,162 @@
+# Anything human specific (e.g. UI, input) goes under MobSynth
+- type: entity
+  name: Synthetic
+  parent: BaseMobOrganic
+  id: BaseMobSynth
+  abstract: true
+  components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 10
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 50
+    drillShockDamage:
+      types:
+        Asphyxiation: 10
+    sutureShockDamage:
+      types:
+        Asphyxiation: 5
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 10
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 10
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 5
+    cellularRejectionDamage:
+      types:
+        Cellular: 0
+    compatibleSpecies:
+      - universal
+  - type: HumanoidAppearance
+    species: Synth
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: full
+  - type: Body
+    prototype: Synth
+    species: universal
+    requiredLegs: 2
+  - type: Hunger
+  - type: Thirst
+  - type: Temperature
+    heatDamageThreshold: 315
+    coldDamageThreshold: 305
+    currentTemperature: 310.15
+    specificHeat: 250
+    coldDamage:
+      types:
+        Cold: 1.1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat: 0.9 #per second, scales with temperature & other constants
+  - type: ThermalRegulator
+    normalBodyTemperature: 310.15
+    implicitHeatRegulation: 0
+    sweatHeatRegulation: 5
+    shiveringHeatRegulation: 150
+
+- type: entity
+  name: Urist McHands
+  id: MobSynthDummy
+  parent: BaseMobOrganicDummy
+  noSpawn: true
+
+- type: entity
+  name: Urist McSynth
+  parent: BaseMobOrganic
+  id: BaseMobSynthBrain
+  abstract: true
+  components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 10
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 50
+    drillShockDamage:
+      types:
+        Asphyxiation: 10
+    sutureShockDamage:
+      types:
+        Asphyxiation: 5
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 10
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 10
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 5
+    cellularRejectionDamage:
+      types:
+        Cellular: 0
+    compatibleSpecies:
+      - universal
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
+  - type: HumanoidAppearance
+    species: Synth
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: full
+  - type: Body
+    prototype: SynthBrain
+    species: universal
+    requiredLegs: 2
+  - type: Hunger
+  - type: Thirst
+  - type: Temperature
+    heatDamageThreshold: 315
+    coldDamageThreshold: 305
+    currentTemperature: 310.15
+    specificHeat: 250
+    coldDamage:
+      types:
+        Cold: 1.1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat: 0.9 #per second, scales with temperature & other constants
+  - type: ThermalRegulator
+    normalBodyTemperature: 310.15
+    implicitHeatRegulation: 0
+    sweatHeatRegulation: 5
+    shiveringHeatRegulation: 150

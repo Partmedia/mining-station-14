@@ -53,3 +53,135 @@
       - right foot
     right foot:
       part: RightFootSynth
+
+- type: body
+  id: Synth
+  name: "synth"
+  root: torso
+  species: universal
+  slots:
+    head:
+      part: HeadSynth
+      connections:
+      - torso
+      organs:
+        brain:
+          organ: OrganHumanBrain
+          type: Brain
+        eyes: 
+          organ: OrganSynthEyes
+          type: Eye
+          internal: false
+    torso:
+      part: TorsoSynth
+      connections:
+      - left arm
+      - right arm
+      - left leg
+      - right leg
+      organs:
+        heart:
+          organ: OrganSynthHeart
+          type: Heart
+        lungs:
+          organ: OrganSynthLungs
+          type: Lung
+        stomach:
+          organ: OrganSynthStomach
+          type: Stomach
+        liver:
+          organ: OrganSynthLiver
+          type: Liver
+        kidneys: 
+          organ: OrganSynthKidneys
+          type: Kidney
+    right arm:
+      part: RightArmSynth
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmSynth
+      connections:
+      - left hand
+    right hand:
+      part: RightHandSynth
+    left hand:
+      part: LeftHandSynth
+    right leg:
+      part: RightLegSynth
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegSynth
+      connections:
+      - left foot
+    right foot:
+      part: RightFootSynth
+    left foot:
+      part: LeftFootSynth
+
+- type: body
+  id: SynthBrain
+  name: "synth"
+  root: torso
+  species: universal
+  slots:
+    head:
+      part: HeadSynth
+      connections:
+      - torso
+      organs:
+        brain:
+          organ: OrganHumanBrain
+          type: Brain
+        eyes: 
+          organ: OrganSynthEyes
+          type: Eye
+          internal: false
+    torso:
+      part: TorsoSynth
+      connections:
+      - left arm
+      - right arm
+      - left leg
+      - right leg
+      organs:
+        heart:
+          organ: OrganSynthHeart
+          type: Heart
+        lungs:
+          organ: OrganSynthLungs
+          type: Lung
+        stomach:
+          organ: OrganSynthStomach
+          type: Stomach
+        liver:
+          organ: OrganSynthLiver
+          type: Liver
+        kidneys: 
+          organ: OrganSynthKidneys
+          type: Kidney
+    right arm:
+      part: RightArmSynth
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmSynth
+      connections:
+      - left hand
+    right hand:
+      part: RightHandSynth
+    left hand:
+      part: LeftHandSynth
+    right leg:
+      part: RightLegSynth
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegSynth
+      connections:
+      - left foot
+    right foot:
+      part: RightFootSynth
+    left foot:
+      part: LeftFootSynth
