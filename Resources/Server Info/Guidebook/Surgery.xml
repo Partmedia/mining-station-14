@@ -1,0 +1,217 @@
+<Document>
+  # Surgery in Mining Station 14
+
+  Sometimes crewmembers may experience organ failure. Sometimes their body may be completely beyond repair and unable to be cloned. And sometimes crewmember may want to take advantage of the various bionics on offer!
+
+  These problems all have a clear solution: surgery! But how? Find out here!
+
+  ## Preparing
+
+  Before you perform surgery on someone, ensure the following:
+
+  - You have the tools you need, including extra tourniquets, retractors, and hemostats. Not a good idea to find yourself halfway through a surgery and unable to find what you need!
+
+  <Box>
+    <GuideEntityEmbed Entity="Retractor"/>
+    <GuideEntityEmbed Entity="Hemostat"/>
+    <GuideEntityEmbed Entity="Tourniquet"/>
+  </Box>
+
+  - That you have what you need to sedate the patient. Nitrous Oxide and a breath mask are the best tools to use. The health analyser will inform you as to whether or not the patient is SEDATED.
+
+  <Box>
+    <GuideEntityEmbed Entity="NitrousOxideTankFilled"/>
+    <GuideEntityEmbed Entity="ClothingMaskBreathMedical"/>
+  </Box>
+
+  - That the patient is buckled. A chair will do, a medical bed or surgery table is far better.
+
+  ## The surgery menu
+
+  To open the the surgery menu, right click on the patient and select "Perform Surgery".
+
+  You will initially see all of their body parts and any external organs (i.e. the eyes).
+
+  Each displayed part will have various boxes next to them to indicate the status of that parts *slot*.
+
+  The status of the part itself will visually update as you apply tools to them. To apply a tool, simply click on the part with the tool in hand.
+
+  Sometimes tools will work as attachments, either to the slot or the part itself. To remove an attach tool, click on the relevant part/slot while empty handed.
+
+  ## Adding and removing a body part
+
+  Body parts that can be removed include heads, arms, legs, hands, and feet. Each can be removed and replaced.
+
+  Of those, removing the head is almost always going to result in the effective death of the patient - but they can be recovered by reattaching said head or a new one (provided it has a brain in it)!
+
+  To remove and replace any body part, following these steps:
+
+  1) Ensure the patient is buckled and sedated.
+
+  2) Apply a tourniquet to the target part slot. Not doing so will result in heavy bleeding.
+
+  <Box>
+    <GuideEntityEmbed Entity="Tourniquet"/>
+  </Box>
+
+  3) Apply a saw to the body part to be removed. Some species have an exoskeleton and so the saw may need to be applied twice.
+
+  <Box>
+    <GuideEntityEmbed Entity="Saw"/>
+  </Box>
+
+  4) Apply a cautery to the now empty part slot.
+
+  <Box>
+    <GuideEntityEmbed Entity="Cautery"/>
+  </Box>
+
+  5) Remove the tourniquet by clicking on the empty part slot.
+
+  6) Attach a new body part compatible with the part slot (arm in arm slot, leg in leg slot, etc) while holding the new part and a drill.
+
+  <Box>
+    <GuideEntityEmbed Entity="Drill"/>
+    <GuideEntityEmbed Entity="RightArmSynth"/>
+  </Box>
+
+  7) Use metal suture to stitch close any open exoskeleton the part may have.
+
+  <Box>
+    <GuideEntityEmbed Entity="MetalSuture"/>
+  </Box>
+
+  8) Remove the sedative and congratulate the patient on their new body part!
+
+  ## Adding and removing an organ
+
+  Organs that can be removed include the brain, heart, eyes, kidneys, lungs, liver, and stomach. Most organs are vital in some way or another.
+  Removing the brain, heart, or lungs will result in death quite quickly. It is important to have a defibrillator and medicine prepared for such cases.
+
+  Some species have multiple organ functions in a single organ - the most apparent example being the diona! Their stomach acts as their liver, kidneys, and heart!
+
+  Some species have their organ functions as part of their whole body - Slimes have their eyes, liver, and kidneys all within their body.
+
+  For most species, each organ serves a specific function - it is important to ensure they are in good working order or replaced as needed.
+
+  To remove and replace any organ, follow these steps:
+
+  1) Ensure the patient is buckled and sedated.
+
+  2) If the organ is external skip this step and go to step 5. Apply a saw to the body part containing organ IF the body part has an exoskeleton (this applies to Moths and Diona). If it does not have an exoskeleton DON'T APPLY THE SAW.
+
+  2) Apply a scalpel to the body part containing the organ.
+
+  <Box>
+    <GuideEntityEmbed Entity="Scalpel"/>
+  </Box>
+
+  3) Apply a retractor to the body part containing the organ.
+
+  <Box>
+    <GuideEntityEmbed Entity="Retractor"/>
+  </Box>
+
+  4) If the body part has an endoskeleton (Only Slimes and Diona do not), apply the saw to the body part.
+
+  <Box>
+    <GuideEntityEmbed Entity="Saw"/>
+  </Box>
+
+  5) Apply a hemostat to the organ slot.
+
+  <Box>
+    <GuideEntityEmbed Entity="Hemostat"/>
+  </Box>
+
+  6) With another hemostat and a scalpel, click on the organ to be removed.
+
+  <Box>
+    <GuideEntityEmbed Entity="Hemostat"/>
+    <GuideEntityEmbed Entity="Scalpel"/>
+  </Box>
+
+  7) Apply a cautery to the now empty organ slot.
+
+  <Box>
+    <GuideEntityEmbed Entity="Cautery"/>
+  </Box>
+
+  8) Remove the hemostat by clicking the empty organ slot.
+
+  9) With a new compatible organ in one hand and suture in the other, attach the new organ to the organ slot. If the organ was external, skip to step 13.
+
+  <Box>
+    <GuideEntityEmbed Entity="Suture"/>
+    <GuideEntityEmbed Entity="OrganSynthLiver"/>
+  </Box>
+
+  10) If an endoskeleton was opened, close it with metal suture.
+
+  <Box>
+    <GuideEntityEmbed Entity="MetalSuture"/>
+  </Box>
+
+  11) Remove the retractor by clicking on the body part with an empty hand.
+
+  12) Seal the incision with suture.
+
+  <Box>
+    <GuideEntityEmbed Entity="Suture"/>
+  </Box>
+
+  13) Remove the sedative and congratulate the patient on their new organ!
+
+  ## Consequences of malpractice!
+
+  Several things can go wrong during these procedures, do not let these things happen to you (or more likely your patient)!
+
+  Not applying a tourniquet or cauterizer as needed can result in heavy bleeding.
+
+  Leaving a tourniquet for too long will result in cellular damage.
+
+  Over-medicating and over-sedating the patient will cause kidney and liver damage (this applies outside of surgery too).
+
+  An unbuckled patient with an opened body part will suffer periodic brute damage until buckled again.
+
+  Operating on a non-sedated patient will cause asphyxiation damage via pain shock - damage varying based on the patient and the tool used.
+
+  Giving a patient an organ or part from an incompatible species will result in periodic cellular damage for some time. The damage will eventually stop but not for a while. This can be mitigated by using Synthetic organs and parts!
+
+  Always have a defibrillator, health analyzer, and medicine - especially Dexalin Plus - on hand for potential and sometime inevitable patient fatalities.
+
+  <Box>
+    <GuideEntityEmbed Entity="Defibrillator"/>
+    <GuideEntityEmbed Entity="HandheldHealthAnalyzer"/>
+  </Box>
+
+  ## Other things to know
+
+  As mentioned, synthetic organs and parts are available for purchase and a useful replacement in most cases. Diona organs are also available for order.
+
+  <Box>
+    <GuideEntityEmbed Entity="OrganSynthEyes"/>
+    <GuideEntityEmbed Entity="OrganSynthHeart"/>
+  </Box>
+
+  An entire synthetic body is also available for order, its brain can be replaced by your patient's brain if they need a brand new body. Don't worry they come brain-dead... we think.
+
+  Bionics, such as the drill arm and the power legs, are available for purchase - be sure to try them out today!
+
+  <Box>
+    <GuideEntityEmbed Entity="LeftDrillArm"/>
+    <GuideEntityEmbed Entity="LeftLegPower"/>
+  </Box>
+
+  In a rush? Can't find your tools? Patient needs a new liver and fast?! Don't be afraid to use whatever you can find - it may take a little longer but better than nothing right? Right?
+
+  <Box>
+    <GuideEntityEmbed Entity="ShardGlass"/>
+    <GuideEntityEmbed Entity="Wirecutter"/>
+    <GuideEntityEmbed Entity="FireAxe"/>
+    <GuideEntityEmbed Entity="Screwdriver"/>
+    <GuideEntityEmbed Entity="CableApcStack"/>
+    <GuideEntityEmbed Entity="MiningDrill"/>
+  </Box>
+
+</Document>
