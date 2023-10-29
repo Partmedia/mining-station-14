@@ -49,6 +49,7 @@
   - type: SurgeryTool
     incisor: true
     incisorTimeMod: 2.5
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: butcher's cleaver
@@ -101,6 +102,7 @@
   - type: SurgeryTool
     incisor: true
     incisorTimeMod: 2.5
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: survival knife
@@ -118,3 +120,4 @@
   - type: SurgeryTool
     incisor: true
     incisorTimeMod: 2.5
+    toolSound: /Audio/Effects/Fluids/blood1.ogg

@@ -135,11 +135,11 @@ public sealed class BodySystem : SharedBodySystem
         AttachPart(bodyId, slot, partComponent);
         InitPart(partComponent, prototype, prototype.Root);
 
-        //drop the part and remove the root
+        //drop the part and remove the root - TODO this is real rude tbqh should definitely replace later 
         if (prototype.RootOverride)
         {
             DropPart(partComponent.Owner, partComponent);
-            Del(body.Owner);
+            QueueDel(body.Owner);
         }
     }
 

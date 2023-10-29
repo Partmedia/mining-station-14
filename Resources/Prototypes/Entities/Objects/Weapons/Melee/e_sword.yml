@@ -55,6 +55,7 @@
     sawTimeMod: 1.5
     cauterizer: true
     cauterizerTimeMod: 1.5
+    toolSound: /Audio/Weapons/eblade1.ogg
 
 - type: entity
   name: pen
@@ -124,3 +125,4 @@
     cauterizer: true
     cauterizerTimeMod: 1.25
     incisor: true
+    toolSound: /Audio/Weapons/eblade1.ogg

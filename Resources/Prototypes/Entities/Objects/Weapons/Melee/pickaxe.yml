@@ -96,6 +96,7 @@
   - type: SurgeryTool
     drill: true
     drillTimeMod: 2
+    toolSound: /Audio/Items/drill_hit.ogg
 
 - type: entity
   name: diamond mining drill

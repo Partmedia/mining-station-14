@@ -67,6 +67,7 @@
   - type: SurgeryTool
     cauterizer: true
     cauterizerTimeMod: 1.5
+    toolSound: /Audio/Effects/lightburn.ogg
 
 - type: entity
   id: WelderEmpty

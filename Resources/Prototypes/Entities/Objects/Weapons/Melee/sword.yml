@@ -25,6 +25,7 @@
   - type: SurgeryTool
     saw: true
     sawTimeMod: 1.5
+    toolSound: /Audio/Effects/gib1.ogg
     
 - type: entity
   name: katana
@@ -52,6 +53,7 @@
   - type: SurgeryTool
     saw: true
     sawTimeMod: 1.5
+    toolSound: /Audio/Effects/gib1.ogg
     
 - type: entity
   name: machete
@@ -77,6 +79,7 @@
   - type: SurgeryTool
     saw: true
     sawTimeMod: 1.5
+    toolSound: /Audio/Effects/gib1.ogg
 
 - type: entity
   name: claymore
@@ -105,3 +108,4 @@
   - type: SurgeryTool
     saw: true
     sawTimeMod: 1.5
+    toolSound: /Audio/Effects/gib1.ogg

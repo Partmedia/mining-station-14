@@ -1,4 +1,6 @@
 
+using System.ComponentModel.DataAnnotations;
+
 namespace Content.Server.Surgery
 {
     [RegisterComponent]
@@ -7,6 +9,9 @@ namespace Content.Server.Surgery
     {
 
         public bool Applying = false;
+
+        [DataField("toolSound")]
+        public string ToolSound = "";
 
         [DataField("incisor")]
         public bool Incisor = false;

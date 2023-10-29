@@ -35,6 +35,7 @@
     sutureTimeMod: 2
     hardSuture: true
     hardSutureTimeMod: 2
+    toolSound: /Audio/Items/jumpsuit_equip.ogg
 
 - type: entity
   id: CableHVStack

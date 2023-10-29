@@ -43,6 +43,7 @@ namespace Content.Server.Surgery
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -745,7 +746,7 @@ namespace Content.Server.Surgery
             if (!timeOverride)
                 if (!(await ProcedureDoAfter(user, target, tool.RetractorTime * tool.RetractorTimeMod, tool))) return false;
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             AttachToolToPart(user, tool, bodyPart, userHands);
 
@@ -776,7 +777,7 @@ namespace Content.Server.Surgery
             if (!timeOverride)
                 if (!(await ProcedureDoAfter(user, target, tool.LargeClampTime * tool.LargeClampTimeMod, tool))) return false;
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-large-clamp-attached"), user, user);
 
@@ -803,7 +804,7 @@ namespace Content.Server.Surgery
             if (!timeOverride)
                 if (!(await ProcedureDoAfter(user, target, tool.SmallClampTime * tool.SmallClampTimeMod, tool))) return false;
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-small-clamp-attached"), user, user);
 
@@ -832,7 +833,7 @@ namespace Content.Server.Surgery
             if (!timeOverride)
                 if (!(await ProcedureDoAfter(user, target, tool.IncisorTime * tool.IncisorTimeMod, tool))) return false;
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-incision-made"), user, user);
 
@@ -882,7 +883,7 @@ namespace Content.Server.Surgery
                 }
             }
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-incision-closed"), user, user);
 
@@ -927,7 +928,7 @@ namespace Content.Server.Surgery
                 }
                 if (!timeOverride)
                     if (!(await ProcedureDoAfter(user, target, tool.HardSutureTime * tool.HardSutureTimeMod, tool))) return false;
-                //TODO sound
+                _audio.PlayPvs(tool.ToolSound, tool.Owner);
                 _bodySystem.SetBodyPartEndoOpen(bodyPart, false);
                 _popupSystem.PopupEntity(Loc.GetString("surgery-endoskeleton-closed"), user, user);
             }
@@ -935,7 +936,7 @@ namespace Content.Server.Surgery
             {
                 if (!timeOverride)
                     if (!(await ProcedureDoAfter(user, target, tool.HardSutureTime * tool.HardSutureTimeMod, tool))) return false;
-                //TODO sound
+                _audio.PlayPvs(tool.ToolSound, tool.Owner);
                 _bodySystem.SetBodyPartExoOpen(bodyPart, false);
                 _popupSystem.PopupEntity(Loc.GetString("surgery-exoskeleton-closed"), user, user);
             }
@@ -964,7 +965,7 @@ namespace Content.Server.Surgery
             if (!timeOverride)
                 if (!(await ProcedureDoAfter(user, target, tool.CauterizerTime * tool.CauterizerTimeMod, tool))) return false;
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-wound-cauterised"), user, user);
 
@@ -992,7 +993,7 @@ namespace Content.Server.Surgery
             if (!timeOverride)
                 if (!(await ProcedureDoAfter(user, target, tool.CauterizerTime * tool.CauterizerTimeMod, tool))) return false;
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             _popupSystem.PopupEntity(Loc.GetString("surgery-wound-cauterised"), user, user);
 
@@ -1014,7 +1015,7 @@ namespace Content.Server.Surgery
             if (!timeOverride)
                 if (!(await ProcedureDoAfter(user, target, tool.SawTime * tool.SawTimeMod, tool))) return false;
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             if (!(_bodySystem.DropPart(bodyPart.Owner, bodyPart))) return false;
 
@@ -1038,7 +1039,7 @@ namespace Content.Server.Surgery
             if (!timeOverride)
                 if (!(await ProcedureDoAfter(user, target, tool.ManipulatorTime * tool.ManipulatorTimeMod, tool))) return false;
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             if (!(_bodySystem.DropOrgan(organ.Owner, organ))) return false;
 
@@ -1067,7 +1068,7 @@ namespace Content.Server.Surgery
             if (!timeOverride)
                 if (!(await ProcedureDoAfter(user, target, tool.DrillTime * tool.DrillTimeMod, tool))) return false;
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             if (!(_bodySystem.AttachPart(bodyPart.Owner, bodyPartSlot, bodyPart))) return false;
 
@@ -1103,7 +1104,7 @@ namespace Content.Server.Surgery
                 }
             }
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             if (!(_bodySystem.InsertOrgan(organ.Owner, organSlot, organ))) return false;
 
@@ -1131,7 +1132,7 @@ namespace Content.Server.Surgery
             if (!timeOverride)
                 if (!(await ProcedureDoAfter(user, target, tool.SawTime * tool.SawTimeMod, tool))) return false;
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             _bodySystem.SetBodyPartEndoOpen(bodyPart, true);
 
@@ -1152,7 +1153,7 @@ namespace Content.Server.Surgery
             if (!timeOverride)
                 if (!(await ProcedureDoAfter(user, target, tool.SawTime * tool.SawTimeMod, tool))) return false;
 
-            //TODO sound
+            _audio.PlayPvs(tool.ToolSound, tool.Owner);
 
             _bodySystem.SetBodyPartExoOpen(bodyPart, true);
 

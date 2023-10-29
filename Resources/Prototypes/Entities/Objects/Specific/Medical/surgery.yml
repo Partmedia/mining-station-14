@@ -26,6 +26,7 @@
   - type: ItemCooldown
   - type: SurgeryTool
     cauterizer: true
+    toolSound: /Audio/Effects/lightburn.ogg
 
 # Drill
 
@@ -49,6 +50,7 @@
       path: /Audio/Items/drill_hit.ogg
   - type: SurgeryTool
     drill: true
+    toolSound: /Audio/Items/drill_hit.ogg
 
 # Scalpel
 
@@ -78,6 +80,7 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: SurgeryTool
     incisor: true
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: shiv
@@ -92,6 +95,7 @@
   - type: SurgeryTool
     incisor: true
     incisorTimeMod: 2
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: advanced scalpel
@@ -106,6 +110,7 @@
   - type: SurgeryTool
     incisor: true
     incisorTimeMod: 0.75
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: laser scalpel
@@ -121,6 +126,7 @@
     incisor: true
     incisorTimeMod: 0.5
     cauterizer: true
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 # Scissors
 
@@ -140,6 +146,7 @@
     retractor: true
     manipulator: true
     manipulatorTimeMod: 2
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: hemostat
@@ -155,6 +162,7 @@
     smallClamp: true    
     manipulator: true
     manipulatorTimeMod: 1
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
   # - type: entity
   #   name: bone setter
@@ -187,6 +195,7 @@
   - type: SurgeryTool
     saw: true
     sawTimeMod: 1
+    toolSound: /Audio/Effects/gib1.ogg
 # No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
 
 - type: entity
@@ -212,6 +221,7 @@
   - type: SurgeryTool
     saw: true
     sawTimeMod: 1.5
+    toolSound: /Audio/Effects/gib1.ogg
 
 - type: entity
   name: circular saw
@@ -236,6 +246,7 @@
   - type: SurgeryTool
     saw: true
     sawTimeMod: 0.5
+    toolSound: /Audio/Items/drill_hit.ogg
 
 - type: entity
   name: advanced circular saw
@@ -261,6 +272,7 @@
   - type: SurgeryTool
     saw: true
     sawTimeMod: 0.3
+    toolSound: /Audio/Items/drill_hit.ogg
 
 - type: entity
   name: suture
@@ -276,6 +288,7 @@
   - type: ItemCooldown
   - type: SurgeryTool
     suture: true
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: metal suture
@@ -293,6 +306,7 @@
     suture: true
     sutureTimeMod: 1.5
     hardSuture: true
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: tourniquet
@@ -308,6 +322,7 @@
   - type: ItemCooldown
   - type: SurgeryTool
     largeClamp: true
+    toolSound: /Audio/Items/jumpsuit_equip.ogg
 
 - type: entity
   name: makeshift tourniquet
@@ -327,3 +342,4 @@
   - type: SurgeryTool
     largeClamp: true
     largeClampTimeMod: 1.5
+    toolSound: /Audio/Items/jumpsuit_equip.ogg

@@ -43,6 +43,7 @@
     retractorTimeMod: 2
     manipulator: true
     manipulatorTimeMod: 2
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: screwdriver
@@ -85,6 +86,7 @@
   - type: SurgeryTool
     manipulator: true
     manipulatorTimeMod: 4
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: wrench
@@ -258,7 +260,8 @@
     price: 60
   - type: SurgeryTool
     drill: true
-    drillTimeMod: 2    
+    drillTimeMod: 2
+    toolSound: /Audio/Items/drill_hit.ogg
 
 - type: entity
   name: RCD

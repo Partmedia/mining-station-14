@@ -263,26 +263,29 @@ public partial class SharedBodySystem
 
         if (part.Body is { } newBody)
         {
-            if (part.PartType == BodyPartType.Leg)
+            if (part.PartType == BodyPartType.Leg || part.PartType == BodyPartType.Foot)
             {
                 UpdateMovementSpeed(newBody);
 
-                //check if leg has a foot slot and foot
-                var hasSlot = false;
-                var slotEmpty = false;
-                foreach (KeyValuePair<string, BodyPartSlot> entry in part.Children)
-                {
-                    if (entry.Value.Type == BodyPartType.Foot)
+                if (part.PartType == BodyPartType.Leg)
+                { 
+                    //check if leg has a foot slot and foot
+                    var hasSlot = false;
+                    var slotEmpty = false;
+                    foreach (KeyValuePair<string, BodyPartSlot> entry in part.Children)
                     {
-                        hasSlot = true;
-                        if (entry.Value.Child is null)
-                            slotEmpty = true;
+                        if (entry.Value.Type == BodyPartType.Foot)
+                        {
+                            hasSlot = true;
+                            if (entry.Value.Child is null)
+                                slotEmpty = true;
+                        }
                     }
-                }
 
-                //stand up
-                if ((!hasSlot || !slotEmpty))
-                    Standing.Stand(newBody);
+                    //stand up
+                    if ((!hasSlot || !slotEmpty))
+                        Standing.Stand(newBody);
+                }
 
             }
 
