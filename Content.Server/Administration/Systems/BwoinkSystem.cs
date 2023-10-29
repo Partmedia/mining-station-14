@@ -413,7 +413,7 @@ namespace Content.Server.Administration.Systems
                 return;
 
             // if auto admin is enabled, don't let them know that no admins are online
-            if (_config.GetCVar(CCVars.AutoAdmin))
+            if (_config.GetCVar(CCVars.AutoAdmin) > 0)
                 return;
 
             // No admin online, let the player know

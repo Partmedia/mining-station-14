@@ -10,6 +10,8 @@
       sprite: Objects/Specific/Mining/mine_cart.rsi
       layers:
         - state: cart
+        - state: fill-0
+          map: ["enum.StorageFillLayers.Fill"]
     - type: Rotatable
     - type: InteractionOutline
     - type: Storage
@@ -53,3 +55,6 @@
       containers:
         storagebase: !type:Container
           ents: []
+    - type: StorageFillVisualizer
+      maxFillLevels: 5
+      fillBaseName: fill

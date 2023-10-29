@@ -69,8 +69,8 @@ namespace Content.Server.Body.Systems
                             }
                         }
 
-                        if (!pump.Working && !_mobState.IsDead(uid))
-                            _damageable.TryChangeDamage(uid, pump.NotWorkingDamage, true, origin: uid);
+                    if (!pump.Working && !_mobState.IsDead(uid))
+                        _damageable.TryChangeDamage(uid, pump.NotWorkingDamage, true, origin: uid);
 
                         if (!hasBrain)
                         {

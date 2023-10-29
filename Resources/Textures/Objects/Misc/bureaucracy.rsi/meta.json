@@ -8,15 +8,6 @@
   },
   "states": [
     {
-      "name": "clipboard"
-    },
-    {
-      "name": "clipboard_over"
-    },
-    {
-      "name": "clipboard_pen"
-    },
-    {
       "name": "envelope_closed"
     },
     {
@@ -292,10 +283,6 @@
     },
     {
       "name": "stamp-warden"
-    },
-    {
-      "name": "clipboard-equipped-BELT",
-      "directions": 4
     }
   ]
 }

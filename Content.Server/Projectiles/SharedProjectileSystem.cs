@@ -12,6 +12,8 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
 
+using Content.Shared.Administration;
+
 namespace Content.Server.Projectiles
 {
     [UsedImplicitly]
@@ -21,6 +23,8 @@ namespace Content.Server.Projectiles
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly GunSystem _guns = default!;
         [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+
+        [Dependency] private readonly IAutoAdmin _autoadmin = default!;
 
         public override void Initialize()
         {
@@ -57,6 +61,8 @@ namespace Content.Server.Projectiles
                 _adminLogger.Add(LogType.BulletHit,
                     HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
                     $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter):user} hit {otherName:target} and dealt {modifiedDamage.Total:damage} damage");
+
+                _autoadmin.CheckCombat(component.Shooter, otherEntity, modifiedDamage.Total.Float());
             }
 
             if (!deleted)
