@@ -25,3 +25,31 @@
       - right hand
     right hand:
       part: RightHandSynth
+
+- type: body
+  id: LeftPowerLegFoot
+  name: "left power leg"
+  root: left leg
+  rootOverride: true
+  species: universal
+  slots:
+    left leg:
+      part: LeftLegPower
+      connections:
+      - left foot
+    left foot:
+      part: LeftFootSynth
+
+- type: body
+  id: RightPowerLegFoot
+  name: "right power leg"
+  root: right leg
+  rootOverride: true
+  species: universal
+  slots:
+    right leg:
+      part: RightLegPower
+      connections:
+      - right foot
+    right foot:
+      part: RightFootSynth

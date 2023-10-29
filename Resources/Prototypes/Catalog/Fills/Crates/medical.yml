@@ -1,11 +1,11 @@
 - type: entity
   id: CrateMedicalDefib
-  parent: CrateMedical
+  parent: CrateDefibMedical
   components:
   - type: StorageFill
-#    contents:
-#      - id: Defibrillator
-#        amount: 1
+    contents:
+      - id: Defibrillator
+        amount: 1
 
 - type: entity
   id: CrateMedicalSupplies
@@ -65,6 +65,10 @@
         amount: 2
       - id: Suture
       - id: MetalSuture
+      - id: NitrousOxideTankFilled
+        amount: 2
+      - id: ClothingMaskBreathMedical
+        amount: 2
 
 - type: entity
   id: CrateMedicalScrubs
