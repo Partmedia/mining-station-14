@@ -59,7 +59,7 @@ namespace Content.Server.Medical
             //lungs
             if (lungs.Count > 1)
             {
-                for (var i = 0; i <= lungs.Count; i++)
+                for (var i = 0; i < lungs.Count; i++)
                 {
                     organFunctionConditions["Lung "+(i+1)+" (or equiv)"] = lungs[i].Comp.Condition.ToString();
                 }
@@ -72,7 +72,7 @@ namespace Content.Server.Medical
             //stomach
             if (stomaches.Count > 1)
             {
-                for (var i = 0; i <= stomaches.Count; i++)
+                for (var i = 0; i < stomaches.Count; i++)
                 {
                     organFunctionConditions["Stomach " + (i + 1) + " (or equiv)"] = stomaches[i].Comp.Condition.ToString();
                 }
