@@ -84,6 +84,7 @@
     partType: Torso
     incisable: true
     container: true
+    endoSkeleton: true
 
 - type: entity
   id: HeadSynth
@@ -104,6 +105,7 @@
     partType: Head
     incisable: true
     container: true
+    endoSkeleton: true
     vital: true
   - type: Input
     context: "ghost"

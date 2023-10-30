@@ -1009,7 +1009,7 @@ namespace Content.Server.Surgery
         private async Task<bool> RemovePart(EntityUid user, SurgeryToolComponent tool, EntityUid target, BodyPartComponent bodyPart, HandsComponent userHands, bool timeOverride)
         {
             //check if part is actually attached to a slot
-            if (bodyPart.ParentSlot is null)
+            if (bodyPart.ParentSlot is null || bodyPart.Owner == target)
                 return false;
 
             if (!timeOverride)
@@ -1209,7 +1209,7 @@ namespace Content.Server.Surgery
             //TODO check if patient is standing
 
             //TODO check for clothing - body suits block surgery (except surgery gowns)
-
+     
             //check for surgical tool in active hand   
             if (userHands.ActiveHandEntity != null && TryComp<SurgeryToolComponent>(userHands.ActiveHandEntity, out var tool))
             {

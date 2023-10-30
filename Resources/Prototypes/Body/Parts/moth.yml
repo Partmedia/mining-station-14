@@ -87,6 +87,8 @@
     partType: Torso
     incisable: true
     container: true
+    endoSkeleton: true
+    exoSkeleton: true
 
 - type: entity
   id: HeadMoth
@@ -107,6 +109,8 @@
     partType: Head
     incisable: true
     container: true
+    endoSkeleton: true
+    exoSkeleton: true
     vital: true
   - type: Input
     context: "ghost"

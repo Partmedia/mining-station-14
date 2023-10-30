@@ -70,11 +70,10 @@ public sealed class BodyPartComponent : Component
 
     /// <summary>
     /// though a part may be opened, the organs may be behind bones!
-    /// by default the part has bones, but it may not
     /// instead it may have an exoskeleton (see below) or no skeleton at all (slimes for example)!
     /// </summary>
     [DataField("endoSkeleton")]
-    public bool EndoSkeleton = true;
+    public bool EndoSkeleton = false;
 
     /// <summary>
     /// but what if its skelly is on the outside?
