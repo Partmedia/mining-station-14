@@ -105,7 +105,7 @@
 
 - type: latheRecipe
   id: Defibrillator
-  result: DefibrillatorEmpty
+  result: Defibrillator
   completetime: 2
   materials:
     Steel: 300
