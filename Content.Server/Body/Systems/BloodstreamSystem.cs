@@ -103,7 +103,7 @@ public sealed class BloodstreamSystem : EntitySystem
             // as well as stop their bleeding to a certain extent.
             if (bloodstream.BleedAmount > 0)
             {
-                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount) / 20, bloodstream);
+                TryModifyBloodLevel(uid, -bloodstream.BleedAmount, bloodstream);
                 TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
             }
 
@@ -161,7 +161,7 @@ public sealed class BloodstreamSystem : EntitySystem
         var oldBleedAmount = component.BleedAmount;
         var total = bloodloss.Total;
         var totalFloat = total.Float();
-        TryModifyBleedAmount(uid, totalFloat, component);
+        TryModifyBleedAmount(uid, totalFloat/20, component);
 
         var prob = Math.Clamp(totalFloat / 50, 0, 1);
         var healPopupProb = Math.Clamp(Math.Abs(totalFloat) / 25, 0, 1);

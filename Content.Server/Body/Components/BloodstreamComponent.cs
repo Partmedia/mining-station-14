@@ -41,7 +41,7 @@ namespace Content.Server.Body.Components
         ///     How high can <see cref="BleedAmount"/> go?
         /// </summary>
         [DataField("maxBleedAmount")]
-        public float MaxBleedAmount = 20.0f;
+        public float MaxBleedAmount = 80.0f;
 
         /// <summary>
         ///     What percentage of current blood is necessary to avoid dealing blood loss damage?
