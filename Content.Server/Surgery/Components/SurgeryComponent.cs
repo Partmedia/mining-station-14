@@ -131,5 +131,8 @@ namespace Content.Server.Surgery
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float RejectionLastChecked = 0f;
+
+        //what inventory slots would block surgery (unless they have the surgeryGown component)
+        public List<string> BlockingSlots = new List<string>{"jumpsuit","outerClothing"};
     }
 }

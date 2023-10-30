@@ -27,6 +27,8 @@ using Content.Shared.Damage;
 using Content.Shared.Bed.Sleep;
 using Content.Server.Bed.Sleep;
 using Content.Server.Speech.Components;
+using Content.Shared.Inventory;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Surgery
 {
@@ -44,6 +46,8 @@ namespace Content.Server.Surgery
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
 
         public override void Initialize()
         {
@@ -1200,6 +1204,26 @@ namespace Content.Server.Surgery
             }
         }
 
+        private bool CheckBlockingInventory(EntityUid uid, SurgeryComponent component)
+        {
+            if (TryComp(uid, out InventoryComponent? inv)
+            && _prototypeManager.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var prototype))
+            {
+                foreach (var slotDef in prototype.Slots)
+                {
+                    if (component.BlockingSlots.Contains(slotDef.Name))
+                    {
+                        if (_inventory.TryGetSlotEntity(uid, slotDef.Name, out var item))
+                        {
+                            if (!TryComp<SurgeryGownComponent>(item.Value, out var gown))
+                                return true;
+                        }                       
+                    }
+                }
+            }
+            return false;
+        }
+
         private async void OnSurgeryButtonPressed(EntityUid uid, SurgeryComponent component, SurgerySlotButtonPressed args)
         {
             if (args.Session.AttachedEntity is not { Valid: true } user ||
@@ -1208,8 +1232,9 @@ namespace Content.Server.Surgery
 
             //TODO check if patient is standing
 
-            //TODO check for clothing - body suits block surgery (except surgery gowns)
-     
+            if (CheckBlockingInventory(uid,component))
+                return;
+
             //check for surgical tool in active hand   
             if (userHands.ActiveHandEntity != null && TryComp<SurgeryToolComponent>(userHands.ActiveHandEntity, out var tool))
             {
@@ -1346,6 +1371,9 @@ namespace Content.Server.Surgery
         {
             if (args.Session.AttachedEntity is not { Valid: true } user ||
                 !TryComp<HandsComponent>(user, out var userHands))
+                return;
+
+            if (CheckBlockingInventory(uid, component))
                 return;
 
             //check for surgical tool in active hand   
