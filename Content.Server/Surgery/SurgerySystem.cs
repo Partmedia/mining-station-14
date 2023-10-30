@@ -171,7 +171,7 @@ namespace Content.Server.Surgery
                 if (!surgery.CompatibleSpecies.Contains(part.Species) && part.RejectionCounter < part.RejectionRounds)
                 {
                     _damageableSystem.TryChangeDamage(uid, surgery.CellularRejectionDamage, ignoreResistances: true);
-                    _popupSystem.PopupEntity("you feel a sharp pain in your joints", uid, uid); //TODO LOC
+                    _popupSystem.PopupEntity(Loc.GetString("surgery-warn-species-incompatible"), uid, uid);
                     _bodySystem.IncrementRejectionCounter(part);
                 }
             }
@@ -181,7 +181,7 @@ namespace Content.Server.Surgery
                 if (!surgery.CompatibleSpecies.Contains(organ.Species) && organ.RejectionCounter < organ.RejectionRounds)
                 {
                     _damageableSystem.TryChangeDamage(uid, surgery.CellularRejectionDamage, ignoreResistances: true);
-                    _popupSystem.PopupEntity("you feel a sharp pain from within", uid, uid); //TODO LOC
+                    _popupSystem.PopupEntity(Loc.GetString("surgery-warn-organ-incompatible"), uid, uid);
                     _bodySystem.IncrementRejectionCounter(organ);
                 }
             }
@@ -206,7 +206,7 @@ namespace Content.Server.Surgery
                 if (!surgery.Necrosis)
                 {
                     surgery.Necrosis = true;
-                    _popupSystem.PopupEntity("you feel a tingling pain followed by numbness", uid, uid); //TODO loc
+                    _popupSystem.PopupEntity(Loc.GetString("surgery-warn-necrosis"), uid, uid);
                 }
             }
         }
@@ -1233,7 +1233,10 @@ namespace Content.Server.Surgery
             //TODO check if patient is standing
 
             if (CheckBlockingInventory(uid,component))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("surgery-blocked"), user, user);
                 return;
+            }
 
             //check for surgical tool in active hand   
             if (userHands.ActiveHandEntity != null && TryComp<SurgeryToolComponent>(userHands.ActiveHandEntity, out var tool))
@@ -1374,7 +1377,10 @@ namespace Content.Server.Surgery
                 return;
 
             if (CheckBlockingInventory(uid, component))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("surgery-blocked"), user, user);
                 return;
+            }
 
             //check for surgical tool in active hand   
             if (userHands.ActiveHandEntity != null && TryComp<SurgeryToolComponent>(userHands.ActiveHandEntity, out var tool))
@@ -1496,7 +1502,7 @@ namespace Content.Server.Surgery
 
             Verb verb = new()
             {
-                Text = Loc.GetString("Perform Surgery"), //TODO loc
+                Text = Loc.GetString("surgery-perform"),
                 Act = () => StartOpeningSurgery(args.User, component, true),
             };
             args.Verbs.Add(verb);

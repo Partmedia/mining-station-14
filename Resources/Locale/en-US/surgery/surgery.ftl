@@ -1,3 +1,5 @@
+surgery-perform = Perform Surgery
+
 surgery-part-already-has-attachment = Body part already has a tool attached to it!
 surgery-part-not-incised-retractor = No incision made on body part, nothing to retract yet!
 surgery-exo-skeleton-blocking = Exoskeleton must be opened first!
@@ -22,3 +24,9 @@ surgery-organ-removed = Organ removed!
 surgery-organ-already-has-attachment = Organ already has a tool attached to it!
 surgery-small-clamp-attached = Small clamp attached.
 surgery-organ-attached = Organ attached.
+
+surgery-blocked = That part of the patient is covered.
+
+surgery-warn-necrosis = You feel a tingling pain followed by numbness.
+surgery-warn-organ-incompatible = You feel a sharp pain from within.
+surgery-warn-species-incompatible = You feel feverish.
