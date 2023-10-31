@@ -108,10 +108,14 @@ namespace Content.Server.Body.Systems
                 return;
             }
 
-            var actualGas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);
+            //var actualGas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);
+            var gas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);
 
-            var lungRatio = 1.0f / organs.Count;
-            var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
+            //NOTE: keeping this here just in case, but by splitting the gas among multiple lungs neither gets enough
+            //so for now if we have multiple lungs, we just breath more
+            //var lungRatio = 1.0f / organs.Count;
+            //var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
+
             foreach (var (lung, _) in organs)
             {
                 _lungSystem.UpdateLungStatus(uid,lung);
