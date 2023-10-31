@@ -190,6 +190,94 @@
           1
         ]
       ]
+    },
+    {
+      "name": "torso_icon",
+      "directions": 1
+    },
+    {
+      "name": "torso_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "torso_incised_icon",
+      "directions": 1
+    },
+    {
+      "name": "torso_retracted_icon",
+      "directions": 1
+    },
+    {
+      "name": "torso_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_incised_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_retracted_icon",
+      "directions": 1
+    },
+    {
+      "name": "head_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_arm_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_arm_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_leg_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_leg_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_hand_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_hand_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_arm_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_arm_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_leg_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_leg_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "l_hand_exo_opened_icon",
+      "directions": 1
+    },
+    {
+      "name": "r_hand_exo_opened_icon",
+      "directions": 1
     }
   ]
 }

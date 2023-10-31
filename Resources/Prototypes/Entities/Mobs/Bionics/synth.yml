@@ -1,0 +1,35 @@
+- type: entity
+  name: Left Synth Arm
+  id: LeftSynthArmHand
+  parent: LeftArmSynth
+  components:
+  - type: Body
+    prototype: LeftSynthArmHand
+    species: Universal
+
+- type: entity
+  name: Right Synth Arm
+  id: RightSynthArmHand
+  parent: RightArmSynth
+  components:
+  - type: Body
+    prototype: RightSynthArmHand
+    species: Universal
+
+- type: entity
+  name: Left Synth Leg
+  id: LeftSynthLegFoot
+  parent: LeftLegSynth
+  components:
+  - type: Body
+    prototype: LeftSynthLegFoot
+    species: Universal
+
+- type: entity
+  name: Right Synth Leg
+  id: RightSynthLegFoot
+  parent: RightLegSynth
+  components:
+  - type: Body
+    prototype: RightSynthLegFoot
+    species: Universal

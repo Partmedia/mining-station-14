@@ -1,0 +1,273 @@
+- type: entity
+  id: PartSynth
+  parent: BaseItem
+  name: "synth body part"
+  abstract: true
+  components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 10
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 50
+    drillShockDamage:
+      types:
+        Asphyxiation: 10
+    sutureShockDamage:
+      types:
+        Asphyxiation: 5
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 10
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 10
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 5
+    cellularRejectionDamage:
+      types:
+        Cellular: 0
+    compatibleSpecies:
+      - universal
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
+  - type: Damageable
+    damageContainer: Biological
+  - type: BodyPart
+    species: universal
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+      attachment: !type:Container
+        ents: []
+      slotAttachment: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  id: TorsoSynth
+  name: "synth torso"
+  parent: PartSynth
+  components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 30
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "torso_m"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "torso_m"
+  - type: BodyPart
+    partType: Torso
+    incisable: true
+    container: true
+    endoSkeleton: true
+
+- type: entity
+  id: HeadSynth
+  name: "synth head"
+  parent: PartSynth
+  components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "head_icon"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "head_icon"
+  - type: BodyPart
+    partType: Head
+    incisable: true
+    container: true
+    endoSkeleton: true
+    vital: true
+  - type: Input
+    context: "ghost"
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0
+    baseSprintSpeed: 0
+  - type: InputMover
+  - type: GhostOnMove
+  - type: Tag
+    tags:
+      - Head
+
+- type: entity
+  id: LeftArmSynth
+  name: "left synth arm"
+  parent: PartSynth
+  components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3.5
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "l_arm_icon"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "l_arm_icon"
+  - type: BodyPart
+    partType: Arm
+    symmetry: Left
+
+- type: entity
+  id: RightArmSynth
+  name: "right synth arm"
+  parent: PartSynth
+  components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3.5
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "r_arm_icon"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "r_arm_icon"
+  - type: BodyPart
+    partType: Arm
+    symmetry: Right
+
+- type: entity
+  id: LeftHandSynth
+  name: "left synth hand"
+  parent: PartSynth
+  components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.1
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "l_hand_icon"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "l_hand_icon"
+  - type: BodyPart
+    partType: Hand
+    symmetry: Left
+
+- type: entity
+  id: RightHandSynth
+  name: "right synth hand"
+  parent: PartSynth
+  components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.1
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "r_hand_icon"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "r_hand_icon"
+  - type: BodyPart
+    partType: Hand
+    symmetry: Right
+
+- type: entity
+  id: LeftLegSynth
+  name: "left synth leg"
+  parent: PartSynth
+  components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 4.5
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "l_leg_icon"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "l_leg_icon"
+  - type: BodyPart
+    partType: Leg
+    symmetry: Left
+  - type: MovementSpeedModifier
+
+- type: entity
+  id: RightLegSynth
+  name: "right synth leg"
+  parent: PartSynth
+  components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 4.5
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "r_leg_icon"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "r_leg_icon"
+  - type: BodyPart
+    partType: Leg
+    symmetry: Right
+  - type: MovementSpeedModifier
+
+- type: entity
+  id: LeftFootSynth
+  name: "left synth foot"
+  parent: PartSynth
+  components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.2
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "l_foot_icon"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "l_foot_icon"
+  - type: BodyPart
+    partType: Foot
+    symmetry: Left
+
+- type: entity
+  id: RightFootSynth
+  name: "right synth foot"
+  parent: PartSynth
+  components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.2
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "r_foot_icon"
+  - type: Icon
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: "r_foot_icon"
+  - type: BodyPart
+    partType: Foot
+    symmetry: Right

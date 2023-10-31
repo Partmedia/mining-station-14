@@ -9,6 +9,26 @@
   group: market
 
 - type: cargoProduct
+  id: MedicalSurgerySupplies
+  icon:
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  product: CrateMedicalSurgery
+  cost: 750
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalDefib
+  icon:
+    sprite: Objects/Specific/Medical/defib.rsi
+    state: icon
+  product: CrateMedicalDefib
+  cost: 750
+  category: Medical
+  group: market
+
+- type: cargoProduct
   id: MedicalChemistrySupplies
   icon:
     sprite: Objects/Specific/Chemistry/beaker.rsi

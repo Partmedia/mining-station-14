@@ -28,6 +28,9 @@ public sealed class BodyComponent : Component, IDraggable
     [DataField("requiredLegs")]
     public int RequiredLegs;
 
+    [DataField("species")]
+    public string Species = "universal";
+
     bool IDraggable.CanStartDrag(StartDragDropEvent args)
     {
         return true;

@@ -198,7 +198,7 @@
     sprite: Structures/Machines/cloning.rsi
     state: pod_0
   product: CrateCloning
-  cost: 3000
+  cost: 10000
   category: Medical
   group: market
 

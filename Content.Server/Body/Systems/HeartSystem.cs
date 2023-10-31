@@ -53,6 +53,7 @@ namespace Content.Server.Body.Systems
 
             //next, add the pump to the entity
             var newCirculatoryPump = EntityManager.EnsureComponent<CirculatoryPumpComponent>(newEntity);
+            newCirculatoryPump.Brainless = pump.Brainless;
             newCirculatoryPump.NotWorkingDamage = pump.NotWorkingDamage;
 
             //if the old CirculatoryPump is NOT embedded, remove the component

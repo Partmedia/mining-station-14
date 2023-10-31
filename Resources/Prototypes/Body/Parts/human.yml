@@ -6,12 +6,65 @@
   name: "human body part"
   abstract: true
   components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 20
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 75
+    drillShockDamage:
+      types:
+        Asphyxiation: 25
+    sutureShockDamage:
+      types:
+        Asphyxiation: 10
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 15
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 15
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 10
+    compatibleSpecies:
+      - human
+      - skeleton
+      - universal
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
+    species: human
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
+        ents: []
+      attachment: !type:Container
+        ents: []
+      slotAttachment: !type:Container
         ents: []
   - type: StaticPrice
     price: 100
@@ -25,7 +78,7 @@
     id: Creature
     totalReagentUnits: 30
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Human/parts.rsi
     state: "torso_m"
   - type: Icon
@@ -33,6 +86,9 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
+    incisable: true
+    container: true
+    endoSkeleton: true
 
 - type: entity
   id: HeadHuman
@@ -43,14 +99,17 @@
     id: Creature
     totalReagentUnits: 3
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Human/parts.rsi
-    state: "head_m"
+    state: "head_icon"
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
-    state: "head_m"
+    state: "head_icon"
   - type: BodyPart
     partType: Head
+    incisable: true
+    container: true
+    endoSkeleton: true
     vital: true
   - type: Input
     context: "ghost"
@@ -72,12 +131,12 @@
     id: Creature
     totalReagentUnits: 3.5
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Human/parts.rsi
-    state: "l_arm"
+    state: "l_arm_icon"
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
-    state: "l_arm"
+    state: "l_arm_icon"
   - type: BodyPart
     partType: Arm
     symmetry: Left
@@ -91,12 +150,12 @@
     id: Creature
     totalReagentUnits: 3.5
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Human/parts.rsi
-    state: "r_arm"
+    state: "r_arm_icon"
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
-    state: "r_arm"
+    state: "r_arm_icon"
   - type: BodyPart
     partType: Arm
     symmetry: Right
@@ -110,12 +169,12 @@
     id: Creature
     totalReagentUnits: 0.1
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Human/parts.rsi
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Left
@@ -129,12 +188,12 @@
     id: Creature
     totalReagentUnits: 0.1
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Human/parts.rsi
-    state: "r_hand"
+    state: "r_hand_icon"
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
-    state: "r_hand"
+    state: "r_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Right
@@ -148,12 +207,12 @@
     id: Creature
     totalReagentUnits: 4.5
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Human/parts.rsi
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: BodyPart
     partType: Leg
     symmetry: Left
@@ -168,12 +227,12 @@
     id: Creature
     totalReagentUnits: 4.5
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Human/parts.rsi
-    state: "r_leg"
+    state: "r_leg_icon"
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
-    state: "r_leg"
+    state: "r_leg_icon"
   - type: BodyPart
     partType: Leg
     symmetry: Right
@@ -188,12 +247,12 @@
     id: Creature
     totalReagentUnits: 0.2
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Human/parts.rsi
-    state: "l_foot"
+    state: "l_foot_icon"
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
-    state: "l_foot"
+    state: "l_foot_icon"
   - type: BodyPart
     partType: Foot
     symmetry: Left
@@ -207,12 +266,12 @@
     id: Creature
     totalReagentUnits: 0.2
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Human/parts.rsi
-    state: "r_foot"
+    state: "r_foot_icon"
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
-    state: "r_foot"
+    state: "r_foot_icon"
   - type: BodyPart
     partType: Foot
     symmetry: Right

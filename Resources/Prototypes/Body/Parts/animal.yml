@@ -8,12 +8,22 @@
   name: "animal body part"
   abstract: true
   components:
+  #- type: Surgery disabled surgery for animals for now
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
+    species: animal
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
+        ents: []
+      attachment: !type:Container
+        ents: []
+      slotAttachment: !type:Container
         ents: []
   - type: StaticPrice
     price: 50
@@ -27,7 +37,7 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Left
@@ -40,7 +50,7 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: BodyPart
     partType: Leg
   - type: MovementSpeedModifier
@@ -53,7 +63,7 @@
   - type: Sprite
     netsync: true
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: "l_foot"
+    state: "l_foot_icon"
   - type: BodyPart
     partType: Foot
 
@@ -68,5 +78,7 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
+    incisable: true
+    container: true
   - type: Damageable
     damageContainer: Biological

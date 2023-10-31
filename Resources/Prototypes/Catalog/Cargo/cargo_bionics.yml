@@ -1,0 +1,109 @@
+- type: cargoProduct
+  id: MedicalSynthBody
+  icon:
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: full
+  product: CrateSyntheticBody
+  cost: 5000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalSynthOrgans
+  icon:
+    sprite: Mobs/Species/Bionic/organs.rsi
+    state: heart-off
+  product: CrateSyntheticOrgans
+  cost: 2000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalDionaOrgans
+  icon:
+    sprite: Mobs/Species/Diona/organs.rsi
+    state: stomach
+  product: CrateDionaOrgans
+  cost: 1500
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalSynthLeftLeg
+  icon:
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: l_leg_icon
+  product: LeftSynthLegFoot
+  cost: 500
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalSynthRightLeg
+  icon:
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: r_leg_icon
+  product: RightSynthLegFoot
+  cost: 500
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalSynthLeftArm
+  icon:
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: l_arm_icon
+  product: LeftSynthArmHand
+  cost: 500
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalSynthRightArn
+  icon:
+    sprite: Mobs/Species/Bionic/parts.rsi
+    state: r_arm_icon
+  product: RightSynthArmHand
+  cost: 500
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalPowerLeftLeg
+  icon:
+    sprite: Mobs/Species/Bionic/power_leg.rsi
+    state: l_leg_icon
+  product: LeftPowerLegFoot
+  cost: 4500
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalPowerRightLeg
+  icon:
+    sprite: Mobs/Species/Bionic/power_leg.rsi
+    state: r_leg_icon
+  product: RightPowerLegFoot
+  cost: 4500
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalDrillLeftArm
+  icon:
+    sprite: Mobs/Species/Bionic/drill_arm.rsi
+    state: l_arm_icon
+  product: LeftDrillArmHand
+  cost: 10000
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalDrillRightArn
+  icon:
+    sprite: Mobs/Species/Bionic/drill_arm.rsi
+    state: r_arm_icon
+  product: RightDrillArmHand
+  cost: 10000
+  category: Medical
+  group: market

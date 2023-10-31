@@ -4,12 +4,22 @@
   name: "silicon body part"
   abstract: true
   components:
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: Damageable
     damageContainer: Inorganic
   - type: BodyPart
+    exoSkeleton: true
+    species: universal
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
+        ents: []
+      attachment: !type:Container
+        ents: []
+      slotAttachment: !type:Container
         ents: []
   - type: StaticPrice
     price: 100
@@ -20,7 +30,7 @@
   parent: PartSilicon
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Silicon/drone.rsi
     state: "l_hand"
   - type: Icon
@@ -41,7 +51,7 @@
   parent: PartSilicon
   components:
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Silicon/drone.rsi
     state: "r_hand"
   - type: Icon

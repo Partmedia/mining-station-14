@@ -1,0 +1,29 @@
+- type: entity
+  id: CrateSyntheticBody
+  parent: CrateSynthBody
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobSynth
+
+- type: entity
+  id: CrateSyntheticOrgans
+  parent: CrateSynthOrgan
+  components:
+  - type: StorageFill
+    contents:
+      - id: OrganSynthEyes
+      - id: OrganSynthLungs
+      - id: OrganSynthHeart
+      - id: OrganSynthStomach
+      - id: OrganSynthLiver
+      - id: OrganSynthKidneys
+
+- type: entity
+  id: CrateDionaOrgans #Diona have a multi-function stomach, so they get special treatment
+  parent: CrateDionaOrgan
+  components:
+  - type: StorageFill
+    contents:
+      - id: OrganDionaEyes
+      - id: OrganDionaStomach

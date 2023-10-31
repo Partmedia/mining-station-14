@@ -326,7 +326,7 @@
         ignoreResistances: true
         damage:
           types:
-            Poison: 0.25
+            Poison: 0.025 #reduced so it can be used safely for surgery
 
 - type: reagent
   id: Frezon

@@ -20,4 +20,25 @@
 - Many more items are available for purchase from the cargo catalog.
 <GuideEntityEmbed Entity="ComputerCargoOrders"/>
 
+- Chemistry is more challenging but also more in depth - dispenser start with limited chemicals but there are multiple ways to get them including breaking down other chemicals with the CentriMax 2000!
+<Box>
+  <GuideEntityEmbed Entity="ChemicalAnalysisMachine"/>
+  <GuideEntityEmbed Entity="Centrifuge"/>
+</Box>
+
+- Crew must take their health more seriously, as things like overeating, smoking, ingesting or breathing poison, or taking too much medicine can lead to organ failure!
+- Fortunately the health analyzer will inform of these ailments and synthetic organs are available for purchase!
+
+<Box>
+  <GuideEntityEmbed Entity="OrganSynthEyes"/>
+  <GuideEntityEmbed Entity="OrganSynthHeart"/>
+</Box>
+
+- Bionics are also available for purchase, just make sure there is licensed surgeon on hand to help you install them!
+
+<Box>
+  <GuideEntityEmbed Entity="LeftDrillArm"/>
+  <GuideEntityEmbed Entity="LeftLegPower"/>
+</Box>
+
 </Document>

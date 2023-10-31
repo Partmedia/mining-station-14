@@ -5,6 +5,50 @@
   id: BaseMobOrganic
   noSpawn: true
   components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 0.25
+    incisorShockDamage:
+      types:
+        Asphyxiation: 20
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 75
+    drillShockDamage:
+      types:
+        Asphyxiation: 25
+    sutureShockDamage:
+      types:
+        Asphyxiation: 10
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 15
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 15
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 10
+    compatibleSpecies:
+      - human
+      - skeleton
+      - universal
   - type: Carriable
   - type: LagCompensation
   - type: RangedDamageSound
@@ -167,6 +211,7 @@
     species: Human
   - type: Body
     prototype: Human
+    species: Human
     requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
@@ -249,6 +294,8 @@
         type: HumanoidMarkingModifierBoundUserInterface
       - key: enum.StrippingUiKey.Key
         type: StrippableBoundUserInterface
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: Puller
   - type: Butcherable
     butcheringType: Spike # TODO human.

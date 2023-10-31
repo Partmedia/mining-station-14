@@ -1,6 +1,7 @@
-﻿using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Systems.Inventory.Controls;
 

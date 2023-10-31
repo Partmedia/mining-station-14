@@ -1,8 +1,53 @@
-﻿- type: entity
+- type: entity
   parent: BaseMobOrganic
   id: BaseMobVox
   abstract: true
   components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 20
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 75
+    drillShockDamage:
+      types:
+        Asphyxiation: 25
+    sutureShockDamage:
+      types:
+        Asphyxiation: 10
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 15
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 15
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 10
+    compatibleSpecies:
+      - vox
+      - human
+      - animal
+      - universal
   - type: Hunger
   - type: Thirst
   - type: Icon
@@ -81,6 +126,7 @@
       - map: [ "pocket2" ]
   - type: Body
     prototype: Vox
+    species: vox
     requiredLegs: 2
   # Vox nitrogen stuff is handled in their metabolism
   - type: Respirator

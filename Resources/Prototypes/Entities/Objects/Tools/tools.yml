@@ -38,6 +38,12 @@
   - type: LatticeCutting
   - type: StaticPrice
     price: 40
+  - type: SurgeryTool
+    retractor: true
+    retractorTimeMod: 2
+    manipulator: true
+    manipulatorTimeMod: 2
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: screwdriver
@@ -77,6 +83,10 @@
           screwdriver: Rainbow
   - type: StaticPrice
     price: 40
+  - type: SurgeryTool
+    manipulator: true
+    manipulatorTimeMod: 4
+    toolSound: /Audio/Effects/Fluids/blood1.ogg
 
 - type: entity
   name: wrench
@@ -248,6 +258,10 @@
           path: /Audio/Items/change_drill.ogg
   - type: StaticPrice
     price: 60
+  - type: SurgeryTool
+    drill: true
+    drillTimeMod: 2
+    toolSound: /Audio/Items/drill_hit.ogg
 
 - type: entity
   name: RCD

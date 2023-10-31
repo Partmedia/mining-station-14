@@ -122,6 +122,8 @@ namespace Content.Shared.Standing
             if (!Resolve(uid, ref standingState, false))
                 return false;
 
+            //TODO integrate body part/organ requirements for standing
+
             // Optional component.
             Resolve(uid, ref appearance, false);
 

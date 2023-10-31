@@ -3,6 +3,8 @@
   parent: OrganHumanLungs
   suffix: "rat"
   components:
+  - type: Organ
+    species: animal
   - type: Metabolizer
     metabolizerTypes: [ Rat ]
 

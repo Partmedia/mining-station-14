@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: makeshifttourniquet
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: clothtourniquet
+          steps:
+            - material: Cloth
+              amount: 2
+              doAfter: 5
+    - node: clothtourniquet
+      entity: ClothTourniquet
