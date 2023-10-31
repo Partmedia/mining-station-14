@@ -46,7 +46,7 @@
 
   To remove and replace any body part, following these steps:
 
-  1) Ensure the patient is buckled and sedated.
+  1) Ensure the patient is buckled and sedated. Ensure they are not wearing a jumpsuit or hardsuit, and preferably are wearing a hospital gown.
 
   2) Apply a tourniquet to the target part slot. Not doing so will result in heavy bleeding.
 
@@ -96,71 +96,71 @@
 
   To remove and replace any organ, follow these steps:
 
-  1) Ensure the patient is buckled and sedated.
+  1) Ensure the patient is buckled and sedated. Ensure they are not wearing a jumpsuit or hardsuit, and preferably are wearing a hospital gown.
 
   2) If the organ is external skip this step and go to step 5. Apply a saw to the body part containing organ IF the body part has an exoskeleton (this applies to Moths and Diona). If it does not have an exoskeleton DON'T APPLY THE SAW.
 
-  2) Apply a scalpel to the body part containing the organ.
+  3) Apply a scalpel to the body part containing the organ.
 
   <Box>
     <GuideEntityEmbed Entity="Scalpel"/>
   </Box>
 
-  3) Apply a retractor to the body part containing the organ.
+  4) Apply a retractor to the body part containing the organ.
 
   <Box>
     <GuideEntityEmbed Entity="Retractor"/>
   </Box>
 
-  4) If the body part has an endoskeleton (Only Slimes and Diona do not), apply the saw to the body part.
+  5) If the body part has an endoskeleton (Only Slimes and Diona do not), apply the saw to the body part.
 
   <Box>
     <GuideEntityEmbed Entity="Saw"/>
   </Box>
 
-  5) Apply a hemostat to the organ slot.
+  6) Apply a hemostat to the organ slot.
 
   <Box>
     <GuideEntityEmbed Entity="Hemostat"/>
   </Box>
 
-  6) With another hemostat and a scalpel, click on the organ to be removed.
+  7) With another hemostat and a scalpel, click on the organ to be removed.
 
   <Box>
     <GuideEntityEmbed Entity="Hemostat"/>
     <GuideEntityEmbed Entity="Scalpel"/>
   </Box>
 
-  7) Apply a cautery to the now empty organ slot.
+  8) Apply a cautery to the now empty organ slot.
 
   <Box>
     <GuideEntityEmbed Entity="Cautery"/>
   </Box>
 
-  8) Remove the hemostat by clicking the empty organ slot.
+  9) Remove the hemostat by clicking the empty organ slot.
 
-  9) With a new compatible organ in one hand and suture in the other, attach the new organ to the organ slot. If the organ was external, skip to step 13.
+  10) With a new compatible organ in one hand and suture in the other, attach the new organ to the organ slot. If the organ was external, skip to step 13.
 
   <Box>
     <GuideEntityEmbed Entity="Suture"/>
     <GuideEntityEmbed Entity="OrganSynthLiver"/>
   </Box>
 
-  10) If an endoskeleton was opened, close it with metal suture.
+  11) If an endoskeleton was opened, close it with metal suture.
 
   <Box>
     <GuideEntityEmbed Entity="MetalSuture"/>
   </Box>
 
-  11) Remove the retractor by clicking on the body part with an empty hand.
+  12) Remove the retractor by clicking on the body part with an empty hand.
 
-  12) Seal the incision with suture.
+  13) Seal the incision with suture.
 
   <Box>
     <GuideEntityEmbed Entity="Suture"/>
   </Box>
 
-  13) Remove the sedative and congratulate the patient on their new organ!
+  14) Remove the sedative and congratulate the patient on their new organ!
 
   ## Consequences of malpractice!
 
