@@ -293,16 +293,6 @@
         visualType: Medium
         messages: [ "effect-sleepy" ]
         probability: 0.1
-      - !type:MovespeedModifier
-        conditions:
-        - !type:ReagentThreshold
-          reagent: NitrousOxide
-          min: 1
-        - !type:OrganType
-          type: Slime
-          shouldHave: false
-        walkSpeedModifier: 0.65
-        sprintSpeedModifier: 0.65
       - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
