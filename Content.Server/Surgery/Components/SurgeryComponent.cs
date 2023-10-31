@@ -19,6 +19,7 @@ namespace Content.Server.Surgery
         public float InitialOrganBloodloss = 15f;
         public float InitialPartBloodloss = 30f;
 
+        [ViewVariables(VVAccess.ReadOnly)]
         public float SurgeryBleed = 0f;
         public float BasePartBleed = 20f;
         public float BaseOrganBleed = 15f;
