@@ -4,9 +4,11 @@ using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
+using Content.Server.MiningCredits;
 using Content.Server.Objectives;
 using Content.Server.Players;
 using Content.Server.Roles;
+using Content.Shared.Body.Part;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -313,6 +315,8 @@ namespace Content.Server.Mind
         /// </exception>
         public void TransferTo(EntityUid? entity, bool ghostCheckOverride = false)
         {
+            var oldEntity = OwnedEntity;
+
             // Looks like caller just wants us to go back to normal.
             if (entity == OwnedEntity)
             {
@@ -373,7 +377,11 @@ namespace Content.Server.Mind
             if (Session != null && !alreadyAttached && VisitingEntity == null)
             {
                 Session.AttachToEntity(entity);
-                Logger.Info($"Session {Session.Name} transferred to entity {entity}.");
+                if (entity != null && oldEntity != null)
+                {
+                    _entityManager.EventBus.RaiseLocalEvent(oldEntity.Value, new MindTransferEvent(entity.Value, oldEntity.Value), true);                  
+                }
+                Logger.Info($"Session {Session.Name} transferred to entity {entity} from {oldEntity}.");
             }
         }
 

@@ -33,6 +33,7 @@
   - type: Faction
     factions:
     - NanoTrasen
+  - type: MiningCredit 
 
 #Syndie
 - type: entity

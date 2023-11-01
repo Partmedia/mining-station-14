@@ -5,6 +5,7 @@ using Content.Server.Mind.Components;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -155,5 +156,17 @@ public sealed class MindSystem : EntitySystem
         {
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
         }
+    }
+}
+
+public sealed class MindTransferEvent : EntityEventArgs
+{
+    public EntityUid NewEntity { get; }
+    public EntityUid OldEntity { get; }
+
+    public MindTransferEvent(EntityUid newEntity, EntityUid oldEntity)
+    {
+        NewEntity = newEntity;
+        OldEntity = oldEntity;
     }
 }

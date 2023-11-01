@@ -27,3 +27,4 @@
     - type: Faction
       factions:
         - NanoTrasen
+    - type: MiningCredit 

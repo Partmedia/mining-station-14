@@ -32,4 +32,5 @@
       damageRecovery:
         types:
           Asphyxiation: -1.5
+    - type: MiningCredit 
 #Weh
