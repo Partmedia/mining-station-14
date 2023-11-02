@@ -24,6 +24,8 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Content.Server.MiningCredits;
+using Content.Server.Mind.Components;
 
 namespace Content.Server.StationEvents
 {
@@ -207,17 +209,55 @@ namespace Content.Server.StationEvents
                 if (bankComponent != null)
                 {
                     var profit = bankComponent.Balance - bankComponent.InitialBalance + change;
-                    ev.AddLine(Loc.GetString("financial-summary"));
+                    var profitStrings = ListPlayerProfit(profit);
+
                     ev.AddLine(Loc.GetString("cargo-balance", ("amount", bankComponent.Balance)));
                     ev.AddLine(Loc.GetString("initial-loan", ("amount", -bankComponent.InitialBalance)));
                     ev.AddLine(Loc.GetString("station-value-change", ("amount", change)));
                     ev.AddLine("");
                     ev.AddLine(Loc.GetString("station-profit", ("profit", profit)));
+                    ev.AddLine("");
+                    ev.AddLine(profitStrings.Item1);
 
-                    ReportRound(Loc.GetString("team-profit", ("team", ListPlayers(players)), ("profit", profit)));
-                    LogProfit(profit, players);
+                    ReportRound(Loc.GetString("team-profit", ("team", ListPlayers(profitStrings.Item2)), ("profit", profit)));
+                    LogProfit(profit, profitStrings.Item2);
                 }
             }
+        }
+
+        private (string, SortedSet<String>) ListPlayerProfit(int profit)
+        {
+            Dictionary<string, int> playerCreds = new Dictionary<string, int>();
+            var totalCreds = 0f;
+
+            foreach (var credit in EntityManager.EntityQuery<MiningCreditComponent>())
+            {
+                if (!credit.Transferred
+                    && TryComp<MindComponent>(credit.Owner, out var mind)
+                    && mind.Mind is not null
+                    && mind.Mind.Session is not null)
+                {
+                    var player = mind.Mind.Session.Data.UserName;
+                    var numCreds = credit.NumCredits;
+                    playerCreds[player] = numCreds;
+
+                    totalCreds += numCreds;
+                }
+            }
+
+            var profitUnit = totalCreds != 0f ? profit / totalCreds : 0;
+            var profitString = "";
+            var reportStrings = new SortedSet<String>();
+
+            foreach (KeyValuePair<string,int> entry in playerCreds)
+            {
+                profitString += String.Format("{0} {1}\n", entry.Key ,Math.Round(profitUnit*entry.Value)); //for round end summary
+                reportStrings.Add(String.Format("{0}({1})", entry.Key, Math.Round(profitUnit * entry.Value))); //for log
+            }
+
+            var profitStrings = (profitString, reportStrings);
+
+            return profitStrings;
         }
 
         private String ListPlayers(SortedSet<String> players)
