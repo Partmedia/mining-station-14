@@ -6,6 +6,7 @@ using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
 using Content.Shared.Standing;
 using Content.Shared.Movement.Components;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Body.Systems
 {
@@ -49,6 +50,10 @@ namespace Content.Server.Body.Systems
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
         {
+            //check if new entity has an actor component, if it does - skip this
+            if (HasComp<ActorComponent>(newEntity))
+                return;
+
             EntityManager.EnsureComponent<MindComponent>(newEntity);
             var oldMind = EntityManager.EnsureComponent<MindComponent>(oldEntity);
 
@@ -66,8 +71,6 @@ namespace Content.Server.Body.Systems
             EnsureComp<InputMoverComponent>(newEntity);
 
             oldMind.Mind?.TransferTo(newEntity);
-
-            //TODO if a mind already exists in the new entity, transfer it to any brain (or brain container) that it can go to
 
             //if the new entity has a circulatory pump system, set it to working - TODO remove once defibs are ported (or we keep this as an alternate jump start? lets see how we go.)
             if (TryComp<CirculatoryPumpComponent>(newEntity, out var pump))

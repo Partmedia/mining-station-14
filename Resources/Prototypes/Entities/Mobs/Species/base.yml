@@ -81,6 +81,7 @@
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
+  - type: TransferMindOnGib
   - type: Barotrauma
     damage:
       types:

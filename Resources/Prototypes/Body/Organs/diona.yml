@@ -60,6 +60,9 @@
     groups:
     - id: Gas
       rateModifier: 100.0
+  - type: Tag
+    tags:
+      - MindTransferTarget
 
 - type: entity
   id: OrganDionaEyes

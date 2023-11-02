@@ -374,7 +374,7 @@ namespace Content.Server.Mind
             }
 
             // Player is CURRENTLY connected.
-            if (Session != null && !alreadyAttached && VisitingEntity == null)
+            if (Session != null && !alreadyAttached && (VisitingEntity == null))
             {
                 Session.AttachToEntity(entity);
                 if (entity != null && oldEntity != null)
@@ -382,7 +382,7 @@ namespace Content.Server.Mind
                     _entityManager.EventBus.RaiseLocalEvent(oldEntity.Value, new MindTransferEvent(entity.Value, oldEntity.Value), true);                  
                 }
                 Logger.Info($"Session {Session.Name} transferred to entity {entity} from {oldEntity}.");
-            }
+            } 
         }
 
         public void ChangeOwningPlayer(NetUserId? newOwner)

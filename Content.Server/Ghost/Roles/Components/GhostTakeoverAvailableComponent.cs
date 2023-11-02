@@ -1,5 +1,8 @@
+using Content.Server.Database;
+using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
+using Content.Server.MiningCredits;
 using Robust.Server.Player;
 
 namespace Content.Server.Ghost.Roles.Components
@@ -10,6 +13,7 @@ namespace Content.Server.Ghost.Roles.Components
     [RegisterComponent, ComponentReference(typeof(GhostRoleComponent))]
     public sealed class GhostTakeoverAvailableComponent : GhostRoleComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         public override bool Take(IPlayerSession session)
         {
             if (Taken)
@@ -18,6 +22,18 @@ namespace Content.Server.Ghost.Roles.Components
             Taken = true;
 
             var mind = Owner.EnsureComponent<MindComponent>();
+
+            var oldAttachedEntity = session.AttachedEntity;
+            if (oldAttachedEntity != null)
+            {
+                if (_entMan.TryGetComponent<VisitingMindComponent>(oldAttachedEntity.Value, out var oldMind))
+                {
+                    if (oldMind.Mind is not null && oldMind.Mind.OwnedEntity != null)
+                        _entMan.EventBus.RaiseLocalEvent(oldMind.Mind.OwnedEntity.Value, new MindTransferEvent(Owner, oldMind.Mind.OwnedEntity.Value));
+                }
+                else
+                    _entMan.EventBus.RaiseLocalEvent(oldAttachedEntity.Value, new MindTransferEvent(Owner, oldAttachedEntity.Value));
+            }
 
             if (mind.HasMind)
                 return false;

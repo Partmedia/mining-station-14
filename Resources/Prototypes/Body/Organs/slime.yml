@@ -31,6 +31,9 @@
       solutions:
         stomach:
           maxVol: 50.0
+    - type: Tag
+      tags:
+        - MindTransferTarget
 
 
 - type: entity

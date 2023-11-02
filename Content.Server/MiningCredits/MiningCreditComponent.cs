@@ -9,7 +9,7 @@ namespace Content.Server.MiningCredits
 
         //how often the miner gets a credit
         [DataField("rewardInterval")]
-        public float RewardInterval = 600f;
+        public float RewardInterval = 60f;
 
         //num credits miner ears every interval
         [DataField("rewardNum")]
@@ -18,5 +18,14 @@ namespace Content.Server.MiningCredits
         //seconds since last reward
         [ViewVariables(VVAccess.ReadWrite)]
         public float LastRewardInterval = 0f;
+
+        //check if the mind has been transferred elsewhere
+        //do not update or tally end of round if transferred
+        [ViewVariables]
+        public bool Transferred = false;
+
+        //Entity uid of previous tracked entity
+        [ViewVariables]
+        public EntityUid? PreviousEntity;
     }
 }

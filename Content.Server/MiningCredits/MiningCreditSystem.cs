@@ -1,7 +1,9 @@
 using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
 using Content.Server.Mind;
+using Content.Server.Mind.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Enums;
 
 namespace Content.Server.MiningCredits
 {
@@ -21,8 +23,20 @@ namespace Content.Server.MiningCredits
             foreach (var credit in EntityManager.EntityQuery<MiningCreditComponent>())
             {
                 //get player session
+                if (credit.Transferred
+                    || !TryComp<MindComponent>(credit.Owner, out var mind)
+                    || mind.Mind is null
+                    || mind.Mind.Session is null
+                    || mind.Mind.Session.Status == SessionStatus.Disconnected)
+                    continue;
 
+                credit.LastRewardInterval += frameTime;
                 //check timing
+                if (credit.LastRewardInterval >= credit.RewardInterval)
+                {
+                    credit.NumCredits += credit.RewardNum;
+                    credit.LastRewardInterval = 0;
+                }
 
                 //if they are: online and an interval has passed - reward!
                 //dead players still get paid, encouraging people to save them so they can get back to work
@@ -35,15 +49,21 @@ namespace Content.Server.MiningCredits
         private void OnMindTransferEvent(EntityUid uid, MiningCreditComponent component, MindTransferEvent args)
         {
 
-            Logger.Debug("oldentity");
-            Logger.Debug(args.OldEntity.ToString());
-            Logger.Debug("newentity");
-            Logger.Debug(args.NewEntity.ToString());
+            if (!TryComp<MiningCreditComponent>(args.OldEntity, out var oldCreditComp) || args.NewEntity == args.OldEntity)
+                return;
 
             //transfer credit component and all values to that entity
+            var newCreditComp = EntityManager.EnsureComponent<MiningCreditComponent>(args.NewEntity);
+            newCreditComp.RewardInterval = oldCreditComp.RewardInterval;
+            newCreditComp.RewardNum = oldCreditComp.RewardNum;
+            newCreditComp.LastRewardInterval = oldCreditComp.LastRewardInterval;
+            newCreditComp.NumCredits = oldCreditComp.NumCredits;
+            newCreditComp.Transferred = false;
+            newCreditComp.PreviousEntity = args.OldEntity;
 
-            //remove from old entity
-
+            //set old component to be transferred
+            oldCreditComp.Transferred = true;
+            
         }
     }
 }
