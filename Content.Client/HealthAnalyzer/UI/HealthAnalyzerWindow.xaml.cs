@@ -40,6 +40,8 @@ namespace Content.Client.HealthAnalyzer.UI
 
                 text.Append(String.Format("Temperature: {0:F1} °C\n", msg.Temperature - 273f));
 
+                text.Append(String.Format("Blood Level: {0}\n", float.IsNaN(msg.BloodLevel) ? "N/A" : $"{msg.BloodLevel * 100:F1} %"));
+
                 // Status Effects / Components
                 if (entities.HasComponent<DiseasedComponent>(msg.TargetEntity))
                 {

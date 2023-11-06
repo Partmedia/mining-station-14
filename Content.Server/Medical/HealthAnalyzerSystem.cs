@@ -189,12 +189,14 @@ namespace Content.Server.Medical
                 return;
 
             TryComp<TemperatureComponent>(target, out var temp);
+            TryComp<BloodstreamComponent>(target, out var bloodstream);
             TryComp<SurgeryComponent>(target, out var surgery);
 
             var organFunctionConditions = GetOrganFunctions(target.Value);
 
             OpenUserInterface(user, healthAnalyzer);
-            healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, surgery != null ? surgery.Sedated : false));
+            healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, surgery != null ? surgery.Sedated : false,
+                bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN));
         }
 
         private static void OnScanCancelled(ScanCancelledEvent args)

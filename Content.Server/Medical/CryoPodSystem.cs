@@ -177,13 +177,14 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     {
         Dictionary<string, string> organFunctionConditions = new Dictionary<string, string>();
         TryComp<TemperatureComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var temp);
+        TryComp<BloodstreamComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var bloodstream);
         TryComp<SurgeryComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var surgery);
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
             organFunctionConditions = _healthAnalyzerSystem.GetOrganFunctions(cryoPodComponent.BodyContainer.ContainedEntity.Value);
         _userInterfaceSystem.TrySendUiMessage(
             uid,
             SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key,
-            new SharedHealthAnalyzerComponent.HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, surgery != null ? surgery.Sedated : false));
+            new SharedHealthAnalyzerComponent.HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, surgery != null ? surgery.Sedated : false, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)

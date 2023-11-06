@@ -32,6 +32,12 @@ namespace Content.Server.Body.Components
         public float BleedAmount;
 
         /// <summary>
+        ///     Value by which Bleedamount is divided to determine actual blood removed per interval
+        /// </summary>
+        [DataField("bleedMod")]
+        public float BleedMod = 20.0f;
+
+        /// <summary>
         ///     How much should bleeding should be reduced every update interval?
         /// </summary>
         [DataField("bleedReductionAmount")]
