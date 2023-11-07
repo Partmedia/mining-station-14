@@ -51,6 +51,8 @@
 - type: entity
   parent: OreBase
   id: GoldOre
+  name: gold ore
+  description: A piece of unrefined ore, it looks like it can be processed into gold bars.
   noSpawn: true
   suffix: Gold
   components:
@@ -78,6 +80,8 @@
 - type: entity
   parent: OreBase
   id: SteelOre
+  name: iron ore
+  description: A piece of unrefined ore, it looks like it can be processed into steel sheets or grinded into iron.
   noSpawn: true
   suffix: Iron
   components:
@@ -117,6 +121,8 @@
 - type: entity
   parent: OreBase
   id: PlasmaOre
+  name: plasma ore
+  description: A piece of unrefined ore, it looks like it can be processed into plasma sheets or grinded into plasma.
   noSpawn: true
   suffix: Plasma
   components:
@@ -134,6 +140,8 @@
 - type: entity
   parent: OreBase
   id: SilverOre
+  name: silver ore
+  description: A piece of unrefined ore, it looks like it can be processed into silver bars.
   noSpawn: true
   suffix: Silver
   components:
@@ -161,6 +169,8 @@
 - type: entity
   parent: OreBase
   id: SpaceQuartz
+  name: quartz ore
+  description: A piece of unrefined ore, it looks like it can be processed into glass sheets or grinded into silicon.
   noSpawn: true
   suffix: Quartz
   components:
@@ -196,6 +206,8 @@
 - type: entity
   parent: OreBase
   id: UraniumOre
+  name: uranium ore
+  description: A piece of unrefined ore, it looks like it can be processed into uranium sheets and rods or grinded into uranium.
   noSpawn: true
   suffix: Uranium
   components:
@@ -226,6 +238,8 @@
 - type: entity
   parent: OreBase
   id: AluminumOre
+  name: bauxite ore
+  description: A piece of unrefined ore, it looks like it can be grinded into aluminium.
   noSpawn: true
   suffix: Bauxite
   components:
@@ -257,6 +271,8 @@
 - type: entity
   parent: OreBase
   id: Coal
+  name: coal ore
+  description: A piece of unrefined ore, it looks like it can be processed into graphite sheets or grinded into carbon.
   noSpawn: true
   suffix: Coal
   components:
@@ -292,6 +308,8 @@
 - type: entity
   parent: OreBase
   id: CopperOre
+  name: chalcocite ore
+  description: A piece of unrefined ore, it looks like it can be processed into copper sheets or grinded into copper.
   noSpawn: true
   suffix: Chalcocite
   components:
@@ -327,6 +345,8 @@
 - type: entity
   parent: OreBase
   id: CinnabarOre
+  name: cinnabar ore
+  description: A piece of unrefined ore, it looks like it can be grinded into mercury.
   noSpawn: true
   suffix: Cinnabar
   components:
