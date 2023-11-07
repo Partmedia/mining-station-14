@@ -82,6 +82,8 @@
       - Multitool
       - AirlockPainter
       - CableStack
+      - CableMVStack
+      - CableHVStack
       - HandheldGPSBasic
       - TRayScanner
       - GasAnalyzer
@@ -287,6 +289,10 @@
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
+      - ChemicalAnalysisMachineBoard
+      - BioPressMachineBoard
+      - CentrifugeMachineBoard
+      - PillPressMachineBoard
       - CryoPodMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - VaccinatorMachineCircuitboard
