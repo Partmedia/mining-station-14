@@ -639,6 +639,7 @@
     - type: Lathe
       staticRecipes:
         - SheetSteel30
+        - SheetCopper30
         - SheetGlass30
         - SheetRGlass30
         - SheetPlasma30

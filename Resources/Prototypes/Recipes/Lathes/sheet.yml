@@ -113,3 +113,18 @@
   completetime: 2
   materials:
     Carbon: 3000
+
+- type: latheRecipe
+  id: SheetCopper
+  result: SheetCopper1
+  applyMaterialDiscount: false
+  completetime: 2
+  materials:
+    Copper: 100
+    
+- type: latheRecipe
+  id: SheetCopper30
+  result: SheetCopper
+  completetime: 2
+  materials:
+    Copper: 3000

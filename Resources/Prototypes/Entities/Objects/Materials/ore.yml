@@ -297,6 +297,10 @@
   components:
   - type: Sprite
     state: copper
+  - type: Material
+    quality: 0.3
+    materials:
+      Copper: 100
   - type: Extractable
     grindableSolutionName: contents
   - type: SolutionContainerManager
