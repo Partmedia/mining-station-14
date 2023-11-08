@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+  "copyright": "Copyright 2023 Jonas Ljunsgtröm",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+	{
+		"name": "furnace"
+	},
+	{
+		"name": "hatch_closed"
+	},
+	{
+		"name": "hatch_open"
+	},
+	{
+		"name": "panel"
+	},
+	{
+		"name": "lit"
+	}
+    ]
+}

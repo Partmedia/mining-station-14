@@ -39,7 +39,7 @@
     price: 0
   - type: Material
     materials:
-      Steel: 0
+      Slag: 500
 
 - type: entity
   parent: OreBase

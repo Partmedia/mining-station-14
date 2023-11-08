@@ -53,6 +53,7 @@
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: uranium }
   color: "#32a852"
   price: 15
+  meltingTemperature: 1405 # K
 
 - type: material
   id: Graphene

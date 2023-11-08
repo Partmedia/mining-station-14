@@ -101,6 +101,7 @@
     state: ash
   - type: Tag
     tags:
+    - Ore
     - Trash
   - type: SolutionContainerManager
     solutions:
@@ -113,5 +114,8 @@
     sourceSolution: food
     ignoreEmpty: true
   - type: DeleteOnTrigger
+  - type: Material
+    materials:
+      Soda: 100
   - type: Extractable
     grindableSolutionName: food

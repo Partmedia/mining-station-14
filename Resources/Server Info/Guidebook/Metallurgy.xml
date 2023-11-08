@@ -1,0 +1,39 @@
+<Document>
+# Metallurgy
+Raw, unprocessed ore must be processed and refined before it can be used on the station or sold for premium prices.
+
+## Obtaining Ore
+You can obtain ore by mining it from the asteroid. To identify ores, use the ore analyzer.
+
+<Box>
+<GuideEntityEmbed Entity="SteelOre1"/>
+<GuideEntityEmbed Entity="CopperOre1"/>
+<GuideEntityEmbed Entity="GoldOre1"/>
+</Box>
+
+<GuideEntityEmbed Entity="OreAnalyzer"/>
+
+## Using the Furnace
+The furnace is the most primitive way to process ores. It uses electrical power to melt ores, after which they can be tapped and poured into sheets.
+
+<GuideEntityEmbed Entity="Furnace"/>
+
+1. Sort and portion your raw material for producing the product you desire (see Furnace Recipes below). As a general rule, more pure materials are worth more.
+
+2. Open the furnace door and load your raw material.
+
+3. Close the door and turn on the furnace.
+
+4. Using an infrared thermometer, monitor the temperature until the furnace reaches the minimum recipe temperature. Do not allow the furnace temperature to exceed 1500°C, or irreversible damage may occur.
+
+<GuideEntityEmbed Entity="HandheldMedicalThermometer"/>
+
+5. Tap the furnace to produce sheets.
+
+6. Turn off the furnace.
+
+## Furnace Recipes
+
+TBD
+
+</Document>

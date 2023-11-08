@@ -17,6 +17,12 @@
   priority: -7
 
 - type: guideEntry
+  id: Metallurgy
+  name: Metallurgy
+  text: "/Server Info/Guidebook/Metallurgy.xml"
+  priority: -7
+
+- type: guideEntry
   id: MiningSafety
   name: Mining Safety
   text: "/Server Info/Guidebook/MiningSafety.txt"

@@ -49,5 +49,8 @@ namespace Content.Shared.Materials
         /// </summary>
         [DataField("price", required: true)]
         public double Price = 0;
+
+        [DataField("meltingTemperature")]
+        public float MeltingTemperature = 800f; // in K
     }
 }

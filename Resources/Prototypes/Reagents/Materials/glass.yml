@@ -5,6 +5,7 @@
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: glass }
   color: "#a8ccd7"
   price: 0.075
+  meltingTemperature: 1986 # K
 
 - type: material
   id: ReinforcedGlass
