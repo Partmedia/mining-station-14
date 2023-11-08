@@ -166,6 +166,7 @@ public sealed class PricingSystem : EntitySystem
     public double GetMaterialPrice(MaterialComponent component)
     {
         double price = 0;
+        int total = component.Materials.Sum(x => x.Value);
         foreach (var (id, quantity) in component.Materials)
         {
             var prot = _prototypeManager.Index<MaterialPrototype>(id);
@@ -178,7 +179,8 @@ public sealed class PricingSystem : EntitySystem
             if (!RL.nil(ret))
                 mprice = RL.cfloat(ret);
 #endif
-            price += mprice * quantity;
+            float purity = (float)quantity / total;
+            price += mprice * quantity * purity;
         }
         return price*component.Quality;
     }
