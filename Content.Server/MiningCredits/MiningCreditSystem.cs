@@ -30,6 +30,9 @@ namespace Content.Server.MiningCredits
                     || mind.Mind.Session.Status == SessionStatus.Disconnected)
                     continue;
 
+                if (credit.PlayerName is null)
+                    credit.PlayerName = mind.Mind.Session.Data.UserName;
+
                 credit.LastRewardInterval += frameTime;
                 //check timing
                 if (credit.LastRewardInterval >= credit.RewardInterval)
@@ -58,6 +61,7 @@ namespace Content.Server.MiningCredits
             newCreditComp.RewardNum = oldCreditComp.RewardNum;
             newCreditComp.LastRewardInterval = oldCreditComp.LastRewardInterval;
             newCreditComp.NumCredits = oldCreditComp.NumCredits;
+            newCreditComp.PlayerName = newCreditComp.PlayerName;
             newCreditComp.Transferred = false;
             newCreditComp.PreviousEntity = args.OldEntity;
 

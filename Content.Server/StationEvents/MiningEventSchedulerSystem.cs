@@ -235,9 +235,9 @@ namespace Content.Server.StationEvents
                 if (!credit.Transferred
                     && TryComp<MindComponent>(credit.Owner, out var mind)
                     && mind.Mind is not null
-                    && mind.Mind.Session is not null)
+                    && credit.PlayerName is not null)
                 {
-                    var player = mind.Mind.Session.Data.UserName;
+                    var player = credit.PlayerName;
                     var numCreds = credit.NumCredits;
                     playerCreds[player] = numCreds;
 

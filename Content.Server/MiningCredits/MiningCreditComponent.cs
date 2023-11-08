@@ -27,5 +27,8 @@ namespace Content.Server.MiningCredits
         //Entity uid of previous tracked entity
         [ViewVariables]
         public EntityUid? PreviousEntity;
+
+        [ViewVariables]
+        public string? PlayerName;
     }
 }
