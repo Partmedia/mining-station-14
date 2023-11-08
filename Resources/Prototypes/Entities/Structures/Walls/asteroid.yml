@@ -309,6 +309,72 @@
         - state: rock_diamond
 
 - type: entity
+  id: WallRockCopper
+  parent: WallRock
+  description: An ore vein with Copper!
+  suffix: Copper
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCopper
+    - type: Sprite
+      layers:
+        - state: rock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_west
+        - state: rock_copper
+
+- type: entity
+  id: WallRockBauxite
+  parent: WallRock
+  description: An ore vein with Bauxite!
+  suffix: Bauxite
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreAluminum
+    - type: Sprite
+      layers:
+        - state: rock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_west
+        - state: rock_bauxite
+
+- type: entity
+  id: WallRockCinnabar
+  parent: WallRock
+  description: An ore vein with Cinnabar!
+  suffix: Cinnabar
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCinnabar
+    - type: Sprite
+      layers:
+        - state: rock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_west
+        - state: rock_cinnabar
+
+- type: entity
   id: TimedSpace
   name: Mined Space
   parent: MarkerBase
