@@ -60,3 +60,10 @@
   name: materials-graphene
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: graphene }
   price: 0.05 # Match steel price
+
+- type: material
+  id: Slag
+  stackEntity: SheetSlag1
+  name: materials-slag
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: graphene }
+  price: 0.0

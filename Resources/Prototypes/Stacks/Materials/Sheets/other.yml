@@ -32,3 +32,10 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: graphene }
   spawn: SheetGraphene1
   maxCount: 30
+
+- type: stack
+  id: Slag
+  name: slag
+  icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: graphene }
+  spawn: SheetSlag1
+  maxCount: 30
