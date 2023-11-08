@@ -27,6 +27,13 @@ namespace Content.Server.Storage.Components
         [DataField("clickInsert")]
         public bool ClickInsert = true; // Can insert stuff by clicking the storage entity with it
 
+        /// <summary>
+        /// When set to true, items that collide with this entity are automatically inserted, if able.
+        /// This should really only be used with an entity whitelist.
+        /// </summary>
+        [DataField("collideInsert")]
+        public bool CollideInsert = false;
+
         [DataField("areaInsert")]
         public bool AreaInsert = false;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
 

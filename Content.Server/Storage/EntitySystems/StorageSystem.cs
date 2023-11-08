@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -63,6 +64,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
             SubscribeLocalEvent<ServerStorageComponent, InteractUsingEvent>(OnInteractUsing, after: new []{ typeof(ItemSlotsSystem)} );
+            SubscribeLocalEvent<ServerStorageComponent, StartCollideEvent>(OnCollide);
             SubscribeLocalEvent<ServerStorageComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<ServerStorageComponent, OpenStorageImplantEvent>(OnImplantActivate);
             SubscribeLocalEvent<ServerStorageComponent, AfterInteractEvent>(AfterInteract);
@@ -271,6 +273,24 @@ namespace Content.Server.Storage.EntitySystems
 
             if (PlayerInsertHeldEntity(uid, args.User, storageComp))
                 args.Handled = true;
+        }
+
+        private void OnCollide(EntityUid uid, ServerStorageComponent storageComp, ref StartCollideEvent args)
+        {
+            if (!storageComp.CollideInsert)
+                return;
+
+            if (TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+                return;
+
+            var toInsert = args.OtherFixture.Body.Owner;
+            if (storageComp.Storage == null || storageComp.Storage.Contains(toInsert))
+                return;
+
+            if (!CanInsert(uid, toInsert, out var reason, storageComp))
+                return;
+
+            Insert(uid, toInsert, storageComp);
         }
 
         /// <summary>
