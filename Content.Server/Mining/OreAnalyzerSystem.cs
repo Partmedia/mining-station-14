@@ -85,9 +85,6 @@ namespace Content.Server.Mining
             if (target == null || oreAnalyzer.UserInterface == null)
                 return;
 
-            if (!_tagSystem.HasTag(target.Value, oreAnalyzer.TargetTag))
-                return;
-
             OpenUserInterface(user, oreAnalyzer);
             var containerInfo = BuildContainerInfo(target);
             oreAnalyzer.UserInterface?.SendMessage(new OreAnalyzerScannedUserMessage(target,containerInfo));

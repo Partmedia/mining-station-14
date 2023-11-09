@@ -23,7 +23,5 @@ namespace Content.Server.Mining.Components
         /// </summary>
         public CancellationTokenSource? CancelToken;
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(OreAnalyzerUiKey.Key);
-
-        public string TargetTag = "Ore";
     }
 }
