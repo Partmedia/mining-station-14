@@ -1,0 +1,18 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+            MinSize="270 130"
+            SetSize="360 180"
+            Title="Furnace-A-Tron 3000">
+    <BoxContainer Orientation="Vertical" Name="Furnace">
+        <GridContainer Margin="2 0 0 0" Columns="2">
+            <Label Text="Power"/>
+            <Slider Name="TargetPower" Access="Public" MinWidth="200" MinValue="0" MaxValue="1"/>
+            <Label Text="Temp"/>
+            <Label Name="Temp"/>
+            <Label Text="Door"/>
+            <Button Name="DoorButton" Access="Public"/>
+            <Label Text="Spigot"/>
+            <Button Name="SpigotButton" Access="Public" Text="Pour"/>
+        </GridContainer>
+    </BoxContainer>
+</DefaultWindow>

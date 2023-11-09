@@ -1,7 +1,7 @@
 using Robust.Shared.Serialization;
 using Content.Shared.Chemistry;
 
-namespace Content.Shared.Mining
+namespace Content.Shared.Mining.Components
 {
     public abstract class SharedOreAnalyzerComponent : Component
     {

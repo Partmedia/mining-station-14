@@ -4,10 +4,14 @@
   parent: BaseMachinePowered
   description: It produces sheets and ingots using ores.
   components:
+    - type: ActivatableUI
+      key: enum.FurnaceUiKey.Key
     - type: UserInterface
       interfaces:
       - key: enum.StorageUiKey.Key
         type: StorageBoundUserInterface
+      - key: enum.FurnaceUiKey.Key
+        type: FurnaceBoundUserInterface
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
@@ -53,8 +57,7 @@
         layer:
         - FullTileLayer
     - type: ApcPowerReceiver
-      powerLoad: 10000
-      powerDisabled: true # don't let it idle and fry itself
+      powerLoad: 0
       dumpHeat: 0 # handled in FurnaceSystem itself
     - type: Furnace
     - type: Temperature

@@ -2,14 +2,13 @@ using System.Linq;
 using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
-//using Content.Shared.IdentityManagement;
 using Content.Shared.Chemistry;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Content.Server.Mining.Components;
-using static Content.Shared.Mining.SharedOreAnalyzerComponent;
+using static Content.Shared.Mining.Components.SharedOreAnalyzerComponent;
 
 namespace Content.Server.Mining
 {

@@ -63,6 +63,7 @@ namespace Content.Server.Storage.Components
         /// <summary>
         /// This storage has an open UI
         /// </summary>
+        [ViewVariables]
         public bool IsOpen = false;
         public int StorageUsed;
         [DataField("capacity")]

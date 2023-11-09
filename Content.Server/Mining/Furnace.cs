@@ -22,6 +22,10 @@ using Content.Shared.Materials;
 using Content.Shared.Power;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
+using Content.Shared.Chemistry;
+using Content.Shared.Mining.Components;
+using Content.Server.Chemistry.Components;
+using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Mining;
 
@@ -40,6 +44,8 @@ public class FurnaceComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ForcePour = false; // set to true to force pour using VV, for debugging
+
+    public float MaxPower = 10000;
 }
 
 public class FurnaceSystem : EntitySystem
@@ -51,22 +57,37 @@ public class FurnaceSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly StackSystem _stack = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly StorageSystem _storageSystem = default!;
+
+    private float AccumTime;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<FurnaceComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
         SubscribeLocalEvent<FurnaceComponent, GetVerbsEvent<ActivationVerb>>(AddPourVerb);
+        SubscribeLocalEvent<FurnaceComponent, BoundUIOpenedEvent>((uid, comp, _) => UpdateUiState(uid,comp));
+
+        SubscribeLocalEvent<FurnaceComponent, FurnaceStoreToggleButtonMessage>(OnStoreToggleButtonMessage);
+        SubscribeLocalEvent<FurnaceComponent, FurnacePourButtonMessage>((uid, comp, _) => Pour(uid, comp));
+        SubscribeLocalEvent<FurnaceComponent, SetTargetPowerMessage>(OnSetTargetPowerMessage);
     }
 
     public override void Update(float dt)
     {
+        float UpdateRate = 0.5f;
+        AccumTime += dt;
+        if (AccumTime < UpdateRate)
+            return;
+        AccumTime -= UpdateRate;
+
         foreach (var comp in EntityManager.EntityQuery<FurnaceComponent>())
         {
             if (!TryComp<TemperatureComponent>(comp.Owner, out var temp))
                 continue;
 
-            UpdateTemp(comp.Owner, comp, temp, dt);
+            UpdateTemp(comp.Owner, comp, temp, UpdateRate);
             MeltOres(comp.Owner, comp, temp);
             OreReactions(comp.Owner, comp, temp);
 
@@ -82,7 +103,60 @@ public class FurnaceSystem : EntitySystem
                 storage.ClickInsert = storage.IsOpen;
                 storage.CollideInsert = storage.IsOpen;
             }
+
+            UpdateUiState(comp.Owner, comp);
         }
+    }
+
+    private void OnSetTargetPowerMessage(EntityUid uid, FurnaceComponent comp, SetTargetPowerMessage message)
+    {
+        if (TryComp<ApcPowerReceiverComponent>(uid, out var power))
+        {
+            power.Load = comp.MaxPower * message.TargetPower;
+        }
+        UpdateUiState(comp.Owner, comp);
+    }
+
+    private void OnStoreToggleButtonMessage(EntityUid uid, FurnaceComponent comp, FurnaceStoreToggleButtonMessage message)
+    {
+        if (!TryComp<ServerStorageComponent>(uid, out var storage))
+            return;
+
+        var user = message.Session.AttachedEntity;
+        if (user != null)
+        {
+            if (!storage.IsOpen)
+            {
+                _storageSystem.OpenStorageUI(uid, user.Value, storage);
+                RaiseLocalEvent(uid, new BoundUIOpenedEvent(StorageUiKey.Key, uid, message.Session));
+            }
+            else if (TryComp(uid, out ServerUserInterfaceComponent? ui) && TryComp<ActorComponent>(user, out var actor))
+            { 
+                storage.IsOpen = false;
+                _userInterfaceSystem.TryClose(uid, StorageUiKey.Key, actor.PlayerSession, ui);
+                RaiseLocalEvent(uid, new BoundUIClosedEvent(StorageUiKey.Key, uid, message.Session));
+            }
+        }
+
+        UpdateUiState(uid, comp);
+    }
+
+    private void UpdateUiState(EntityUid uid, FurnaceComponent comp)
+    {
+        if (!TryComp<ServerStorageComponent>(uid, out var storage))
+            return;
+
+        if (!TryComp<TemperatureComponent>(uid, out var temp))
+            return;
+
+        if (!TryComp<ApcPowerReceiverComponent>(uid, out var power))
+            return;
+
+        var currentPower = power.Load / comp.MaxPower;
+
+        var state = new FurnaceBoundUserInterfaceState(storage.IsOpen, temp.CurrentTemperature, currentPower);
+
+        _userInterfaceSystem.TrySetUiState(uid, FurnaceUiKey.Key, state);
     }
 
     private void OnAtmosUpdate(EntityUid uid, FurnaceComponent comp, AtmosDeviceUpdateEvent args)
@@ -112,7 +186,7 @@ public class FurnaceSystem : EntitySystem
                 float energy = power.Load * (1 - power.DumpHeat) * dt;
                 temp.CurrentTemperature += energy/temp.SpecificHeat;
             }
-            _appearance.SetData(uid, PowerDeviceVisuals.Powered, power.Powered);
+            _appearance.SetData(uid, PowerDeviceVisuals.Powered, power.Powered && power.Load > 10f);
         }
     }
 

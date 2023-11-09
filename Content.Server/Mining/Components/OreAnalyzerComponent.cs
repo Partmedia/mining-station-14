@@ -1,6 +1,6 @@
 using System.Threading;
 using Content.Server.UserInterface;
-using Content.Shared.Mining;
+using Content.Shared.Mining.Components;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Mining.Components

@@ -11,7 +11,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using System.Text;
-using static Content.Shared.Mining.SharedOreAnalyzerComponent;
+using static Content.Shared.Mining.Components.SharedOreAnalyzerComponent;
 
 namespace Content.Client.OreAnalyzer.UI
 {

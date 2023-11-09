@@ -462,9 +462,14 @@ namespace Content.Server.Storage.EntitySystems
             PlayerInsertHeldEntity(uid, args.Session.AttachedEntity.Value, storageComp);
         }
 
+        private bool ValidateUiKey(EntityUid uid, Enum uiKey)
+        {
+            return uiKey.GetType().ToString() == typeof(StorageUiKey).ToString();
+        }
+
         private void OnBoundUIOpen(EntityUid uid, ServerStorageComponent storageComp, BoundUIOpenedEvent args)
         {
-            if (!storageComp.IsOpen)
+            if (!storageComp.IsOpen && ValidateUiKey(uid, args.UiKey))
             {
                 storageComp.IsOpen = true;
                 UpdateStorageVisualization(uid, storageComp);
@@ -477,7 +482,7 @@ namespace Content.Server.Storage.EntitySystems
                 CloseNestedInterfaces(uid, actor.PlayerSession, storageComp);
 
             // If UI is closed for everyone
-            if (!_uiSystem.IsUiOpen(uid, args.UiKey))
+            if (!_uiSystem.IsUiOpen(uid, args.UiKey) && ValidateUiKey(uid, args.UiKey))
             {
                 storageComp.IsOpen = false;
                 UpdateStorageVisualization(uid, storageComp);
