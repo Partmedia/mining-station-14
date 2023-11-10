@@ -9,6 +9,8 @@ using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Content.Server.Mining.Components;
 using static Content.Shared.Mining.Components.SharedOreAnalyzerComponent;
+using Content.Shared.Materials;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Mining
 {
@@ -17,6 +19,7 @@ namespace Content.Server.Mining
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -76,6 +79,20 @@ namespace Content.Server.Mining
             oreAnalyzer.UserInterface?.Open(actor.PlayerSession);
         }
 
+        private float GetMeltingTemperature(MaterialComponent material)
+        {
+            float max = 0;
+            foreach ((string k, int v) in material.Materials)
+            {
+                if (_prototypeManager.TryIndex<MaterialPrototype>(k, out var mat))
+                {
+                    float myMelt = mat.MeltingTemperature;
+                    max = MathF.Max(myMelt, max);
+                }
+            }
+            return max;
+        }
+
         public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid? target, OreAnalyzerComponent? oreAnalyzer)
         {
             if (!Resolve(uid, ref oreAnalyzer))
@@ -84,9 +101,14 @@ namespace Content.Server.Mining
             if (target == null || oreAnalyzer.UserInterface == null)
                 return;
 
+            if (!TryComp<MaterialComponent>(target, out var materials))
+                return;
+
+            var temp = GetMeltingTemperature(materials);
+
             OpenUserInterface(user, oreAnalyzer);
             var containerInfo = BuildContainerInfo(target);
-            oreAnalyzer.UserInterface?.SendMessage(new OreAnalyzerScannedUserMessage(target,containerInfo));
+            oreAnalyzer.UserInterface?.SendMessage(new OreAnalyzerScannedUserMessage(target,containerInfo,temp));
         }
 
         private ContainerInfo? BuildContainerInfo(EntityUid? container)

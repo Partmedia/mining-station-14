@@ -11,6 +11,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using System.Text;
+using Content.Shared.Temperature;
 using static Content.Shared.Mining.Components.SharedOreAnalyzerComponent;
 
 namespace Content.Client.OreAnalyzer.UI
@@ -30,6 +31,7 @@ namespace Content.Client.OreAnalyzer.UI
         {
             var materialText = new StringBuilder();
             var reagentText = new StringBuilder();
+            var tempText = new StringBuilder();
             var entities = IoCManager.Resolve<IEntityManager>();
 
             var hasMaterials = false;
@@ -47,12 +49,23 @@ namespace Content.Client.OreAnalyzer.UI
 
                         hasMaterials = true;
                         materialText.Append($"\n" + material + " - Quantity: " + quantity);
-                        materialText.AppendLine();
-                        
+                        materialText.AppendLine();                        
                     }
                 }
                 OreMaterials.Text = materialText.ToString();
-                SetSize = (300, 150);
+                
+                SetSize = (300, 225);
+            }
+
+            if (msg.TargetMeltingTemp != null)
+            {
+                tempText.Append(Loc.GetString("ore-analyzer-window-temperature-text"));
+                tempText.AppendLine();
+                tempText.Append(Loc.GetString("ore-analyzer-window-temperature-val-text",
+                                    ("tempK", $"{msg.TargetMeltingTemp.Value:0.#}"),
+                                    ("tempC", $"{TemperatureHelpers.KelvinToCelsius(msg.TargetMeltingTemp.Value):0.#}")));
+                tempText.AppendLine();
+                OreMeltingPoint.Text = tempText.ToString();
             }
 
             if (msg.SolutionContainer != null)
@@ -76,15 +89,16 @@ namespace Content.Client.OreAnalyzer.UI
                     reagentText.AppendLine();
                 }
                 OreReagents.Text = reagentText.ToString();
-                SetSize = (300, 150);
+                SetSize = (300, 225);
             }
 
             if (hasMaterials && hasReagents)
-                SetSize = (300, 225);
+                SetSize = (300, 300);
 
             if (!hasMaterials && !hasReagents)
             {
                 OreMaterials.Text = "No extractable materials detected.";
+                SetSize = (300, 150);
             }
         }
     }

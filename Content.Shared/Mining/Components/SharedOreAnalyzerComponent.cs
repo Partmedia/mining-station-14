@@ -13,11 +13,13 @@ namespace Content.Shared.Mining.Components
         {
             public readonly EntityUid? TargetEntity;
             public readonly ContainerInfo? SolutionContainer;
+            public readonly float? TargetMeltingTemp;
 
-            public OreAnalyzerScannedUserMessage(EntityUid? targetEntity, ContainerInfo? solutionContainer)
+            public OreAnalyzerScannedUserMessage(EntityUid? targetEntity, ContainerInfo? solutionContainer, float? targetMeltingTemp)
             {
                 TargetEntity = targetEntity;
                 SolutionContainer = solutionContainer;
+                TargetMeltingTemp = targetMeltingTemp;
             }
         }
 
