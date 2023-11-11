@@ -39,11 +39,18 @@ public class FurnaceComponent : Component
     [DataField("pourCapacity")]
     public int PourCapacity = 3000;
 
+    [DataField("xfer")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float ThermalCond = 20f; // thermal conductivity between internal heating element and furnace
+
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ForceMelt = false; // set to true to force melt everything without waiting for temperature, for debugging
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ForcePour = false; // set to true to force pour using VV, for debugging
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float InternalTemp; // internal variable for creating 1st order heating response
 
     public float MaxPower = 10000;
 }
@@ -65,6 +72,7 @@ public class FurnaceSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<FurnaceComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<FurnaceComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
         SubscribeLocalEvent<FurnaceComponent, GetVerbsEvent<ActivationVerb>>(AddPourVerb);
         SubscribeLocalEvent<FurnaceComponent, BoundUIOpenedEvent>((uid, comp, _) => UpdateUiState(uid,comp));
@@ -72,6 +80,15 @@ public class FurnaceSystem : EntitySystem
         SubscribeLocalEvent<FurnaceComponent, FurnaceStoreToggleButtonMessage>(OnStoreToggleButtonMessage);
         SubscribeLocalEvent<FurnaceComponent, FurnacePourButtonMessage>((uid, comp, _) => Pour(uid, comp));
         SubscribeLocalEvent<FurnaceComponent, SetTargetPowerMessage>(OnSetTargetPowerMessage);
+    }
+
+    private void OnMapInit(EntityUid uid, FurnaceComponent comp, MapInitEvent args)
+    {
+        // Initialize internal temperature to the TemperatureComponent's temperature
+        if (TryComp<TemperatureComponent>(comp.Owner, out var temp))
+        {
+            comp.InternalTemp = temp.CurrentTemperature;
+        }
     }
 
     public override void Update(float dt)
@@ -179,15 +196,24 @@ public class FurnaceSystem : EntitySystem
 
     private void UpdateTemp(EntityUid uid, FurnaceComponent comp, TemperatureComponent temp, float dt)
     {
+        // Add energy to internal heating element
+        const float Hratio = 10f;
+        float specHeat = temp.SpecificHeat / Hratio; // heating element specific heat
         if (TryComp<ApcPowerReceiverComponent>(uid, out var power))
         {
             if (power.Powered)
             {
                 float energy = power.Load * (1 - power.DumpHeat) * dt;
-                temp.CurrentTemperature += energy/temp.SpecificHeat;
+                comp.InternalTemp += energy/specHeat;
             }
             _appearance.SetData(uid, PowerDeviceVisuals.Powered, power.Powered && power.Load > 10f);
         }
+
+        // Transfer energy to temperature component
+        float dT = comp.InternalTemp - temp.CurrentTemperature;
+        float dE = dT * comp.ThermalCond * dt;
+        comp.InternalTemp -= dE/specHeat;
+        temp.CurrentTemperature += dE/temp.SpecificHeat;
     }
 
     private void MeltOres(EntityUid uid, FurnaceComponent comp, TemperatureComponent temp)
