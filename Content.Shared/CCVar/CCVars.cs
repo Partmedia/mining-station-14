@@ -625,6 +625,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> AutoAdmin =
             CVarDef.Create("admin.auto", 1, CVar.SERVERONLY);
 
+        public static readonly CVarDef<float> AutoWarnThresh =
+            CVarDef.Create("admin.auto_warn_thresh", 75f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> AutoKickThresh =
+            CVarDef.Create("admin.auto_kick_thresh", 150f, CVar.SERVERONLY);
+
         /*
          * Explosions
          */

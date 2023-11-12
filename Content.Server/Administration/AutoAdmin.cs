@@ -69,13 +69,13 @@ public sealed class AutoAdmin : EntitySystem, IAutoAdmin
     private void AdminAction(IPlayerSession session, float n)
     {
         var _bwoinkSystem = _entitySystemManager.GetEntitySystem<BwoinkSystem>();
-        if (n >= 70f && _cfg.GetCVar(CCVars.AutoAdmin) >= 2)
+        if (n >= _cfg.GetCVar(CCVars.AutoKickThresh) && _cfg.GetCVar(CCVars.AutoAdmin) >= 2)
         {
             // kick
-            _netManager.DisconnectChannel(session.ConnectedClient, "Kicked by admin");
-            _bwoinkSystem.Bwoink(session.UserId, "You were kicked by an admin.");
+            _netManager.DisconnectChannel(session.ConnectedClient, Loc.GetString("autoadmin-kick"));
+            _bwoinkSystem.Bwoink(session.UserId, Loc.GetString("autoadmin-kick"));
         }
-        else if (n >= 50f)
+        else if (n >= _cfg.GetCVar(CCVars.AutoWarnThresh))
         {
             // warn
             _bwoinkSystem.Bwoink(session.UserId, Loc.GetString("autoadmin-no-rdm"));
