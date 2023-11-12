@@ -33,23 +33,3 @@
   name: Surgery
   text: "/Server Info/Guidebook/Surgery.xml"
   priority: -7
-
-- type: guideEntry
-  id: Checklists
-  name: Checklists
-  text: "/Server Info/Guidebook/Checklists.txt"
-  priority: -6
-  children:
-  - ChecklistNormal
-  - ChecklistEmergency
-
-- type: guideEntry
-  id: ChecklistNormal
-  name: Normal Checklist
-  text: "/Server Info/Guidebook/ChecklistNormal.txt"
-
-- type: guideEntry
-  id: ChecklistEmergency
-  name: Emergency Checklist
-  text: "/Server Info/Guidebook/ChecklistEmergency.txt"
-  priority: 1
