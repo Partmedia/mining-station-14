@@ -60,28 +60,33 @@ public sealed class LungSystem : EntitySystem
     {
         //narcotics and toxins deal damage to the lungs
         //the damage taken is used modify the suffocation threshold UNLESS said lungs are immune
-        //determine reagent type - is it in the damage list?
         if (!_prototypeManager.TryIndex<ReagentPrototype>(reagentId, out var proto) || proto.Metabolisms == null)
             return;
 
-        var toxic = false;
-        //if it is, multiply amount by coeff and add value to Lung Damage value
+        // small amounts do no damage
+        if (amount < 0.1f)
+            return;
+
+        float damageMod = 0f;
+        //determine reagent type - is it in the damage list?
         foreach (var group in lung.DamageGroups)
         {
             if (proto.Metabolisms.ContainsKey(group))
             {
-                toxic = true;
-                break;
+                // this is toxic
+                var effects = proto.Metabolisms[group];
+                foreach (var effect in effects)
+                {
+                    if (effect.GetType() == typeof(HealthChange))
+                    {
+                        var healthChange = (HealthChange)effect;
+                        damageMod += healthChange.Damage.Total;
+                    }
+                }
             }
         }
 
-        if (toxic)
-        {
-            if (amount < 0.1f)
-                amount = 0f;
-            //track damage
-            lung.Damage += amount * lung.DamageMod;
-        }
+        lung.Damage += amount * damageMod * lung.DamageMod;
     }
 
     public void GasToReagent(EntityUid uid, LungComponent lung)
