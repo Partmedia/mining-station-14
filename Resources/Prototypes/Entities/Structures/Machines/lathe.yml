@@ -637,6 +637,7 @@
         tags:
           - Ore
     - type: Lathe
+      ignoreMaterialWhitelist: true
       staticRecipes:
         - SheetSteel30
         - SheetCopper30

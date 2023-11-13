@@ -67,6 +67,11 @@ namespace Content.Server.Lathe
         {
             if (args.Storage != uid)
                 return;
+            if (component.IgnoreMaterialWhiteList)
+            {
+                args.Whitelist = null;
+                return;
+            }
             var materialWhitelist = new List<string>();
             var recipes =  GetAllBaseRecipes(component);
             foreach (var id in recipes)

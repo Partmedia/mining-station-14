@@ -87,6 +87,12 @@ namespace Content.Shared.Lathe
 
         public const float DefaultPartRatingMaterialUseMultiplier = 0.75f;
         #endregion
+
+        /// <summary>
+        /// Ignore the material whitelist. Used for ore processors to accept all ores, regardless of materials.
+        /// </summary>
+        [DataField("ignoreMaterialWhitelist")]
+        public bool IgnoreMaterialWhiteList;
     }
 
     public sealed class LatheGetRecipesEvent : EntityEventArgs
