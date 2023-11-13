@@ -30,3 +30,7 @@ surgery-blocked = That part of the patient is covered.
 surgery-warn-necrosis = You feel a tingling pain followed by numbness.
 surgery-warn-organ-incompatible = You feel a sharp pain from within.
 surgery-warn-species-incompatible = You feel feverish.
+
+organ-healthy = It is healthy.
+organ-warning = It is damaged.
+organ-critical = It is critically damaged.

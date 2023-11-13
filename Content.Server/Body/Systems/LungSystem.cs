@@ -7,6 +7,7 @@ using Content.Shared.Inventory.Events;
 using Robust.Shared.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Server.Popups;
+using Content.Shared.Examine;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Body.Organ;
 
@@ -28,6 +29,7 @@ public sealed class LungSystem : EntitySystem
         SubscribeLocalEvent<LungComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BreathToolComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<BreathToolComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<LungComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<LungComponent, RejuvenateEvent>(OnRejuvenate);
     }
 
@@ -125,6 +127,22 @@ public sealed class LungSystem : EntitySystem
         else
         {
             lung.Condition = OrganCondition.Good;
+        }
+    }
+
+    private void OnExamine(EntityUid uid, LungComponent comp, ExaminedEvent args)
+    {
+        switch (comp.Condition)
+        {
+            case OrganCondition.Good:
+                args.PushText(Loc.GetString("organ-healthy"));
+                break;
+            case OrganCondition.Warning:
+                args.PushText(Loc.GetString("organ-warning"));
+                break;
+            case OrganCondition.Critical:
+                args.PushText(Loc.GetString("organ-critical"));
+                break;
         }
     }
 
