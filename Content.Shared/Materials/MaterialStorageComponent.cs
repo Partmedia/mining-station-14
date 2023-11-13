@@ -88,7 +88,7 @@ public record struct GetMaterialWhitelistEvent(EntityUid Storage)
 {
     public readonly EntityUid Storage = Storage;
 
-    public List<string> Whitelist = new();
+    public List<string>? Whitelist;
 }
 
 [Serializable, NetSerializable]

@@ -87,8 +87,7 @@ namespace Content.Server.Lathe
                 }
             }
 
-            var combined = args.Whitelist.Union(materialWhitelist).ToList();
-            args.Whitelist = combined;
+            args.Whitelist = materialWhitelist;
         }
 
         [PublicAPI]
