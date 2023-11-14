@@ -61,7 +61,7 @@ namespace Content.Server.MiningCredits
             newCreditComp.RewardNum = oldCreditComp.RewardNum;
             newCreditComp.LastRewardInterval = oldCreditComp.LastRewardInterval;
             newCreditComp.NumCredits = oldCreditComp.NumCredits;
-            newCreditComp.PlayerName = newCreditComp.PlayerName;
+            newCreditComp.PlayerName = oldCreditComp.PlayerName;
             newCreditComp.Transferred = false;
             newCreditComp.PreviousEntity = args.OldEntity;
 

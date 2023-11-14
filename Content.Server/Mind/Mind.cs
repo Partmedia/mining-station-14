@@ -374,7 +374,7 @@ namespace Content.Server.Mind
             }
 
             // Player is CURRENTLY connected.
-            if (Session != null && !alreadyAttached && (VisitingEntity == null))
+            if (Session != null && ((!alreadyAttached && (VisitingEntity == null)) || VisitingEntity != null))
             {
                 Session.AttachToEntity(entity);
                 if (entity != null && oldEntity != null)
