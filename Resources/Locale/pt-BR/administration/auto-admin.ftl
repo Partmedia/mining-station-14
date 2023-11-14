@@ -1,0 +1,1 @@
+autoadmin-no-rdm = Você não é um antagonista. Atacar membros da tripulação não é permitido.
