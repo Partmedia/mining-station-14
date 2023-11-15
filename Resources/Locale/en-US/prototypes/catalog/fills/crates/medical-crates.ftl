@@ -6,7 +6,7 @@ ent-CrateMedicalSupplies = Medical supplies crate
 ent-CrateChemistrySupplies = Chemistry supplies crate
     .desc = Basic chemistry supplies.
 
-ent-CrateMedicalSurgery = Surgical supplies crate
+ent-CrateMedicalSurgery = surgical supplies crate
     .desc = Surgical instruments.
 
 ent-CrateMedicalScrubs = Medical scrubs crate

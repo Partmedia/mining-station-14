@@ -131,6 +131,7 @@
   parent: CrateBaseWeldable
   id: CrateSurgery
   name: surgery crate
+  suffix: Empty
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/surgery.rsi

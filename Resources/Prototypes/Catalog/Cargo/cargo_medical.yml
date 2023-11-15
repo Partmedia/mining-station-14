@@ -14,7 +14,6 @@
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     state: scalpel
   product: CrateMedicalSurgery
-  cost: 750
   category: Medical
   group: market
 
