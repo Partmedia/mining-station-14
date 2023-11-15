@@ -232,18 +232,19 @@ namespace Content.Server.StationEvents
 
             foreach (var credit in EntityManager.EntityQuery<MiningCreditComponent>())
             {
-                if (!credit.Transferred
-                    && TryComp<MindComponent>(credit.Owner, out var mind)
-                    && mind.Mind is not null
-                    && credit.PlayerName is not null)
+                if (credit.PlayerName is not null)
                 {
                     var player = credit.PlayerName;
                     var numCreds = credit.NumCredits;
-                    playerCreds[player] = numCreds;
 
-                    totalCreds += numCreds;
+                    //if the creds have not yet been record OR there is an entity with more cred, set the player creds
+                    if ((playerCreds.ContainsKey(player) && numCreds > playerCreds[player]) || !playerCreds.ContainsKey(player))
+                        playerCreds[player] = numCreds;
                 }
             }
+
+            foreach (KeyValuePair<string, int> entry in playerCreds)
+                totalCreds += entry.Value;
 
             var profitUnit = totalCreds != 0f ? profit / totalCreds : 0;
             var profitString = "";
