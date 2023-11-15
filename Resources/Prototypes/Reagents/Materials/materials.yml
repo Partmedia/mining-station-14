@@ -68,3 +68,9 @@
   name: materials-slag
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: graphene }
   price: 0.0
+
+- type: material
+  id: Soda
+  name: materials-soda
+  icon: { sprite: Objects/Materials/materials.rsi, state: ash }
+  price: 0.0
