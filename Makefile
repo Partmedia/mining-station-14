@@ -5,14 +5,8 @@ DOTNET_BUILD=dotnet build ${DOTNET_FLAGS}
 
 fast: build fastserver fastclient
 
-build: libRL
+build:
 	${DOTNET_BUILD}
-
-libRL:
-	cd Content.Server/RL/libRL && make
-
-RL:
-	cd Resources/Mining/RL && make
 
 client:
 	cd ./bin/Content.Client && ../../linklibs && ./Content.Client
@@ -27,7 +21,6 @@ fastserver:
 	cd ./bin/Content.Server && ./Content.Server --config-file ../../fast_config.toml &
 
 lint:
-	rm -f Content.Server/RL/libRL/libRL.so
 	${DOTNET_BUILD} Content.YAMLLinter
 	cd bin/Content.YAMLLinter && ../../linklibs && ./Content.YAMLLinter
 
@@ -36,7 +29,7 @@ test:
 	cd bin/Content.Tests && ../../linklibs
 	dotnet test ${DOTNET_FLAGS}
 
-package: libRL RL
+package:
 	python3 Tools/package_server_build.py --hybrid-acz ${PACKAGE_BUILD_ARGS}
 
 deploy: package

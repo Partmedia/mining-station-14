@@ -71,8 +71,10 @@ SERVER_CONTENT_ASSEMBLIES = [
 
 # Extra assemblies to copy on the server, with a startswith
 SERVER_EXTRA_ASSEMBLIES = [
-    "Npgsql.",
+    "Google",
+    "Grpc",
     "Microsoft",
+    "Npgsql.",
 ]
 
 SERVER_NOT_EXTRA_ASSEMBLIES = [
@@ -282,8 +284,6 @@ def copy_content_assemblies(target, zipf):
         pdb_path = asm + ".pdb"
         if os.path.exists(p(source_dir, pdb_path)):
             files.append(pdb_path)
-
-    files.append("libRL.so")
 
     # Write assemblies dir if necessary.
     if not zip_entry_exists(zipf, target):

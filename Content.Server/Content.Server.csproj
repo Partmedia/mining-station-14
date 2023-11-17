@@ -16,6 +16,12 @@
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.25.1" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.59.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.59.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
@@ -29,14 +35,7 @@
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 
-  <PropertyGroup Condition="'$(RL)' == 'True'">
-    <DefineConstants>$(DefineConstants);RL</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(RL)' == 'True'">
-    <Content Include="RL/libRL/libRL.so">
-      <Link>libRL.so</Link>
-      <IsAssembly>True</IsAssembly>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+  <ItemGroup>
+    <Protobuf Include="RL/RL.proto" GrpcServices="Client" />
   </ItemGroup>
 </Project>
