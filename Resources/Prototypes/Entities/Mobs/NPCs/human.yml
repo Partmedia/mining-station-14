@@ -35,8 +35,6 @@
   - type: GhostTakeoverAvailable
     name: Pirate
     description: Demand treasure or take it from the station by force, yarr!
-  - type: RLAccent
-    accent: "pirate"
 
 - type: entity
   parent: BaseMobHuman

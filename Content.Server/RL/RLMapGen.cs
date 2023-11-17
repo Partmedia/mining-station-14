@@ -1,7 +1,10 @@
 using Content.Server.Spawners.EntitySystems;
+using Content.Server.Warps;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+
+using Content.Server.RL;
 
 public sealed class RLMapGen : EntitySystem
 {
@@ -9,6 +12,7 @@ public sealed class RLMapGen : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileManager = default!;
     [Dependency] private readonly RLSystem _rl = default!;
+    [Dependency] private readonly WarperSystem _dungeon = default!;
 
     public override void Initialize()
     {
@@ -49,60 +53,41 @@ public sealed class RLMapGen : EntitySystem
             }
         }
 
-#if RL
         // Send to RL, read back spawn list
-        if (_rl.Available())
-        {
-            int width = maxX - minX + 1;
-            int height = maxY - minY + 1;
+        if (_rl.Available() && miningTiles.Count > 0) {
+            Logger.InfoS("RLMapGen", "Attempting to generate map...");
+            var request = new MapGenRequest();
 
-            // Array setup
-            var arg = RL.eval_str($"(make-map {width} {height})");
-            if (RL.nil(arg))
-            {
-                Logger.ErrorS("RLMapGen", "Failed to generate map: MAKE-MAP returned NIL");
-                return;
-            }
-
-            // Populate array
+            uint width = (uint)(maxX - minX + 1);
+            uint height = (uint)(maxY - minY + 1);
+            request.Width = width;
+            request.Height = height;
+            request.DungeonLevel = (int)_dungeon.dungeonLevel;
             foreach ((var v, var val) in miningTiles)
             {
                 int tx = v.X - minX;
                 int ty = v.Y - minY;
-                RL.si_aset(4, arg, RL.num(tx), RL.num(ty), RL.num(val));
+                var req = new TileRequest();
+                req.Request = (uint)val;
+                req.X = (uint)tx;
+                req.Y = (uint)ty;
+                request.MapData.Add(req);
             }
 
             // Run mapgen
-            var fn = RL.readstr("mapgen");
-            var form = RL.list2(fn, arg);
-            var ret = RL.eval(form);
-            if (!RL.ensure_list(ret, 3))
+            try
             {
-                Logger.ErrorS("RLMapGen", "Failed to generate map: MAPGEN did not return a list");
-                return;
-            }
+                var reply = _rl.Client().MapGen(request, deadline: _rl.Deadline());
 
-            // Read back results
-            var entities = RL.ecl_car(ret);
-            int nent = 0;
-            while (!RL.nil(entities))
-            {
-                var el = RL.ecl_car(entities);
-                if (!RL.ensure_list(el, 3))
+                int nent = 0;
+                foreach (var ent in reply.Entities)
                 {
-                    Logger.ErrorS("RLMapGen", "RL returned a malformed entity list");
-                }
-                else
-                {
-                    var e = RL.cstr(RL.ecl_car(el));
-                    var x = RL.cint(RL.ecl_cadr(el));
-                    var y = RL.cint(RL.ecl_caddr(el));
-                    int tx = x + minX;
-                    int ty = y + minY;
+                    int tx = (int)ent.X + minX;
+                    int ty = (int)ent.Y + minY;
                     var coord = map.GridTileToLocal(new Vector2i(tx, ty));
                     try
                     {
-                        _entMan.SpawnEntity(e, coord);
+                        _entMan.SpawnEntity(ent.Entity, coord);
                         nent++;
                     }
                     catch (Exception ex)
@@ -110,25 +95,15 @@ public sealed class RLMapGen : EntitySystem
                         Logger.ErrorS("RLMapGen", "Error spawning prototype: " + ex.ToString());
                     }
                 }
-                entities = RL.ecl_cdr(entities);
-            }
 
-            var tiles = RL.ecl_cadr(ret);
-            int ntiles = 0;
-            while (!RL.nil(tiles))
-            {
-                var el = RL.ecl_car(tiles);
-                if (!RL.ensure_list(el, 3))
+                int ntiles = 0;
+                foreach (var t in reply.Tiles)
                 {
-                    Logger.ErrorS("RLMapGen", "RL returned a malformed tile list");
-                }
-                else
-                {
-                    var name = RL.cstr(RL.ecl_car(el));
-                    var x = RL.cint(RL.ecl_cadr(el));
-                    var y = RL.cint(RL.ecl_caddr(el));
-                    int tx = x + minX;
-                    int ty = y + minY;
+                    var name = t.Tile;
+                    var x = t.X;
+                    var y = t.Y;
+                    int tx = (int)x + minX;
+                    int ty = (int)y + minY;
                     var coord = new Vector2i(tx, ty);
                     try
                     {
@@ -141,16 +116,15 @@ public sealed class RLMapGen : EntitySystem
                         Logger.ErrorS("RLMapGen", "No tile with this name exists: " + name);
                     }
                 }
-                tiles = RL.ecl_cdr(tiles);
-            }
 
-            int ndecor = 0;
+                int ndecor = 0;
+
+                Logger.InfoS("RLMapGen", $"Generated {nent} entities, {ntiles} tiles, {ndecor} decor");
+            }
+            catch (Exception e)
             {
-            var decor = RL.ecl_caddr(ret);
+                Logger.ErrorS("RLMapGen", "Could not make gRPC call:" + e);
             }
-
-            Logger.InfoS("RLMapGen", $"Generated {nent} entities, {ntiles} tiles, {ndecor} decor");
         }
-#endif
     }
 }
