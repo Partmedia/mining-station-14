@@ -1,4 +1,4 @@
-﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Map;
@@ -38,7 +38,7 @@ public sealed class ShuffleArtifactSystem : EntitySystem
 
         foreach (var xform in toShuffle)
         {
-            _xform.SetCoordinates(xform, _random.PickAndTake(allCoords));
+            _xform.SetCoordinates(uid, _random.PickAndTake(allCoords));
         }
     }
 }

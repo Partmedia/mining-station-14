@@ -107,7 +107,9 @@ namespace Content.Client.Suspicion
         public void AddUI()
         {
             // TODO move this out of the component
-            _gui = _ui.ActiveScreen?.GetOrNewWidget<SuspicionGui>();
+            if (_ui.ActiveScreen is not null)
+                _ui.ActiveScreen.GetOrAddWidget<SuspicionGui>();
+
             _gui!.UpdateLabel();
             SetAnchorAndMarginPreset(_gui, LayoutPreset.BottomLeft);
 

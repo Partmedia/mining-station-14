@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration.Logs;
@@ -73,7 +73,7 @@ public sealed partial class AdminLogsControl : Control
         UpdateResetButton();
     }
 
-    private void RoundSpinBoxChanged(object? sender, ValueChangedEventArgs args)
+    private void RoundSpinBoxChanged(ValueChangedEventArgs args)
     {
         UpdateResetButton();
     }

@@ -153,7 +153,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         }
     }
 
-    private void ZIndexSpinboxChanged(object? sender, ValueChangedEventArgs e)
+    private void ZIndexSpinboxChanged(ValueChangedEventArgs e)
     {
         _zIndex = e.Value;
         UpdateDecalPlacementInfo();

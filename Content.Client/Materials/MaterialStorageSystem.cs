@@ -1,4 +1,4 @@
-﻿using Content.Shared.Materials;
+using Content.Shared.Materials;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Materials;
@@ -44,7 +44,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     {
         if (!base.TryInsertMaterialEntity(user, toInsert, receiver, component))
             return false;
-        _transform.DetachParentToNull(Transform(toInsert));
+        _transform.DetachParentToNull(toInsert,Transform(toInsert));
         return true;
     }
 }
