@@ -1,5 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.GameTicking;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Robust.Server.GameObjects;
@@ -16,6 +17,7 @@ namespace Content.Server.MiningCredits
 
             SubscribeLocalEvent<MiningCreditComponent, MindTransferEvent>(OnMindTransferEvent);
             SubscribeLocalEvent<MiningCreditComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnCleanup);
         }
 
         //if an entity is deleted, take the reward num and session player name and store it here until it comes back
@@ -104,6 +106,11 @@ namespace Content.Server.MiningCredits
         {
             if (component.PlayerName is not null)
                 LostCredits[component.PlayerName] = component.NumCredits;
+        }
+
+        private void OnCleanup(RoundRestartCleanupEvent ev)
+        {
+            LostCredits.Clear();
         }
     }
 }
