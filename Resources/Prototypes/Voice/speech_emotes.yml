@@ -66,6 +66,28 @@
 
 # Fox emotes
 - type: emote
+  id: FoxScreams
+  category: Vocal
+  chatMessages: [screams, yells]
+  chatTriggers:
+    - scream
+    - screams
+    - screaming
+    - screamed
+    - shriek
+    - shrieks
+    - shrieking
+    - shrieked
+    - screech
+    - screechs
+    - screeching
+    - screeched
+    - yell
+    - yells
+    - yelled
+    - yelling
+
+- type: emote
   id: Howl
   category: Vocal
   chatMessages: [howls.]

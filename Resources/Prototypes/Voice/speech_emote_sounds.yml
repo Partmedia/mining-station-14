@@ -82,7 +82,7 @@
     variation: 0.125
   sounds:
     Scream:
-      collection: MaleScreams
+      collection: FoxScreams
     Laugh:
       collection: MaleLaugh
     Growl:
@@ -98,7 +98,7 @@
     variation: 0.125
   sounds:
     Scream:
-      collection: FemaleScreams
+      collection: FoxScreams
     Laugh:
       collection: FemaleLaugh
     Growl:

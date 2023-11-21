@@ -87,3 +87,12 @@
     path: /Audio/Voice/Talk/slime_ask.ogg
   exclaimSound:
     path: /Audio/Voice/Talk/slime_exclaim.ogg
+
+- type: speechSounds
+  id: Fox
+  saySound:
+    path: /Audio/Voice/Talk/vulp.ogg
+  askSound:
+    path: /Audio/Voice/Talk/vulp_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/vulp_exclaim.ogg
