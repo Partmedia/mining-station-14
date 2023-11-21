@@ -8,6 +8,7 @@ using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.Maps;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -17,11 +18,13 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Physics.Controllers
 {
     public sealed class ConveyorController : VirtualController
     {
+        [Dependency] protected readonly IGameTiming Timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
@@ -298,6 +301,13 @@ namespace Content.Server.Physics.Controllers
                     _gravity.IsWeightless(entity, physics, entityXform))
                 {
                     continue;
+                }
+
+                // If thing can move and has recently moved, don't apply conveyor
+                if (TryComp<InputMoverComponent>(entity, out var mover))
+                {
+                    if (Timing.CurTick < mover.LastInputTick + 2)
+                        continue;
                 }
 
                 // Yes there's still going to be the occasional rounding issue where it stops getting conveyed
