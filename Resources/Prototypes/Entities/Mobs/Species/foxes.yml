@@ -60,6 +60,13 @@
     prototype: HumanoidFox
     species: fox
     requiredLegs: 2
+  - type: Speech
+    speechSounds: Fox
+  - type: Vocal
+    sounds:
+      Male: MaleFox
+      Female: FemaleFox
+      Unsexed: FemaleFox # no universal form
   - type: Temperature
     heatDamageThreshold: 317
     coldDamageThreshold: 307
