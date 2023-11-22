@@ -42,6 +42,7 @@
         amount: 2
       - id: BoxBottle
         amount: 2
+      - id: HandLabeler
 
 - type: entity
   id: CrateMedicalSurgery
