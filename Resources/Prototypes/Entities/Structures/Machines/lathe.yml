@@ -613,7 +613,7 @@
   parent: Autolathe
   id: OreProcessor
   name: ore processor
-  description: It produces sheets and ingots using ores.
+  description: A fully-automatic ore processing machine.
   components:
     - type: Sprite
       sprite: Structures/Machines/ore_processor.rsi
@@ -651,3 +651,5 @@
         - IngotSilver1
         - SheetShieldedUranium1
         - SheetGraphene30
+    - type: ApcPowerReceiver
+      powerLoad: 12000

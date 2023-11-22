@@ -1,8 +1,8 @@
 - type: entity
   id: Furnace
-  name: furnace
+  name: metallurgical furnace
   parent: BaseMachinePowered
-  description: It produces sheets and ingots using ores.
+  description: A manual furnace for melting ores into sheets and ingots.
   components:
     - type: ActivatableUI
       key: enum.FurnaceUiKey.Key

@@ -298,7 +298,7 @@ namespace Content.Shared.CCVar
 #endif
 
         public static readonly CVarDef<int> InitialBalance =
-            CVarDef.Create("game.initial_balance", 2000, CVar.SERVERONLY);
+            CVarDef.Create("game.initial_balance", 10000, CVar.SERVERONLY);
 
         /*
          * Discord
