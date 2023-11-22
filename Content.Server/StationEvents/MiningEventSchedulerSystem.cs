@@ -164,7 +164,7 @@ namespace Content.Server.StationEvents
         /// </summary>
         public string RunMiningEvent()
         {
-            List<string> events = new List<string>{"MeteorSwarm","RadiationStorm","Quake"};
+            List<string> events = new List<string>{"MeteorSwarm","Quake"};
             string randomEvent = _random.Pick(events);
             if (!_prototype.TryIndex<GameRulePrototype>(randomEvent, out var proto))
             {
