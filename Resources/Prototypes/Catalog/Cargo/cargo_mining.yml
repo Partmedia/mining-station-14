@@ -39,27 +39,7 @@
     state: icon
   product: Electromagnet
   cost: 2995
-  category: Ore Processing
-  group: market
-
-- type: cargoProduct
-  id: OreProcessorC
-  icon:
-    sprite: Structures/Machines/ore_processor.rsi
-    state: icon
-  product: OreProcessor
-  cost: 14950
-  category: Ore Processing
-  group: market
-
-- type: cargoProduct
-  id: FurnaceC
-  icon:
-    sprite: Structures/Machines/furnace.rsi
-    state: furnace
-  product: Furnace
-  cost: 1950
-  category: Ore Processing
+  category: Mining
   group: market
 
 - type: cargoProduct
@@ -70,8 +50,8 @@
     sprite: Structures/Machines/ore_processor.rsi
     state: icon
   product: BlastFurnace
-  cost: 3995
-  category: Ore Processing
+  cost: 5995
+  category: Mining
   group: market
 
 - type: cargoProduct
@@ -458,7 +438,7 @@
     state: analyzer
   product: OreAnalyzer
   cost: 1200
-  category: Ore Processing
+  category: Mining
   group: market
 
 - type: cargoProduct
@@ -489,7 +469,7 @@
     state: icon
   product: ChemJugH
   cost: 750
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -500,7 +480,7 @@
     state: icon
   product: ChemJugO
   cost: 500
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -511,7 +491,7 @@
     state: icon
   product: ChemJugK
   cost: 600
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -522,7 +502,7 @@
     state: icon
   product: ChemJugS
   cost: 700
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -533,7 +513,7 @@
     state: icon
   product: ChemJugC
   cost: 750
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -544,7 +524,7 @@
     state: icon
   product: ChemJugP
   cost: 600
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -555,7 +535,7 @@
     state: icon
   product: ChemJugN
   cost: 500
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -566,7 +546,7 @@
     state: icon
   product: ChemJugSi
   cost: 600
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -577,7 +557,7 @@
     state: icon
   product: ChemJugRa
   cost: 700
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -588,7 +568,7 @@
     state: icon
   product: ChemJugCl
   cost: 700
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -599,7 +579,7 @@
     state: icon
   product: ChemJugCu
   cost: 400
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -610,7 +590,7 @@
     state: icon
   product: ChemJugEthanol
   cost: 800
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -621,7 +601,7 @@
     state: icon
   product: ChemJugI
   cost: 700
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -632,7 +612,7 @@
     state: icon
   product: ChemJugLi
   cost: 800
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
@@ -643,7 +623,7 @@
     state: icon
   product: ChemJugNa
   cost: 500
-  category: Chemicals
+  category: Medical
   group: market
 
 - type: cargoProduct
