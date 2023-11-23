@@ -28,6 +28,7 @@
           - Defibrillator
       doorSound:
         path: /Audio/Machines/machine_switch.ogg
+    - type: ItemCabinetVisuals
       openState: open
       closedState: closed
     - type: Appearance
