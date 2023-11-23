@@ -6,7 +6,7 @@ game-ticker-unknown-role = Desconhecido
 game-ticker-delay-start = O inicio da partida foi atrasado para {$seconds} segundos.
 game-ticker-pause-start = A inicialização de partida foi pausada.
 game-ticker-pause-start-resumed = A contagem para iniciar a partida voltou.
-game-ticker-player-join-game-message = Boas vindas à estação espacial 14! Se essa é sua primeira vez jogando, se certifique de ler as regras do jogo, e não tenha vergonha de pedir ajuda no chat OOC.
+game-ticker-player-join-game-message = Boas vindas à Estação Mineira! Se essa é sua primeira vez jogando, se certifique de ler as regras do jogo, o guia do jogo está disponível ainda em inglês na tecla Num 0, e não tenha vergonha de pedir ajuda no chat OOC ou no ahelp (F1).
 game-ticker-get-info-text = Olá e bem-vindo a [color=white]Estação Mineira![/color]
                             A rodada atual é: [color=white]#{$roundId}[/color]
                             A quantidade de jogadores conectados é: [color=white]{$playerCount}[/color]
