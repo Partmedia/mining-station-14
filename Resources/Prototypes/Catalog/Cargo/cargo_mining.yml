@@ -48,7 +48,7 @@
     sprite: Structures/Machines/ore_processor.rsi
     state: icon
   product: OreProcessor
-  cost: 9500
+  cost: 14950
   category: Ore Processing
   group: market
 
