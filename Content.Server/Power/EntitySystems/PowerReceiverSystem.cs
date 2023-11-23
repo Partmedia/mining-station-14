@@ -61,10 +61,15 @@ namespace Content.Server.Power.EntitySystems
         ///</summary>
         private void OnExamined(EntityUid uid, ApcPowerReceiverComponent component, ExaminedEvent args)
         {
+            string state;
+            if (component.Powered)
+                state = "power-receiver-component-on-examine-powered";
+            else if (component.PowerDisabled)
+                state = "power-receiver-component-on-examine-off";
+            else
+                state = "power-receiver-component-on-examine-unpowered";
             args.PushMarkup(Loc.GetString("power-receiver-component-on-examine-main",
-                                            ("stateText", Loc.GetString( component.Powered
-                                                ? "power-receiver-component-on-examine-powered"
-                                                : "power-receiver-component-on-examine-unpowered"))));
+                                            ("stateText", Loc.GetString(state))));
         }
 
         private void OnProviderShutdown(EntityUid uid, ApcPowerProviderComponent component, ComponentShutdown args)
