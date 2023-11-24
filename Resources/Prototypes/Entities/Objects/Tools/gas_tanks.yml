@@ -38,6 +38,8 @@
   - type: Tag
     tags:
     - Metal
+  - type: StaticPrice
+    price: 200
 
 - type: entity
   parent: GasTankBase

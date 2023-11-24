@@ -94,7 +94,6 @@
     sprite: Clothing/Belt/utility.rsi
     state: icon
   product: CrateEngineeringGear
-  cost: 2000
   category: Engineering
   group: market
 

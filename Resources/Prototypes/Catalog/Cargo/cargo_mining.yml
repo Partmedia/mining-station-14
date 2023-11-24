@@ -256,7 +256,15 @@
     sprite: Structures/Storage/canister.rsi
     state: yellow
   product: StorageCanister
-  cost: 1100
+  category: Atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AirTankFilledC
+  icon:
+    sprite: Objects/Tanks/generic.rsi
+    state: icon
+  product: AirTankFilled
   category: Atmospherics
   group: market
 
