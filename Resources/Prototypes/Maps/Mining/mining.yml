@@ -2,7 +2,7 @@
   id: Mining
   mapName: 'Mining'
   mapPath: /Mining/Maps/mining.yml
-  minPlayers: 3
+  minPlayers: 2
   maxPlayers: 10
   fallback: true
   stations:
