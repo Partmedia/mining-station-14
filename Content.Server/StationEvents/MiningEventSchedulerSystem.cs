@@ -205,23 +205,39 @@ namespace Content.Server.StationEvents
 
             foreach (var station in _station.Stations)
             {
-                TryComp<StationBankAccountComponent>(station, out var bankComponent);
-                if (bankComponent != null)
+                int profit = 0;
+                if (!TryComp<StationBankAccountComponent>(station, out var bankComponent))
                 {
-                    var profit = bankComponent.Balance - bankComponent.InitialBalance + change;
-                    var profitStrings = ListPlayerProfit(profit);
-
-                    ev.AddLine(Loc.GetString("cargo-balance", ("amount", bankComponent.Balance)));
-                    ev.AddLine(Loc.GetString("initial-loan", ("amount", -bankComponent.InitialBalance)));
-                    ev.AddLine(Loc.GetString("station-value-change", ("amount", change)));
-                    ev.AddLine("");
-                    ev.AddLine(Loc.GetString("station-profit", ("profit", profit)));
-                    ev.AddLine("");
-                    ev.AddLine(profitStrings.Item1);
-
-                    ReportRound(Loc.GetString("team-profit", ("team", ListPlayers(profitStrings.Item2)), ("profit", profit)));
-                    LogProfit(profit, profitStrings.Item2);
+                    continue;
                 }
+
+                profit += bankComponent.Balance - bankComponent.InitialBalance + change;
+
+                int powerCosts = 0;
+                if (TryComp<StationPowerTrackerComponent>(station, out var powerTracker))
+                {
+                    powerCosts = (int)Math.Round(powerTracker.TotalPrice);
+                    profit -= powerCosts;
+                }
+
+                var profitStrings = ListPlayerProfit(profit);
+
+                ev.AddLine(Loc.GetString("cargo-balance", ("amount", bankComponent.Balance)));
+                ev.AddLine(Loc.GetString("initial-loan", ("amount", -bankComponent.InitialBalance)));
+                ev.AddLine(Loc.GetString("station-value-change", ("amount", change)));
+                if (powerTracker != null)
+                {
+                    ev.AddLine(Loc.GetString("station-power-costs",
+                                ("energy", powerTracker.TotalEnergy.ToString("F3")),
+                                ("amount", -powerCosts)));
+                }
+                ev.AddLine("");
+                ev.AddLine(Loc.GetString("station-profit", ("profit", profit)));
+                ev.AddLine("");
+                ev.AddLine(profitStrings.Item1);
+
+                ReportRound(Loc.GetString("team-profit", ("team", ListPlayers(profitStrings.Item2)), ("profit", profit)));
+                LogProfit(profit, profitStrings.Item2);
             }
         }
 

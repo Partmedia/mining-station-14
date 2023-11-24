@@ -269,6 +269,52 @@
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
 
+- type: entity
+  id: GeneratorBluespace
+  parent: GeneratorRTG
+  name: bluespace power receiver
+  description: Purchases power from NanoTrasen, delivered to your station via Bluespace™ technology.
+  components:
+  - type: PowerSupplier
+    supplyRate: 30000
+  - type: PowerTracked
+    # stack of plasma costs 925 and generates 14 kW for 15 minutes = 265 per kWHr
+    pricePerKWHr: 2120
+  - type: Sprite
+    sprite: Structures/Power/powerreceiver.rsi
+    offset: 0.5, 0.6
+    layers:
+      - state: powerreceiver
+      - state: monitor_powered
+        shader: unshaded
+      - state: on
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+        shader: unshaded
+        visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: PointLight
+    radius: 1.4
+    energy: 1.6
+    offset: 0.2, 0.7
+    color: "#3db83b"
+    castShadows: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.3,1.2,1.25"
+      density: 190
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+
 # TODO: need radioactive fallout when destroyed
 
 - type: entity
