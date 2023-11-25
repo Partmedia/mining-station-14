@@ -17,5 +17,5 @@
         Quartermaster: [ 1, 1 ]
         StationEngineer: [ 1, 2 ]
         SalvageSpecialist: [ -1, -1 ]
-        MedicalDoctor: [ 0, 1 ]
+        MedicalDoctor: [ 1, 1 ]
         CorpSec: [ 1, 1 ]
