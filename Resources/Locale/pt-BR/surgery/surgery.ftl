@@ -1,3 +1,5 @@
+surgery-perform = Operar
+
 surgery-part-already-has-attachment = Parte do corpo já tem uma ferramenta posicionada nela
 
 surgery-part-not-incised-retractor = Nenhuma incisão feita na parte do corpo, nada pra retrair ainda!
@@ -23,3 +25,14 @@ surgery-organ-removed = Orgão removido!
 surgery-organ-already-has-attachment = Orgão já tem uma ferramenta posicionada nele!
 surgery-small-clamp-attached = Sequeno grampo posicionado.
 surgery-organ-attached = Orgão implantado.
+
+surgery-blocked = Essa parte do paciente está coberta.
+
+surgery-warn-necrosis = Você sente uma dor latejante seguida de dormência.
+surgery-warn-organ-incompatible = Você sente uma aguda dor vinda de dentro.
+surgery-warn-species-incompatible = Você se sente febril.
+
+organ-healthy = Está saudável.
+organ-warning = Está danificado.
+organ-critical = Está severamente danificado.
+

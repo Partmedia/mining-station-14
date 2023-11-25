@@ -83,3 +83,6 @@ alerts-pulled-desc = Você está sendo puxado. Mova-se para se libertar.
 
 alerts-pulling-name = Puxar
 alerts-pulling-desc = Você está puxando alguma coisa. Clique no alerta para parar.
+
+alerts-bleed-name = [color=red]Sangramento[/color]
+alerts-bleed-desc = Você está [color=red]sangrando[/color].
