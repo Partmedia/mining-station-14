@@ -83,6 +83,8 @@ namespace Content.Server.StationEvents
 
         private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
         {
+            if (!RuleAdded)
+                return;
             startValue = stationPrice();
             Logger.InfoS("mining", $"Initial value: {startValue}");
         }
