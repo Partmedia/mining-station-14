@@ -3,7 +3,7 @@
   mapName: 'Mining Pill'
   mapPath: /Mining/Maps/miningpill.yml
   minPlayers: 0
-  maxPlayers: 5
+  maxPlayers: 6
   fallback: true
   stations:
     Mining:

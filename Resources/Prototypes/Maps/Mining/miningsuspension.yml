@@ -2,8 +2,8 @@
   id: MiningSuspension
   mapName: 'Mining Suspension'
   mapPath: /Mining/Maps/miningsuspension.yml
-  minPlayers: 1
-  maxPlayers: 6
+  minPlayers: 3
+  maxPlayers: 15
   stations:
     Mining:
       mapNameTemplate: '{0} Mining Suspension {1}'
