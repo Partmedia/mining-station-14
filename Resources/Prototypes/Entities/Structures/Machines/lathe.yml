@@ -173,7 +173,7 @@
   - type: Lathe
     idleState: icon
     runningState: building
-    dynamicRecipes:
+    staticRecipes:
       - LightTube
       - LightBulb
       - SheetSteel #these sheet recipe costs don't scale with upgrades
@@ -275,7 +275,7 @@
     producingSound: /Audio/Machines/circuitprinter.ogg
     idleState: icon
     runningState: building
-    dynamicRecipes:
+    staticRecipes:
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
