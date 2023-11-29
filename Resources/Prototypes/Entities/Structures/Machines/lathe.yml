@@ -98,6 +98,8 @@
       - MagazinePlasmaRifleFilled
       - PlasmaShell
       - ShellShotgun
+      - HandheldCrewMonitor
+      - AppraisalTool
   - type: StaticPrice
     price: 800
 

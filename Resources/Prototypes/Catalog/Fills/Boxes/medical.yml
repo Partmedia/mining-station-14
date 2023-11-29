@@ -115,3 +115,14 @@
     whitelist:
       tags:
         - BodyBag
+
+- type: entity
+  name: emergency medipen box
+  parent: BoxSyringe
+  id: BoxEmergencyMedipens
+  description: A box of eight emergency medipens.
+  components:
+  - type: StorageFill
+    contents:
+      - id: EmergencyMedipen
+        amount: 8

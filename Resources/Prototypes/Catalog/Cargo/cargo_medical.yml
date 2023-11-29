@@ -146,3 +146,11 @@
   cost: 10000
   category: Medical
   group: market
+
+- type: cargoProduct
+  id: BoxEmergencyMedipensC
+  icon:
+    sprite: Objects/Specific/Medical/medipen.rsi
+    state: medipen
+  product: BoxEmergencyMedipens
+  category: Medical

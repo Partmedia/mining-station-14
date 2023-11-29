@@ -13,3 +13,5 @@
     - type: PriceGun
     - type: UseDelay
       delay: 1
+    - type: StaticPrice
+      price: 120
