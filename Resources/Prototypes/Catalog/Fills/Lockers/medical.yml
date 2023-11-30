@@ -5,8 +5,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxPillCanister
-        amount: 1
+      - id: MedkitFilled
+      - id: HandheldCrewMonitor
       - id: BoxSyringe
         amount: 1
       - id: EpinephrineChemistryBottle
@@ -77,8 +77,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSyringe
       - id: BoxBeaker
       - id: BoxPillCanister
       - id: BoxBottle
-      - id: BoxBottle
+      - id: HandLabeler
+      - id: Dropper
