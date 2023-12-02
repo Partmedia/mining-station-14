@@ -1,10 +1,13 @@
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map.Enumerators;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Tiles;
 
 public sealed class RequiresTileSystem : EntitySystem
 {
+    [Dependency] private readonly IMapManager _mapManager = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -13,21 +16,13 @@ public sealed class RequiresTileSystem : EntitySystem
 
     private void OnTileChange(ref TileChangedEvent ev)
     {
-        if (!TryComp<MapGridComponent>(ev.Entity, out var grid))
-            return;
-
-        var anchored = grid.GetAnchoredEntitiesEnumerator(ev.NewTile.GridIndices);
-        if (anchored.Equals(AnchoredEntitiesEnumerator.Empty))
-            return;
-
-        var query = GetEntityQuery<RequiresTileComponent>();
-
-        while (anchored.MoveNext(out var ent))
+        foreach (var ent in EntityQuery<RequiresTileComponent>())
         {
-            if (!query.HasComponent(ent.Value))
-                continue;
-
-            QueueDel(ent.Value);
+            var xform = Transform(ent.Owner);
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            {
+                QueueDel(ent.Owner);
+            }
         }
     }
 }
