@@ -291,6 +291,14 @@
      Glass: 900
 
 - type: latheRecipe
+  id: CrewMonitoringServerMachineCircuitboard
+  result: CrewMonitoringServerMachineCircuitboard
+  completetime: 4
+  materials:
+     Copper: 100
+     Glass: 900
+
+- type: latheRecipe
   id: ShuttleConsoleCircuitboard
   result: ShuttleConsoleCircuitboard
   completetime: 4

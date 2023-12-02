@@ -297,6 +297,7 @@
       - PillPressMachineBoard
       - CryoPodMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
+      - CrewMonitoringServerMachineCircuitboard
       - VaccinatorMachineCircuitboard
       - DiagnoserMachineCircuitboard
       - ChemMasterMachineCircuitboard
