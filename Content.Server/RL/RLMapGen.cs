@@ -1,4 +1,5 @@
 using Content.Server.Spawners.EntitySystems;
+using Content.Server.Warps;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -11,6 +12,7 @@ public sealed class RLMapGen : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileManager = default!;
     [Dependency] private readonly RLSystem _rl = default!;
+    [Dependency] private readonly WarperSystem _dungeon = default!;
 
     public override void Initialize()
     {
@@ -60,6 +62,7 @@ public sealed class RLMapGen : EntitySystem
             uint height = (uint)(maxY - minY + 1);
             request.Width = width;
             request.Height = height;
+            request.DungeonLevel = (int)_dungeon.dungeonLevel;
             foreach ((var v, var val) in miningTiles)
             {
                 int tx = v.X - minX;

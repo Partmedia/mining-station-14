@@ -12,6 +12,7 @@ message MapGenRequest {
     uint32 width = 1;
     uint32 height = 2;
     repeated TileRequest mapData = 3;
+    int32 dungeonLevel = 4;
 }
 
 message TileRequest {
