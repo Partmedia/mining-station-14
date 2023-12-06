@@ -52,7 +52,7 @@ public sealed class RLMapGen : EntitySystem
         }
 
         // Send to RL, read back spawn list
-        if (_rl.Available()) {
+        if (_rl.Available() && miningTiles.Count > 0) {
             Logger.InfoS("RLMapGen", "Attempting to generate map...");
             var request = new MapGenRequest();
 
