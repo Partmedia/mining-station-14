@@ -49,3 +49,11 @@
       layer:
       - MidImpassable
       - LowImpassable
+
+- type: entity
+  id: LadderDungeon
+  parent: LadderTop
+  suffix: dungeon
+  components:
+  - type: Warper
+    dungeon: true
