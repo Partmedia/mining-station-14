@@ -353,6 +353,7 @@
           reagent: Inaprovaline
           min: 1
         - !type:TotalDamage
+          min: -1
           max: 100
         damage:
           types:
@@ -991,3 +992,127 @@
         - !type:ReagentThreshold
           min: 16
         probability: 0.02
+
+- type: reagent
+  id: Calomel
+  name: reagent-name-calomel
+  group: Medicine
+  desc: reagent-desc-calomel
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: medicine
+  color: "#A4E326"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          # they gotta be in crit first
+          min: 100
+        damage:
+          types:
+            Asphyxiation: -6
+          groups:
+            Toxin: -15
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          min: -1
+          max: 100
+        damage:
+          types:
+            Slash: 2
+            Poison: 2
+
+- type: reagent
+  id: Frozackamol
+  name: reagent-name-frozackamol
+  group: Medicine
+  desc: reagent-desc-frozackamol
+  physicalDesc: reagent-physical-desc-cold
+  flavor: medicine
+  color: "#CAEBEB"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        damage:
+          types:
+            Heat: -10
+            Shock: -10
+            Poison: 5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 11
+        damage:
+          types:
+            Cold: 5
+            Poison: 5
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          max: 293.15
+        amount: 10000
+
+- type: reagent
+  id: PyrothylNitrate
+  name: reagent-name-pyrothylnitrate
+  group: Medicine
+  desc: reagent-desc-pyrothylnitrate
+  physicalDesc: reagent-physical-desc-blazing
+  flavor: medicine
+  color: "#F13C0C"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        damage:
+          types:
+            Cold: -20
+            Poison: 5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 11
+        damage:
+          types:
+            Heat: 5
+            Poison: 5
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 293.15
+        amount: -10000
+
+- type: reagent
+  id: Renephelone
+  name: reagent-name-renephelone
+  group: Medicine
+  desc: reagent-desc-renephelone
+  physicalDesc: reagent-physical-desc-glowing
+  flavor: medicine
+  color: "#EAC90B"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        damage:
+          types:
+            Cellular: -6
+            Heat: 1.5
+            Bloodloss: 5
+            Airloss: -6
+          groups:
+            Brute: -18
+            Toxin: -4
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+      - !type:Emote
+        emote: Scream
+        probability: 0.2
