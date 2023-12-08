@@ -2,11 +2,12 @@
 
 - type: entity
   name: staff of healing
-  parent: WeaponStaffBase
+  parent: WeaponWandBase
   id: WeaponStaffHealing
   description: You don't foresee having to use this in your quest for carnage too often.
   components:
   - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/staves.rsi
     layers:
     - state: healing
   - type: Item
@@ -16,8 +17,8 @@
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_healing.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectileHealingBolt
-    capacity: 10
-    count: 10
+    capacity: 6
+    count: 6
 
 - type: entity
   name: staff of entrance
