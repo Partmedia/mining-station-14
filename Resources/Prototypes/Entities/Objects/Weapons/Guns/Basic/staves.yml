@@ -17,8 +17,8 @@
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_healing.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectileHealingBolt
-    capacity: 6
-    count: 6
+    capacity: 5
+    count: 5
 
 - type: entity
   name: staff of entrance
@@ -36,5 +36,5 @@
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltDoor
-    capacity: 10
-    count: 10
+    capacity: 7
+    count: 7
