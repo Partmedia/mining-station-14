@@ -467,3 +467,18 @@ Entries:
   - { type: Fix, message: "Fix memory leak when using the crew monitor" }
   id: 2550
   time: '2023-07-15T11:04:41-07:00'
+
+
+- author: v1.2.11
+  changes:
+  - { type: Tweak, message: "Most medical reagents have been adjusted to have a lower OD threshold, but greater effects overall" }
+  - { type: Add, message: "There are now medical reagent synergies and incompatibilities, some reagents will enhance each other while some will cause complications" }
+  - { type: Add, message: "There are some new high impact high risk medical reagents - Check the wiki for more information" }
+  - { type: Add, message: "Bionics are available for purchase and organ failure can now occur - Surgery can be used to add/replace/remove body parts and organs" }
+  - { type: Add, message: "Miners are now paid proportionally to the time they spend in round." }
+  - { type: Add, message: "Miners can find some fancy new rocks with chemicals in them" }
+  - { type: Add, message: "Copper is now available on the asteroid, and required in several lathe recipes" }
+  - { type: Add, message: "Bleeding is a bit more intense now, but there are bloodpacks to help with that" }
+  - { type: Add, message: "Defibrillators can now be used to revive dead crew members." }
+  id: 2551
+  time: '2023-12-08T13:36:42+08:00'
