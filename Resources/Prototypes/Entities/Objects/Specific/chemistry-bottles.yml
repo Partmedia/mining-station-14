@@ -309,3 +309,212 @@
   - type: Tag
     tags:
     - Bottle
+
+
+- type: entity
+  id: TricordrazineChemistryBottle
+  name: tricordrazine bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Tricordrazine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: BicaridineChemistryBottle
+  name: bicaridine bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: InaprovalineChemistryBottle
+  name: inaprovaline bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Inaprovaline
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: DyloveneChemistryBottle
+  name: dylovene bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Dylovene
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: ArithrazineChemistryBottle
+  name: arithrazine bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Arithrazine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: DexalinPlusChemistryBottle
+  name: dexalin plus bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: DexalinPlus
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: LeporazineChemistryBottle
+  name: leporazine bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Leporazine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: PhalanximineChemistryBottle
+  name: phalanximine bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Phalanximine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: SiderlacChemistryBottle
+  name: siderlac bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Siderlac
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: CalomelChemistryBottle
+  name: calomel bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Calomel
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: FrozackamolChemistryBottle
+  name: frozackamol bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Frozackamol
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: PyrothylNitrateChemistryBottle
+  name: pyrothyl nitrate bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: PyrothylNitrate
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: RenepheloneChemistryBottle
+  name: renephelone bottle
+  parent: ChemistryEmptyBottle01
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Renephelone
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Bottle
