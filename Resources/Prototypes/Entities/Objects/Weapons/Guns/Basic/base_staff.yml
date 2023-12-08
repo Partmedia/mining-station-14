@@ -14,8 +14,6 @@
     availableModes:
     - SemiAuto
   - type: AmmoCounter
-  # All staves recharge. Wands are not.
-  - type: RechargeBasicEntityAmmo
   - type: Tag
     tags:
     - WizardStaff
