@@ -480,6 +480,10 @@
   - type: MobPrice
     price: 300
     deathPenalty: 1 # we cannot sell living space mobs so...
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 1
 
 - type: entity
   name: space adder
