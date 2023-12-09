@@ -73,7 +73,7 @@ public class WarperSystem : EntitySystem
                     if (TryComp<WarpPointComponent>(downDest, out var downWarp))
                     {
                         downWarp.ID = $"dlvl{dungeonLevel}up";
-                        downWarp.Location = $"Dungeon Level {dungeonLevel}";
+                        downWarp.Location = $"Dungeon Level {dungeonLevel:00}";
                     }
                 }
             }
