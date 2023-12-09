@@ -22,7 +22,7 @@ namespace Content.Server.Nutrition.Components
             set => _baseDecayRate = value;
         }
         [DataField("baseDecayRate")]
-        private float _baseDecayRate = 0.01666666666f;
+        private float _baseDecayRate = 0.0278f; // 150 -> 50 in 1 hour
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ActualDecayRate
@@ -115,7 +115,7 @@ namespace Content.Server.Nutrition.Components
                     case HungerThreshold.Peckish:
                         // Same as okay except with UI icon saying eat soon.
                         _lastHungerThreshold = _currentHungerThreshold;
-                        _actualDecayRate = _baseDecayRate * 0.8f;
+                        _actualDecayRate = _baseDecayRate;
                         return;
 
                     case HungerThreshold.Starving:
@@ -123,7 +123,7 @@ namespace Content.Server.Nutrition.Components
                         // If some form of speed update system if multiple things are touching it use that.
                         EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
                         _lastHungerThreshold = _currentHungerThreshold;
-                        _actualDecayRate = _baseDecayRate * 0.6f;
+                        _actualDecayRate = _baseDecayRate;
                         return;
 
                     case HungerThreshold.Dead:
