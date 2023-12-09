@@ -38,17 +38,6 @@
   components:
   - type: Sprite
     state: ladder_bottom
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,0,0.25,0.5"
-      density: 60
-      mask:
-      - MachineMask
-      layer:
-      - MidImpassable
-      - LowImpassable
 
 - type: entity
   id: LadderDungeon
