@@ -8,6 +8,9 @@
   - type: Item
     sprite: Objects/Specific/Medical/medical.rsi
     heldPrefix: ointment
+  - type: Healing
+    delay: 2.0
+    selfHealPenaltyMultiplier: 1.0
   # Inherited
   - type: StaticPrice
     price: 0
@@ -59,8 +62,6 @@
     damage:
       groups:
         Brute: -15 # 5 for each type in the group
-    delay: 2.0
-    selfHealPenaltyMultiplier: 1.0
     bloodlossModifier: -3 # a little bit of bloodloss healing.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
@@ -131,6 +132,7 @@
 
 - type: entity
   id: Gauze1
+  suffix: Single
   parent: Gauze
   components:
   - type: Stack
