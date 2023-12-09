@@ -92,3 +92,11 @@
     mode: NoSprite
   placement:
     mode: SnapgridCenter
+
+- type: entity
+  id: HighSecDoorWelded
+  parent: HighSecDoor
+  suffix: Welded
+  components:
+  - type: Weldable
+    startWelded: true

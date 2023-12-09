@@ -19,6 +19,13 @@ public sealed class WeldableSystem : EntitySystem
         SubscribeLocalEvent<WeldableComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<WeldableComponent, WeldCancelledEvent>(OnWeldCanceled);
         SubscribeLocalEvent<WeldableComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<WeldableComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, WeldableComponent component, MapInitEvent args)
+    {
+        if (component.StartWelded)
+            ForceWeldedState(uid, true, component);
     }
 
     private void OnExamine(EntityUid uid, WeldableComponent component, ExaminedEvent args)
