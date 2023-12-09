@@ -58,4 +58,8 @@ public sealed class WeldableComponent : SharedWeldableComponent
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public bool IsWelded;
+
+    [DataField("startWelded")]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool StartWelded;
 }
