@@ -1,19 +1,13 @@
 - type: entity
-  name: space dragon
+  id: MobDragonBase
   parent: SimpleSpaceMobBase
-  id: MobDragon
-  suffix: ""
+  name: space dragon
+  suffix: "Base"
   description: A flying leviathan, loosely related to space carps.
   components:
     - type: BiopressHarvest
       id: Creature
       totalReagentUnits: 150
-    - type: GhostTakeoverAvailable
-      allowMovement: true
-      allowSpeech: true
-      makeSentient: true
-      name: Space dragon
-      description: Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
     - type: HTN
       rootTask: XenoCompound
     - type: Faction
@@ -102,6 +96,18 @@
         types:
           Piercing: 15
           Slash: 15
+
+- type: entity
+  id: MobDragon
+  parent: MobDragonBase
+  suffix: ""
+  components:
+    - type: GhostTakeoverAvailable
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: Space dragon
+      description: Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
     - type: Dragon
       spawnsLeft: 2
       spawnsProto: MobCarpDragon
