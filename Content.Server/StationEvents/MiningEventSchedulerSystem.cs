@@ -27,6 +27,8 @@ using System.Threading.Tasks;
 using Content.Server.MiningCredits;
 using Content.Server.Mind.Components;
 
+using Content.Server.Warps;
+
 namespace Content.Server.StationEvents
 {
     [UsedImplicitly]
@@ -43,6 +45,7 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly PricingSystem _pricingSystem = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly WarperSystem _dungeon = default!;
 
         private readonly HttpClient _httpClient = new();
 
@@ -207,6 +210,9 @@ namespace Content.Server.StationEvents
 
             foreach (var station in _station.Stations)
             {
+                if (_dungeon.dungeonLevel > 0)
+                    ev.AddLine(Loc.GetString("dungeon-level", ("depth", _dungeon.dungeonLevel)));
+
                 int profit = 0;
                 if (!TryComp<StationBankAccountComponent>(station, out var bankComponent))
                 {
@@ -238,7 +244,10 @@ namespace Content.Server.StationEvents
                 ev.AddLine("");
                 ev.AddLine(profitStrings.Item1);
 
-                ReportRound(Loc.GetString("team-profit", ("team", ListPlayers(profitStrings.Item2)), ("profit", profit)));
+                if (_dungeon.dungeonLevel > 0)
+                    ReportRound(Loc.GetString("team-profit-depth", ("team", ListPlayers(profitStrings.Item2)), ("profit", profit), ("depth", _dungeon.dungeonLevel)));
+                else
+                    ReportRound(Loc.GetString("team-profit", ("team", ListPlayers(profitStrings.Item2)), ("profit", profit)));
                 LogProfit(profit, profitStrings.Item2);
             }
         }
