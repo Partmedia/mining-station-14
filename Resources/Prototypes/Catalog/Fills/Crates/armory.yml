@@ -99,6 +99,8 @@
     contents:
       - id: ClothingOuterArmorHeavy
         amount: 1
+      - id: ClothingHeadHelmetThunderdome
+        amount: 1
 
 - type: entity
   id: CrateArmoryRiotArmor
