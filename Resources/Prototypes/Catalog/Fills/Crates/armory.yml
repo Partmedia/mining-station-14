@@ -129,7 +129,7 @@
       - id: WeaponSniperHristov
         amount: 1
       - id: MagazineBoxAntiMateriel
-        amount: 2
+        amount: 1
 
 - type: entity
   id: CrateArmoryMinigun
@@ -150,3 +150,30 @@
         amount: 1
       - id: MagazineLightRifleBox
         amount: 2
+
+- type: entity
+  id: CrateArmoryAdvancedLaser
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponAdvancedLaser
+        amount: 1
+
+- type: entity
+  id: CrateArmoryLaserCannon
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLaserCannon
+        amount: 1
+
+- type: entity
+  id: CrateArmoryXrayCannon
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponXrayCannon
+        amount: 1

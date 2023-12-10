@@ -83,6 +83,7 @@
         - CrateArmoryLecter
         - CrateArmoryLaserRifle
         - CrateArmoryPlasmaRifle
+        - CrateArmoryAdvancedLaser
         - CrateArmoryHeavyArmor
         - CrateArmoryRiotArmor
       rareChance: 0.1
@@ -100,8 +101,10 @@
     - type: RandomSpawner
       prototypes:
         - CrateArmorySniper
-        - CrateArmoryL6
+        - CrateArmoryXrayCannon
       chance: 0.7
       rarePrototypes:
+        - CrateArmoryL6
         - CrateArmoryMinigun
+        - CrateArmoryLaserCannon
       rareChance: 0.1

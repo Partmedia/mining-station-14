@@ -235,6 +235,9 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedHeavyLaser
     fireCost: 100
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
 
 - type: entity
   name: x-ray cannon
@@ -263,6 +266,9 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
 
 - type: entity
   name: disabler
