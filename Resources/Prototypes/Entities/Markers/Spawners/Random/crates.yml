@@ -59,3 +59,49 @@
         - CrateMaterialPlasma
         - CrateHydroponicsSeedsExotic
       rareChance: 0.1
+
+- type: entity
+  name: Armory Crate Spawner
+  id: ArmoryCrateSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Storage/Crates/sec_gear.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+        - CrateArmorySMG
+        - CrateArmoryShotgun
+        - CrateArmoryLaser
+        - CrateArmoryPistol
+        - CrateArmoryLightArmor
+        - CrateArmoryHardsuit
+      chance: 0.7
+      rarePrototypes:
+        - CrateArmoryLecter
+        - CrateArmoryLaserRifle
+        - CrateArmoryPlasmaRifle
+        - CrateArmoryHeavyArmor
+        - CrateArmoryRiotArmor
+      rareChance: 0.1
+
+- type: entity
+  name: Heavy Weapon Crate Spawner
+  id: HeavyWeaponCrateSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Storage/Crates/sec_gear.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+        - CrateArmorySniper
+        - CrateArmoryL6
+      chance: 0.7
+      rarePrototypes:
+        - CrateArmoryMinigun
+      rareChance: 0.1

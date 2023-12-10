@@ -1,0 +1,30 @@
+- type: entity
+  id: RandomMedicine
+  name: random medicine spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Specific/Chemistry/bottle.rsi
+        state: bottle-1
+  - type: RandomSpawner
+    prototypes:
+      - EpinephrineChemistryBottle
+      - TricordrazineChemistryBottle
+      - BicaridineChemistryBottle
+      - InaprovalineChemistryBottle
+      - DyloveneChemistryBottle
+      - ArithrazineChemistryBottle
+      - DexalinPlusChemistryBottle
+      - LeporazineChemistryBottle
+      - SiderlacChemistryBottle
+    chance: 0.75
+    rarePrototypes:
+      - PhalanximineChemistryBottle
+      - LeporazineChemistryBottle
+      - CalomelChemistryBottle
+      - FrozackamolChemistryBottle
+      - PyrothylNitrateChemistryBottle
+      - RenepheloneChemistryBottle
+    rareChance: 0.25

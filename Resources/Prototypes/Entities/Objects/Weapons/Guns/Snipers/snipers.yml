@@ -52,7 +52,7 @@
   name: Hristov
   parent: BaseWeaponSniper
   id: WeaponSniperHristov
-  description: A portable anti-armour rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-material ammo.
+  description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
@@ -61,9 +61,9 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-      - CartridgeAntiMaterial
+      - CartridgeAntiMateriel
     capacity: 5
-    proto: CartridgeAntiMaterial
+    proto: CartridgeAntiMateriel
 
 - type: entity
   name: musket
@@ -82,9 +82,9 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-      - CartridgeAntiMaterial
+      - CartridgeAntiMateriel
     capacity: 1
-    proto: CartridgeAntiMaterial
+    proto: CartridgeAntiMateriel
 
 - type: entity
   name: flintlock pistol
@@ -99,6 +99,6 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeAntiMaterial
+        - CartridgeAntiMateriel
     capacity: 1
-    proto: CartridgeAntiMaterial
+    proto: CartridgeAntiMateriel
