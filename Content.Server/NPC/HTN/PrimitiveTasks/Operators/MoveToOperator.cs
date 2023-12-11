@@ -142,8 +142,8 @@ public sealed class MoveToOperator : HTNOperator
         {
             if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates, _entManager))
             {
-                var mapCoords = coordinates.ToMap(_entManager, _transform);
-                _steering.PrunePath(uid, mapCoords, targetCoordinates.ToMapPos(_entManager, _transform) - mapCoords.Position, result.Path);
+                var mapCoords = coordinates.ToMap(_entManager);
+                _steering.PrunePath(uid, mapCoords, targetCoordinates.ToMapPos(_entManager) - mapCoords.Position, result.Path);
             }
 
             comp.CurrentPath = result.Path;

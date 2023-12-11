@@ -473,7 +473,7 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            var targetPos = steering.Coordinates.ToMap(EntityManager, _transform);
+            var targetPos = steering.Coordinates.ToMap(EntityManager);
             var ourPos = xform.MapPosition;
 
             PrunePath(uid, ourPos, targetPos.Position - ourPos.Position, result.Path);

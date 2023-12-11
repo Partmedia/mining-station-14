@@ -102,8 +102,8 @@ public sealed partial class NPCSteeringSystem
         }
 
         // Check if mapids match.
-        var targetMap = targetCoordinates.ToMap(EntityManager, _transform);
-        var ourMap = ourCoordinates.ToMap(EntityManager, _transform);
+        var targetMap = targetCoordinates.ToMap(EntityManager);
+        var ourMap = ourCoordinates.ToMap(EntityManager);
 
         if (targetMap.MapId != ourMap.MapId)
         {
@@ -156,7 +156,7 @@ public sealed partial class NPCSteeringSystem
                 // Alright just adjust slightly and grab the next node so we don't stop moving for a tick.
                 // TODO: If it's the last node just grab the target instead.
                 targetCoordinates = GetTargetCoordinates(steering);
-                targetMap = targetCoordinates.ToMap(EntityManager, _transform);
+                targetMap = targetCoordinates.ToMap(EntityManager);
 
                 // Can't make it again.
                 if (ourMap.MapId != targetMap.MapId)
@@ -301,7 +301,7 @@ public sealed partial class NPCSteeringSystem
 
         // If we have to backtrack (for example, we're behind a table and the target is on the other side)
         // Then don't consider pruning.
-        var goal = nodes.Last().Coordinates.ToMap(EntityManager, _transform);
+        var goal = nodes.Last().Coordinates.ToMap(EntityManager);
         var canPrune =
             _interaction.InRangeUnobstructed(mapCoordinates, goal, (goal.Position - mapCoordinates.Position).Length + 0.1f, mask);
 
@@ -310,7 +310,7 @@ public sealed partial class NPCSteeringSystem
             if (!node.Data.IsFreeSpace)
                 break;
 
-            var nodeMap = node.Coordinates.ToMap(EntityManager, _transform);
+            var nodeMap = node.Coordinates.ToMap(EntityManager);
 
             // If any nodes are 'behind us' relative to the target we'll prune them.
             // This isn't perfect but should fix most cases of stutter stepping.
