@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+  "copyright": "Copyright 2023 Jonas Ljunsgtröm",
+    "size": {
+        "x": 32,
+        "y": 64
+    },
+    "states": [
+	{
+            "name": "warningtape_down",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "stair_down"
+        },
+        {
+            "name": "stair_up"
+        },
+        {
+            "name": "warningtape_up"
+        }
+    ]
+}

@@ -5,7 +5,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Nuclear14/Structures/Misc/ladders.rsi
+    sprite: Mining/Structures/Stairs.rsi
     noRot: true
     netsync: false
   - type: Transform
@@ -27,7 +27,11 @@
   description: The top of a ladder. Use it to go down.
   components:
   - type: Sprite
-    state: ladder_top
+    offset: 0, 0.5
+    layers:
+      - state: stair_down
+      - state: warningtape_down
+        shader: unshaded
     
 - type: entity
   parent: BaseLadder
@@ -37,7 +41,11 @@
   description: The bottom of a ladder. Use it to go up.
   components:
   - type: Sprite
-    state: ladder_bottom
+    offset: 0, 0.5
+    layers:
+      - state: stair_up
+      - state: warningtape_up
+        shader: unshaded
 
 - type: entity
   id: LadderDungeon
