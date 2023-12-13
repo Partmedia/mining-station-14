@@ -1,7 +1,7 @@
 ﻿# To be implemented: see #9072
 
 - type: entity
-  name: staff of healing
+  name: wand of healing
   parent: WeaponStaffBase
   id: WeaponStaffHealing
   description: You don't foresee having to use this in your quest for carnage too often.
@@ -20,7 +20,7 @@
     count: 5
 
 - type: entity
-  name: staff of entrance
+  name: wand of entrance
   parent: WeaponStaffBase
   id: WeaponStaffPolymorphDoor
   description: For when you need a get-away route.
