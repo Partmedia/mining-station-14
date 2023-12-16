@@ -1,5 +1,6 @@
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
+using Content.Server.Storage.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
@@ -42,6 +43,7 @@ namespace Content.Server.NPC.Systems
             SubscribeLocalEvent<NPCComponent, ComponentShutdown>(OnNPCShutdown);
             SubscribeLocalEvent<NPCComponent, PlayerAttachedEvent>(OnPlayerNPCAttach);
             SubscribeLocalEvent<NPCComponent, PlayerDetachedEvent>(OnPlayerNPCDetach);
+            SubscribeLocalEvent<NPCComponent, InsertIntoEntityStorageAttemptEvent>(OnStoreThisAttempt);
             _configurationManager.OnValueChanged(CCVars.NPCEnabled, SetEnabled, true);
             _configurationManager.OnValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates, true);
         }
@@ -86,6 +88,13 @@ namespace Content.Server.NPC.Systems
         public bool IsAwake(EntityUid uid, NPCComponent component, ActiveNPCComponent? active = null)
         {
             return Resolve(uid, ref active, false);
+        }
+
+        public void OnStoreThisAttempt(EntityUid uid, NPCComponent comp, InsertIntoEntityStorageAttemptEvent args)
+        {
+            // Disallow awake NPCs from being stuffed into crates
+            if (IsAwake(uid, comp))
+                args.Cancel();
         }
 
         /// <summary>
