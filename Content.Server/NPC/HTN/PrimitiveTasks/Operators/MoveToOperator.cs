@@ -5,6 +5,7 @@ using Content.Server.NPC.Pathfinding;
 using Content.Server.NPC.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
@@ -15,6 +16,7 @@ public sealed class MoveToOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     private NPCSteeringSystem _steering = default!;
     private PathfindingSystem _pathfind = default!;
 
@@ -175,6 +177,12 @@ public sealed class MoveToOperator : HTNOperator
 
         if (!_entManager.TryGetComponent<NPCSteeringComponent>(owner, out var steering))
             return HTNOperatorStatus.Failed;
+
+        // Random chance of breaking out to check for new target
+        if (_random.Next() < 0.05)
+        {
+            return HTNOperatorStatus.Finished;
+        }
 
         return steering.Status switch
         {
