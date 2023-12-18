@@ -79,12 +79,6 @@ public abstract class NPCCombatOperator : HTNOperator
         var paths = new List<Task>();
         // TODO: Really this should be a part of perception so we don't have to constantly re-plan targets.
 
-        // Special-case existing target.
-        if (EntManager.EntityExists(existingTarget))
-        {
-            paths.Add(UpdateTarget(owner, existingTarget, existingTarget, ownerCoordinates, blackboard, radius, canMove, xformQuery, targets));
-        }
-
         // TODO: Need a perception system instead
         // TODO: This will be expensive so will be good to optimise and cut corners.
         foreach (var target in _factions
