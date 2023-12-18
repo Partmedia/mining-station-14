@@ -27,6 +27,7 @@
   description: The top of a ladder. Use it to go down.
   components:
   - type: Sprite
+    offset: 0, 0.5
     layers:
       - state: stair_down
       - state: warningtape_down
@@ -40,6 +41,7 @@
   description: The bottom of a ladder. Use it to go up.
   components:
   - type: Sprite
+    offset: 0, 0.5
     layers:
       - state: stair_up
       - state: warningtape_up
