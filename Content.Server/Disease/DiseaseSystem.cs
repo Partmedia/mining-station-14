@@ -388,7 +388,7 @@ namespace Content.Server.Disease
                     return;
             }
 
-            var freshDisease = _serializationManager.CreateCopy(addedDisease, notNullableOverride: true);
+            var freshDisease = _serializationManager.CreateCopy(addedDisease);
 
             if (freshDisease == null) return;
 
