@@ -33,3 +33,9 @@
   name: Surgery
   text: "/Server Info/Guidebook/Surgery.xml"
   priority: -7
+
+- type: guideEntry
+  id: Medical
+  name: Medical
+  text: "/Server Info/Guidebook/Medical.xml"
+  priority: -7

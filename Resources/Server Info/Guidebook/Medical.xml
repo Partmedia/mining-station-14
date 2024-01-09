@@ -1,0 +1,169 @@
+<Document>
+  # Medical in Mining Station 14
+
+  Healing, damage, and practicing medicine in Mining Station is a bit different to what you may be used to.
+
+  First thing to note is that things can be a bit more harsh here on Mining Station, spacing hurts more, monsters hit hard, bleeding is very serious, organs can fail, and medicines have lower OD thresholds.
+
+  The medical doctor role is important, but not always available. You, even as a regular mining specialist, will need to know the basics of healing yourself and others.
+
+  This guide will cover most what you need to know about basic healing - some kinds of damage will require surgery which has its own guide.
+
+  ## Help, a xeno hit me and now I am bleeding everywhere!
+
+  Do not panic! If you are bleeding, often due to some kind of aggressive fauna, do the following:
+
+  1) Apply your emergency medipen if you still have one - it has tranexamic acid in it! This should slow down the bleeding.
+
+  <Box>
+    <GuideEntityEmbed Entity="EmergencyMedipen"/>
+  </Box>
+
+  2) Make your way to the closest stocked first aid kit. If there is no first aid kit available... sorry!
+
+  <Box>
+    <GuideEntityEmbed Entity="Medkit"/>
+  </Box>
+
+  3) Find gauze in the first aid kit and apply until no longer bleeding. This is very important to get done right away.
+
+  <Box>
+    <GuideEntityEmbed Entity="Gauze"/>
+  </Box>
+
+  4) Utilise a health analyzer to inform you of your current blood level - if it is 90% or above you are OK!
+
+  <Box>
+    <GuideEntityEmbed Entity="HandheldHealthAnalyzer"/>
+  </Box>
+
+  5) If your blood level is below 90% apply a bloodpack or inject/ingest iron until it is 90% or above. Iron can be acquire by grinding the correct ore!
+
+  <Box>
+    <GuideEntityEmbed Entity="Bloodpack"/>
+  </Box>
+
+  If is important to get all of this done as soon as you can - if you can get a doctor to help then allow them to complete the above steps where possible as they should have a good idea of what to do.
+
+  Doctors can identify bleeding patients by right clicking on them and then clicking the heart icon. Patients who have lost too much blood will also "look pale".
+
+  If you are bleeding you will know based on the blood-drop icon that will appear on your screen. Once this is gone it means you are no longer bleeding - but you may still suffer bloodloss damage if you have lost too much blood. If the room is spinning, acquire a bloodpack or iron!
+
+  If available, miners may wish to bring their own personal roll of gauze with them - tending to any bleeding wounds soon after they occur. Be sure to ask your doctor or MS first however, as medical supplies can sometimes be scarce or expensive! Of course, if you happen to have some cloth, you can craft your own gauze!
+
+  ## Oh no! This person is dead and smells! What do I do?!
+
+  Death on Mining Station is a regular occurence but can be remedied in most cases. It is important to note that a body rotting is NOT the end, and they can still be healed - it just might take longer.
+
+  When a body rots it will take periodic brute damage - the longer the body is left the more damage it acquires... and the harder it will be to fully heal.
+
+  For all brute and burn damage types bruise packs and ointment can be used to heal a dead patient.
+
+  <Box>
+    <GuideEntityEmbed Entity="Brutepack"/>
+    <GuideEntityEmbed Entity="Ointment"/>
+  </Box>
+
+  When a patient's total damage drops below 200, they are alive again! But be warned, their heart will still need to be reset else they will quickly die again! So as soon as they are gasping, defibrillate them! Don't worry if they appear to die again, the defibrillator will heal a small amount of asphyxiation damage when used on a dead patient - effectively bringing them back from death once again!
+
+  <Box>
+    <GuideEntityEmbed Entity="Defibrillator"/>
+  </Box>
+
+  There are some damage types that cannot be dealt with once someone is dead - poison, cellular, radiation, and bloodloss - you will need to revive the patient to heal this kind of damage with chemicals!
+
+  Should a patient have acquired too much damage that cannot healed without chemical reagents you have two options: arrange a cloner to be installed (quite expensive and less reliable on rotting bodies, but somewhat reusable) or surgically remove the brain and place it in to a new body (Cheaper, but the patient might have a mind-body identity crisis afterwards... also requires a surgeon).
+
+  ## Chemistry is different here! READ THIS BEFORE APPLYING MEDICINE!!!
+
+  Chemistry on Mining Station is somewhat more challenging, but also quite rewarding.
+
+  First thing to keep in mind is that chemical reagents are finite - there is not infinite dispenser and chances are you will start with an empty dispenser on your station. All of the essential medicines will have to be made with grinded ore, processed corpses, and medicinal plants.
+
+  Fortunately, there are many tools to help with this process. One of those tool is the Centrimax! This will allow you to separate chemicals in to separate containers. It will also allow you to break down chemicals in to the their ingredient or their base elements. This is very useful for converting one kind of medicine in to another!
+
+  <Box>
+    <GuideEntityEmbed Entity="Centrifuge"/>
+  </Box>
+
+  For example, putting Bicaridine through the Centrimax and clicking the Electrolysis button will yield Inaprovaline (and a bunch of carbon)!
+
+  Another handy tool is the Biopress, should you have an organic... thing... that you no longer require, you can convert it in to a generous number of chemicals! Try dumping a xeno corpse in there!
+
+  <Box>
+    <GuideEntityEmbed Entity="BioPress"/>
+  </Box>
+
+  Other tools include the Chemical Analyzer, the Pill Press, and the Reagent Grinder - these tools will aid you in acquiring, identifying, and utilising chemicals as needed.
+
+  <Box>
+    <GuideEntityEmbed Entity="ChemicalAnalysisMachine"/>
+    <GuideEntityEmbed Entity="pill_press"/>
+    <GuideEntityEmbed Entity="KitchenReagentGrinder"/>
+  </Box>
+
+  ### Oh good, now to apply this medicine to a pa- WAIT THERE IS MORE!
+
+  On Mining Station 14, MOST chemical reagents have had their OD threshold increased, while their medicinal effects have ALSO been increased.
+
+  Synergies and incompatibilities have also been introduced!
+
+  This brief summary will introduce you to what medicines to use, how much, and when:
+
+  Tricordrazine - Minor healing of most damage types and amplifies other medicines, Do not use more than 15u (it just won't do anything), Do use with Bicaridine, Dermaline, Stellibinin, Arithrazine, or Dexalin Plus for enhanced effects!
+
+  Dylovene - Minor healing of poison, Do not use more than 15u!
+
+  Dexalin - Minor healing of asphyxiation and bloodloss, Do not use more than 15u!
+
+  Hyronalin - Minor healing of radiation, Do not use more than 5u!
+
+  Inaprovaline - Heals asphyxiation of critical patients and stops bleeding!
+
+  Kelotane - Minor healing of burn, Do not use more than 15u!
+
+  Sigynate - Heals caustic, do not use more than 10u!
+
+  Arithrazine - Heals radiation but also deals brute damage, Use carefully and ideally with Bicaridine!
+
+  Bicaridine - Heals Brute damage, Do not use more than 5u, Do not use with Dermaline!
+
+  Dermaline - Heals Burn damage, Do not use more than 5u, Do not use with Stellibinin or Dylovene, Do use with kelotane for enhanced effects!
+
+  Dexalin Plus - Heals asphyxiation and bloodloss, Do not use more than 5u, Do not use with Epinephrine, Do use with Inaprovaline for enhanced effects!
+
+  Epinephrine - Heals multiple damage types on critical patients including asphyxiation, Do not use more than 15u, Do use with Inaprovaline for enhanced effects!
+
+  Leporazine - Heals cold damage, Do not use more than 5u!
+
+  Phalanximine - Heals cellular but also deals radiation damage, Use carefully and ideally with Hyronalin, Do not use more than 10u!
+
+  Siderlac - Heals Caustic, Do not use more than 5u!
+
+  Stellibinin - Heals poison, Do not use more than 10u, Do not use with Bicaridine, Use with Dylovene for enhanced effects!
+
+  Tranexamic Acid - Stops bleeding, Do not use more than 15u!
+
+  Ultravasculine - Heals toxin damage but also deals brute damage, Use carefully and ideally with Bicaridine, Do not use more than 30u!
+
+  Recipes for most of the above can be found here: http://nfn.mooo.com:5000/wiki/chemistry.html where applicable. Some, like Ultravasculine, can only be obtained through grinding plants.
+
+  ### One more thing...
+
+  In addition to the above, some new medicinal chemicals have been introduced. These are all very dangerous and should only be used with careful preparation and in emergencies.
+
+  As these are all new and quite dangerous, the recipes and effects have been listed here in full:
+
+  Calomel - (1) Mercury + (1) Chlorine HEAT to 370 -> (2) Calomel: At above 100 damage heals 5 toxin and 2 asphyx but below 100 damage deals 2 poison and 2 slash
+  A powerful purgative that flushes out all other toxins in the body but is quite toxic itself and can cause intense strain on the body.
+
+  Frozackamol - (2) Kelotane + Inaprovaline (1) + Copper (1) HEAT to 370 -> (4) Frozackamol: heals 10 burn but causes 5 poison, above 10u causes 5 cold and 5 poison
+  A highly controlled burn medicine that rapidly cools and mends burnt tissue - highly toxic and can cause internal freeze-burns.
+
+  Pyrothyl Nitrate - (1) Oxygen + (2) Nitrogen + (1) Leporazine -> (4) Pyrothyl Nitrate: heals 20 cold and stabilises the patients temperature but causes 5 poison, above 10u causes 5 heat and 5 poison
+  A medicine commonly used by miner's in artic-like conditions - exceedingly powerful and can prevent frostbite but highly toxic and can cause internal burns.
+
+  Renephelone - (1) Phalanximine + (1) Bicaridine HEAT to 370 -> Two Renephelone: Heals 12 brute, 4 cellular, 4 asphyxiation, 2 toxin - causes 10 bloodloss and 3 burn
+  An experimental medication that effectively temporarily replaces the recipients bloodstream with a powerful multi-purpose purgative - a breakthrough in advanced medication but still very dangerous.
+
+</Document>
