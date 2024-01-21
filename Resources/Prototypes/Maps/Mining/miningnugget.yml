@@ -1,7 +1,7 @@
 - type: gameMap
   id: MiningNugget
   mapName: 'Mining Nugget'
-  mapPath: /Maps/miningnugget.yml
+  mapPath: /Mining/Maps/miningnugget.yml
   minPlayers: 0
   maxPlayers: 6
   fallback: true
