@@ -1,0 +1,22 @@
+- type: gameMap
+  id: MiningNugget
+  mapName: 'Mining Nugget'
+  mapPath: /Maps/miningnugget.yml
+  minPlayers: 0
+  maxPlayers: 6
+  fallback: true
+  stations:
+    MiningNugget:
+      mapNameTemplate: '{0} Mining Base {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: '14'
+      overflowJobs:
+        - SalvageSpecialist
+      availableJobs:
+        Quartermaster: [ 1, 1 ]
+        StationEngineer: [ 1, 1 ]
+        SalvageSpecialist: [ -1, -1 ]
+        MedicalDoctor: [ 0, 1 ]
+        ServiceWorker: [ 1, 1 ]
+        CorpSec: [ 1, 1 ]
