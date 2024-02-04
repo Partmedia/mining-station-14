@@ -33,5 +33,5 @@ package:
 	python3 Tools/package_server_build.py --hybrid-acz ${PACKAGE_BUILD_ARGS}
 
 deploy: package
-	git push -f ms14 HEAD:ms/server
 	mv release/* ~ss14/downloads
+	git push -f ms14 HEAD:ms/server
