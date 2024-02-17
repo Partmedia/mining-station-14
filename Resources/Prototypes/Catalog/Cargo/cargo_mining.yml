@@ -10,6 +10,17 @@
   group: market
 
 - type: cargoProduct
+  id: HelpingHandC
+  description: .
+  icon:
+    sprite: Clothing/OuterClothing/Misc/helpinghand.rsi
+    state: icon
+  product: HelpingHandHarness
+  cost: 5000
+  category: Mining
+  group: market
+
+- type: cargoProduct
   id: MiningBiomassCrate
   description: Lost a fellow crew member? We're here to help!
   icon:
