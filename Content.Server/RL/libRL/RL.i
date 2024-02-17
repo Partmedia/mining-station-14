@@ -49,6 +49,10 @@ cl_object list2(cl_object a, cl_object b) {
     return cl_list(2, a, b);
 }
 
+cl_object list3(cl_object a, cl_object b, cl_object c) {
+    return cl_list(3, a, b, c);
+}
+
 cl_object call(const char *s) {
     return cl_list(1, ecl_read_from_cstring(s));
 }
@@ -137,6 +141,7 @@ extern float cfloat(const cl_object o);
 extern const char* cstr(const cl_object o);
 extern cl_object list(void);
 extern cl_object list2(cl_object a, cl_object b);
+extern cl_object list3(cl_object a, cl_object b, cl_object c);
 extern cl_object add(cl_object l, cl_object arg);
 extern cl_object call(const char *s);
 extern cl_object readstr(const char *s);

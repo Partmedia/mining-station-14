@@ -23,7 +23,7 @@ public class WarperSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly WarpPointSystem _warpPointSystem = default!;
 
-    private int dungeonLevel = 0;
+    public int dungeonLevel = 0;
 
     public override void Initialize()
     {
