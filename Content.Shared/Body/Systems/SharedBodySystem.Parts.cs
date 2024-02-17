@@ -90,12 +90,13 @@ public partial class SharedBodySystem
         EntityUid parent,
         BodyPartType partType,
         string species,
-        BodyPartComponent? part = null)
+        BodyPartComponent? part = null,
+        Boolean? wearable = false)
     {
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var slot = new BodyPartSlot(slotId, parent, partType,species);
+        var slot = new BodyPartSlot(slotId, parent, partType,species,wearable);
         part.Children.Add(slotId, slot);
 
         return slot;
@@ -105,7 +106,8 @@ public partial class SharedBodySystem
         EntityUid? parentId,
         string id,
         [NotNullWhen(true)] out BodyPartSlot? slot,
-        BodyPartComponent? parent = null)
+        BodyPartComponent? parent = null,
+        Boolean? wearable = false)
     {
         slot = null;
 
@@ -113,12 +115,28 @@ public partial class SharedBodySystem
             !Resolve(parentId.Value, ref parent, false))
             return false;
 
-        slot = new BodyPartSlot(id, parentId.Value, null,parent.Species);
+        slot = new BodyPartSlot(id, parentId.Value, null, parent.Species, wearable);
         if (!parent.Children.TryAdd(id, slot))
         {
             slot = null;
             return false;
         }
+
+        return true;
+    }
+
+    public bool TryRemovePartSlot(
+        EntityUid parentId,
+        string id,
+        BodyPartComponent parent)
+    {
+        //do not allow removal of slot if it is occupied
+        var slot = parent.Children[id];
+        if (slot.Child is not null)
+            return false;
+
+        //otherwise, remove from parent part
+        parent.Children.Remove(id);
 
         return true;
     }
