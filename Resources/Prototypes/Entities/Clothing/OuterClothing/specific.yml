@@ -27,8 +27,8 @@
   description: A machine arm with a neural interface that grants its wearer an additional manipulator!
   components:
     - type: Sprite
-      sprite: Clothing/OuterClothing/Vests/vest.rsi
+      sprite: Clothing/OuterClothing/Misc/helpinghand.rsi
       netsync: false
     - type: Clothing
-      sprite: Clothing/OuterClothing/Vests/vest.rsi
+      sprite: Clothing/OuterClothing/Misc/helpinghand.rsi
     - type: HelpingHand
