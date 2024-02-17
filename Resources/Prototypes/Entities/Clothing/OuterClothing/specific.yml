@@ -32,3 +32,4 @@
     - type: Clothing
       sprite: Clothing/OuterClothing/Misc/helpinghand.rsi
     - type: HelpingHand
+    - type: SurgeryGown
