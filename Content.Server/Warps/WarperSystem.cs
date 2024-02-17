@@ -41,6 +41,8 @@ public class WarperSystem : EntitySystem
     {
         if (component.Dungeon)
         {
+            // Destination is next level
+            dungeonLevel++;
             var dMap = _mapManager.CreateMap();
             var map = _map.LoadMap(dMap, "/Mining/Maps/Templates/dungeon.yml");
             var gravity = _entMan.EnsureComponent<GravityComponent>(map.First());
@@ -51,11 +53,8 @@ public class WarperSystem : EntitySystem
             var upDest = _entMan.SpawnEntity("WarpPoint", Transform(uid).Coordinates);
             if (TryComp<WarpPointComponent>(upDest, out var upWarp))
             {
-                upWarp.ID = $"dlvl{dungeonLevel}down";
+                upWarp.ID = $"dlvl{dungeonLevel - 1}down";
             }
-
-            // Destination is next level
-            dungeonLevel++;
             component.ID = $"dlvl{dungeonLevel}up";
 
             // find stairs up, create warp destination
