@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ClothingOuterBase
   id: ClothingOuterChameleon
   name: vest
@@ -19,3 +19,16 @@
       interfaces:
         - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: ClothingOuterBase
+  id: HelpingHandHarness
+  name: helping hand harness
+  description: A machine arm with a neural interface that grants its wearer an additional manipulator!
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Vests/vest.rsi
+      netsync: false
+    - type: Clothing
+      sprite: Clothing/OuterClothing/Vests/vest.rsi
+    - type: HelpingHand

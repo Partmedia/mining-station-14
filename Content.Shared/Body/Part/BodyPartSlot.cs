@@ -5,7 +5,7 @@ namespace Content.Shared.Body.Part;
 
 [Serializable, NetSerializable]
 [DataRecord]
-public sealed record BodyPartSlot(string Id, EntityUid Parent, BodyPartType? Type, String Species)
+public sealed record BodyPartSlot(string Id, EntityUid Parent, BodyPartType? Type, String Species, Boolean? Wearable = false)
 {
     /// <summary>
     /// the body part occupying the slot
@@ -25,8 +25,9 @@ public sealed record BodyPartSlot(string Id, EntityUid Parent, BodyPartType? Typ
     /// </summary>
     public bool IsRoot = false;
 
+
     // Rider doesn't suggest explicit properties during deconstruction without this
-    public void Deconstruct(out EntityUid? child, out EntityUid? attachment, out string id, out EntityUid parent, out BodyPartType? type, out bool cauterised, out string species)
+    public void Deconstruct(out EntityUid? child, out EntityUid? attachment, out string id, out EntityUid parent, out BodyPartType? type, out bool cauterised, out string species, out Boolean? wearable)
     {
         child = Child;
         attachment = Attachment;
@@ -35,5 +36,6 @@ public sealed record BodyPartSlot(string Id, EntityUid Parent, BodyPartType? Typ
         type = Type;
         cauterised = Cauterised;
         species = Species;
+        wearable = Wearable;
     }
 }

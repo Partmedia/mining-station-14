@@ -453,7 +453,8 @@ namespace Content.Server.Surgery
                 {
                     foreach (KeyValuePair<string, BodyPartSlot> partSlot in bodyPartComp.Children)
                     {
-                        bodyPartSlots.Add(partSlot.Value);
+                        if (partSlot.Value.Wearable is null || !partSlot.Value.Wearable.Value) //don't track if the part is just a wearable
+                            bodyPartSlots.Add(partSlot.Value);
                     }
                 }
             }
