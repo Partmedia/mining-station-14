@@ -339,4 +339,29 @@ namespace Content.Server.StationEvents
         {
         }
     }
+
+    [UsedImplicitly]
+    public sealed class DungeonRuleSystem : GameRuleSystem
+    {
+        public override string Prototype => "DungeonRuleSystem";
+
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+
+        private string OldPool;
+
+        public override void Added()
+        {
+            OldPool = _configurationManager.GetCVar(CCVars.GameMapPool);
+            _configurationManager.SetCVar(CCVars.GameMapPool, "DungeonMapPool");
+        }
+
+        public override void Started()
+        {
+        }
+
+        public override void Ended()
+        {
+            _configurationManager.SetCVar(CCVars.GameMapPool, OldPool);
+        }
+    }
 }

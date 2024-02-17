@@ -135,4 +135,5 @@
   name: Dungeon
   description: Your brave group of miners have been assigned to investigate an anomalous asteroid. What dangers will it bring?
   rules:
+    - DungeonRuleSystem
     - MiningProfitManager
