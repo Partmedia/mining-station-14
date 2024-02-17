@@ -32,19 +32,16 @@ using Content.Server.Warps;
 namespace Content.Server.StationEvents
 {
     [UsedImplicitly]
-    public sealed class MiningEventScheduler : GameRuleSystem
+    public sealed class MiningProfitManager : GameRuleSystem
     {
-        public override string Prototype => "MiningEventScheduler";
+        public override string Prototype => "MiningProfitManager";
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly EventManagerSystem _event = default!;
         [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly PricingSystem _pricingSystem = default!;
-        [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly WarperSystem _dungeon = default!;
 
         private readonly HttpClient _httpClient = new();
@@ -54,13 +51,6 @@ namespace Content.Server.StationEvents
             "/Mining/Audio/big_john.ogg",
             "/Mining/Audio/working.ogg"
         };
-
-        /// <summary>
-        /// How long until the next check for an event runs
-        /// </summary>
-        /// Default value is how long until first event is allowed
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _timeUntilNextEvent;
 
         private int startValue = 0;
 
@@ -79,7 +69,6 @@ namespace Content.Server.StationEvents
         public override void Started()
         {
             players = new SortedSet<string>();
-            ResetTimer(true);
             _soundSystem.DispatchGlobalEventMusic(RandomExtensions.Pick(_random, 音乐));
             ReportRound(Loc.GetString("round-started"));
         }
@@ -144,59 +133,6 @@ namespace Content.Server.StationEvents
                 }
             }
             return (int)total;
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            if (!RuleStarted || !_event.EventsEnabled)
-                return;
-
-            if (_timeUntilNextEvent > 0)
-            {
-                _timeUntilNextEvent -= frameTime;
-                return;
-            }
-
-            string result = RunMiningEvent();
-            Logger.Debug(result);
-            ResetTimer(false);
-        }
-
-        /// <summary>
-        /// Randomly runs a valid event.
-        /// </summary>
-        public string RunMiningEvent()
-        {
-            List<string> events = new List<string>{"MeteorSwarm","Quake"};
-            string randomEvent = _random.Pick(events);
-            if (!_prototype.TryIndex<GameRulePrototype>(randomEvent, out var proto))
-            {
-                var errStr = Loc.GetString("station-event-system-run-random-event-no-valid-events");
-                return errStr;
-            }
-
-            GameTicker.AddGameRule(proto);
-            var str = Loc.GetString("station-event-system-run-event",("eventName", randomEvent));
-            return str;
-        }
-
-        /// <summary>
-        /// Set the time for the next meteor swarm. Meteor swarms increase in frequency
-        /// as the round goes on.
-        ///
-        /// We need to be told whether or not we just got started, because RoundDuration is
-        /// only updated after the first Update of a round, i.e. reading RoundDuration gets
-        /// us the duration of the last round when starting a new one.
-        /// </summary>
-        private void ResetTimer(bool start)
-        {
-            var minsInRound = start ? 0 : _gameTicker.RoundDuration().TotalMinutes;
-            var mt = Math.Max(35-2*Math.Sqrt(minsInRound), 6);
-            var st = mt/3;
-            _timeUntilNextEvent = _random.Next(60*(int)(mt-st), 60*(int)(mt+st));
-            Logger.InfoS("mining", $"Next station event in {(int)(_timeUntilNextEvent/60)} minutes ({minsInRound} mins in round, mean {mt}, s {st})");
         }
 
         private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -321,6 +257,86 @@ namespace Content.Server.StationEvents
         {
             [JsonPropertyName("content")]
             public String Content { get; set; }
+        }
+    }
+
+    [UsedImplicitly]
+    public sealed class MiningEventSchedulerSystem : GameRuleSystem
+    {
+        public override string Prototype => "MiningEventSchedulerSystem";
+
+        /// <summary>
+        /// How long until the next check for an event runs
+        /// </summary>
+        /// Default value is how long until first event is allowed
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _timeUntilNextEvent;
+
+        [Dependency] private readonly EventManagerSystem _event = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
+        public override void Started()
+        {
+            ResetTimer(true);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            if (!RuleStarted || !_event.EventsEnabled)
+                return;
+
+            if (_timeUntilNextEvent > 0)
+            {
+                _timeUntilNextEvent -= frameTime;
+                return;
+            }
+
+            string result = RunMiningEvent();
+            Logger.Debug(result);
+            ResetTimer(false);
+        }
+
+        /// <summary>
+        /// Randomly runs a valid event.
+        /// </summary>
+        public string RunMiningEvent()
+        {
+            List<string> events = new List<string>{"MeteorSwarm","Quake"};
+            string randomEvent = _random.Pick(events);
+            if (!_prototype.TryIndex<GameRulePrototype>(randomEvent, out var proto))
+            {
+                var errStr = Loc.GetString("station-event-system-run-random-event-no-valid-events");
+                return errStr;
+            }
+
+            GameTicker.AddGameRule(proto);
+            var str = Loc.GetString("station-event-system-run-event",("eventName", randomEvent));
+            return str;
+        }
+
+        /// <summary>
+        /// Set the time for the next meteor swarm. Meteor swarms increase in frequency
+        /// as the round goes on.
+        ///
+        /// We need to be told whether or not we just got started, because RoundDuration is
+        /// only updated after the first Update of a round, i.e. reading RoundDuration gets
+        /// us the duration of the last round when starting a new one.
+        /// </summary>
+        private void ResetTimer(bool start)
+        {
+            var minsInRound = start ? 0 : _gameTicker.RoundDuration().TotalMinutes;
+            var mt = Math.Max(35-2*Math.Sqrt(minsInRound), 6);
+            var st = mt/3;
+            _timeUntilNextEvent = _random.Next(60*(int)(mt-st), 60*(int)(mt+st));
+            Logger.InfoS("mining", $"Next station event in {(int)(_timeUntilNextEvent/60)} minutes ({minsInRound} mins in round, mean {mt}, s {st})");
+        }
+
+        public override void Ended()
+        {
         }
     }
 }
