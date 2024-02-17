@@ -28,7 +28,7 @@ public class WarperSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<WarperComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<WarperComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnCleanup);
     }
 
@@ -37,7 +37,7 @@ public class WarperSystem : EntitySystem
         dungeonLevel = 0;
     }
 
-    private void OnInteractHand(EntityUid uid, WarperComponent component, InteractHandEvent args)
+    private void OnActivate(EntityUid uid, WarperComponent component, ActivateInWorldEvent args)
     {
         if (component.Dungeon)
         {
