@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Body.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -8,6 +9,10 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.Body.Systems;
+using Content.Shared.Body.Part;
+using Content.Shared.Body.Organ;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Damage
 {
@@ -15,7 +20,9 @@ namespace Content.Shared.Damage
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedBodySystem _body = default!;
         [Dependency] private readonly INetManager _netMan = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
         {
@@ -189,7 +196,170 @@ namespace Content.Shared.Damage
 
             if (!delta.Empty)
             {
-                DamageChanged(damageable, delta, interruptsDoAfters, origin);
+                //check for body component
+                if (TryComp<BodyComponent>(uid, out var body))
+                {
+                    //TODO properly parameterise this - cba right now
+                    List<string> integrityDamages = new List<string> { "Blunt", "Piercing", "Slash" };
+                    List<string> containerDamages = new List<string> { "Piercing" };
+                    List<string> criticalDamages = new List<string> { "Slash" };
+
+                    //check if damage brute (blunt, piercing, slash)
+                    foreach (KeyValuePair<string, FixedPoint2> entry in delta.DamageDict)
+                    {
+                        var damageType = entry.Key;
+                        var damageValue = entry.Value;
+
+                        Logger.Debug(entry.Key);
+                        Logger.Debug(entry.Value.ToString());
+
+                        if (!integrityDamages.Contains(damageType))
+                            continue;
+
+                        //Get all (non-wearable) parts
+                        var bodyPartSlots = _body.GetBodyAllSlots(uid, body);
+                        List<BodyPartComponent> bodyParts = new List<BodyPartComponent> { };
+                        foreach (var slot in bodyPartSlots)
+                        {
+                            if (slot.Child != null && TryComp<BodyPartComponent>(slot.Child.Value, out var part) ) //TODO && !part.Wearable
+                                bodyParts.Add(part);
+                        }
+                        if (body.Root is not null && body.Root.Child is not null && TryComp<BodyPartComponent>(body.Root.Child.Value, out var rootPart))
+                        {
+                            bodyParts.Add(rootPart);
+                        }
+
+                        List<List<int>> hitRanges = new List<List<int>> { };
+                        var hitChanceTotal = 0;
+                        //Get all HitChance values of all parts, add together for total, generate random number from 0 to total
+                        for (var i = 0; i < bodyParts.Count(); i++)
+                        {
+                            List<int> range = new List<int> { hitChanceTotal + 1, hitChanceTotal + bodyParts[i].HitChance };
+                            hitChanceTotal += bodyParts[i].HitChance;
+                            hitRanges.Add(range);
+                        }
+
+                        if (hitChanceTotal < 1)
+                            continue;
+
+                        var hitNum = _random.Next(1, hitChanceTotal+1);
+                        var hitPartIndex = 0;
+                        for (var i = 0; i < hitRanges.Count(); i++)
+                        {
+                            //select part that the number falls in range of
+                            if (hitNum >= hitRanges[i][0] && hitNum <= hitRanges[i][1])
+                            {
+                                hitPartIndex = i;
+                                break;
+                            }
+                        }
+
+                        var hitPart = bodyParts[hitPartIndex];
+
+                        if (hitPart.Container && containerDamages.Contains(damageType))
+                        {
+                            //if the selected part is an organ container and the damage is piercing,
+                            //generate a random number from 1 to the max integrity of the container part
+                            var organDamage = _random.Next(1, (int)Math.Round((double)hitPart.MaxIntegrity)+1);
+                            //if the number is greater than the current integrity of the part,
+                            //redirect the difference (if available) to an organ
+                            if (organDamage > hitPart.Integrity)
+                            {
+                                organDamage -= hitPart.Integrity;
+                                if (organDamage > damageValue)
+                                    organDamage = (int)Math.Round((double)damageValue);
+                                damageValue -= organDamage;
+                            }
+
+                            List<OrganComponent> partOrgans = new List<OrganComponent> { };
+                            foreach (KeyValuePair<string, OrganSlot> organSlot in hitPart.Organs)
+                            {
+                                if (organSlot.Value.Child is not null && TryComp<OrganComponent>(organSlot.Value.Child.Value, out var organ))
+                                    partOrgans.Add(organ);
+                            }
+
+                            List<List<int>> organHitRanges = new List<List<int>> { };
+                            var organHitChanceTotal = 0;
+                            //Get all HitChance values of all parts, add together for total, generate random number from 0 to total
+                            for (var i = 0; i < partOrgans.Count(); i++)
+                            {
+                                List<int> range = new List<int> { organHitChanceTotal + 1, organHitChanceTotal + partOrgans[i].HitChance };
+                                organHitChanceTotal += partOrgans[i].HitChance;
+                                organHitRanges.Add(range);
+                            }
+
+                            if (organHitChanceTotal > 0)
+                            {
+                                var organHitNum = _random.Next(1, organHitChanceTotal+1);
+                                var organHitPartIndex = 0;
+                                for (var i = 0; i < hitRanges.Count(); i++)
+                                {
+                                    //select part that the number falls in range of
+                                    if (organHitNum >= organHitRanges[i][0] && organHitNum <= organHitRanges[i][1])
+                                    {
+                                        organHitPartIndex = i;
+                                        break;
+                                    }
+                                }
+
+                                var hitOrgan = partOrgans[organHitPartIndex];
+
+                                //TODO implement integrity
+                                //_integrity.ChangeOrganIntegrity(hitOrgan.Owner,hitOrgan,organDamage)
+                                Logger.Debug("DEALING ORGAN DAMAGE");
+                            }
+                        }
+
+                        //after (and if) organ damage is subtracted, apply damage to part
+                        var isRoot = false;
+                        if (body.Root is not null && body.Root.Child is not null && body.Root.Child.Value == hitPart.Owner)
+                            isRoot = true;
+                        Logger.Debug(isRoot.ToString());
+
+                        //if the not part is not root and the damage type is slash, roll for a crit hit
+                        if (!isRoot && criticalDamages.Contains(damageType))
+                        {
+                            //roll from 1 to max integrity, if the result is greater than the part's current integrity,
+                            //apply integrity damage equal to current integrity
+                            var critHit = _random.Next(1, (int) Math.Round((double) hitPart.MaxIntegrity)+1);
+                            if (critHit > hitPart.Integrity)
+                            {
+                                Logger.Debug("DEALING CRITICAL SLASH DAMAGE");
+                                Logger.Debug(hitPart.PartType.ToString());
+                                //TODO implement integrity
+                                //_integrity.ChangePartIntegrity(hitPart.Owner,hitPart,damageValue)
+                            }
+                            //otherwise, apply integrity damage as normal
+                            else
+                            {
+                                Logger.Debug("DEALING PART DAMAGE");
+                                Logger.Debug(hitPart.PartType.ToString());
+                                //TODO implement integrity
+                                //_integrity.ChangePartIntegrity(hitPart.Owner,hitPart,damageValue)
+                            }
+                        }
+                        else
+                        {
+                            Logger.Debug("DEALING PART DAMAGE");
+                            Logger.Debug(hitPart.PartType.ToString());
+                            //TODO implement integrity
+                            //_integrity.ChangePartIntegrity(hitPart.Owner,hitPart,damageValue) 
+                        }
+
+                        //where applied as integrity damage, remove from delta unless applied to root part
+                        if (isRoot)
+                        {
+                            Logger.Debug("ROOT PART HIT");
+                            delta.DamageDict[damageType] = damageValue;
+                        }
+                        else
+                        {
+                            Logger.Debug("NEGATING MAIN DAMAGE");
+                            delta.DamageDict[damageType] = 0;
+                        }
+                    }
+                }
+                DamageChanged(damageable, delta, interruptsDoAfters, origin);             
             }
 
             return delta;

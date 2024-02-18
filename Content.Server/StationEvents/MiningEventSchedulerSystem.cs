@@ -347,7 +347,7 @@ namespace Content.Server.StationEvents
 
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
-        private string OldPool;
+        private string OldPool = "";
 
         public override void Added()
         {

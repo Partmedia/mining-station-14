@@ -464,7 +464,7 @@ namespace Content.Server.Surgery
         /// <summary>
         /// Get all body part slots attached to everybody part attached to the initally submitted part (usually the torso to start)
         /// </summary>
-        private List<BodyPartSlot> GetAllBodyPartSlots(EntityUid bodyOwner)
+        public List<BodyPartSlot> GetAllBodyPartSlots(EntityUid bodyOwner)
         {
 
             EntityUid? rootPart; // = body.Root.Child;
@@ -544,7 +544,7 @@ namespace Content.Server.Surgery
             return organSlots;
         }
 
-        private List<OrganSlot> GetAllPartOrganSlots(List<BodyPartSlot> bodyPartSlots)
+        public List<OrganSlot> GetAllPartOrganSlots(List<BodyPartSlot> bodyPartSlots)
         {
             List<OrganSlot> organSlots = new List<OrganSlot>();
 

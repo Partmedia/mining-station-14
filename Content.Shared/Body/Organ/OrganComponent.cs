@@ -29,4 +29,23 @@ public sealed class OrganComponent : Component
     //number of times cellular damage has been dealt because of species mismatch - should be reset to 0 on removal
     [DataField("rejectionCounter")]
     public int RejectionCounter = 0;
+
+    //when integrity reaches zero, remove the organ
+    [DataField("integrity")]
+    public float Integrity = 50;
+
+    [DataField("maxIntegrity")]
+    public float MaxIntegrity = 50;
+
+    [DataField("healingTime")]
+    public float HealingTime = 30;
+
+    public float HealingTimer = 0;
+
+    [DataField("selfHealingAmount")]
+    public float SelfHealingAmount = 5;
+
+    //change relative to other organs that this organ gets hit
+    [DataField("hitChance")]
+    public int HitChance = 1;
 }
