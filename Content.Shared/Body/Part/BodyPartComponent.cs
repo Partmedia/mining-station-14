@@ -88,5 +88,22 @@ public sealed class BodyPartComponent : Component
     [ViewVariables]
     public bool ExoOpened = false; //gotta get through the shell or whatever it is (if they have them)
 
+    //when integrity reaches zero, the part will eject from its slot
+    [DataField("integrity")]
+    public int Integrity = 100;
 
+    [DataField("maxIntegrity")]
+    public int MaxIntegrity = 100;
+
+    [DataField("healingTime")]
+    public float HealingTime = 30;
+
+    public float HealingTimer = 0;
+
+    [DataField("selfHealingAmount")]
+    public int SelfHealingAmount = 5;
+
+    //change relative to other part that this part gets hit
+    [DataField("hitChance")]
+    public int HitChance = 1;
 }

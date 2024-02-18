@@ -315,12 +315,7 @@ namespace Content.Server.StationEvents
         private bool OldSupercond;
         private int KillCount;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-            SubscribeLocalEvent<HTNComponent, MobStateChangedEvent>(OnMobDied);
-        }
+        private string OldPool = "";
 
         public override void Added()
         {
