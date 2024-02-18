@@ -111,6 +111,7 @@ namespace Content.Server.Atmos.Miasma
                     _damageableSystem.TryChangeDamage(perishable.Owner, damage, true, true, origin: perishable.Owner);
                 }
 
+#if ROT_PRODUCES_MIASMA
                 if (!TryComp<PhysicsComponent>(perishable.Owner, out var physics))
                     continue;
                 // We need a way to get the mass of the mob alone without armor etc in the future
@@ -122,6 +123,7 @@ namespace Content.Server.Atmos.Miasma
 
                 var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
                 tileMix?.AdjustMoles(Gas.Miasma, molRate * physics.FixturesMass);
+#endif
             }
         }
 
