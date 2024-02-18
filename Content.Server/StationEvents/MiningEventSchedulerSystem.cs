@@ -348,11 +348,14 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         private string OldPool;
+        private bool OldSupercond;
 
         public override void Added()
         {
             OldPool = _configurationManager.GetCVar(CCVars.GameMapPool);
             _configurationManager.SetCVar(CCVars.GameMapPool, "DungeonMapPool");
+            OldSupercond = _configurationManager.GetCVar(CCVars.Superconduction);
+            _configurationManager.SetCVar(CCVars.Superconduction, false);
         }
 
         public override void Started()
@@ -362,6 +365,7 @@ namespace Content.Server.StationEvents
         public override void Ended()
         {
             _configurationManager.SetCVar(CCVars.GameMapPool, OldPool);
+            _configurationManager.SetCVar(CCVars.Superconduction, OldSupercond);
         }
     }
 }
