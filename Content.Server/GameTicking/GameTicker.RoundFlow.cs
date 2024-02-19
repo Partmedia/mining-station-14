@@ -22,6 +22,12 @@ using System.Threading.Tasks;
 using Content.Shared.Database;
 using Robust.Shared.Asynchronous;
 
+using System.Net.Http;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using System.Text;
+
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
@@ -68,6 +74,8 @@ namespace Content.Server.GameTicking
 
         [ViewVariables]
         public int RoundId { get; private set; }
+
+        private readonly HttpClient _httpClient = new();
 
         /// <summary>
         /// Returns true if the round's map is eligible to be updated.
@@ -265,6 +273,7 @@ namespace Content.Server.GameTicking
             _roundStartFailCount = 0;
 #endif
             _startingRound = false;
+            ReportRound(Loc.GetString("round-started"));
         }
 
         private void RefreshLateJoinAllowed()
@@ -299,6 +308,7 @@ namespace Content.Server.GameTicking
             // Let things add text here.
             var textEv = new RoundEndTextAppendEvent();
             RaiseLocalEvent(textEv);
+            ReportRound(textEv.Summary);
 
             var roundEndText = $"{text}\n{textEv.Text}";
 
@@ -362,6 +372,30 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
                 listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong,
                 new SoundCollectionSpecifier("RoundEnd").GetSound()));
+        }
+
+        private async Task ReportRound(String message)
+        {
+            Logger.InfoS("discord", message);
+            String _webhookUrl = _configurationManager.GetCVar(CCVars.DiscordRoundEndWebook);
+            if (_webhookUrl == string.Empty)
+                return;
+
+            var payload = new WebhookPayload{ Content = message };
+            var ser_payload = JsonSerializer.Serialize(payload);
+            var content = new StringContent(ser_payload, Encoding.UTF8, "application/json");
+            var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true", content);
+            var reply = await request.Content.ReadAsStringAsync();
+            if (!request.IsSuccessStatusCode)
+            {
+                Logger.ErrorS("mining", $"Discord returned bad status code when posting message: {request.StatusCode}\nResponse: {reply}");
+            }
+        }
+
+        private struct WebhookPayload
+        {
+            [JsonPropertyName("content")]
+            public String Content { get; set; }
         }
 
         public void RestartRound()
@@ -716,6 +750,12 @@ namespace Content.Server.GameTicking
 
             Text += text;
             _doNewLine = true;
+        }
+
+        public string Summary;
+        public void AddSummary(string summary)
+        {
+            Summary += summary;
         }
     }
 }

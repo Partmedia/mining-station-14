@@ -19,12 +19,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-using System.Net.Http;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Text;
-using System.Threading.Tasks;
 using Content.Server.MiningCredits;
 using Content.Server.Mind.Components;
 
@@ -43,9 +37,6 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly PricingSystem _pricingSystem = default!;
-        [Dependency] private readonly WarperSystem _dungeon = default!;
-
-        private readonly HttpClient _httpClient = new();
 
         private IReadOnlyList<string> 音乐 = new List<string>{
             "/Mining/Audio/16tons.ogg",
@@ -71,7 +62,6 @@ namespace Content.Server.StationEvents
         {
             players = new SortedSet<string>();
             _soundSystem.DispatchGlobalEventMusic(RandomExtensions.Pick(_random, 音乐));
-            ReportRound(Loc.GetString("round-started"));
         }
 
         private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
@@ -147,9 +137,6 @@ namespace Content.Server.StationEvents
 
             foreach (var station in _station.Stations)
             {
-                if (_dungeon.dungeonLevel > 0)
-                    ev.AddLine(Loc.GetString("dungeon-level", ("depth", _dungeon.dungeonLevel)));
-
                 int profit = 0;
                 if (!TryComp<StationBankAccountComponent>(station, out var bankComponent))
                 {
@@ -181,10 +168,7 @@ namespace Content.Server.StationEvents
                 ev.AddLine("");
                 ev.AddLine(profitStrings.Item1);
 
-                if (_dungeon.dungeonLevel > 0)
-                    ReportRound(Loc.GetString("team-profit-depth", ("team", ListPlayers(profitStrings.Item2)), ("profit", profit), ("depth", _dungeon.dungeonLevel)));
-                else
-                    ReportRound(Loc.GetString("team-profit", ("team", ListPlayers(profitStrings.Item2)), ("profit", profit)));
+                ev.AddSummary(Loc.GetString("team-profit", ("team", ListPlayers(profitStrings.Item2)), ("profit", profit)));
                 LogProfit(profit, profitStrings.Item2);
             }
         }
@@ -234,30 +218,6 @@ namespace Content.Server.StationEvents
         {
             var endText = String.Format("The team of {0} made a profit of {1} spacebucks.", ListPlayers(players), profit);
             Logger.InfoS("mining", "profit:{0}", endText);
-        }
-
-        private async Task ReportRound(String message)
-        {
-            Logger.InfoS("discord", message);
-            String _webhookUrl = _configurationManager.GetCVar(CCVars.DiscordRoundEndWebook);
-            if (_webhookUrl == string.Empty)
-                return;
-
-            var payload = new WebhookPayload{ Content = message };
-            var ser_payload = JsonSerializer.Serialize(payload);
-            var content = new StringContent(ser_payload, Encoding.UTF8, "application/json");
-            var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true", content);
-            var reply = await request.Content.ReadAsStringAsync();
-            if (!request.IsSuccessStatusCode)
-            {
-                Logger.ErrorS("mining", $"Discord returned bad status code when posting message: {request.StatusCode}\nResponse: {reply}");
-            }
-        }
-
-        private struct WebhookPayload
-        {
-            [JsonPropertyName("content")]
-            public String Content { get; set; }
         }
     }
 
@@ -348,9 +308,16 @@ namespace Content.Server.StationEvents
 
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly WarperSystem _dungeon = default!;
 
         private string OldPool;
         private bool OldSupercond;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        }
 
         public override void Added()
         {
@@ -363,6 +330,19 @@ namespace Content.Server.StationEvents
         public override void Started()
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("dungeon-intro"));
+        }
+
+        private void OnRoundEndText(RoundEndTextAppendEvent ev)
+        {
+            if (!RuleStarted)
+                return;
+
+            if (_dungeon.dungeonLevel > 0)
+            {
+                string depth = Loc.GetString("dungeon-level", ("depth", _dungeon.dungeonLevel));
+                ev.AddLine(depth);
+                ev.AddSummary(depth);
+            }
         }
 
         public override void Ended()

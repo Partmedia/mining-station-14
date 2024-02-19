@@ -10,6 +10,5 @@ station-power-costs = Electricity bill: {$energy} kWHr = {$amount}
 
 station-profit = The station made a profit of {$profit} spacebucks.
 team-profit = The team of {$team} made a profit of {$profit} spacebucks.
-team-profit-depth = The team of {$team} made a profit of {$profit} spacebucks and reached a maximum dungeon level of {$depth}.
 
 power-tracker-examine = Purchasing {$power} kW (total of {$totalEnergy} kWHr costing {$totalPrice}).
