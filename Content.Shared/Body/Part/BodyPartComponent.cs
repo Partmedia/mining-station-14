@@ -90,10 +90,10 @@ public sealed class BodyPartComponent : Component
 
     //when integrity reaches zero, the part will eject from its slot
     [DataField("integrity")]
-    public int Integrity = 100;
+    public float Integrity = 100;
 
     [DataField("maxIntegrity")]
-    public int MaxIntegrity = 100;
+    public float MaxIntegrity = 100;
 
     [DataField("healingTime")]
     public float HealingTime = 30;
@@ -101,7 +101,7 @@ public sealed class BodyPartComponent : Component
     public float HealingTimer = 0;
 
     [DataField("selfHealingAmount")]
-    public int SelfHealingAmount = 5;
+    public float SelfHealingAmount = 5;
 
     //change relative to other part that this part gets hit
     [DataField("hitChance")]

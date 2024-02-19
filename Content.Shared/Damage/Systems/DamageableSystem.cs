@@ -204,14 +204,15 @@ namespace Content.Shared.Damage
                     List<string> containerDamages = new List<string> { "Piercing" };
                     List<string> criticalDamages = new List<string> { "Slash" };
 
+                    //init these here so if multi damage is at play they all hit the same part/organ
+                    var hitPartIndex = -1;
+                    var organHitPartIndex = -1;
+
                     //check if damage brute (blunt, piercing, slash)
                     foreach (KeyValuePair<string, FixedPoint2> entry in delta.DamageDict)
                     {
                         var damageType = entry.Key;
                         var damageValue = entry.Value;
-
-                        Logger.Debug(entry.Key);
-                        Logger.Debug(entry.Value.ToString());
 
                         if (!integrityDamages.Contains(damageType))
                             continue;
@@ -229,38 +230,40 @@ namespace Content.Shared.Damage
                             bodyParts.Add(rootPart);
                         }
 
-                        List<List<int>> hitRanges = new List<List<int>> { };
-                        var hitChanceTotal = 0;
-                        //Get all HitChance values of all parts, add together for total, generate random number from 0 to total
-                        for (var i = 0; i < bodyParts.Count(); i++)
+                        if (hitPartIndex < 0)
                         {
-                            List<int> range = new List<int> { hitChanceTotal + 1, hitChanceTotal + bodyParts[i].HitChance };
-                            hitChanceTotal += bodyParts[i].HitChance;
-                            hitRanges.Add(range);
-                        }
-
-                        if (hitChanceTotal < 1)
-                            continue;
-
-                        var hitNum = _random.Next(1, hitChanceTotal+1);
-                        var hitPartIndex = 0;
-                        for (var i = 0; i < hitRanges.Count(); i++)
-                        {
-                            //select part that the number falls in range of
-                            if (hitNum >= hitRanges[i][0] && hitNum <= hitRanges[i][1])
+                            List<List<int>> hitRanges = new List<List<int>> { };
+                            var hitChanceTotal = 0;
+                            //Get all HitChance values of all parts, add together for total, generate random number from 0 to total
+                            for (var i = 0; i < bodyParts.Count(); i++)
                             {
-                                hitPartIndex = i;
-                                break;
+                                List<int> range = new List<int> { hitChanceTotal + 1, hitChanceTotal + bodyParts[i].HitChance };
+                                hitChanceTotal += bodyParts[i].HitChance;
+                                hitRanges.Add(range);
                             }
-                        }
 
+                            if (hitChanceTotal < 1)
+                                continue;
+
+                            var hitNum = _random.Next(1, hitChanceTotal + 1);
+                            hitPartIndex = 0;
+                            for (var i = 0; i < hitRanges.Count(); i++)
+                            {
+                                //select part that the number falls in range of
+                                if (hitNum >= hitRanges[i][0] && hitNum <= hitRanges[i][1])
+                                {
+                                    hitPartIndex = i;
+                                    break;
+                                }
+                            }            
+                        }
                         var hitPart = bodyParts[hitPartIndex];
 
                         if (hitPart.Container && containerDamages.Contains(damageType))
                         {
                             //if the selected part is an organ container and the damage is piercing,
                             //generate a random number from 1 to the max integrity of the container part
-                            var organDamage = _random.Next(1, (int)Math.Round((double)hitPart.MaxIntegrity)+1);
+                            var organDamage = (float)_random.Next(1, (int)Math.Round((double)hitPart.MaxIntegrity)+1);
                             //if the number is greater than the current integrity of the part,
                             //redirect the difference (if available) to an organ
                             if (organDamage > hitPart.Integrity)
@@ -290,23 +293,24 @@ namespace Content.Shared.Damage
 
                             if (organHitChanceTotal > 0)
                             {
-                                var organHitNum = _random.Next(1, organHitChanceTotal+1);
-                                var organHitPartIndex = 0;
-                                for (var i = 0; i < hitRanges.Count(); i++)
+                                if (organHitPartIndex < 0)
                                 {
-                                    //select part that the number falls in range of
-                                    if (organHitNum >= organHitRanges[i][0] && organHitNum <= organHitRanges[i][1])
+                                    var organHitNum = _random.Next(1, organHitChanceTotal + 1);
+                                    organHitPartIndex = 0;
+                                    for (var i = 0; i < organHitRanges.Count(); i++)
                                     {
-                                        organHitPartIndex = i;
-                                        break;
+                                        //select part that the number falls in range of
+                                        if (organHitNum >= organHitRanges[i][0] && organHitNum <= organHitRanges[i][1])
+                                        {
+                                            organHitPartIndex = i;
+                                            break;
+                                        }
                                     }
                                 }
 
                                 var hitOrgan = partOrgans[organHitPartIndex];
 
-                                //TODO implement integrity
-                                //_integrity.ChangeOrganIntegrity(hitOrgan.Owner,hitOrgan,organDamage)
-                                Logger.Debug("DEALING ORGAN DAMAGE");
+                                _body.ChangeOrganIntegrity(hitOrgan.Owner, hitOrgan, organDamage);
                             }
                         }
 
@@ -314,7 +318,6 @@ namespace Content.Shared.Damage
                         var isRoot = false;
                         if (body.Root is not null && body.Root.Child is not null && body.Root.Child.Value == hitPart.Owner)
                             isRoot = true;
-                        Logger.Debug(isRoot.ToString());
 
                         //if the not part is not root and the damage type is slash, roll for a crit hit
                         if (!isRoot && criticalDamages.Contains(damageType))
@@ -322,40 +325,20 @@ namespace Content.Shared.Damage
                             //roll from 1 to max integrity, if the result is greater than the part's current integrity,
                             //apply integrity damage equal to current integrity
                             var critHit = _random.Next(1, (int) Math.Round((double) hitPart.MaxIntegrity)+1);
-                            if (critHit > hitPart.Integrity)
+
+                            if (critHit > hitPart.Integrity-damageValue)
                             {
-                                Logger.Debug("DEALING CRITICAL SLASH DAMAGE");
-                                Logger.Debug(hitPart.PartType.ToString());
-                                //TODO implement integrity
-                                //_integrity.ChangePartIntegrity(hitPart.Owner,hitPart,damageValue)
+                                _body.ChangePartIntegrity(hitPart.Owner, hitPart, hitPart.Integrity, isRoot);
                             }
                             //otherwise, apply integrity damage as normal
                             else
                             {
-                                Logger.Debug("DEALING PART DAMAGE");
-                                Logger.Debug(hitPart.PartType.ToString());
-                                //TODO implement integrity
-                                //_integrity.ChangePartIntegrity(hitPart.Owner,hitPart,damageValue)
+                                _body.ChangePartIntegrity(hitPart.Owner, hitPart, damageValue, isRoot);
                             }
                         }
                         else
                         {
-                            Logger.Debug("DEALING PART DAMAGE");
-                            Logger.Debug(hitPart.PartType.ToString());
-                            //TODO implement integrity
-                            //_integrity.ChangePartIntegrity(hitPart.Owner,hitPart,damageValue) 
-                        }
-
-                        //where applied as integrity damage, remove from delta unless applied to root part
-                        if (isRoot)
-                        {
-                            Logger.Debug("ROOT PART HIT");
-                            delta.DamageDict[damageType] = damageValue;
-                        }
-                        else
-                        {
-                            Logger.Debug("NEGATING MAIN DAMAGE");
-                            delta.DamageDict[damageType] = 0;
+                            _body.ChangePartIntegrity(hitPart.Owner, hitPart, damageValue, isRoot);
                         }
                     }
                 }
