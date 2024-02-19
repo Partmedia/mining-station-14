@@ -308,7 +308,7 @@ namespace Content.Server.GameTicking
             // Let things add text here.
             var textEv = new RoundEndTextAppendEvent();
             RaiseLocalEvent(textEv);
-            ReportRound(textEv.Summary);
+            ReportRound(textEv.Summary.Trim());
 
             var roundEndText = $"{text}\n{textEv.Text}";
 
@@ -755,7 +755,7 @@ namespace Content.Server.GameTicking
         public string Summary;
         public void AddSummary(string summary)
         {
-            Summary += summary;
+            Summary += summary + " ";
         }
     }
 }
