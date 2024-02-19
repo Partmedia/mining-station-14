@@ -19,9 +19,10 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
+using Content.Shared.Mobs;
 using Content.Server.MiningCredits;
 using Content.Server.Mind.Components;
-
+using Content.Server.NPC.HTN;
 using Content.Server.Warps;
 
 namespace Content.Server.StationEvents
@@ -312,11 +313,13 @@ namespace Content.Server.StationEvents
 
         private string OldPool;
         private bool OldSupercond;
+        private int KillCount;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+            SubscribeLocalEvent<HTNComponent, MobStateChangedEvent>(OnMobDied);
         }
 
         public override void Added()
@@ -330,6 +333,15 @@ namespace Content.Server.StationEvents
         public override void Started()
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("dungeon-intro"));
+            KillCount = 0;
+        }
+
+        private void OnMobDied(EntityUid mobUid, HTNComponent component, MobStateChangedEvent args)
+        {
+            if (!RuleStarted)
+                return;
+            if (args.NewMobState == MobState.Dead)
+                KillCount++;
         }
 
         private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -343,6 +355,10 @@ namespace Content.Server.StationEvents
                 ev.AddLine(depth);
                 ev.AddSummary(depth);
             }
+
+            string killcount = Loc.GetString("dungeon-kill-count", ("count", KillCount));
+            ev.AddLine(killcount);
+            ev.AddSummary(killcount);
         }
 
         public override void Ended()
