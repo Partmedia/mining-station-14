@@ -302,6 +302,51 @@ namespace Content.Server.Surgery
 
         }
 
+        public void SetBleedStatus(EntityUid uid, SurgeryComponent surgery, List<BodyPartSlot> bodyPartSlots, List<OrganSlot> organSlots)
+        {
+            if (TryComp<BloodstreamComponent>(uid, out var bloodstream))
+            {
+                //check clamp/cauterised/occupied status of all slots - if any are empty and not cauterised/clamped set either part or organ bleeding to true
+                var partNotClamped = false;
+                var currentPartBleed = surgery.PartBleeding;
+                var currentOrganBleed = surgery.OrganBleeding;
+                foreach (var slot in bodyPartSlots)
+                {
+                    if (slot.Child is null && !slot.Cauterised && (slot.Attachment is null || !TryComp<SurgeryToolComponent>(slot.Attachment, out var tool) || !tool.LargeClamp))
+                    {
+                        partNotClamped = true;
+                        break;
+                    }
+                }
+
+                surgery.PartBleeding = partNotClamped;
+                //if the patient has gone from not bleeding to bleeding, run an initial bloodloss
+                if (!currentPartBleed && surgery.PartBleeding)
+                {
+                    //if the part bleed is new but there was a bleeding organ, only make up the difference
+                    if (!currentOrganBleed)
+                        _bloodstreamSystem.TryModifyBloodLevel(uid, -surgery.InitialPartBloodloss, bloodstream);
+                    else
+                        _bloodstreamSystem.TryModifyBloodLevel(uid, -(Math.Abs(surgery.InitialPartBloodloss - surgery.InitialOrganBloodloss)), bloodstream);
+                }
+
+                var organNotClamped = false;
+
+                foreach (var slot in organSlots)
+                {
+                    if (slot.Child is null && !slot.Cauterised && (slot.Attachment is null || !TryComp<SurgeryToolComponent>(slot.Attachment, out var tool) || !tool.SmallClamp))
+                    {
+                        organNotClamped = true;
+                        break;
+                    }
+                }
+                surgery.OrganBleeding = organNotClamped;
+                //if the patient has gone from not bleeding to bleeding, run an initial bloodloss
+                if (!currentPartBleed && !currentOrganBleed && surgery.OrganBleeding)
+                    _bloodstreamSystem.TryModifyBloodLevel(uid, -surgery.InitialOrganBloodloss, bloodstream);
+            }
+        }
+
         /// <summary>
         /// Handles status effects such as bleeding and opened for when a part/organ/slot is affected
         /// Applies "shock" (airloss) damage is the body is not sedated
@@ -376,45 +421,7 @@ namespace Content.Server.Surgery
                         surgery.ClampedTimes.Remove(entity);
             }
 
-            if (TryComp<BloodstreamComponent>(uid, out var bloodstream)) {
-                //check clamp/cauterised/occupied status of all slots - if any are empty and not cauterised/clamped set either part or organ bleeding to true
-                var partNotClamped = false;
-                var currentPartBleed = surgery.PartBleeding;
-                var currentOrganBleed = surgery.OrganBleeding;
-                foreach (var slot in bodyPartSlots)
-                {
-                    if (slot.Child is null && !slot.Cauterised && (slot.Attachment is null || !TryComp<SurgeryToolComponent>(slot.Attachment, out var tool) || !tool.LargeClamp))
-                    {
-                        partNotClamped = true;
-                        break;
-                    }
-                }
-
-                surgery.PartBleeding = partNotClamped;
-                //if the patient has gone from not bleeding to bleeding, run an initial bloodloss
-                if (!currentPartBleed && surgery.PartBleeding) {
-                    //if the part bleed is new but there was a bleeding organ, only make up the difference
-                    if (!currentOrganBleed)
-                        _bloodstreamSystem.TryModifyBloodLevel(uid, -surgery.InitialPartBloodloss, bloodstream);
-                    else
-                        _bloodstreamSystem.TryModifyBloodLevel(uid, -(Math.Abs(surgery.InitialPartBloodloss - surgery.InitialOrganBloodloss)), bloodstream);
-                }
-
-                var organNotClamped = false;
-
-                foreach (var slot in organSlots)
-                {
-                    if (slot.Child is null && !slot.Cauterised && (slot.Attachment is null || !TryComp<SurgeryToolComponent>(slot.Attachment, out var tool) || !tool.SmallClamp))
-                    {
-                        organNotClamped = true;
-                        break;
-                    }
-                }
-                surgery.OrganBleeding = organNotClamped;
-                //if the patient has gone from not bleeding to bleeding, run an initial bloodloss
-                if (!currentPartBleed && !currentOrganBleed && surgery.OrganBleeding)
-                    _bloodstreamSystem.TryModifyBloodLevel(uid, -surgery.InitialOrganBloodloss, bloodstream);
-            }
+            //SetBleedStatus(uid, surgery, bodyPartSlots, organSlots);
         }
 
         /// <summary>
@@ -601,6 +608,9 @@ namespace Content.Server.Surgery
         {
             //SetBodyStatusFromChange();
             //SetBodyStatusFromChange();
+            var bodyPartSlots = GetAllBodyPartSlots(uid);
+            var organSlots = GetOpenPartOrganSlots(bodyPartSlots);
+            SetBleedStatus(uid, component, bodyPartSlots, organSlots);
             UpdateUiState(uid);
         }
 
@@ -608,6 +618,9 @@ namespace Content.Server.Surgery
         {
             //SetBodyStatusFromChange(uid, );
             //SetBodyStatusFromChange();
+            var bodyPartSlots = GetAllBodyPartSlots(uid);
+            var organSlots = GetOpenPartOrganSlots(bodyPartSlots);
+            SetBleedStatus(uid, component, bodyPartSlots, organSlots);
             UpdateUiState(uid);
         }
 
