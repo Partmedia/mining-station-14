@@ -3,6 +3,7 @@ using Content.Server.Audio;
 using Content.Server.Mind;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
@@ -345,6 +346,7 @@ namespace Content.Server.StationEvents
     {
         public override string Prototype => "DungeonRuleSystem";
 
+        [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         private string OldPool;
@@ -360,6 +362,7 @@ namespace Content.Server.StationEvents
 
         public override void Started()
         {
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("dungeon-intro"));
         }
 
         public override void Ended()

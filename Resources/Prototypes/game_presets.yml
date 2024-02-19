@@ -133,7 +133,7 @@
 - type: gamePreset
   id: Dungeon
   name: Dungeon
-  description: Your brave group of miners have been assigned to investigate an anomalous asteroid. What dangers will it bring?
+  description: Recover a powerful artifact hidden deep within the asteroid.
   rules:
     - DungeonRuleSystem
     - MiningProfitManager

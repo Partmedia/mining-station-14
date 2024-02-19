@@ -1,5 +1,6 @@
 using System.Linq;
 
+using Content.Server.Chat.Systems;
 using Content.Server.Ghost.Components;
 using Content.Server.Popups;
 using Content.Shared.GameTicking;
@@ -22,6 +23,7 @@ public class WarperSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly WarpPointSystem _warpPointSystem = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
 
     public int dungeonLevel = 0;
 
@@ -35,6 +37,17 @@ public class WarperSystem : EntitySystem
     private void OnCleanup(RoundRestartCleanupEvent ev)
     {
         dungeonLevel = 0;
+    }
+
+    private void RandomAnnounce(EntityUid uid, int dlvl)
+    {
+        string announcement;
+        if (dlvl == 1)
+            announcement = Loc.GetString("dungeon-enter-announce");
+        else
+            return;
+        var sender = Loc.GetString("admin-announce-announcer-default");
+        _chatSystem.DispatchStationAnnouncement(uid, announcement, sender);
     }
 
     private void OnActivate(EntityUid uid, WarperComponent component, ActivateInWorldEvent args)
@@ -78,6 +91,7 @@ public class WarperSystem : EntitySystem
 
             // don't generate again
             component.Dungeon = false;
+            RandomAnnounce(uid, dungeonLevel);
         }
 
         if (component.ID is null)
