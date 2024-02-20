@@ -9,8 +9,8 @@ using Content.Shared.NPC;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
-using ClimbableComponent = Content.Shared.Climbing.Components.ClimbableComponent;
-using ClimbingComponent = Content.Shared.Climbing.Components.ClimbingComponent;
+using ClimbableComponent = Content.Shared.Climbing.ClimbableComponent;
+// using ClimbingComponent = Content.Shared.Climbing.ClimbingComponent;
 
 namespace Content.Server.NPC.Systems;
 

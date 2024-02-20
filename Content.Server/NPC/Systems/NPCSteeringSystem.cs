@@ -7,7 +7,7 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.CCVar;
-using Content.Shared.Climbing.Systems;
+using Content.Shared.Climbing;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
@@ -28,6 +28,8 @@ using Robust.Shared.Utility;
 using Content.Shared.Prying.Systems;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Shared.Threading;
+using Robust.Shared.Players;
+
 
 namespace Content.Server.NPC.Systems;
 
