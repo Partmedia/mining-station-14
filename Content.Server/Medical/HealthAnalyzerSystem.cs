@@ -1,10 +1,11 @@
-using System.Threading;
+
 using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Disease;
 using Content.Server.Temperature.Components;
 using Content.Server.Popups;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
@@ -27,6 +28,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
 
         public override void Initialize()
@@ -34,6 +36,7 @@ namespace Content.Server.Medical
             base.Initialize();
             SubscribeLocalEvent<HealthAnalyzerComponent, ActivateInWorldEvent>(HandleActivateInWorld);
             SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<HealthAnalyzerComponent, DoAfterEvent>(OnDoAfter);
             SubscribeLocalEvent<TargetScanSuccessfulEvent>(OnTargetScanSuccessful);
             SubscribeLocalEvent<ScanCancelledEvent>(OnScanCancelled);
         }
@@ -117,26 +120,13 @@ namespace Content.Server.Medical
                 return;
             }
 
-            if (args.Target == null)
+            if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target))
                 return;
-
-            if (!args.CanReach)
-                return;
-
-            if (healthAnalyzer.CancelToken != null)
-                return;
-
-            if (!HasComp<MobStateComponent>(args.Target))
-                return;
-
-            healthAnalyzer.CancelToken = new CancellationTokenSource();
 
             _audio.PlayPvs(healthAnalyzer.ScanningBeginSound, uid);
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, healthAnalyzer.ScanDelay, healthAnalyzer.CancelToken.Token, target: args.Target)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, healthAnalyzer.ScanDelay, target: args.Target, used:uid)
             {
-                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(args.User, args.Target, healthAnalyzer),
-                BroadcastCancelledEvent = new ScanCancelledEvent(healthAnalyzer),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -144,37 +134,47 @@ namespace Content.Server.Medical
             });
         }
 
-        private void OnTargetScanSuccessful(TargetScanSuccessfulEvent args)
+        private void OnDoAfter(EntityUid uid, HealthAnalyzerComponent component, DoAfterEvent args)
         {
-            args.Component.CancelToken = null;
+            if (args.Handled || args.Cancelled || args.Args.Target == null)
+                return;
 
-            _audio.PlayPvs(args.Component.ScanningEndSound, args.User);
+            _audio.PlayPvs(component.ScanningEndSound, args.Args.User);
 
-            UpdateScannedUser(args.Component.Owner, args.User, args.Target, args.Component);
+            UpdateScannedUser(uid, args.Args.User, args.Args.Target.Value, component);
             // Below is for the traitor item
             // Piggybacking off another component's doafter is complete CBT so I gave up
             // and put it on the same component
-            if (string.IsNullOrEmpty(args.Component.Disease) || args.Target == null)
-                return;
-
-            _disease.TryAddDisease(args.Target.Value, args.Component.Disease);
-
-            if (args.User == args.Target)
+            if (string.IsNullOrEmpty(component.Disease))
             {
-                _popupSystem.PopupEntity(Loc.GetString("disease-scanner-gave-self", ("disease", args.Component.Disease)),
-                    args.User, args.User);
+                args.Handled = true;
                 return;
             }
-            _popupSystem.PopupEntity(Loc.GetString("disease-scanner-gave-other", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("disease", args.Component.Disease)),
-                args.User, args.User);
+
+            _disease.TryAddDisease(args.Args.Target.Value, component.Disease);
+
+            if (args.Args.User == args.Args.Target)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("disease-scanner-gave-self", ("disease", component.Disease)),
+                    args.Args.User, args.Args.User);
+            }
+
+
+            else
+            {
+                _popupSystem.PopupEntity(Loc.GetString("disease-scanner-gave-other", ("target", Identity.Entity(args.Args.Target.Value, EntityManager)),
+                    ("disease", component.Disease)), args.Args.User, args.Args.User);
+            }
+
+            args.Handled = true;
         }
 
         private void OpenUserInterface(EntityUid user, HealthAnalyzerComponent healthAnalyzer)
         {
-            if (!TryComp<ActorComponent>(user, out var actor))
+            if (!TryComp<ActorComponent>(user, out var actor) || healthAnalyzer.UserInterface == null)
                 return;
 
-            healthAnalyzer.UserInterface?.Open(actor.PlayerSession);
+            _uiSystem.OpenUi(healthAnalyzer.UserInterface ,actor.PlayerSession);
         }
 
         public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid? target, HealthAnalyzerComponent? healthAnalyzer)
@@ -195,7 +195,7 @@ namespace Content.Server.Medical
             var organFunctionConditions = GetOrganFunctions(target.Value);
 
             OpenUserInterface(user, healthAnalyzer);
-            healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, surgery != null ? surgery.Sedated : false,
+            _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, surgery != null ? surgery.Sedated : false,
                 bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN));
         }
 

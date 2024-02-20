@@ -30,6 +30,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly SharedItemSystem _items = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly LungSystem _lungSystem = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
 
@@ -58,7 +59,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             smokable.State = state;
-            appearance.SetData(SmokingVisuals.Smoking, state);
+            _appearance.SetData(uid, SmokingVisuals.Smoking, state, appearance);
 
             var newState = state switch
             {
@@ -115,7 +116,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     if (transform.GridUid is {} gridUid)
                     {
                         var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-                        _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, true);
+                        _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, uid, true);
                     }
                 }
 

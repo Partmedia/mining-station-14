@@ -11,11 +11,13 @@ namespace Content.Server.MachineLinking.Events
     {
         public readonly string Port;
         public readonly SignalState State;
+        public readonly EntityUid? Trigger;
 
-        public SignalReceivedEvent(string port, SignalState state)
+        public SignalReceivedEvent(string port, SignalState state, EntityUid? trigger)
         {
             Port = port;
             State = state;
+            Trigger = trigger;
         }
     }
 }

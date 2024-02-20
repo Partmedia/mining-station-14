@@ -6,6 +6,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -13,6 +14,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     public sealed class GasOutletInjectorSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -25,21 +27,21 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnMapInit(EntityUid uid, GasOutletInjectorComponent component, MapInitEvent args)
         {
-            UpdateAppearance(component);
+            UpdateAppearance(uid, component);
         }
 
         private void OnActivate(EntityUid uid, GasOutletInjectorComponent component, ActivateInWorldEvent args)
         {
             component.Enabled = !component.Enabled;
-            UpdateAppearance(component);
+            UpdateAppearance(uid, component);
         }
 
-        public void UpdateAppearance(GasOutletInjectorComponent component, AppearanceComponent? appearance = null)
+        public void UpdateAppearance(EntityUid uid, GasOutletInjectorComponent component, AppearanceComponent? appearance = null)
         {
             if (!Resolve(component.Owner, ref appearance, false))
                 return;
 
-            appearance.SetData(OutletInjectorVisuals.Enabled, component.Enabled);
+            _appearance.SetData(uid, OutletInjectorVisuals.Enabled, component.Enabled, appearance);
         }
 
         private void OnOutletInjectorUpdated(EntityUid uid, GasOutletInjectorComponent injector, AtmosDeviceUpdateEvent args)

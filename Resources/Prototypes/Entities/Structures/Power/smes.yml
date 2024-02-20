@@ -60,6 +60,9 @@
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: StrongMetallic
     - type: AtmosExposed
     - type: Temperature
       heatDamageThreshold: 350
@@ -132,6 +135,9 @@
     maxChargeRate: 0
     supplyRampTolerance: 5000
     supplyRampRate: 1000
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
 
 - type: entity
   parent: SMESBasic
