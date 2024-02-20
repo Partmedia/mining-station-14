@@ -311,7 +311,7 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly WarperSystem _dungeon = default!;
 
-        private string OldPool;
+        private string OldPool = string.Empty;
         private bool OldSupercond;
         private int KillCount;
 

@@ -752,7 +752,7 @@ namespace Content.Server.GameTicking
             _doNewLine = true;
         }
 
-        public string Summary;
+        public string Summary = string.Empty;
         public void AddSummary(string summary)
         {
             Summary += summary + " ";
