@@ -24,6 +24,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
+using Content.Shared.Administration;
+
 namespace Content.Shared.Weapons.Melee;
 
 public abstract class SharedMeleeWeaponSystem : EntitySystem
@@ -42,6 +44,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] private   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly StaminaSystem _stamina = default!;
+
+    [Dependency] private readonly IAutoAdmin _autoadmin = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -456,6 +460,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             }
 
             PlayHitSound(ev.Target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component.HitSound);
+
+            _autoadmin.CheckCombat(user, ev.Target.Value, damageResult.Total.Float());
         }
         else
         {

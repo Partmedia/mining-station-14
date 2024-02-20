@@ -10,6 +10,7 @@
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
   - type: Organ
+    species: human
   - type: Food
   - type: Extractable
     grindableSolutionName: organ
@@ -29,6 +30,8 @@
   - type: Sprite
     state: brain
   - type: Organ
+    organType: Brain
+    species: universal #lets allow brain transfer to be a little easier
   - type: Input
     context: "ghost"
   - type: InputMover
@@ -37,6 +40,9 @@
     baseSprintSpeed: 0
   - type: GhostOnMove
   - type: Brain
+  - type: Tag
+    tags:
+      - MindTransferTarget
 
 - type: entity
   id: OrganHumanEyes
@@ -49,6 +55,9 @@
       - state: eyeball-l
       - state: eyeball-r
   - type: Organ
+    organType: Eye
+    species: universal
+  - type: EyeSight
 
 - type: entity
   id: OrganHumanTongue
@@ -93,6 +102,8 @@
       - state: lung-l
       - state: lung-r
   - type: Organ
+    organType: Lung
+    species: universal #TODO make alternate lungs for non-human humanoids
   - type: Lung
   - type: Metabolizer
     removeEmpty: true
@@ -120,7 +131,13 @@
   components:
   - type: Sprite
     state: heart-on
+  - type: Heart
+  - type: CirculatoryPump
+    notWorkingDamage:
+      types:
+        Asphyxiation: 30
   - type: Organ
+    organType: Heart
   # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
   # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
   # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
@@ -141,6 +158,7 @@
   - type: Sprite
     state: stomach
   - type: Organ
+    organType: Stomach
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -166,6 +184,10 @@
   - type: Sprite
     state: liver
   - type: Organ
+    organType: Liver
+  - type: Liver
+  - type: ToxinFilter
+    embedded: true
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
     maxReagents: 1
     metabolizerTypes: [Human]
@@ -184,6 +206,11 @@
       - state: kidney-l
       - state: kidney-r
   - type: Organ
+    organType: Kidney
+    species: universal
+  - type: Kidney
+  - type: ToxinRemover
+    embedded: true
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
   - type: Metabolizer
     maxReagents: 5

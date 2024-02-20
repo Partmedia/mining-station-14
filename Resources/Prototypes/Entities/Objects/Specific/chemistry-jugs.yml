@@ -1,21 +1,37 @@
 - type: entity
-  parent: BaseChemistryEmptyBottle
+  parent: Jug
   id: BaseChemistryEmptyJug
-  name: reagent jug
-  description: A large jug for holding stock chemical reagents.
   components:
   - type: Item
     size: 30
   - type: Tag
     tags:
     - ChemJug
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/water.rsi
-    state: icon
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 300
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
+  - type: ExaminableSolution
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: InjectableSolution
+    solution: drink
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.TransferAmountUiKey.Key
+        type: TransferAmountBoundUserInterface
+  - type: Drink
+    isOpen: true
+    solution: drink
+  - type: Spillable
+    solution: drink
 
 - type: entity
   parent: BaseChemistryEmptyJug

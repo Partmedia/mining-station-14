@@ -18,3 +18,4 @@ materials-plasma = Plasma
 materials-plastic = Plástico
 materials-wood = Madeira
 materials-uranium = Urânio
+materials-slag = Jorra

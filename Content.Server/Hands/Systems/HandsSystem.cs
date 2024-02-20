@@ -116,8 +116,26 @@ namespace Content.Server.Hands.Systems
 
         private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)
         {
-            if (args.Part.PartType != BodyPartType.Hand)
+            if (args.Part.PartType != BodyPartType.Hand && args.Part.PartType != BodyPartType.Arm)
                 return;
+
+            //if arm, check if the arm has a hand
+            var hasHand = false;
+            var handSlot = args.Slot;
+            if (args.Part.PartType == BodyPartType.Arm)
+            {
+                foreach (KeyValuePair<string, BodyPartSlot> entry in args.Part.Children)
+                {
+                    if (entry.Value.Child != null && entry.Value.Type == BodyPartType.Hand &&
+                        TryComp(entry.Value.Child, out BodyPartComponent? childPart) &&
+                        childPart.PartType == BodyPartType.Hand)
+                    {
+                        hasHand = true;
+                        handSlot = entry.Value.Id;
+                        break;
+                    }
+                }
+            }
 
             // If this annoys you, which it should.
             // Ping Smugleaf.
@@ -129,15 +147,37 @@ namespace Content.Server.Hands.Systems
                 _ => throw new ArgumentOutOfRangeException(nameof(args.Part.Symmetry))
             };
 
-            AddHand(uid, args.Slot, location);
+            if ((args.Part.PartType == BodyPartType.Hand || hasHand) && TryComp(uid, out SharedHandsComponent? sharedHandComp))
+                AddHand(uid, handSlot, location, sharedHandComp);
         }
 
         private void HandleBodyPartRemoved(EntityUid uid, HandsComponent component, ref BodyPartRemovedEvent args)
         {
-            if (args.Part.PartType != BodyPartType.Hand)
+
+            if (args.Part.PartType != BodyPartType.Hand && args.Part.PartType != BodyPartType.Arm)
                 return;
 
-            RemoveHand(uid, args.Slot);
+            //if arm, check if the arm has a hand
+            var hasHand = false;
+            var handSlot = args.Slot;
+            if (args.Part.PartType == BodyPartType.Arm)
+            {
+                foreach (KeyValuePair<string, BodyPartSlot> entry in args.Part.Children)
+                {
+                    if (entry.Value.Child != null && entry.Value.Type == BodyPartType.Hand &&
+                        TryComp(entry.Value.Child, out BodyPartComponent? childPart) &&
+                        childPart.PartType == BodyPartType.Hand)
+                    {
+                        hasHand = true;
+                        handSlot = entry.Value.Id;
+                        break;
+                    }
+                }
+            }
+
+            //TODO technically arms COULD have multiple hands but lets worry about that later
+            if ((args.Part.PartType == BodyPartType.Hand || hasHand) && TryComp(uid, out SharedHandsComponent? sharedHandComp))
+                RemoveHand(uid, handSlot, sharedHandComp);
         }
 
         #region pulling

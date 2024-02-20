@@ -1,8 +1,9 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Random;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Mind;
 
@@ -28,10 +29,17 @@ public sealed class TransferMindOnGibSystem : EntitySystem
             return;
 
         var validParts = args.GibbedParts.Where(p => _tag.HasTag(p, component.TargetTag)).ToHashSet();
-        if (!validParts.Any())
+        HashSet<EntityUid> validPartsNoMind = new HashSet<EntityUid>();
+        foreach (var part in validParts)
+        {
+            if (!TryComp<ActorComponent>(part, out var partActor))
+                validPartsNoMind.Add(part);
+        }   
+
+        if (!validPartsNoMind.Any())
             return;
 
-        var ent = _random.Pick(validParts);
+        var ent = _random.Pick(validPartsNoMind);
         mindcomp.Mind.TransferTo(ent);
     }
 }

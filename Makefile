@@ -1,6 +1,6 @@
 .PHONY: build client server lint deploy
 
-DOTNET_FLAGS+= -c Release -v quiet -maxcpucount:5 /property:WarningLevel=0
+DOTNET_FLAGS+= -c Release -v quiet -maxcpucount:5 /property:WarningLevel=0 /p:WarningsAsErrors=nullable
 DOTNET_BUILD=dotnet build ${DOTNET_FLAGS}
 
 fast: build fastserver fastclient
@@ -41,3 +41,4 @@ package: libRL RL
 
 deploy: package
 	mv release/* ~ss14/downloads
+	git push -f ms14 HEAD:ms/server

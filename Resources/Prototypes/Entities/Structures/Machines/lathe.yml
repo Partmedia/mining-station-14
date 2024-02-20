@@ -82,9 +82,15 @@
       - Multitool
       - AirlockPainter
       - CableStack
+      - CableMVStack
+      - CableHVStack
       - HandheldGPSBasic
       - TRayScanner
       - GasAnalyzer
+      - LightTube
+      - LightBulb
+      - LightReplacer
+      - ClothingNeckBodycam
       - UtilityBelt
       - Pickaxe
       - BaseChemistryEmptyJug
@@ -92,6 +98,8 @@
       - MagazinePlasmaRifleFilled
       - PlasmaShell
       - ShellShotgun
+      - HandheldCrewMonitor
+      - AppraisalTool
   - type: StaticPrice
     price: 800
 
@@ -167,7 +175,7 @@
   - type: Lathe
     idleState: icon
     runningState: building
-    dynamicRecipes:
+    staticRecipes:
       - LightTube
       - LightBulb
       - SheetSteel #these sheet recipe costs don't scale with upgrades
@@ -274,7 +282,7 @@
     producingSound: /Audio/Machines/circuitprinter.ogg
     idleState: icon
     runningState: building
-    dynamicRecipes:
+    staticRecipes:
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
@@ -288,8 +296,13 @@
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
+      - ChemicalAnalysisMachineBoard
+      - BioPressMachineBoard
+      - CentrifugeMachineBoard
+      - PillPressMachineBoard
       - CryoPodMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
+      - CrewMonitoringServerMachineCircuitboard
       - VaccinatorMachineCircuitboard
       - DiagnoserMachineCircuitboard
       - ChemMasterMachineCircuitboard
@@ -472,6 +485,7 @@
     runningState: icon
     machinePartPrintSpeed: Laser
     dynamicRecipes:
+      - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingHandsGlovesNitrile
@@ -631,8 +645,10 @@
         tags:
           - Ore
     - type: Lathe
+      ignoreMaterialWhitelist: true
       staticRecipes:
         - SheetSteel30
+        - SheetCopper30
         - SheetGlass30
         - SheetRGlass30
         - SheetPlasma30

@@ -2,8 +2,8 @@
   id: Mining
   mapName: 'Mining'
   mapPath: /Mining/Maps/mining.yml
-  minPlayers: 3
-  maxPlayers: 10
+  minPlayers: 0
+  maxPlayers: 8
   fallback: true
   stations:
     Mining:
@@ -17,5 +17,5 @@
         Quartermaster: [ 1, 1 ]
         StationEngineer: [ 1, 2 ]
         SalvageSpecialist: [ -1, -1 ]
-        MedicalDoctor: [ 0, 1 ]
+        MedicalDoctor: [ 1, 1 ]
         CorpSec: [ 1, 1 ]

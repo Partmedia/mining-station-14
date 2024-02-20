@@ -5,6 +5,7 @@ using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using JetBrains.Annotations;
+using Content.Shared.Body.Organ;
 
 namespace Content.Shared.Eye.Blinding
 {
@@ -139,6 +140,27 @@ namespace Content.Shared.Eye.Blinding
             Dirty(blindable);
         }
 
+        public void UpdateEyeStatus(EntityUid uid, BlindableComponent blindable)
+        {
+            //Update and signal damage
+            if (blindable.EyeDamage >= blindable.MaxDamage)
+            {
+                blindable.Condition = OrganCondition.Failure;
+            }
+            else if (blindable.EyeDamage >= blindable.CriticalDamage)
+            {
+                blindable.Condition = OrganCondition.Critical;
+            }
+            else if (blindable.EyeDamage >= blindable.WarningDamage)
+            {
+                blindable.Condition = OrganCondition.Warning;
+            }
+            else
+            {
+                blindable.Condition = OrganCondition.Good;
+            }
+        }
+
         public void AdjustEyeDamage(EntityUid uid, int amount, BlindableComponent? blindable = null)
         {
             if (!Resolve(uid, ref blindable, false))
@@ -157,19 +179,34 @@ namespace Content.Shared.Eye.Blinding
                 RemComp<BlurryVisionComponent>(uid);
             }
 
-            if (!blindable.EyeTooDamaged && blindable.EyeDamage >= 8)
+            if (!blindable.EyeTooDamaged && blindable.EyeDamage >= blindable.MaxDamage)
             {
                 blindable.EyeTooDamaged = true;
                 AdjustBlindSources(uid, 1, blindable);
             }
-            if (blindable.EyeTooDamaged && blindable.EyeDamage < 8)
+            if (blindable.EyeTooDamaged && blindable.EyeDamage < blindable.MaxDamage)
             {
                 blindable.EyeTooDamaged = false;
                 AdjustBlindSources(uid, -1, blindable);
             }
 
-            blindable.EyeDamage = Math.Clamp(blindable.EyeDamage, 0, 8);
+            blindable.EyeDamage = Math.Clamp(blindable.EyeDamage, 0, blindable.MaxDamage);
+
+            UpdateEyeStatus(uid,blindable);
         }
+
+        //got me a new pair of eyes (or not)
+        public void TransferBlindness(BlindableComponent newSight, BlindableComponent oldSight)
+        {
+            newSight.Sources = oldSight.Sources;
+            newSight.BlindResistance = oldSight.BlindResistance;
+            newSight.EyeDamage = oldSight.EyeDamage;
+            newSight.EyeTooDamaged = oldSight.EyeTooDamaged;
+            newSight.LightSetup = oldSight.LightSetup;
+            newSight.GraceFrame = oldSight.GraceFrame;
+            newSight.Condition = oldSight.Condition;
+        }
+
     }
 
     // I have no idea why blurry vision needs this but blindness doesn't

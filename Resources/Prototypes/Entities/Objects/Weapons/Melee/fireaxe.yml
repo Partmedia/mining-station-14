@@ -37,6 +37,10 @@
     qualities:
       - Prying
   - type: TilePrying
+  - type: SurgeryTool
+    saw: true
+    sawTimeMod: 1.5
+    toolSound: /Audio/Effects/gib1.ogg
 
 - type: entity
   id: FireAxeFlaming
@@ -54,3 +58,9 @@
     quickEquip: false
     slots:
     - back
+  - type: SurgeryTool
+    saw: true
+    sawTimeMod: 1.5
+    cauterizer: true
+    cauterizerTimeMod: 1.5
+    toolSound: /Audio/Effects/gib1.ogg

@@ -1,23 +1,27 @@
-﻿- type: entity
+- type: entity
   id: BaseAnimalOrgan
   parent: BaseItem
   abstract: true
   components:
   - type: Organ
+    species: animal
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
   - type: StaticPrice
     price: 50
 
-
 - type: entity
   id: OrganAnimalLungs
   parent: BaseAnimalOrgan
   name: lungs
-  noSpawn: true
   components:
+  - type: Sprite
+    layers:
+      - state: lung-l
+      - state: lung-r
   - type: Organ
+    organType: Lung
   - type: Lung
   - type: Metabolizer
     removeEmpty: true
@@ -37,9 +41,11 @@
   id: OrganAnimalStomach
   parent: BaseAnimalOrgan
   name: stomach
-  noSpawn: true
   components:
+  - type: Sprite
+    state: stomach
   - type: Organ
+    organType: Stomach
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -57,9 +63,14 @@
   id: OrganAnimalLiver
   parent: BaseAnimalOrgan
   name: liver
-  noSpawn: true
   components:
+  - type: Sprite
+    state: liver
   - type: Organ
+    organType: Liver
+  - type: Liver
+  - type: ToxinFilter
+    embedded: true
   - type: Metabolizer
     maxReagents: 1
     metabolizerTypes: [ Animal ]
@@ -71,9 +82,16 @@
   id: OrganAnimalHeart
   parent: BaseAnimalOrgan
   name: heart
-  noSpawn: true
   components:
+  - type: Sprite
+    state: heart-on
+  - type: Heart
+  - type: CirculatoryPump
+    notWorkingDamage:
+      types:
+        Asphyxiation: 30
   - type: Organ
+    organType: Heart
   - type: Metabolizer
     maxReagents: 2
     metabolizerTypes: [ Animal ]
@@ -86,9 +104,16 @@
   id: OrganAnimalKidneys
   parent: BaseAnimalOrgan
   name: kidneys
-  noSpawn: true
   components:
+  - type: Sprite
+    layers:
+      - state: kidney-l
+      - state: kidney-r
   - type: Organ
+    organType: Kidney
+  - type: Kidney
+  - type: ToxinRemover
+    embedded: true
   - type: Metabolizer
     maxReagents: 5
     metabolizerTypes: [ Animal ]

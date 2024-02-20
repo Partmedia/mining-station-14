@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
@@ -18,12 +18,12 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<OrganComponent, ComponentHandleState>(OnOrganHandleState);
     }
 
-    private OrganSlot? CreateOrganSlot(string slotId, EntityUid parent, BodyPartComponent? part = null)
+    private OrganSlot? CreateOrganSlot(string slotId, EntityUid parent, OrganType type, bool internalOrgan, BodyPartComponent? part = null)
     {
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var slot = new OrganSlot(slotId, parent);
+        var slot = new OrganSlot(slotId, parent, type, internalOrgan, part.Species);
         part.Organs.Add(slotId, slot);
 
         return slot;
@@ -67,6 +67,11 @@ public partial class SharedBodySystem
             return false;
 
         slot.Child = organId;
+        slot.Cauterised = false;
+
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Organs[slot.Id] = slot;
+
         organ.ParentSlot = slot;
         organ.Body = CompOrNull<BodyPartComponent>(slot.Parent)?.Body;
 
@@ -119,8 +124,13 @@ public partial class SharedBodySystem
         var oldParent = CompOrNull<BodyPartComponent>(organ.ParentSlot.Parent);
 
         slot.Child = null;
+
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Organs[slot.Id] = slot;
+
         organ.ParentSlot = null;
         organ.Body = null;
+        organ.RejectionCounter = 0;
 
         if (Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container))
             container.Remove(organId.Value);
@@ -168,6 +178,34 @@ public partial class SharedBodySystem
 
         Del(id.Value);
         return true;
+    }
+
+    public void AttachOrganSlotAttachment(EntityUid uid, OrganSlot slot)
+    {
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+        {
+            if (part.Organs[slot.Id].Attachment == null)
+                part.Organs[slot.Id].Attachment = uid;
+        }
+    }
+
+    public void RemoveOrganSlotAttachment(OrganSlot slot)
+    {
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+        {
+            part.Organs[slot.Id].Attachment = null;
+        }
+    }
+
+    public void SetCauterisedOrganSlot(OrganSlot slot, bool cauterised)
+    {
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Organs[slot.Id].Cauterised = cauterised;
+    }
+
+    public void IncrementRejectionCounter(OrganComponent organ, int count = 1)
+    {
+        organ.RejectionCounter += count;
     }
 
     /// <summary>

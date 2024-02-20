@@ -50,7 +50,10 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component, ShuttleConsoleDestinationMessage args)
         {
-            if (!TryComp<FTLDestinationComponent>(args.Destination, out var dest)) return;
+            if (!TryComp<FTLDestinationComponent>(args.Destination, out var dest))
+            {
+                return;
+            }
 
             if (!dest.Enabled) return;
 
@@ -64,10 +67,16 @@ namespace Content.Server.Shuttles.Systems
             RaiseLocalEvent(entity.Value, ref getShuttleEv);
             entity = getShuttleEv.Console;
 
-            if (entity == null || dest.Whitelist?.IsValid(entity.Value, EntityManager) == false) return;
+            if (entity == null || dest.Whitelist?.IsValid(entity.Value, EntityManager) == false)
+            {
+                return;
+            }
 
             if (!TryComp<TransformComponent>(entity, out var xform) ||
-                !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle)) return;
+                !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle))
+            {
+                return;
+            }
 
             if (HasComp<FTLComponent>(xform.GridUid))
             {

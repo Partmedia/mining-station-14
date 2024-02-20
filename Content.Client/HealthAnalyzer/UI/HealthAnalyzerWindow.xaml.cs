@@ -23,6 +23,7 @@ namespace Content.Client.HealthAnalyzer.UI
         public void Populate(HealthAnalyzerScannedUserMessage msg)
         {
             var text = new StringBuilder();
+            var text2 = new StringBuilder();
             var entities = IoCManager.Resolve<IEntityManager>();
 
             if (msg.TargetEntity != null && entities.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
@@ -35,9 +36,11 @@ namespace Content.Client.HealthAnalyzer.UI
                 IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup = damageable.DamagePerGroup;
                 IReadOnlyDictionary<string, FixedPoint2> DamagePerType = damageable.Damage.DamageDict;
 
-                text.Append($"{Loc.GetString("health-analyzer-window-entity-health-text", ("entityName", entityName))}\n");
+                text.Append($"{Loc.GetString("health-analyzer-window-entity-health-text", ("entityName", entityName))}\n\n");
 
                 text.Append(String.Format("Temperature: {0:F1} °C\n", msg.Temperature - 273f));
+
+                text.Append(String.Format("Blood Level: {0}\n", float.IsNaN(msg.BloodLevel) ? "N/A" : $"{msg.BloodLevel * 100:F1} %"));
 
                 // Status Effects / Components
                 if (entities.HasComponent<DiseasedComponent>(msg.TargetEntity))
@@ -48,8 +51,11 @@ namespace Content.Client.HealthAnalyzer.UI
                     text.Append($"{Loc.GetString("disease-scanner-not-diseased")}\n");
                 }
 
+                if (msg.Sedated)
+                    text.Append(String.Format("\nSEDATED\n")); //TODO LOC
+
                 // Damage
-                text.Append($"\n{Loc.GetString("health-analyzer-window-entity-damage-total-text", ("amount", damageable.TotalDamage))}\n");
+                text.Append($"{Loc.GetString("health-analyzer-window-entity-damage-total-text", ("amount", damageable.TotalDamage))}\n");
 
                 HashSet<string> shownTypes = new();
 
@@ -58,7 +64,12 @@ namespace Content.Client.HealthAnalyzer.UI
                 // Show the total damage and type breakdown for each damage group.
                 foreach (var (damageGroupId, damageAmount) in DamagePerGroup)
                 {
+                    if (damageAmount == 0)
+                    {
+                        continue;
+                    }
                     text.Append($"\n{Loc.GetString("health-analyzer-window-damage-group-text", ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)), ("amount", damageAmount))}");
+
                     // Show the damage for each type in that group.
                     var group = protos.Index<DamageGroupPrototype>(damageGroupId);
                     foreach (var type in group.DamageTypes)
@@ -66,7 +77,7 @@ namespace Content.Client.HealthAnalyzer.UI
                         if (DamagePerType.TryGetValue(type, out var typeAmount))
                         {
                             // If damage types are allowed to belong to more than one damage group, they may appear twice here. Mark them as duplicate.
-                            if (!shownTypes.Contains(type))
+                            if (!shownTypes.Contains(type) && typeAmount > 0)
                             {
                                 shownTypes.Add(type);
                                 text.Append($"\n- {Loc.GetString("health-analyzer-window-damage-type-text", ("damageType", Loc.GetString("health-analyzer-window-damage-type-" + type)), ("amount", typeAmount))}");
@@ -76,7 +87,18 @@ namespace Content.Client.HealthAnalyzer.UI
                     text.AppendLine();
                 }
                 Diagnostics.Text = text.ToString();
-                SetSize = (250, 600);
+
+                //TODO LOC
+                text2.Append("\nOrgan Conditions\n");
+
+                foreach (KeyValuePair<string, string> entry in msg.OrganConditions)
+                {
+                    text2.Append(String.Format("\n{0}: {1}\n", entry.Key, entry.Value));
+                }
+
+                OrganStatus.Text = text2.ToString();
+
+                SetSize = (550, 800);
             }
             else
             {

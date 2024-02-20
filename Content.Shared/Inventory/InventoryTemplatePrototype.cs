@@ -29,6 +29,8 @@ public sealed class SlotDefinition
 
     [DataField("dependsOn")] public string? DependsOn { get; }
 
+    [DataField("bodyPart")] public string? BodyPart { get; }
+
     [DataField("displayName", required: true)]
     public string DisplayName { get; } = string.Empty;
 

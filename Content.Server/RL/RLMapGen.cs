@@ -1,4 +1,5 @@
 using Content.Server.Spawners.EntitySystems;
+using Content.Server.Warps;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -9,6 +10,7 @@ public sealed class RLMapGen : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileManager = default!;
     [Dependency] private readonly RLSystem _rl = default!;
+    [Dependency] private readonly WarperSystem _warperSystem = default!;
 
     public override void Initialize()
     {
@@ -74,7 +76,7 @@ public sealed class RLMapGen : EntitySystem
 
             // Run mapgen
             var fn = RL.readstr("mapgen");
-            var form = RL.list2(fn, arg);
+            var form = RL.list3(fn, arg, RL.num(_warperSystem.dungeonLevel));
             var ret = RL.eval(form);
             if (!RL.ensure_list(ret, 3))
             {

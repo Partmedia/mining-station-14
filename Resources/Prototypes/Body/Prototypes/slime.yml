@@ -1,12 +1,17 @@
-﻿- type: body
+- type: body
   id: Slime
   name: "slime"
+  species: slime
   root: torso
   slots:
     head:
       part: HeadSlime
       connections:
       - torso
+      organs:
+        eyes:
+          type: Eye
+          internal: false
     torso:
       part: TorsoSlime
       connections:
@@ -15,8 +20,12 @@
       - left leg
       - right leg
       organs:
-        core: SentientSlimeCore
-        lungs: OrganSlimeLungs
+        core:
+          organ: SentientSlimeCore
+          type: Brain
+        lungs:
+          organ: OrganSlimeLungs
+          type: Lung
     right arm:
       part: RightArmSlime
       connections:

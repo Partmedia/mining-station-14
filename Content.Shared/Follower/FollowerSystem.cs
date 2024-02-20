@@ -3,14 +3,17 @@ using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Follower;
 
 public sealed class FollowerSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
     {
@@ -90,8 +93,7 @@ public sealed class FollowerSystem : EntitySystem
     /// <summary>
     ///     Forces an entity to stop following another entity, if it is doing so.
     /// </summary>
-    public void StopFollowingEntity(EntityUid uid, EntityUid target,
-        FollowedComponent? followed=null)
+    public void StopFollowingEntity(EntityUid uid, EntityUid target, FollowedComponent? followed = null, bool deparent = true)
     {
         if (!Resolve(target, ref followed, false))
             return;
@@ -102,16 +104,8 @@ public sealed class FollowerSystem : EntitySystem
         followed.Following.Remove(uid);
         if (followed.Following.Count == 0)
             RemComp<FollowedComponent>(target);
+
         RemComp<FollowerComponent>(uid);
-
-        var xform = Transform(uid);
-        xform.AttachToGridOrMap();
-        if (xform.MapID == MapId.Nullspace)
-        {
-            Del(uid);
-            return;
-        }
-
         RemComp<OrbitVisualsComponent>(uid);
 
         var uidEv = new StoppedFollowingEntityEvent(target, uid);
@@ -119,6 +113,25 @@ public sealed class FollowerSystem : EntitySystem
 
         RaiseLocalEvent(uid, uidEv, true);
         RaiseLocalEvent(target, targetEv, false);
+        Dirty(followed);
+        RaiseLocalEvent(uid, uidEv);
+        RaiseLocalEvent(target, targetEv);
+
+        if (!deparent || !TryComp(uid, out TransformComponent? xform))
+            return;
+
+        xform.AttachToGridOrMap();
+        if (xform.MapUid != null)
+            return;
+
+        if (_netMan.IsClient)
+        {
+            _transform.DetachParentToNull(xform);
+            return;
+        }
+
+        Logger.Warning($"A follower has been detached to null-space and will be deleted. Follower: {ToPrettyString(uid)}. Followed: {ToPrettyString(target)}");
+        QueueDel(uid);
     }
 
     /// <summary>

@@ -356,3 +356,50 @@
       amount: 1
   products:
     Cognizine: 1
+
+- type: reaction
+  id: Calomel
+  minTemp: 370
+  reactants:
+    Mercury:
+      amount: 1
+    Chlorine:
+      amount: 1
+  products:
+    Calomel: 2
+
+- type: reaction
+  id: Frozackamol
+  minTemp: 370
+  reactants:
+    Kelotane:
+      amount: 2
+    Inaprovaline:
+      amount: 1
+    Copper:
+      amount: 1
+  products:
+    Frozackamol: 4
+
+- type: reaction
+  id: PyrothylNitrate
+  reactants:
+    Oxygen:
+      amount: 1
+    Nitrogen:
+      amount: 2
+    Leporazine:
+      amount: 1
+  products:
+    PyrothylNitrate: 4
+
+- type: reaction
+  id: Renephelone
+  minTemp: 370
+  reactants:
+    Phalanximine:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Renephelone: 2

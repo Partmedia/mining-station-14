@@ -1,10 +1,12 @@
-﻿using Content.Server.Mind.Commands;
+using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Server.Ghost.Roles.Events;
+using Content.Server.MiningCredits;
+using Content.Server.Mind;
 
 namespace Content.Server.Ghost.Roles.Components
 {
@@ -49,6 +51,18 @@ namespace Content.Server.Ghost.Roles.Components
                 MakeSentientCommand.MakeSentient(mob, _entMan, AllowMovement, AllowSpeech);
 
             mob.EnsureComponent<MindComponent>();
+
+            var oldAttachedEntity = session.AttachedEntity;
+            if (oldAttachedEntity != null)
+            {
+                if (_entMan.TryGetComponent<VisitingMindComponent>(oldAttachedEntity.Value, out var oldMind))
+                {
+                    if (oldMind.Mind is not null && oldMind.Mind.OwnedEntity != null)
+                        _entMan.EventBus.RaiseLocalEvent(oldMind.Mind.OwnedEntity.Value, new MindTransferEvent(Owner, oldMind.Mind.OwnedEntity.Value));
+                }
+                else
+                    _entMan.EventBus.RaiseLocalEvent(oldAttachedEntity.Value, new MindTransferEvent(Owner, oldAttachedEntity.Value));
+            }
 
             var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
             ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, Owner, mob, this);

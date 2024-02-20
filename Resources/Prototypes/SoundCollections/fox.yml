@@ -1,0 +1,22 @@
+- type: soundCollection
+  id: FoxScreams
+  files:
+  - /Audio/Voice/Fox/scream1.ogg
+  - /Audio/Voice/Fox/scream2.ogg
+
+- type: soundCollection
+  id: FoxGrowls
+  files:
+  - /Audio/Voice/Fox/growl1.ogg
+  - /Audio/Voice/Fox/growl2.ogg
+  - /Audio/Voice/Fox/growl3.ogg
+
+- type: soundCollection
+  id: FoxBark
+  files:
+  - /Audio/Voice/Fox/bark.ogg
+
+- type: soundCollection
+  id: FoxHowl
+  files:
+  - /Audio/Voice/Fox/howl.ogg

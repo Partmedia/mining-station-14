@@ -2,8 +2,8 @@
   id: MiningSuspension
   mapName: 'Mining Suspension'
   mapPath: /Mining/Maps/miningsuspension.yml
-  minPlayers: 2
-  maxPlayers: 6
+  minPlayers: 3
+  maxPlayers: 15
   stations:
     Mining:
       mapNameTemplate: '{0} Mining Suspension {1}'
@@ -15,4 +15,5 @@
       availableJobs:
         Quartermaster: [ 1, 1 ]
         SalvageSpecialist: [ -1, -1 ]
+        MedicalDoctor: [ 1, 1 ]
         CorpSec: [ 1, 1 ]

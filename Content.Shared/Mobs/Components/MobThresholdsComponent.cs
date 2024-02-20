@@ -1,4 +1,4 @@
-﻿using Content.Shared.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;

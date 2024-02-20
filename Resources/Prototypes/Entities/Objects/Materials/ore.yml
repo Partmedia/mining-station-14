@@ -49,14 +49,14 @@
     price: 0
   - type: Material
     materials:
-      Steel: 0
+      Slag: 500
 
 - type: entity
   parent: OreBase
   id: RockOre
   components:
   - type: Sprite
-    state: iron
+    state: rock
 
 - type: entity
   parent: OreBase
@@ -65,7 +65,7 @@
   suffix: Gold
   components:
   - type: Sprite
-    state: iron
+    state: gold
   - type: Material
     quality: 0.3
     materials:
@@ -131,7 +131,7 @@
   suffix: Plasma
   components:
   - type: Sprite
-    state: iron
+    state: plasma
   - type: Material
     quality: 0.3
     materials:
@@ -148,7 +148,7 @@
   suffix: Silver
   components:
   - type: Sprite
-    state: iron
+    state: silver
   - type: Material
     quality: 0.3
     materials:
@@ -175,7 +175,7 @@
   suffix: Quartz
   components:
   - type: Sprite
-    state: iron
+    state: spacequartz
   - type: Material
     quality: 0.3
     materials:
@@ -210,7 +210,7 @@
   suffix: Uranium
   components:
   - type: Sprite
-    state: iron
+    state: uranium
   - type: RadiationSource
     N: 8000
     hl: 7200
@@ -240,7 +240,7 @@
   suffix: Bauxite
   components:
   - type: Sprite
-    state: iron
+    state: bauxite
   - type: Extractable
     grindableSolutionName: contents
   - type: SolutionContainerManager
@@ -306,7 +306,11 @@
   suffix: Chalcocite
   components:
   - type: Sprite
-    state: iron
+    state: copper
+  - type: Material
+    quality: 0.3
+    materials:
+      Copper: 100
   - type: Extractable
     grindableSolutionName: contents
   - type: SolutionContainerManager
@@ -337,7 +341,7 @@
   suffix: Cinnabar
   components:
   - type: Sprite
-    state: iron
+    state: cinnabar
   - type: Extractable
     grindableSolutionName: contents
   - type: SolutionContainerManager

@@ -6,6 +6,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Server.Tools;
 using Content.Shared.Tools.Components;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Server.Eye.Blinding.EyeProtection
 {

@@ -3,6 +3,7 @@ using Content.Server.Audio;
 using Content.Server.Mind;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
@@ -18,44 +19,31 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-using System.Net.Http;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Text;
-using System.Threading.Tasks;
+using Content.Shared.Mobs;
+using Content.Server.MiningCredits;
+using Content.Server.Mind.Components;
+using Content.Server.NPC.HTN;
+using Content.Server.Warps;
 
 namespace Content.Server.StationEvents
 {
     [UsedImplicitly]
-    public sealed class MiningEventScheduler : GameRuleSystem
+    public sealed class MiningProfitManager : GameRuleSystem
     {
-        public override string Prototype => "MiningEventScheduler";
+        public override string Prototype => "MiningProfitManager";
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly EventManagerSystem _event = default!;
         [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly PricingSystem _pricingSystem = default!;
-        [Dependency] private readonly GameTicker _gameTicker = default!;
-
-        private readonly HttpClient _httpClient = new();
 
         private IReadOnlyList<string> 音乐 = new List<string>{
             "/Mining/Audio/16tons.ogg",
             "/Mining/Audio/big_john.ogg",
             "/Mining/Audio/working.ogg"
         };
-
-        /// <summary>
-        /// How long until the next check for an event runs
-        /// </summary>
-        /// Default value is how long until first event is allowed
-        [ViewVariables(VVAccess.ReadWrite)]
-        private float _timeUntilNextEvent;
 
         private int startValue = 0;
 
@@ -74,13 +62,13 @@ namespace Content.Server.StationEvents
         public override void Started()
         {
             players = new SortedSet<string>();
-            ResetTimer(true);
             _soundSystem.DispatchGlobalEventMusic(RandomExtensions.Pick(_random, 音乐));
-            ReportRound(Loc.GetString("round-started"));
         }
 
         private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
         {
+            if (!RuleAdded)
+                return;
             startValue = stationPrice();
             Logger.InfoS("mining", $"Initial value: {startValue}");
         }
@@ -139,6 +127,123 @@ namespace Content.Server.StationEvents
             return (int)total;
         }
 
+        private void OnRoundEndText(RoundEndTextAppendEvent ev)
+        {
+            if (!RuleStarted)
+                return;
+
+            int endValue = stationPrice();
+            int change = endValue - startValue;
+            Logger.InfoS("mining", $"End value: {endValue} (change {change})");
+
+            foreach (var station in _station.Stations)
+            {
+                int profit = 0;
+                if (!TryComp<StationBankAccountComponent>(station, out var bankComponent))
+                {
+                    continue;
+                }
+
+                profit += bankComponent.Balance - bankComponent.InitialBalance + change;
+
+                int powerCosts = 0;
+                if (TryComp<StationPowerTrackerComponent>(station, out var powerTracker))
+                {
+                    powerCosts = (int)Math.Round(powerTracker.TotalPrice);
+                    profit -= powerCosts;
+                }
+
+                var profitStrings = ListPlayerProfit(profit);
+
+                ev.AddLine(Loc.GetString("cargo-balance", ("amount", bankComponent.Balance)));
+                ev.AddLine(Loc.GetString("initial-loan", ("amount", -bankComponent.InitialBalance)));
+                ev.AddLine(Loc.GetString("station-value-change", ("amount", change)));
+                if (powerTracker != null)
+                {
+                    ev.AddLine(Loc.GetString("station-power-costs",
+                                ("energy", powerTracker.TotalEnergy.ToString("F3")),
+                                ("amount", -powerCosts)));
+                }
+                ev.AddLine("");
+                ev.AddLine(Loc.GetString("station-profit", ("profit", profit)));
+                ev.AddLine("");
+                ev.AddLine(profitStrings.Item1);
+
+                ev.AddSummary(Loc.GetString("team-profit", ("team", ListPlayers(profitStrings.Item2)), ("profit", profit)));
+                LogProfit(profit, profitStrings.Item2);
+            }
+        }
+
+        private (string, SortedSet<String>) ListPlayerProfit(int profit)
+        {
+            Dictionary<string, int> playerCreds = new Dictionary<string, int>();
+            var totalCreds = 0f;
+
+            foreach (var credit in EntityManager.EntityQuery<MiningCreditComponent>())
+            {
+                if (credit.PlayerName is not null)
+                {
+                    var player = credit.PlayerName;
+                    var numCreds = credit.NumCredits;
+
+                    //if the creds have not yet been record OR there is an entity with more cred, set the player creds
+                    if ((playerCreds.ContainsKey(player) && numCreds > playerCreds[player]) || !playerCreds.ContainsKey(player))
+                        playerCreds[player] = numCreds;
+                }
+            }
+
+            foreach (KeyValuePair<string, int> entry in playerCreds)
+                totalCreds += entry.Value;
+
+            var profitUnit = totalCreds != 0f ? profit / totalCreds : 0;
+            var profitString = "";
+            var reportStrings = new SortedSet<String>();
+
+            foreach (KeyValuePair<string,int> entry in playerCreds)
+            {
+                profitString += String.Format("{0} {1}\n", entry.Key ,Math.Round(profitUnit*entry.Value)); //for round end summary
+                reportStrings.Add(String.Format("{0}({1})", entry.Key, Math.Round(profitUnit * entry.Value))); //for log
+            }
+
+            var profitStrings = (profitString, reportStrings);
+
+            return profitStrings;
+        }
+
+        private String ListPlayers(SortedSet<String> players)
+        {
+            return String.Join(", ", players);
+        }
+
+        private void LogProfit(int profit, SortedSet<String> players)
+        {
+            var endText = String.Format("The team of {0} made a profit of {1} spacebucks.", ListPlayers(players), profit);
+            Logger.InfoS("mining", "profit:{0}", endText);
+        }
+    }
+
+    [UsedImplicitly]
+    public sealed class MiningEventSchedulerSystem : GameRuleSystem
+    {
+        public override string Prototype => "MiningEventSchedulerSystem";
+
+        /// <summary>
+        /// How long until the next check for an event runs
+        /// </summary>
+        /// Default value is how long until first event is allowed
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _timeUntilNextEvent;
+
+        [Dependency] private readonly EventManagerSystem _event = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
+        public override void Started()
+        {
+            ResetTimer(true);
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -162,7 +267,7 @@ namespace Content.Server.StationEvents
         /// </summary>
         public string RunMiningEvent()
         {
-            List<string> events = new List<string>{"MeteorSwarm","RadiationStorm","Quake"};
+            List<string> events = new List<string>{"MeteorSwarm","Quake"};
             string randomEvent = _random.Pick(events);
             if (!_prototype.TryIndex<GameRulePrototype>(randomEvent, out var proto))
             {
@@ -192,67 +297,74 @@ namespace Content.Server.StationEvents
             Logger.InfoS("mining", $"Next station event in {(int)(_timeUntilNextEvent/60)} minutes ({minsInRound} mins in round, mean {mt}, s {st})");
         }
 
+        public override void Ended()
+        {
+        }
+    }
+
+    [UsedImplicitly]
+    public sealed class DungeonRuleSystem : GameRuleSystem
+    {
+        public override string Prototype => "DungeonRuleSystem";
+
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly WarperSystem _dungeon = default!;
+
+        private string OldPool = string.Empty;
+        private bool OldSupercond;
+        private int KillCount;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+            SubscribeLocalEvent<HTNComponent, MobStateChangedEvent>(OnMobDied);
+        }
+
+        public override void Added()
+        {
+            OldPool = _configurationManager.GetCVar(CCVars.GameMapPool);
+            _configurationManager.SetCVar(CCVars.GameMapPool, "DungeonMapPool");
+            OldSupercond = _configurationManager.GetCVar(CCVars.Superconduction);
+            _configurationManager.SetCVar(CCVars.Superconduction, false);
+        }
+
+        public override void Started()
+        {
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("dungeon-intro"));
+            KillCount = 0;
+        }
+
+        private void OnMobDied(EntityUid mobUid, HTNComponent component, MobStateChangedEvent args)
+        {
+            if (!RuleStarted)
+                return;
+            if (args.NewMobState == MobState.Dead)
+                KillCount++;
+        }
+
         private void OnRoundEndText(RoundEndTextAppendEvent ev)
         {
             if (!RuleStarted)
                 return;
 
-            int endValue = stationPrice();
-            int change = endValue - startValue;
-            Logger.InfoS("mining", $"End value: {endValue} (change {change})");
-
-            foreach (var station in _station.Stations)
+            if (_dungeon.dungeonLevel > 0)
             {
-                TryComp<StationBankAccountComponent>(station, out var bankComponent);
-                if (bankComponent != null)
-                {
-                    var profit = bankComponent.Balance - bankComponent.InitialBalance + change;
-                    ev.AddLine(Loc.GetString("financial-summary"));
-                    ev.AddLine(Loc.GetString("cargo-balance", ("amount", bankComponent.Balance)));
-                    ev.AddLine(Loc.GetString("initial-loan", ("amount", -bankComponent.InitialBalance)));
-                    ev.AddLine(Loc.GetString("station-value-change", ("amount", change)));
-                    ev.AddLine("");
-                    ev.AddLine(Loc.GetString("station-profit", ("profit", profit)));
-
-                    ReportRound(Loc.GetString("team-profit", ("team", ListPlayers(players)), ("profit", profit)));
-                    LogProfit(profit, players);
-                }
+                string depth = Loc.GetString("dungeon-level", ("depth", _dungeon.dungeonLevel));
+                ev.AddLine(depth);
+                ev.AddSummary(depth);
             }
+
+            string killcount = Loc.GetString("dungeon-kill-count", ("count", KillCount));
+            ev.AddLine(killcount);
+            ev.AddSummary(killcount);
         }
 
-        private String ListPlayers(SortedSet<String> players)
+        public override void Ended()
         {
-            return String.Join(", ", players);
-        }
-
-        private void LogProfit(int profit, SortedSet<String> players)
-        {
-            var endText = String.Format("The team of {0} made a profit of {1} spacebucks.", ListPlayers(players), profit);
-            Logger.InfoS("mining", "profit:{0}", endText);
-        }
-
-        private async Task ReportRound(String message)
-        {
-            Logger.InfoS("discord", message);
-            String _webhookUrl = _configurationManager.GetCVar(CCVars.DiscordRoundEndWebook);
-            if (_webhookUrl == string.Empty)
-                return;
-
-            var payload = new WebhookPayload{ Content = message };
-            var ser_payload = JsonSerializer.Serialize(payload);
-            var content = new StringContent(ser_payload, Encoding.UTF8, "application/json");
-            var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true", content);
-            var reply = await request.Content.ReadAsStringAsync();
-            if (!request.IsSuccessStatusCode)
-            {
-                Logger.ErrorS("mining", $"Discord returned bad status code when posting message: {request.StatusCode}\nResponse: {reply}");
-            }
-        }
-
-        private struct WebhookPayload
-        {
-            [JsonPropertyName("content")]
-            public String Content { get; set; }
+            _configurationManager.SetCVar(CCVars.GameMapPool, OldPool);
+            _configurationManager.SetCVar(CCVars.Superconduction, OldSupercond);
         }
     }
 }

@@ -2,8 +2,8 @@
   id: MiningBozo
   mapName: 'Mining Bozo'
   mapPath: /Mining/Maps/miningbozo.yml
-  minPlayers: 2
-  maxPlayers: 8
+  minPlayers: 3
+  maxPlayers: 15
   stations:
     Mining:
       mapNameTemplate: '{0} Mining Bozo {1}'
@@ -16,4 +16,5 @@
         Quartermaster: [ 1, 1 ]
         StationEngineer: [ 1, 2 ]
         SalvageSpecialist: [ -1, -1 ]
+        MedicalDoctor: [ 1, 1 ]
         CorpSec: [ 1, 1 ]

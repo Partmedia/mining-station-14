@@ -43,6 +43,7 @@
     oreChance: 0.2
     oreRarityPrototypeId: RandomOreDistributionStandard
   - type: CaveSupport
+    quakeProof: false
   - type: CaveIn
     damage:
       types:
@@ -62,8 +63,6 @@
   - type: OreVein
     oreChance: 0.33
     oreRarityPrototypeId: RandomOreDistributionStandard
-  - type: CaveSupport
-  - type: CaveIn
 
 - type: entity
   id: AsteroidRockIndestructible
@@ -287,6 +286,94 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_west
         - state: rock_uranium
+
+- type: entity
+  id: WallRockDiamond
+  parent: WallRock
+  description: An ore vein with diamonds!
+  suffix: Diamond
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreDiamond
+    - type: Sprite
+      layers:
+        - state: rock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_west
+        - state: rock_diamond
+
+- type: entity
+  id: WallRockCopper
+  parent: WallRock
+  description: An ore vein with Copper!
+  suffix: Copper
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCopper
+    - type: Sprite
+      layers:
+        - state: rock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_west
+        - state: rock_copper
+
+- type: entity
+  id: WallRockBauxite
+  parent: WallRock
+  description: An ore vein with Bauxite!
+  suffix: Bauxite
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreAluminum
+    - type: Sprite
+      layers:
+        - state: rock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_west
+        - state: rock_bauxite
+
+- type: entity
+  id: WallRockCinnabar
+  parent: WallRock
+  description: An ore vein with Cinnabar!
+  suffix: Cinnabar
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCinnabar
+    - type: Sprite
+      layers:
+        - state: rock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_west
+        - state: rock_cinnabar
 
 - type: entity
   id: TimedSpace

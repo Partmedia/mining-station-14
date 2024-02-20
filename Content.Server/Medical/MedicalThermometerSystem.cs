@@ -49,9 +49,6 @@ namespace Content.Server.Medical
             if (medicalThermometer.CancelToken != null)
                 return;
 
-            if (!HasComp<MobStateComponent>(args.Target))
-                return;
-
             medicalThermometer.CancelToken = new CancellationTokenSource();
             _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, medicalThermometer.ScanDelay, medicalThermometer.CancelToken.Token, target: args.Target)
             {

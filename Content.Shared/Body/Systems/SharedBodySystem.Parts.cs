@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -11,6 +11,7 @@ using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Content.Shared.Humanoid;
 
 namespace Content.Shared.Body.Systems;
 
@@ -27,12 +28,22 @@ public partial class SharedBodySystem
     {
         args.State = new BodyPartComponentState(
             part.Body,
+            part.OriginalBody,
             part.ParentSlot,
             part.Children,
             part.Organs,
             part.PartType,
             part.IsVital,
-            part.Symmetry
+            part.Symmetry,
+            part.Attachment,
+            part.Container,
+            part.Incisable,
+            part.Incised,
+            part.Opened,
+            part.EndoSkeleton,
+            part.ExoSkeleton,
+            part.EndoOpened,
+            part.ExoOpened
         );
     }
 
@@ -42,12 +53,22 @@ public partial class SharedBodySystem
             return;
 
         part.Body = state.Body;
+        part.OriginalBody = state.OriginalBody;
         part.ParentSlot = state.ParentSlot;
         part.Children = state.Children;
         part.Organs = state.Organs;
         part.PartType = state.PartType;
         part.IsVital = state.IsVital;
         part.Symmetry = state.Symmetry;
+        part.Attachment = state.Attachment;
+        part.Container = state.Container;
+        part.Incisable = state.Incisable;
+        part.Incised = state.Incised;
+        part.Opened = state.Opened;
+        part.EndoSkeleton = state.EndoSkeleton;
+        part.ExoSkeleton = state.ExoSkeleton;
+        part.EndoOpened = state.EndoOpened;
+        part.ExoOpened = state.ExoOpened;
     }
 
     private void OnPartRemoved(EntityUid uid, BodyPartComponent part, ComponentRemove args)
@@ -68,12 +89,13 @@ public partial class SharedBodySystem
         string slotId,
         EntityUid parent,
         BodyPartType partType,
+        string species,
         BodyPartComponent? part = null)
     {
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var slot = new BodyPartSlot(slotId, parent, partType);
+        var slot = new BodyPartSlot(slotId, parent, partType,species);
         part.Children.Add(slotId, slot);
 
         return slot;
@@ -91,7 +113,7 @@ public partial class SharedBodySystem
             !Resolve(parentId.Value, ref parent, false))
             return false;
 
-        slot = new BodyPartSlot(id, parentId.Value, null);
+        slot = new BodyPartSlot(id, parentId.Value, null,parent.Species);
         if (!parent.Children.TryAdd(id, slot))
         {
             slot = null;
@@ -192,11 +214,14 @@ public partial class SharedBodySystem
             return false;
 
         slot.Child = partId;
+        slot.Cauterised = false; //override cauterisation on new part attachment
         part.ParentSlot = slot;
 
         if (TryComp(slot.Parent, out BodyPartComponent? parentPart))
         {
             part.Body = parentPart.Body;
+            parentPart.Children[slot.Id] = slot;
+
         }
         else if (TryComp(slot.Parent, out BodyComponent? parentBody))
         {
@@ -207,19 +232,70 @@ public partial class SharedBodySystem
             part.Body = null;
         }
 
+        foreach (var childSlot in part.Children.Values)
+        {
+            if (childSlot.Child is not { } child || !TryComp<BodyPartComponent>(child, out var childPart))
+                continue;
+
+            childPart.OriginalBody = childPart.Body;
+            childPart.Body = part.Body;
+        }
+
+        foreach (var organSlot in part.Organs.Values)
+        {
+            if (organSlot.Child is not { } child || !TryComp<OrganComponent>(child, out var childOrgan))
+                continue;
+
+            childOrgan.Body = part.Body;
+        }
+
+        if (TryComp(part.Body, out HumanoidAppearanceComponent? bodyAppearance) &&
+                !TryComp(part.Owner, out BodyPartAppearanceComponent? existingAppearance))
+        {
+            var appearance = AddComp<BodyPartAppearanceComponent>(part.Owner);
+            appearance.OriginalBody = part.Body;
+            appearance.Color = bodyAppearance.SkinColor;
+            UpdateAppearance(part.Owner, appearance);
+        }
+
         Dirty(slot.Parent);
         Dirty(partId.Value);
 
         if (part.Body is { } newBody)
         {
-            if (part.PartType == BodyPartType.Leg)
+            if (part.PartType == BodyPartType.Leg || part.PartType == BodyPartType.Foot)
+            {
                 UpdateMovementSpeed(newBody);
+
+                if (part.PartType == BodyPartType.Leg)
+                { 
+                    //check if leg has a foot slot and foot
+                    var hasSlot = false;
+                    var slotEmpty = false;
+                    foreach (KeyValuePair<string, BodyPartSlot> entry in part.Children)
+                    {
+                        if (entry.Value.Type == BodyPartType.Foot)
+                        {
+                            hasSlot = true;
+                            if (entry.Value.Child is null)
+                                slotEmpty = true;
+                        }
+                    }
+
+                    //stand up
+                    if ((!hasSlot || !slotEmpty))
+                        Standing.Stand(newBody);
+                }
+
+            }
 
             var partAddedEvent = new BodyPartAddedEvent(slot.Id, part);
             RaiseLocalEvent(newBody, ref partAddedEvent);
 
+            RaiseLocalEvent(partId.Value, new PartAddedToBodyEvent(newBody), true);
+
             // TODO: Body refactor. Somebody is doing it
-            // EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
+            //EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
 
             foreach (var organ in GetPartOrgans(partId, part))
             {
@@ -232,6 +308,7 @@ public partial class SharedBodySystem
         return true;
     }
 
+
     public virtual bool DropPart(EntityUid? partId, [NotNullWhen(true)] BodyPartComponent? part = null)
     {
         if (partId == null ||
@@ -243,7 +320,9 @@ public partial class SharedBodySystem
 
         slot.Child = null;
         part.ParentSlot = null;
+        part.OriginalBody = part.Body;
         part.Body = null;
+        part.RejectionCounter = 0;
 
         if (Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container))
             container.Remove(partId.Value);
@@ -255,29 +334,62 @@ public partial class SharedBodySystem
 
         if (oldBodyNullable is { } oldBody)
         {
-            var args = new BodyPartRemovedEvent(slot.Id, part);
-            RaiseLocalEvent(oldBody, ref args);
+            var partRemovedEvent = new BodyPartRemovedEvent(slot.Id, part);
+            RaiseLocalEvent(oldBody, ref partRemovedEvent);
 
-            if (part.PartType == BodyPartType.Leg)
+            RaiseLocalEvent(partId.Value, new PartRemovedFromBodyEvent(oldBody), true);
+
+            if (part.PartType == BodyPartType.Leg || part.PartType == BodyPartType.Foot)
             {
                 UpdateMovementSpeed(oldBody);
                 if(!GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
                     Standing.Down(oldBody);
+                else
+                {
+                    var legs = GetBodyChildrenOfType(oldBody, BodyPartType.Leg);
+                    var emptySlot = 0;
+                    var footSlot = 0;
+                    foreach (var leg in legs) {
+                        foreach (KeyValuePair<string, BodyPartSlot> entry in leg.Component.Children)
+                        {
+                            if (entry.Value.Type == BodyPartType.Foot)
+                            {
+                                footSlot++;
+                                if (entry.Value.Child is null)
+                                    emptySlot++;
+                            }
+                        }                 
+                    }
+                    if (emptySlot == footSlot) //if the legs have a number of footslots and they are all empty, fall over
+                        Standing.Down(oldBody);
+                }
             }
 
-            if (part.IsVital && !GetBodyChildrenOfType(oldBody, part.PartType).Any())
+            foreach (var childSlot in part.Children.Values)
             {
-                // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
-                var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
-                Damageable.TryChangeDamage(part.Owner, damage);
+                if (childSlot.Child is not { } child || !TryComp<BodyPartComponent>(child, out var childPart))
+                    continue;
+
+                childPart.OriginalBody = childPart.Body;
+                childPart.Body = part.Body;
             }
 
             foreach (var organSlot in part.Organs.Values)
             {
-                if (organSlot.Child is not { } child)
+                if (organSlot.Child is not { } child || !TryComp<OrganComponent>(child, out var childOrgan))
                     continue;
 
-                RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody), true);
+                childOrgan.Body = part.Body;
+                RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody));
+            }
+
+            if (part != null && TryComp(oldBody, out HumanoidAppearanceComponent? bodyAppearance) &&
+                !TryComp(part.Owner, out BodyPartAppearanceComponent? existingAppearance))
+            {
+                var appearance = AddComp<BodyPartAppearanceComponent>(part.Owner);
+                appearance.OriginalBody = part.OriginalBody;
+                appearance.Color = bodyAppearance.SkinColor;
+                UpdateAppearance(part.Owner, appearance);
             }
         }
 
@@ -302,8 +414,20 @@ public partial class SharedBodySystem
         var allLegs = new HashSet<EntityUid>();
         foreach (var slot in allSlots)
         {
-            if (slot.Type == BodyPartType.Leg && slot.Child is {  } child)
-                allLegs.Add(child);
+            if (slot.Type == BodyPartType.Leg && slot.Child is { } child)
+            {
+                var emptySlot = false; //the leg should have a foot to count (unless it is some kind of footless leg, anything is possibe)
+                if (TryComp<BodyPartComponent>(slot.Child, out var leg))
+                {
+                    foreach (KeyValuePair<string, BodyPartSlot> entry in leg.Children)
+                    {
+                        if (entry.Value.Type == BodyPartType.Foot && entry.Value.Child is null)
+                            emptySlot = true;
+                    }
+                }
+                if (!emptySlot)
+                    allLegs.Add(child);
+            }
         }
 
         var walkSpeed = 0f;
@@ -363,6 +487,88 @@ public partial class SharedBodySystem
 
         Del(id.Value);
         return true;
+    }
+
+    public void SetBodyPartOpen(BodyPartComponent part, bool opened)
+    {
+            part.Opened = opened;
+    }
+
+    public void AttachPartAttachment(EntityUid uid, BodyPartComponent part)
+    {
+        if (part.Attachment == null)
+            part.Attachment = uid;
+
+        //TODO update player sprite if possible
+    }
+
+    public void RemovePartAttachment(BodyPartComponent part)
+    {
+        part.Attachment = null;
+
+        //TODO update player sprite if possible
+    }
+
+    public void AttachPartSlotAttachment(EntityUid uid, BodyPartSlot slot)
+    {
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+        {
+            if (part.Children[slot.Id].Attachment == null)
+                part.Children[slot.Id].Attachment = uid;
+        }
+    }
+
+    public void RemovePartSlotAttachment(BodyPartSlot slot)
+    {
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+        {
+            part.Children[slot.Id].Attachment = null;
+        }
+    }
+
+    public void SetBodyPartIncised(BodyPartComponent part, bool incised)
+    {
+        if (part.Incisable)
+        {
+            //change body part incised to true
+            part.Incised = incised;
+
+            //TODO update player sprite if possible
+        }
+    }
+
+    public void SetBodyPartEndoOpen(BodyPartComponent part, bool opened)
+    {
+        if (part.EndoSkeleton)
+        {
+            //change body part incised to true
+            part.EndoOpened = opened;
+
+            //TODO update player sprite if possible
+        }
+    }
+
+    public void SetBodyPartExoOpen(BodyPartComponent part, bool opened)
+    {
+        if (part.ExoSkeleton)
+        {
+            //change body part incised to true
+            part.ExoOpened = opened;
+
+            //TODO update player sprite if possible
+        }
+    }
+
+    public void SetCauterisedPartSlot(BodyPartSlot slot, bool cauterised)
+    {
+
+        if (TryComp<BodyPartComponent>(slot.Parent, out var part))
+            part.Children[slot.Id].Cauterised = cauterised;
+    }
+
+    public void IncrementRejectionCounter(BodyPartComponent part, int count = 1)
+    {
+        part.RejectionCounter += count;
     }
 
     public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildrenOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)

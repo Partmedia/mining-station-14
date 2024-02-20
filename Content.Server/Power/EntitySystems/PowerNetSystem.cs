@@ -255,7 +255,7 @@ namespace Content.Server.Power.EntitySystems
             _solver.Tick(frameTime, _powerState, _parMan.ParallelProcessCount);
 
             // Synchronize batteries, the other way around.
-            RaiseLocalEvent(new NetworkBatteryPostSync());
+            RaiseLocalEvent(new NetworkBatteryPostSync(frameTime));
 
             // Send events where necessary.
             // TODO: Instead of querying ALL power components every tick, and then checking if an event needs to be
@@ -452,8 +452,9 @@ namespace Content.Server.Power.EntitySystems
     ///     Raised after power network simulation happens, to synchronize battery charge changes from
     ///     <see cref="PowerNetworkBatteryComponent"/> to components like <see cref="BatteryComponent"/>.
     /// </summary>
-    public readonly struct NetworkBatteryPostSync
+    public readonly record struct NetworkBatteryPostSync(float frameTime)
     {
+        public readonly float FrameTime = frameTime;
     }
 
     /// <summary>

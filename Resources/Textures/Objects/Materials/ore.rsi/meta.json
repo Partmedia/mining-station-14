@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-NC-SA-3.0",
-  "copyright": "Taken from goonstation at commit https://github.com/goonstation/goonstation/pull/210/commits/d188de4d110a4f433ce3d30211be30d8257dc4c3 modified by HoofedEar",
+  "copyright": "Taken from goonstation at commit https://github.com/goonstation/goonstation/pull/210/commits/d188de4d110a4f433ce3d30211be30d8257dc4c3 modified by HoofedEar,iron.png and cinnabar.png Copyright 2023 Jonas Ljunsgtröm ",
   "size": {
     "x": 32,
     "y": 32
@@ -17,7 +17,7 @@
       "name": "gold"
     },
     {
-      "name": "iron"
+      "name": "bauxite"
     },
     {
       "name": "uranium"
@@ -35,7 +35,16 @@
       "name": "copper"
     },
     {
+      "name": "iron"
+    },
+    {
+      "name": "cinnabar"
+    },
+    {
       "name": "coal"
+    },
+    {
+      "name": "rock"
     }
   ]
 }

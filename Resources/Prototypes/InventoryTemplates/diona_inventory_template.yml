@@ -1,4 +1,4 @@
-﻿#human but no shoes
+#human but no shoes
 - type: inventoryTemplate
   id: diona
   slots:
@@ -20,6 +20,7 @@
     - name: gloves
       slotTexture: gloves
       slotFlags: GLOVES
+      bodyPart: Hand
       uiWindowPos: 2,2
       strippingWindowPos: 2,2
       displayName: Gloves
@@ -32,12 +33,14 @@
     - name: mask
       slotTexture: mask
       slotFlags: MASK
+      bodyPart: Head
       uiWindowPos: 1,1
       strippingWindowPos: 1,1
       displayName: Mask
     - name: eyes
       slotTexture: glasses
       slotFlags: EYES
+      bodyPart: Head
       stripTime: 3
       uiWindowPos: 0,0
       strippingWindowPos: 0,0
@@ -45,6 +48,7 @@
     - name: ears
       slotTexture: ears
       slotFlags: EARS
+      bodyPart: Head
       stripTime: 3
       uiWindowPos: 2,0
       strippingWindowPos: 2,0
@@ -52,6 +56,7 @@
     - name: head
       slotTexture: head
       slotFlags: HEAD
+      bodyPart: Head
       uiWindowPos: 1,0
       strippingWindowPos: 1,0
       displayName: Head

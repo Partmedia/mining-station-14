@@ -622,6 +622,15 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
 
+        public static readonly CVarDef<int> AutoAdmin =
+            CVarDef.Create("admin.auto", 1, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> AutoWarnThresh =
+            CVarDef.Create("admin.auto_warn_thresh", 75f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> AutoKickThresh =
+            CVarDef.Create("admin.auto_kick_thresh", 150f, CVar.SERVERONLY);
+
         /*
          * Explosions
          */
@@ -1068,6 +1077,30 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> CameraRotationLocked =
             CVarDef.Create("shuttle.camera_rotation_locked", false, CVar.REPLICATED);
+
+        /// <summary>
+        /// Whether the arrivals shuttle is enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> ArrivalsShuttles =
+            CVarDef.Create("shuttle.arrivals", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The map to use for the arrivals station.
+        /// </summary>
+        public static readonly CVarDef<ResourcePath> ArrivalsMap =
+            CVarDef.Create("shuttle.arrivals_map", new ResourcePath("/Maps/Misc/terminal.yml"), CVar.SERVERONLY);
+
+        /// <summary>
+        /// Cooldown between arrivals departures. This should be longer than the FTL time or it will double cycle.
+        /// </summary>
+        public static readonly CVarDef<float> ArrivalsCooldown =
+            CVarDef.Create("shuttle.arrivals_cooldown", 90f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Are players allowed to return on the arrivals shuttle.
+        /// </summary>
+        public static readonly CVarDef<bool> ArrivalsReturns =
+            CVarDef.Create("shuttle.arrivals_returns", true, CVar.SERVERONLY);
 
         /// <summary>
         /// Whether cargo shuttles are enabled.

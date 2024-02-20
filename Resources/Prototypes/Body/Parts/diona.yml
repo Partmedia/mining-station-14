@@ -4,15 +4,70 @@
   name: "diona body part"
   abstract: true
   components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 5
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 50 #not as affected by sawing and incisions
+    drillShockDamage:
+      types:
+        Asphyxiation: 25
+    sutureShockDamage:
+      types:
+        Asphyxiation: 10
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 15
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 50 #hurt more by burning
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 5
+    compatibleSpecies:
+      - diona
+      - universal
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
+    exoSkeleton: true #probably the best representation
+    incisable: false #wood all the way through, no incisions needed just a saw
+    endoSkeleton: false
+    species: diona
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
         ents: []
+      attachment: !type:Container
+        ents: []
+      slotAttachment: !type:Container
+        ents: []
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Diona/parts.rsi
   - type: Icon
     sprite: Mobs/Species/Diona/parts.rsi
@@ -33,6 +88,7 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
+    container: true
 
 - type: entity
   id: HeadDiona
@@ -43,11 +99,12 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 4
   - type: Sprite
-    state: "head_m"
+    state: "head_icon"
   - type: Icon
-    state: "head_m"
+    state: "head_icon"
   - type: BodyPart
     partType: Head
+    container: true
     vital: true
   - type: Input
     context: "ghost"
@@ -69,12 +126,13 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 3
   - type: Sprite
-    state: "l_arm"
+    state: "l_arm_icon"
   - type: Icon
-    state: "l_arm"
+    state: "l_arm_icon"
   - type: BodyPart
     partType: Arm
     symmetry: Left
+    exoSkeleton: false
 
 - type: entity
   id: RightArmDiona
@@ -85,12 +143,13 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 3
   - type: Sprite
-    state: "r_arm"
+    state: "r_arm_icon"
   - type: Icon
-    state: "r_arm"
+    state: "r_arm_icon"
   - type: BodyPart
     partType: Arm
     symmetry: Right
+    exoSkeleton: false
 
 - type: entity
   id: LeftHandDiona
@@ -101,12 +160,13 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 0.1
   - type: Sprite
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: Icon
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Left
+    exoSkeleton: false
 
 - type: entity
   id: RightHandDiona
@@ -117,12 +177,13 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 0.1
   - type: Sprite
-    state: "r_hand"
+    state: "r_hand_icon"
   - type: Icon
-    state: "r_hand"
+    state: "r_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Right
+    exoSkeleton: false
 
 - type: entity
   id: LeftLegDiona
@@ -133,12 +194,13 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 4.5
   - type: Sprite
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: Icon
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: BodyPart
     partType: Leg
     symmetry: Left
+    exoSkeleton: false
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5
@@ -152,44 +214,13 @@
     id: Creature #might make a special diona group later...
     totalReagentUnits: 4.5
   - type: Sprite
-    state: "r_leg"
+    state: "r_leg_icon"
   - type: Icon
-    state: "r_leg"
+    state: "r_leg_icon"
   - type: BodyPart
     partType: Leg
     symmetry: Right
+    exoSkeleton: false
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5
-
-- type: entity
-  id: LeftFootDiona
-  name: "left diona foot"
-  parent: PartDiona
-  components:
-  - type: BiopressHarvest
-    id: Creature #might make a special diona group later...
-    totalReagentUnits: 0.2
-  - type: Sprite
-    state: "l_foot"
-  - type: Icon
-    state: "l_foot"
-  - type: BodyPart
-    partType: Foot
-    symmetry: Left
-
-- type: entity
-  id: RightFootDiona
-  name: "right diona foot"
-  parent: PartDiona
-  components:
-  - type: BiopressHarvest
-    id: Creature #might make a special diona group later...
-    totalReagentUnits: 0.2
-  - type: Sprite
-    state: "r_foot"
-  - type: Icon
-    state: "r_foot"
-  - type: BodyPart
-    partType: Foot
-    symmetry: Right

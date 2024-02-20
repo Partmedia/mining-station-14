@@ -8,8 +8,13 @@
       connections:
       - torso
       organs:
-        brain: OrganHumanBrain
-        eyes: OrganHumanEyes
+        brain:
+          organ: OrganHumanBrain
+          type: Brain
+        eyes: 
+          organ: OrganHumanEyes
+          type: Eye
+          internal: false
     torso:
       part: TorsoHuman
       connections:
@@ -18,11 +23,21 @@
       - left leg
       - right leg
       organs:
-        heart: OrganAnimalHeart
-        lungs: OrganHumanLungs
-        stomach: OrganReptilianStomach
-        liver:  OrganAnimalLiver
-        kidneys: OrganHumanKidneys
+        heart:
+          organ: OrganAnimalHeart
+          type: Heart
+        lungs:
+          organ: OrganHumanLungs
+          type: Lung
+        stomach:
+          organ: OrganReptilianStomach
+          type: Stomach
+        liver:
+          organ: OrganAnimalLiver
+          type: Liver
+        kidneys: 
+          organ: OrganHumanKidneys
+          type: Kidney
     right arm:
       part: RightArmHuman
       connections:

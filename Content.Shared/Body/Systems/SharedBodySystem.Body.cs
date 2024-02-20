@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
@@ -8,6 +8,9 @@ using Content.Shared.Coordinates;
 using Content.Shared.DragDrop;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Content.Shared.Humanoid;
+using static Content.Shared.Humanoid.HumanoidAppearanceState;
+using Content.Shared.Humanoid.Prototypes;
 
 namespace Content.Shared.Body.Systems;
 
@@ -66,7 +69,7 @@ public partial class SharedBodySystem
             body.Root != null)
             return false;
 
-        slot = new BodyPartSlot(slotId, bodyId.Value, null);
+        slot = new BodyPartSlot(slotId, bodyId.Value, null, body.Species);
         body.Root = slot;
 
         return true;
@@ -95,35 +98,74 @@ public partial class SharedBodySystem
         foreach (var connection in connections)
         {
             var childSlot = prototype.Slots[connection];
-            if (childSlot.Part == null)
-                continue;
 
-            var childPart = Spawn(childSlot.Part, coordinates);
-            var childPartComponent = Comp<BodyPartComponent>(childPart);
-            var slot = CreatePartSlot(connection, parent.Owner, childPartComponent.PartType, parent);
-            if (slot == null)
+            //TODO tidy this up
+            if (childSlot.Part != null)
             {
-                Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
-                continue;
-            }
+                var childPart = Spawn(childSlot.Part, coordinates);
+                var childPartComponent = Comp<BodyPartComponent>(childPart);
 
-            AttachPart(childPart, slot, childPartComponent);
-            subConnections.Add((childPartComponent, connection));
+                childPartComponent.OriginalBody = parent.Owner;
+                var slot = CreatePartSlot(connection, parent.Owner, childPartComponent.PartType, parent.Species, parent);
+                if (slot == null)
+                {
+                    Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
+                    continue;
+                }
+
+                if (TryComp(parent.Owner, out HumanoidAppearanceComponent? bodyAppearance))
+                {
+                    var appearance = AddComp<BodyPartAppearanceComponent>(childPart);
+                    appearance.OriginalBody = childPartComponent.OriginalBody;
+                    appearance.Color = bodyAppearance.SkinColor;
+
+                    var symmetry = ((BodyPartSymmetry)childPartComponent.Symmetry).ToString();
+                    if (symmetry == "None")
+                        symmetry = "";
+                    appearance.ID = "removed" + symmetry + ((BodyPartType)childPartComponent.PartType).ToString();
+
+                    Dirty(appearance);
+                }
+
+                AttachPart(childPart, slot, childPartComponent);
+                subConnections.Add((childPartComponent, connection));       
+            }
+            else if (childSlot.SlotType != null)
+            {
+                var slot = CreatePartSlot(connection, parent.Owner, childSlot.SlotType.Value, parent.Species, parent);          
+                if (slot == null)
+                {
+                    Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
+                    continue;
+                }
+                slot.Cauterised = true;
+                AttachPart(null, slot);
+            }           
+            else
+                continue;
         }
 
-        foreach (var (organSlotId, organId) in organs)
+        foreach (KeyValuePair<string, OrganPrototypeSlot> organSlot in organs)
         {
-            var organ = Spawn(organId, coordinates);
-            var organComponent = Comp<OrganComponent>(organ);
-
-            var slot = CreateOrganSlot(organSlotId, parent.Owner, parent);
-            if (slot == null)
+            if (organSlot.Value != null)
             {
-                Logger.Error($"Could not create slot for connection {organSlotId} in body {prototype.ID}");
-                continue;
-            }
+                var slot = CreateOrganSlot(organSlot.Key, parent.Owner, organSlot.Value.SlotType, organSlot.Value.Internal, parent);
+                if (slot == null)
+                {
+                    Logger.Error($"Could not create slot for connection {organSlot.Key} in body {prototype.ID}");
+                    continue;
+                }
 
-            InsertOrgan(organ, slot, organComponent);
+                if (organSlot.Value.Organ != null)
+                {
+                    var organ = Spawn(organSlot.Value.Organ, coordinates);
+                    var organComponent = Comp<OrganComponent>(organ);
+                    InsertOrgan(organ, slot, organComponent);
+                } else
+                {
+                    slot.Cauterised = true;
+                }
+            }
         }
 
         foreach (var connection in subConnections)

@@ -144,5 +144,7 @@ public sealed class HumanoidAppearanceState : ComponentState
         /// </summary>
         [DataField("color")]
         public Color? Color { init; get; }
+
+        //TODO add other custom variables such as species and markings - in case someone decides to attach a lizard arm to a human for example
     }
 }

@@ -49,3 +49,10 @@
   desc: reagent-desc-sodium-carbonate
   physicalDesc: reagent-physical-desc-powdery
   color: white
+
+- type: reagent
+  id: Slag
+  name: reagent-name-slag
+  desc: reagent-desc-slag
+  physicalDesc: reagent-physical-desc-powdery
+  color: gray

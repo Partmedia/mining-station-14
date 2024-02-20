@@ -152,12 +152,34 @@ namespace Content.Server.Body.Systems
                     if (entry.MetabolismRate > mostToRemove)
                         mostToRemove = entry.MetabolismRate;
 
+                    var toxinRemovalRate = 1f;
+                    if (meta.FilterToxins.Contains(group.Id))
+                    {
+                        //if no toxin remover, set add BaseToxinRemovalRate from MetabolizerComponent (0.25)
+                        //otherwise set modifier from ToxinRemoverComponent
+                        if (TryComp<ToxinRemoverComponent>(solutionEntityUid.Value, out var toxinRemover) && toxinRemover.Working) {
 
-                    mostToRemove *= group.MetabolismRateModifier;
+                            //determine if there is enough build up to diminish the remover's effectiveness
+                            var toxinRemovalPenalty = 0f;
+                            if (toxinRemover.ToxinBuildUp >= toxinRemover.BuildUpThreshold)
+                                toxinRemovalPenalty = (toxinRemover.ToxinBuildUp * toxinRemover.BuildUpRemovalMod) - (toxinRemover.BuildUpThreshold * toxinRemover.BuildUpRemovalMod);
 
+                            toxinRemovalRate = toxinRemover.ToxinRemovalRate - toxinRemovalPenalty;
+                            //always maintain a minimum removal rate
+                            if (toxinRemovalRate < meta.BaseToxinRemovalRate)
+                                toxinRemovalRate = meta.BaseToxinRemovalRate;
+                        }
+                        else
+                            toxinRemovalRate = meta.BaseToxinRemovalRate;
+                    }
+
+                    var effectAmount = mostToRemove * group.MetabolismRateModifier;
+                    mostToRemove *= (group.MetabolismRateModifier * toxinRemovalRate);
+
+                    effectAmount = FixedPoint2.Clamp(effectAmount, 0, reagent.Quantity);
                     mostToRemove = FixedPoint2.Clamp(mostToRemove, 0, reagent.Quantity);
 
-                    float scale = (float) mostToRemove / (float) entry.MetabolismRate;
+                    float scale = (float) effectAmount / (float) entry.MetabolismRate;
 
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
@@ -166,8 +188,23 @@ namespace Content.Server.Body.Systems
                     bool dead = state is not null && _mobStateSystem.IsDead(solutionEntityUid.Value, state);
 
                     var actualEntity = organ?.Body ?? solutionEntityUid.Value;
-                    var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
+                    var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, effectAmount,
                         EntityManager, null, scale);
+
+                    if (meta.FilterToxins.Contains(group.Id))
+                    {
+                        //put strain on the toxinFilter if any
+                        if (TryComp<ToxinFilterComponent>(solutionEntityUid.Value, out var toxinFilter))
+                            toxinFilter.ToxinBuildUp += scale;
+                    }
+
+                    if (meta.RemoverToxins.Contains(group.Id))
+                    {
+                        //put strain on the toxinRemover if any
+                        //TODO cleanup don't get this component twice...
+                        if (TryComp<ToxinRemoverComponent>(solutionEntityUid.Value, out var toxinRemover))
+                            toxinRemover.ToxinBuildUp += scale;
+                    }
 
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
@@ -190,8 +227,14 @@ namespace Content.Server.Body.Systems
 
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
+                {
                     _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId,
                         mostToRemove);
+                    //If no toxin filter (liver) add toxin reagent (by scale determined by UnfilteredToxinRate from MetabolizerComponent (0.1))
+                    if (!TryComp<ToxinFilterComponent>(solutionEntityUid.Value, out var toxinFilter) || !toxinFilter.Working)
+                        _solutionContainerSystem.TryAddReagent(solutionEntityUid.Value, solution, meta.UnfilteredToxinReagent,
+                        mostToRemove*meta.UnfilteredToxinRate, out var accepted);
+                }
             }
         }
     }

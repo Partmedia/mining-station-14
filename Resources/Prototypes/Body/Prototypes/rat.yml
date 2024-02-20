@@ -1,6 +1,7 @@
-﻿- type: body
+- type: body
   id: Rat
   name: "animal"
+  species: animal
   root: torso
   slots:
     torso:
@@ -8,11 +9,28 @@
       connections:
       - legs
       organs:
-        lungs: OrganRatLungs
-        stomach: OrganRatStomach
-        liver: OrganAnimalLiver
-        heart: OrganAnimalHeart
-        kidneys: OrganAnimalKidneys
+        brain:
+          organ: OrganHumanBrain
+          type: Brain
+        eyes: 
+          organ: OrganHumanEyes
+          type: Eye
+          internal: false
+        lungs:
+          organ: OrganRatLungs
+          type: Lung
+        stomach:
+          organ: OrganRatStomach
+          type: Stomach
+        liver: 
+          organ: OrganAnimalLiver
+          type: Liver
+        heart: 
+          organ: OrganAnimalHeart
+          Type: Heart
+        kidneys:
+          Kidney: OrganAnimalKidneys
+          Type: Kidney
     legs:
       part: LegsAnimal
       connections:

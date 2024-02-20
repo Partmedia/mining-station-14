@@ -12,6 +12,7 @@
   - type: Lava
   - type: Transform
     anchored: true
+  - type: RequiresTile
   - type: SyncSprite
   - type: Clickable
   - type: Sprite

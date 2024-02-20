@@ -153,6 +153,31 @@
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
+      - !type:Emote
+        emote: Scream
+        probability: 0.3
+
+- type: reagent
+  id: FerrochromicAcid
+  name: reagent-name-ferrochromic-acid
+  group: Toxins
+  desc: reagent-desc-ferrochromic-acid
+  flavor: sour
+  color: "#48b3b8"
+  physicalDesc: reagent-physical-desc-ferrous
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: -1.5
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Heat: 2.5
+            Caustic: 1
+
 - type: reagent
   id: FluorosulfuricAcid
   name: reagent-name-fluorosulfuric-acid
@@ -349,7 +374,7 @@
   meltingPoint: 351
   boilingPoint: 554 # I'm not a chemist, but it boils at 295, lower than melting point, idk how it works so I gave it higher value
   metabolisms:
-    Poison:
+    Food:
       metabolismRate: 0.05
       effects:
       - !type:HealthChange

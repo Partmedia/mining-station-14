@@ -5,9 +5,55 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 5
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 50 #not as affected by sawing and incisions
+    drillShockDamage:
+      types:
+        Asphyxiation: 25
+    sutureShockDamage:
+      types:
+        Asphyxiation: 10
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 15
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 50 #hurt more by burning
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 5
+    compatibleSpecies:
+      - diona
+      - universal
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger
+    starvationDamage:
+      types:
+        Bloodloss: 0.5
   - type: Thirst
     baseDecayRate: 0.3
   - type: Icon
@@ -15,6 +61,7 @@
     state: full
   - type: Body
     prototype: Diona
+    species: diona
     requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
@@ -46,7 +93,7 @@
         layer:
           - MobLayer
   - type: Inventory
-    templateId: diona
+    templateId: human
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5

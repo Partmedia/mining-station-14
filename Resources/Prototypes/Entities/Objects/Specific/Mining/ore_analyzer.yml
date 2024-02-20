@@ -1,8 +1,8 @@
 - type: entity
-  name: ore analyzer
+  name: XRF analyzer
   parent: BaseItem
   id: OreAnalyzer
-  description: A hand-held scanner capable of displaying the material and chemical content of a piece of ore.
+  description: A hand-held X-ray fluorescence gun. Analyzes material content in ores and sheets.
   components:
   - type: Sprite
     sprite: Objects/Specific/Mining/ore_scanner.rsi

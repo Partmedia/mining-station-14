@@ -5,6 +5,7 @@ using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.Maps;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Controllers;
 using Robust.Shared.Physics;
@@ -12,11 +13,13 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Physics.Controllers;
 
 public sealed class ConveyorController : SharedConveyorController
 {
+        [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly RecyclerSystem _recycler = default!;
     [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
@@ -145,4 +148,11 @@ public sealed class ConveyorController : SharedConveyorController
             }
         }
     }
+                }
+
+                // If thing can move and has recently moved, don't apply conveyor
+                if (TryComp<InputMoverComponent>(entity, out var mover))
+                {
+                    if (Timing.CurTick < mover.LastInputTick + 2)
+                        continue;
 }

@@ -53,6 +53,7 @@
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: uranium }
   color: "#32a852"
   price: 15
+  meltingTemperature: 1405 # K
 
 - type: material
   id: Graphene
@@ -60,3 +61,16 @@
   name: materials-graphene
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: graphene }
   price: 0.05 # Match steel price
+
+- type: material
+  id: Slag
+  stackEntity: SheetSlag1
+  name: materials-slag
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: graphene }
+  price: 0.0
+
+- type: material
+  id: Soda
+  name: materials-soda
+  icon: { sprite: Objects/Materials/materials.rsi, state: ash }
+  price: 0.0

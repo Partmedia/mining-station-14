@@ -13,6 +13,9 @@ reagent-desc-polytrinic-acid = An extremely corrosive chemical substance. The sl
 reagent-name-chloral-hydrate = chloral hydrate
 reagent-desc-chloral-hydrate = In low doses, makes you drowsy. In higher doses, puts you to sleep. Overdoses deal toxin damage.
 
+reagent-name-ferrochromic-acid = ferrochromic acid
+reagent-desc-ferrochromic-acid = A mildy corrosive solution, unable of causing severe danger unless ingested.
+
 reagent-name-fluorosulfuric-acid = fluorosulfuric acid
 reagent-desc-fluorosulfuric-acid = An extremely corrosive chemical substance.
 

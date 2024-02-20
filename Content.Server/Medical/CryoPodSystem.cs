@@ -32,6 +32,7 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
+using Content.Server.Surgery;
 
 namespace Content.Server.Medical;
 
@@ -50,6 +51,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
+    [Dependency] private readonly HealthAnalyzerSystem _healthAnalyzerSystem = default!;
 
     public override void Initialize()
     {
@@ -171,11 +173,16 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
 
     private void OnActivateUI(EntityUid uid, CryoPodComponent cryoPodComponent, AfterActivatableUIOpenEvent args)
     {
+        Dictionary<string, string> organFunctionConditions = new Dictionary<string, string>();
         TryComp<TemperatureComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var temp);
+        TryComp<BloodstreamComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var bloodstream);
+        TryComp<SurgeryComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var surgery);
+        if (cryoPodComponent.BodyContainer.ContainedEntity != null)
+            organFunctionConditions = _healthAnalyzerSystem.GetOrganFunctions(cryoPodComponent.BodyContainer.ContainedEntity.Value);
         _userInterfaceSystem.TrySendUiMessage(
             uid,
             SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key,
-            new SharedHealthAnalyzerComponent.HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity, temp != null ? temp.CurrentTemperature : 0));
+            new SharedHealthAnalyzerComponent.HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, surgery != null ? surgery.Sedated : false, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)

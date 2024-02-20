@@ -361,7 +361,20 @@ namespace Content.Server.Administration.Systems
             };
 
             var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText);
+            BwoinkCommon(msg, message.Text, senderSession, personalChannel);
+        }
 
+        /**
+         * Convenience method for the server to bwoink someone.
+         */
+        public void Bwoink(NetUserId recipient, string text)
+        {
+            var msg = new BwoinkTextMessage(recipient, SharedBwoinkSystem.SystemUserId, text);
+            BwoinkCommon(msg, text);
+        }
+
+        private void BwoinkCommon(BwoinkTextMessage msg, string text, IPlayerSession? senderSession=null, bool personalChannel=false)
+        {
             LogBwoink(msg);
 
             var admins = GetTargetAdmins();
@@ -373,7 +386,7 @@ namespace Content.Server.Administration.Systems
             }
 
             // Notify player
-            if (_playerManager.TryGetSessionById(message.UserId, out var session))
+            if (_playerManager.TryGetSessionById(msg.UserId, out var session))
             {
                 if (!admins.Contains(session.ConnectedClient))
                     RaiseNetworkEvent(msg, session.ConnectedClient);
@@ -385,25 +398,31 @@ namespace Content.Server.Administration.Systems
                 if (!_messageQueues.ContainsKey(msg.UserId))
                     _messageQueues[msg.UserId] = new Queue<string>();
 
-                var str = message.Text;
-                var unameLength = senderSession.Name.Length;
+                var str = text;
+                string name = senderSession != null ? senderSession.Name : "SYSTEM";
+                var unameLength = name.Length;
 
                 if (unameLength + str.Length + _maxAdditionalChars > DescriptionMax)
                 {
                     str = str[..(DescriptionMax - _maxAdditionalChars - unameLength)];
                 }
-                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, admins.Count == 0));
+                _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(name, str, !personalChannel, admins.Count == 0));
             }
 
             if (admins.Count != 0)
+                return;
+
+            // if auto admin is enabled, don't let them know that no admins are online
+            if (_config.GetCVar(CCVars.AutoAdmin) > 0)
                 return;
 
             // No admin online, let the player know
             var systemText = sendsWebhook ?
                 Loc.GetString("bwoink-system-starmute-message-no-other-users-webhook") :
                 Loc.GetString("bwoink-system-starmute-message-no-other-users");
-            var starMuteMsg = new BwoinkTextMessage(message.UserId, SystemUserId, systemText);
-            RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
+            var starMuteMsg = new BwoinkTextMessage(msg.UserId, SystemUserId, systemText);
+            if (senderSession != null)
+                RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
         }
 
         // Returns all online admins with AHelp access

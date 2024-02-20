@@ -4,18 +4,15 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingBeltUtility
-        amount: 2
-      - id: ClothingEyesGlassesMeson
-        amount: 2
-      - id: ClothingHeadHatHardhatYellow
-        amount: 2
-      - id: ClothingHeadHatWelding
-        amount: 2
-      - id: ClothingOuterVestHazard
-        amount: 3
+      - id: ClothingOuterHardsuitEngineering
       - id: ClothingHandsGlovesColorYellow
-        amount: 2
+      - id: ClothingMaskGas
+      - id: AirTankFilled
+      - id: ClothingShoesBootsMag
+      - id: GasAnalyzer
+      - id: trayScanner
+      - id: ClothingEyesGlassesMeson
+      - id: ClothingBeltUtilityFilled
 
 - type: entity
   id: CrateEngineeringToolbox

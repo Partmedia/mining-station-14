@@ -1,6 +1,7 @@
-﻿- type: body
+- type: body
   id: Skeleton
   name: "skeleton"
+  species: skeleton
   root: torso
   slots:
     head:

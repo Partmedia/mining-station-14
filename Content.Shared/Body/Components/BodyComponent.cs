@@ -26,4 +26,7 @@ public sealed class BodyComponent : Component
     /// </summary>
     [DataField("requiredLegs")]
     public int RequiredLegs;
+    [DataField("species")]
+    public string Species = "universal";
+
 }

@@ -27,6 +27,8 @@
     maleScream: "/Audio/Voice/Moth/scream_moth.ogg"
     femaleScream: "/Audio/Voice/Moth/scream_moth.ogg"
     wilhelm: "/Audio/Voice/Moth/scream_moth.ogg"
+  - type: NoSlip
+  - type: MovementAlwaysTouching
   - type: Faction
     factions:
       - NanoTrasen
@@ -37,3 +39,4 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
+  - type: MiningCredit 

@@ -159,6 +159,24 @@
   group: market
 
 - type: cargoProduct
+  id: AppraisalToolC
+  icon:
+    sprite: Objects/Tools/appraisal-tool.rsi
+    state: icon
+  product: AppraisalTool
+  category: Salvage
+  group: market
+
+- type: cargoProduct
+  id: PowerComputerCircuitboardC
+  icon:
+    sprite: Objects/Misc/module.rsi
+    state: cpu_engineering
+  product: PowerComputerCircuitboard
+  category: Engineering
+  group: market
+
+- type: cargoProduct
   id: MiningBiomassReclaimerCrate
   name: biomass reclaimer crate
   description: End NanoTrasen's monopoly on biomass with your own reclaimer!
@@ -198,7 +216,7 @@
     sprite: Structures/Machines/cloning.rsi
     state: pod_0
   product: CrateCloning
-  cost: 3000
+  cost: 10000
   category: Medical
   group: market
 
@@ -256,7 +274,15 @@
     sprite: Structures/Storage/canister.rsi
     state: yellow
   product: StorageCanister
-  cost: 1100
+  category: Atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AirTankFilledC
+  icon:
+    sprite: Objects/Tanks/generic.rsi
+    state: icon
+  product: AirTankFilled
   category: Atmospherics
   group: market
 
@@ -432,7 +458,6 @@
 
 - type: cargoProduct
   id: ProductOreAnalyzer
-  name: ore analyzer
   icon:
     sprite: Objects/Specific/Mining/ore_scanner.rsi
     state: analyzer
@@ -687,4 +712,13 @@
   product: CrateEmergencyFlares
   cost: 500
   category: Mining
+  group: market
+
+- type: cargoProduct
+  id: ClothingOuterWinterCoatC
+  icon:
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    state: icon
+  product: ClothingOuterWinterCoat
+  category: Misc
   group: market

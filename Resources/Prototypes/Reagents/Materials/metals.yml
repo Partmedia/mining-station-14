@@ -4,6 +4,7 @@
   name: materials-steel
   icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: steel }
   price: 0.05
+  meltingTemperature: 1811 # K
 
 - type: material
   id: Gold
@@ -12,6 +13,7 @@
   icon: { sprite: Objects/Materials/ingots.rsi, state: gold }
   color: "#FFD700"
   price: 3
+  meltingTemperature: 1337 # K
 
 - type: material
   id: Silver
@@ -20,6 +22,7 @@
   icon: { sprite: Objects/Materials/ingots.rsi, state: silver }
   color: "#C0C0C0"
   price: 0.75
+  meltingTemperature: 1235 # K
 
 - type: material
   id: Plasteel
@@ -28,3 +31,12 @@
   icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: plasteel }
   color: "#696969" #Okay, this is epic
   price: 0.28 # 1-1 mix of plasma and steel.
+  meltingTemperature: 1873 # K
+
+- type: material
+  id: Copper
+  stackEntity: SheetCopper1
+  name: copper
+  icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: copper }
+  price: 0.10
+  meltingTemperature: 1358 # K

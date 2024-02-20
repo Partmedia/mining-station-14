@@ -10,6 +10,7 @@
     netsync: false
     sprite: Mobs/Species/Diona/organs.rsi
   - type: Organ
+    species: diona
   - type: Food
   - type: Extractable
     grindableSolutionName: organ
@@ -30,6 +31,7 @@
   - type: Sprite
     state: brain
   - type: Organ
+    organType: Brain
   - type: Input
     context: "ghost"
   - type: InputMover
@@ -49,6 +51,7 @@
   - type: GhostOnMove
   - type: Brain
   - type: Lung #lungs in they head. why they there tho?
+    damageMod: 0.00125 #make this a bit more resilient due to the multiple functions
   - type: Metabolizer
     removeEmpty: true
     solutionOnBody: false
@@ -57,6 +60,9 @@
     groups:
     - id: Gas
       rateModifier: 100.0
+  - type: Tag
+    tags:
+      - MindTransferTarget
 
 - type: entity
   id: OrganDionaEyes
@@ -69,6 +75,8 @@
       - state: eyeball-l
       - state: eyeball-r
   - type: Organ
+    organType: Eye
+  - type: EyeSight
 
 - type: entity
   id: OrganDionaStomach
@@ -79,11 +87,26 @@
   - type: Sprite
     state: stomach
   - type: Organ
+    organType: Stomach
   - type: SolutionContainerManager
     solutions:
       stomach:
         maxVol: 50
   - type: Stomach
+    toxinThreshold: 200 #make this a bit more resilient due to the multiple functions
+  - type: Liver #if its brain is also its lungs, then I'm making its stomach also its liver and kidneys okay?
+  - type: Kidney
+  - type: ToxinRemover 
+    embedded: true
+    toxinThreshold: 400 #make this a bit more resilient due to the multiple functions
+  - type: ToxinFilter
+    embedded: true
+    toxinThreshold: 300 #make this a bit more resilient due to the multiple functions
+  - type: Heart #also its heart until we port over other diona organs (or not)
+  - type: CirculatoryPump
+    notWorkingDamage:
+      types:
+        Asphyxiation: 30
   - type: Metabolizer
     maxReagents: 6
     metabolizerTypes: [ Plant ]

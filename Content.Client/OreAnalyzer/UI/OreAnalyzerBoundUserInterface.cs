@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-using static Content.Shared.Mining.SharedOreAnalyzerComponent;
+using static Content.Shared.Mining.Components.SharedOreAnalyzerComponent;
 
 namespace Content.Client.OreAnalyzer.UI
 {

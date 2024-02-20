@@ -57,7 +57,7 @@ namespace Content.Server.Body.Systems
                 respirator.AccumulatedFrametime -= respirator.CycleDelay;
                 UpdateSaturation(respirator.Owner, -respirator.CycleDelay, respirator);
 
-                if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
+                if (!_mobState.IsIncapacitated(uid) && (TryComp<CirculatoryPumpComponent>(uid, out var pump) && pump.Working)) // cannot breathe in crit or without a heart.
                 {
                     switch (respirator.Status)
                     {
@@ -108,14 +108,34 @@ namespace Content.Server.Body.Systems
                 return;
             }
 
-            var actualGas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);
+            //var actualGas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);
+            var gas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);
 
-            var lungRatio = 1.0f / organs.Count;
-            var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
+            //NOTE: keeping this here just in case, but by splitting the gas among multiple lungs neither gets enough
+            //so for now if we have multiple lungs, we just breath more
+            //var lungRatio = 1.0f / organs.Count;
+            //var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
+
             foreach (var (lung, _) in organs)
             {
+                _lungSystem.UpdateLungStatus(uid,lung);
+
+                // Remove for lung damage
+                var damageLoss = lung.Damage;
+                if (damageLoss > 1.0f)
+                    damageLoss = 1.0f;
+
                 // Merge doesn't remove gas from the giver.
-                _atmosSys.Merge(lung.Air, gas);
+                if (damageLoss > 0)
+                {
+                    var remainderGas = gas.RemoveRatio(1.0f - damageLoss);
+                    var removedGas = gas.RemoveRatio(damageLoss);
+                    _atmosSys.Merge(lung.Air, remainderGas);
+                    _atmosSys.Merge(ev.Gas, removedGas);
+                }
+                else
+                    _atmosSys.Merge(lung.Air, gas);
+
                 _lungSystem.GasToReagent(lung.Owner, lung);
             }
         }

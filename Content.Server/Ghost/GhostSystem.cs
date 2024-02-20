@@ -19,6 +19,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Enums;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
@@ -172,7 +173,9 @@ namespace Content.Server.Ghost
 
         private void OnPlayerDetached(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
         {
-            QueueDel(uid);
+            //do not delete if just disconnected
+            if (args.Player.Status != SessionStatus.Disconnected)
+                QueueDel(uid);
         }
 
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)

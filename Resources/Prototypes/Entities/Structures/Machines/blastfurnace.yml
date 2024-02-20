@@ -23,6 +23,7 @@
     - type: ApcPowerReceiver
       powerLoad: 3000
     - type: Lathe
+      ignoreMaterialWhitelist: true
       staticRecipes:
         - BlastFurnaceSteel
         - BlastFurnacePlasteel

@@ -101,3 +101,37 @@
   - type: Stack
     stackType: Plasteel
     count: 1
+
+- type: entity
+  parent: SheetMetalBase
+  id: SheetCopper
+  name: copper
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Copper: 100
+  - type: Stack
+    stackType: Copper
+  - type: Sprite
+    state: copper_3
+  - type: Item
+    heldPrefix: copper
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - copper
+      - copper_2
+      - copper_3
+
+- type: entity
+  parent: SheetCopper
+  id: SheetCopper1
+  name: copper
+  suffix: Single
+  components:
+  - type: Sprite
+    state: copper
+  - type: Stack
+    count: 1

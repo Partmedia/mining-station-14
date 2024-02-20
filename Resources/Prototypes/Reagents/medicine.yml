@@ -21,8 +21,14 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: -1
-    # TODO overdose: vomit, dizzy effect (drunkenness?)
+            Poison: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 16
+        damage:
+          types:
+            Burn: 0.5
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: -10
@@ -78,9 +84,9 @@
       - !type:HealthChange
         damage:
           types:
-            Radiation: -3
+            Radiation: -6
           groups:
-            Brute: 0.5
+            Brute: 2
 
 - type: reagent
   id: Bicaridine
@@ -96,19 +102,27 @@
       - !type:HealthChange
         damage:
           groups:
-            Brute: -2
+            Brute: -6
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 6
         damage:
           types:
-            Asphyxiation: 1
-            Poison: 0.5
+            Asphyxiation: 2
+            Poison: 1
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Dermaline
+          min: 1
+        damage:
+          types:
+            Poison: 2
     Alcohol:
       effects:
       - !type:Drunk
@@ -158,22 +172,48 @@
       - !type:HealthChange
         damage:
           types:
+            Heat: -3
+            Shock: -3
+            Cold: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        damage:
+          types:
+            Asphyxiation: 2
+        groups:
+            Brute: 1
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Kelotane
+          min: 1
+        damage:
+          types:
             Heat: -1
             Shock: -1
             Cold: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          reagent: Dylovene
+          min: 1
         damage:
           types:
-            Asphyxiation: 1
-        groups:
-            Brute: 0.5
-      - !type:Jitter
+            Blunt: 2
+      - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          reagent: Stellibinin
+          min: 1
+        damage:
+          types:
+            Blunt: 2
 
 - type: reagent
   id: Dexalin
@@ -189,8 +229,15 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: -1
-            Bloodloss: -0.5
+            Asphyxiation: -2
+            Bloodloss: -1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 16
+        damage:
+          types:
+            Cold: 0.1
 
 - type: reagent
   id: DexalinPlus
@@ -206,8 +253,8 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: -3.5
-            Bloodloss: -3
+            Asphyxiation: -7
+            Bloodloss: -6
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
@@ -215,6 +262,29 @@
           min: 1
         reagent: Lexorin
         amount: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        damage:
+          types:
+            Cold: 0.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Epinephrine
+          min: 1
+        damage:
+          types:
+            Cold: 1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Inaprovaline
+          min: 1
+        damage:
+          types:
+            Bloodloss: -3
 
 # this ones a doozy
 - type: reagent
@@ -277,6 +347,17 @@
         key: KnockedDown
         time: 0.75
         type: Remove
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Inaprovaline
+          min: 1
+        - !type:TotalDamage
+          min: -1
+          max: 100
+        damage:
+          types:
+            Asphyxiation: -5
 
 - type: reagent
   id: Hyronalin
@@ -294,18 +375,21 @@
           types:
             Radiation: -1
       - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
         probability: 0.02
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 16
         damage:
           types:
            Heat: 0.5
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 16
 
 - type: reagent
   id: Ipecac
@@ -341,7 +425,7 @@
           types:
             Asphyxiation: -5
       - !type:ModifyBleedAmount
-        amount: -0.25
+        amount: -0.5
 
 - type: reagent
   id: Kelotane
@@ -357,9 +441,16 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: -0.33
-            Shock: -0.33
-            Cold: -0.33
+            Heat: -1
+            Shock: -1
+            Cold: -1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 16
+        damage:
+          types:
+            Blunt: 0.1
 
 - type: reagent
   id: Leporazine
@@ -375,7 +466,7 @@
       - !type:HealthChange
         damage:
           types:
-            Cold: -4
+            Cold: -8
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
@@ -391,6 +482,13 @@
         visualType: Medium
         messages: [ "leporazine-effect-temperature-adjusting" ]
         probability: 0.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        damage:
+          types:
+            Burn: 2
 
 - type: reagent
   id: Barozine
@@ -450,9 +548,12 @@
       - !type:HealthChange
         damage:
           types:
-            Cellular: -1
-            Radiation: 1
+            Cellular: -3
+            Radiation: 3
       - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 11
         probability: 0.05
 
 - type: reagent
@@ -500,7 +601,14 @@
       - !type:HealthChange
         damage:
           types:
-            Caustic: -5
+            Caustic: -10
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        damage:
+          types:
+            Burn: 2
 
 - type: reagent
   id: Spaceacillin
@@ -515,9 +623,12 @@
       effects:
       - !type:ChemCureDisease
       - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 11
         damage:
           types:
-            Cellular: 0.5
+            Poison: 0.5
 
 - type: reagent
   id: Stellibinin
@@ -533,7 +644,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: -4
+            Poison: -6
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
@@ -541,6 +652,30 @@
           min: 1
         reagent: Amatoxin
         amount: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 11
+        damage:
+          types:
+            Heat: 2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Bicaridine
+          min: 1
+        damage:
+          types:
+            Heat: 4
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Dylovene
+          min: 1
+        damage:
+          types:
+            Poison: -2
+            Caustic: -2
 
 - type: reagent
   id: Synaptizine
@@ -602,16 +737,68 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
-          max: 50
+          - !type:ReagentThreshold
+            max: 15
         damage:
           groups:
-            Brute: -1
+            Brute: -0.5
           types:
-            Poison: -0.5 ##Should be about what it was when it healed the toxin group
-            Heat: -0.33
-            Shock: -0.33
-            Cold: -0.33
+            Poison: -0.25 ##Should be about what it was when it healed the toxin group
+            Heat: -0.16
+            Shock: -0.16
+            Cold: -0.16
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          max: 15
+        - !type:ReagentThreshold
+          reagent: Bicaridine
+          min: 1
+        damage:
+          groups:
+            Brute: -2.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          max: 15
+        - !type:ReagentThreshold
+          reagent: Dermaline
+          min: 1
+        damage:
+          types:
+            Heat: -0.66
+            Shock: -0.66
+            Cold: -0.66
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          max: 15
+        - !type:ReagentThreshold
+          reagent: Stellibinin
+          min: 1
+        damage:
+          groups:
+            Toxin: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          max: 15
+        - !type:ReagentThreshold
+          reagent: Arithrazine
+          min: 1
+        damage:
+          types:
+            Cellular: -1
+          groups:
+            Brute: 0.5
+      - !type:ModifyBloodLevel
+        conditions:
+        - !type:ReagentThreshold
+          max: 15
+        - !type:ReagentThreshold
+          reagent: DexalinPlus
+          min: 1
+        amount: 2
 
 - type: reagent
   id: Lipozine
@@ -666,8 +853,8 @@
           max: 30
         damage:
           groups:
-            Toxin: -3
-            Brute: 0.5
+            Toxin: -5
+            Brute: 1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -787,15 +974,15 @@
           min: 16
         damage:
           types:
-            Heat: 2
+            Heat: 0.5
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 20
+          min: 11
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
-          min: 20
+          min: 11
         type: Local
         visualType: Medium
         messages: [ "generic-reagent-effect-nauseous" ]
@@ -803,5 +990,129 @@
       - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 16
         probability: 0.02
+
+- type: reagent
+  id: Calomel
+  name: reagent-name-calomel
+  group: Medicine
+  desc: reagent-desc-calomel
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: medicine
+  color: "#A4E326"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          # they gotta be in crit first
+          min: 100
+        damage:
+          types:
+            Asphyxiation: -6
+          groups:
+            Toxin: -15
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          min: -1
+          max: 100
+        damage:
+          types:
+            Slash: 2
+            Poison: 2
+
+- type: reagent
+  id: Frozackamol
+  name: reagent-name-frozackamol
+  group: Medicine
+  desc: reagent-desc-frozackamol
+  physicalDesc: reagent-physical-desc-cold
+  flavor: medicine
+  color: "#CAEBEB"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        damage:
+          types:
+            Heat: -10
+            Shock: -10
+            Poison: 5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 11
+        damage:
+          types:
+            Cold: 5
+            Poison: 5
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          max: 293.15
+        amount: 10000
+
+- type: reagent
+  id: PyrothylNitrate
+  name: reagent-name-pyrothylnitrate
+  group: Medicine
+  desc: reagent-desc-pyrothylnitrate
+  physicalDesc: reagent-physical-desc-blazing
+  flavor: medicine
+  color: "#F13C0C"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        damage:
+          types:
+            Cold: -20
+            Poison: 5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 11
+        damage:
+          types:
+            Heat: 5
+            Poison: 5
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 293.15
+        amount: -10000
+
+- type: reagent
+  id: Renephelone
+  name: reagent-name-renephelone
+  group: Medicine
+  desc: reagent-desc-renephelone
+  physicalDesc: reagent-physical-desc-glowing
+  flavor: medicine
+  color: "#EAC90B"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        damage:
+          types:
+            Cellular: -6
+            Heat: 1.5
+            Bloodloss: 5
+            Airloss: -6
+          groups:
+            Brute: -18
+            Toxin: -4
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+      - !type:Emote
+        emote: Scream
+        probability: 0.2

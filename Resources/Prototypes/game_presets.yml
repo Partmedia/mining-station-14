@@ -127,4 +127,12 @@
   description: You and your friends racked up too much poker debt and must now mine to make your way back.
   showInVote: true
   rules:
+    - MiningProfitManager
     - MiningEventScheduler
+
+- type: gamePreset
+  id: Dungeon
+  name: Dungeon
+  description: Recover a powerful artifact hidden deep within the asteroid.
+  rules:
+    - DungeonRuleSystem

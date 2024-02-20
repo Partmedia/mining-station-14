@@ -6,12 +6,66 @@
   name: "moth body part"
   abstract: true
   components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 30 #internal organs are more sensitive due to exoskeleton
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 65 #exo skeleton offers pain resistance here
+    drillShockDamage:
+      types:
+        Asphyxiation: 25
+    sutureShockDamage:
+      types:
+        Asphyxiation: 10
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 15
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 15
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 10
+    compatibleSpecies:
+      - moth
+      - animal
+      - universal
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurgeryUiKey.Key
+        type: SurgeryBoundUserInterface
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
+    exoSkeleton: true
+    species: moth
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
+        ents: []
+      attachment: !type:Container
+        ents: []
+      slotAttachment: !type:Container
         ents: []
 
 - type: entity
@@ -23,7 +77,7 @@
     id: Creature
     totalReagentUnits: 25
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Moth/parts.rsi
     state: "torso_m"
   - type: Icon
@@ -31,6 +85,10 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
+    incisable: true
+    container: true
+    endoSkeleton: true
+    exoSkeleton: true
 
 - type: entity
   id: HeadMoth
@@ -41,14 +99,18 @@
     id: Creature
     totalReagentUnits: 3
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "head_m"
+    state: "head_icon"
   - type: Icon
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "head_m"
+    state: "head_icon"
   - type: BodyPart
     partType: Head
+    incisable: true
+    container: true
+    endoSkeleton: true
+    exoSkeleton: true
     vital: true
   - type: Input
     context: "ghost"
@@ -70,12 +132,12 @@
     id: Creature
     totalReagentUnits: 3
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "l_arm"
+    state: "l_arm_icon"
   - type: Icon
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "l_arm"
+    state: "l_arm_icon"
   - type: BodyPart
     partType: Arm
     symmetry: Left
@@ -89,12 +151,12 @@
     id: Creature
     totalReagentUnits: 3
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "r_arm"
+    state: "r_arm_icon"
   - type: Icon
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "r_arm"
+    state: "r_arm_icon"
   - type: BodyPart
     partType: Arm
     symmetry: Right
@@ -108,12 +170,12 @@
     id: Creature
     totalReagentUnits: 0.1
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: Icon
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "l_hand"
+    state: "l_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Left
@@ -127,12 +189,12 @@
     id: Creature
     totalReagentUnits: 0.1
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "r_hand"
+    state: "r_hand_icon"
   - type: Icon
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "r_hand"
+    state: "r_hand_icon"
   - type: BodyPart
     partType: Hand
     symmetry: Right
@@ -146,12 +208,12 @@
     id: Creature
     totalReagentUnits: 4
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: Icon
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "l_leg"
+    state: "l_leg_icon"
   - type: BodyPart
     partType: Leg
     symmetry: Left
@@ -166,12 +228,12 @@
     id: Creature
     totalReagentUnits: 4
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "r_leg"
+    state: "r_leg_icon"
   - type: Icon
     sprite: Mobs/Species/Moth/parts.rsi
-    state: "r_leg"
+    state: "r_leg_icon"
   - type: BodyPart
     partType: Leg
     symmetry: Right

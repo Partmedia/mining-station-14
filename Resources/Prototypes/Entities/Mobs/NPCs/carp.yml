@@ -10,6 +10,7 @@
       totalReagentUnits: 25
     - type: InputMover
     - type: MobMover
+    - type: MovementIgnoreGravity
     - type: HTN
       rootTask: SimpleHostileCompound
       blackboard:

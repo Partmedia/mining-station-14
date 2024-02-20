@@ -57,6 +57,26 @@
     sprite: Structures/Storage/Crates/medical.rsi
 
 - type: entity
+  parent: CrateMedical
+  id: CrateDefibMedical
+  name: defibrillator crate
+
+- type: entity
+  parent: CrateMedical
+  id: CrateSynthOrgan
+  name: synthetic organ crate
+
+- type: entity
+  parent: CrateMedical
+  id: CrateDionaOrgan
+  name: diona organ crate
+
+- type: entity
+  parent: CrateMedical
+  id: CrateSynthBody
+  name: synthetic body crate
+
+- type: entity
   parent: CrateBaseWeldable
   id: CrateRadiation
   name: radiation gear crate
@@ -111,6 +131,7 @@
   parent: CrateBaseWeldable
   id: CrateSurgery
   name: surgery crate
+  suffix: Empty
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/surgery.rsi
@@ -154,6 +175,18 @@
     sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
   - type: AccessReader
     access: [["Medical"]]
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateChemistrySecure
+  name: secure chemistry crate
+  components:
+    - type: Icon
+      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    - type: Sprite
+      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    - type: AccessReader
+      access: [["Chemistry"]]
 
 - type: entity
   parent: CrateBaseSecure

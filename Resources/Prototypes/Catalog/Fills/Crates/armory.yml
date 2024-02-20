@@ -37,3 +37,145 @@
     contents:
       - id: WeaponLaserGun
         amount: 3
+
+- type: entity
+  id: CrateArmoryLecter
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponRifleLecter
+        amount: 2
+      - id: MagazineRifle
+        amount: 4
+
+- type: entity
+  id: CrateArmoryLaserRifle
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLaserCarbine
+        amount: 2
+
+- type: entity
+  id: CrateArmoryPlasmaRifle
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponPlasmaRifle
+        amount: 2
+      - id: MagazinePlasmaRifle
+        amount: 4
+
+- type: entity
+  id: CrateArmoryPistol
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponPistolMk58
+        amount: 2
+      - id: MagazinePistol
+        amount: 4
+
+- type: entity
+  id: CrateArmoryLightArmor
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterVestWeb
+        amount: 3
+      - id: ClothingHeadHelmetHelmet
+        amount: 3
+
+- type: entity
+  id: CrateArmoryHeavyArmor
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterArmorHeavy
+        amount: 1
+      - id: ClothingHeadHelmetThunderdome
+        amount: 1
+
+- type: entity
+  id: CrateArmoryRiotArmor
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterArmorRiot
+        amount: 2
+      - id: ClothingHeadHelmetRiot
+        amount: 2
+
+- type: entity
+  id: CrateArmoryHardsuit
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSecurity
+        amount: 2
+
+- type: entity
+  id: CrateArmorySniper
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponSniperHristov
+        amount: 1
+      - id: MagazineBoxAntiMateriel
+        amount: 1
+
+- type: entity
+  id: CrateArmoryMinigun
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponMinigun
+        amount: 1
+
+- type: entity
+  id: CrateArmoryL6
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLightMachineGunL6
+        amount: 1
+      - id: MagazineLightRifleBox
+        amount: 2
+
+- type: entity
+  id: CrateArmoryAdvancedLaser
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponAdvancedLaser
+        amount: 1
+
+- type: entity
+  id: CrateArmoryLaserCannon
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLaserCannon
+        amount: 1
+
+- type: entity
+  id: CrateArmoryXrayCannon
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponXrayCannon
+        amount: 1

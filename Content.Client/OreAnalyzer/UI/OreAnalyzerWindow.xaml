@@ -6,5 +6,7 @@
             Name="OreMaterials"/>
         <Label
             Name="OreReagents"/>
+        <Label
+            Name="OreMeltingPoint"/>
     </BoxContainer>
 </DefaultWindow>

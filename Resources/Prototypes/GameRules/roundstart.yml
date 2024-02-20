@@ -80,6 +80,18 @@
     id: MiningEventScheduler
 
 - type: gameRule
+  id: MiningProfitManager
+  config:
+    !type:GenericGameRuleConfiguration
+    id: MiningProfitManager
+
+- type: gameRule
+  id: DungeonRuleSystem
+  config:
+    !type:GenericGameRuleConfiguration
+    id: DungeonRuleSystem
+
+- type: gameRule
   id: RampingStationEventScheduler
   config:
     !type:GenericGameRuleConfiguration

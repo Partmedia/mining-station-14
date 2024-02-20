@@ -239,19 +239,25 @@ namespace Content.Server.Cargo.Systems
             _audio.PlayPvs(_audio.GetSound(component.ErrorSound), uid);
         }
 
+        private int AutoPrice(string id)
+        {
+            float markup = 1.5f; // how much buy price is inflated TODO: CCVar
+            var ent = _entityManager.SpawnEntity(id, MapCoordinates.Nullspace);
+            int price = (int)(_pricingSystem.GetPrice(ent) * markup);
+            QueueDel(ent);
+            return price;
+        }
+
         private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int index)
         {
             var product = _protoManager.Index<CargoProductPrototype>(args.ProductId);
-            int price = 0;
-            if (product.PointCost == 0)
+            int price = AutoPrice(product.Product);
+            if (product.PointCost != 0)
             {
-                float markup = 1.5f; // how much buy price is inflated TODO: CCVar
-                var ent = _entityManager.SpawnEntity(product.Product, MapCoordinates.Nullspace);
-                price = (int)(_pricingSystem.GetPrice(ent) * markup);
-            }
-            else
-            {
-                price = product.PointCost;
+                if (product.PointCost < price)
+                    Logger.WarningS("cargo", $"Price for {product.Product} is {product.PointCost} which is less than the automatic price of {price}");
+                else
+                    price = product.PointCost;
             }
             return new CargoOrderData(index, args.ProductId, price, args.Amount, args.Requester, args.Reason);
         }

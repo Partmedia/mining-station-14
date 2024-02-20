@@ -250,3 +250,47 @@
     state: graphene
   - type: Stack
     count: 1
+
+- type: entity
+  parent: SheetOtherBase
+  id: SheetSlag
+  name: slag
+  suffix: Full
+  components:
+  - type: StaticPrice
+    price: 0
+  - type: Material
+    materials:
+      Slag: 100
+  - type: Stack
+    stackType: Slag
+  - type: Sprite
+    state: graphene_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - graphene
+      - graphene_2
+      - graphene_3
+  - type: Item
+    heldPrefix: graphite
+  - type: Extractable
+    grindableSolutionName: contents
+  - type: SolutionContainerManager
+    solutions:
+      contents:
+        reagents:
+        - ReagentId: Slag
+          Quantity: 6
+
+- type: entity
+  parent: SheetSlag
+  id: SheetSlag1
+  name: slag
+  suffix: Single
+  components:
+  - type: Sprite
+    state: graphene
+  - type: Stack
+    count: 1

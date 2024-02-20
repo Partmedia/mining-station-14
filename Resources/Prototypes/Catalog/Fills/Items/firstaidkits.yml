@@ -9,15 +9,19 @@
       - id: HandheldHealthAnalyzer
         amount: 1
       - id: Brutepack
-        amount: 2
+        amount: 1
       - id: Ointment
         amount: 1
       - id: PillDylovene
-        amount: 2
+        amount: 1
       - id: PillHyronalin
-        amount: 2
+        amount: 1
       - id: EmergencyMedipen
-        amount: 2
+        amount: 1
+      - id: Gauze
+        amount: 1
+      - id: Bloodpack
+        amount: 1
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
 - type: entity
@@ -43,10 +47,10 @@
     contents:
       - id: Brutepack
         amount: 2 # TO DO: Advanced brute pack
-      - id: PillIron
-        amount: 2
       - id: Gauze
-        amount: 2
+        amount: 1
+      - id: Bloodpack
+        amount: 1
 
 - type: entity
   id: MedkitToxinFilled
@@ -72,8 +76,10 @@
       - id: EmergencyMedipen
         amount: 1
       - id: PillDexalin
-        amount: 3
+        amount: 1
       - id: SyringeInaprovaline
+        amount: 1
+      - id: Bloodpack
         amount: 1
 
 - type: entity
@@ -100,12 +106,14 @@
       - id: HandheldHealthAnalyzer
         amount: 1
       - id: Brutepack
-        amount: 3 # TO DO: Advanced fills
+        amount: 2 # TO DO: Advanced fills
       - id: SyringeTranexamicAcid
         amount: 1
       - id: PillTricordrazine
         amount: 1
       - id: AntiPoisonMedipen
+        amount: 1
+      - id: Bloodpack
         amount: 1
 
 - type: entity

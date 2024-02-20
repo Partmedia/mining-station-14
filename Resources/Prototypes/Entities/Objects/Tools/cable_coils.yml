@@ -26,6 +26,16 @@
     price: 0
   - type: StackPrice
     price: 5
+  - type: SurgeryTool
+    smallClamp: true    
+    largeClamp: true
+    smallClampTimeMod: 3.0
+    largeClampTimeMod: 2.0
+    suture: true
+    sutureTimeMod: 2
+    hardSuture: true
+    hardSutureTimeMod: 2
+    toolSound: /Audio/Items/jumpsuit_equip.ogg
 
 - type: entity
   id: CableHVStack

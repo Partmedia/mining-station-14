@@ -4,6 +4,7 @@ using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.HealthExaminable;
 using Content.Server.Popups;
+using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
@@ -33,6 +34,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
+    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
     // TODO here
     // Update over time. Modify bloodloss damage in accordance with (amount of blood / max blood level), and reduce bleeding over time
@@ -103,7 +105,7 @@ public sealed class BloodstreamSystem : EntitySystem
             // as well as stop their bleeding to a certain extent.
             if (bloodstream.BleedAmount > 0)
             {
-                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount) / 20, bloodstream);
+                TryModifyBloodLevel(uid, -(bloodstream.BleedAmount) / bloodstream.BleedMod, bloodstream);
                 TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
             }
 
@@ -308,6 +310,14 @@ public sealed class BloodstreamSystem : EntitySystem
 
         component.BleedAmount += amount;
         component.BleedAmount = Math.Clamp(component.BleedAmount, 0, component.MaxBleedAmount);
+
+        if (component.BleedAmount == 0)
+            _alertsSystem.ClearAlert(uid, AlertType.Bleed);
+        else
+        {
+            var severity = (short) Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 10);
+            _alertsSystem.ShowAlert(uid, AlertType.Bleed, severity);
+        }
 
         return true;
     }

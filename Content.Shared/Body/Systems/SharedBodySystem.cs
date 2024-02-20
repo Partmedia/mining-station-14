@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 using Robust.Shared.Containers;
@@ -24,5 +24,6 @@ public abstract partial class SharedBodySystem : EntitySystem
         InitializeBody();
         InitializeParts();
         InitializeOrgans();
+        InitializePartAppearances();
     }
 }

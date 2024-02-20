@@ -4,13 +4,62 @@
   id: BaseMobSlimePerson
   abstract: true
   components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 5 #slimes are not very much affected by procedures
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 25
+    drillShockDamage:
+      types:
+        Asphyxiation: 25
+    sutureShockDamage:
+      types:
+        Asphyxiation: 10
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 15
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 35 #they take a bit more pain from cauterizer
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 5
+    cellularRejectionDamage:
+      types:
+        Cellular: 5
+    compatibleSpecies:
+      - slime
+      - human
+      - animal
+      - universal
   - type: Hunger
+    starvationDamage:
+      types:
+        Bloodloss: 0.5
   - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi
     state: full
   - type: Body
     prototype: Slime
+    species: slime
     requiredLegs: 2
   - type: HumanoidAppearance
     species: SlimePerson
@@ -78,6 +127,16 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
+  - type: CirculatoryPump
+    notWorkingDamage:
+      types:
+        Asphyxiation: 30
+    embedded: true
+  - type: ToxinRemover 
+    embedded: true
+  - type: ToxinFilter
+    embedded: true
+  - type: EyeSight
   - type: DiseaseCarrier
     naturalImmunities:
     - Ultragigacancer

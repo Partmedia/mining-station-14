@@ -32,6 +32,12 @@ namespace Content.Server.Body.Components
         public float BleedAmount;
 
         /// <summary>
+        ///     Value by which Bleedamount is divided to determine actual blood removed per interval
+        /// </summary>
+        [DataField("bleedMod")]
+        public float BleedMod = 20.0f;
+
+        /// <summary>
         ///     How much should bleeding should be reduced every update interval?
         /// </summary>
         [DataField("bleedReductionAmount")]
@@ -41,7 +47,7 @@ namespace Content.Server.Body.Components
         ///     How high can <see cref="BleedAmount"/> go?
         /// </summary>
         [DataField("maxBleedAmount")]
-        public float MaxBleedAmount = 20.0f;
+        public float MaxBleedAmount = 80.0f;
 
         /// <summary>
         ///     What percentage of current blood is necessary to avoid dealing blood loss damage?

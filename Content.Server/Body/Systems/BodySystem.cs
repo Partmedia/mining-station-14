@@ -20,6 +20,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Server.Construction.Completions;
 
 namespace Content.Server.Body.Systems;
 
@@ -126,12 +127,25 @@ public sealed class BodySystem : SharedBodySystem
             return;
         var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
         var partComponent = Comp<BodyPartComponent>(bodyId);
-        var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
+        var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType, partComponent.Species);
+        slot.IsRoot = true;
         body.Root = slot;
         partComponent.Body = bodyId;
 
         AttachPart(bodyId, slot, partComponent);
         InitPart(partComponent, prototype, prototype.Root);
+
+        //drop the part and remove the root - TODO this is real rude tbqh should definitely replace later 
+        if (prototype.RootOverride)
+        {
+            DropPart(partComponent.Owner, partComponent);
+            QueueDel(body.Owner);
+        }
+    }
+
+    protected override void UpdateAppearance(EntityUid uid, BodyPartAppearanceComponent component)
+    {
+        return;
     }
 
     public override HashSet<EntityUid> GibBody(EntityUid? bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false)
@@ -161,8 +175,15 @@ public sealed class BodySystem : SharedBodySystem
                     else
                     {
                         cont.Remove(ent, EntityManager, force: true);
-                        Transform(ent).Coordinates = coordinates;
-                        ent.RandomOffset(0.25f);
+                        if (body.Root != null && ent == body.Root.Child)
+                        {
+                            QueueDel(ent);
+                        }
+                        else
+                        {
+                            Transform(ent).Coordinates = coordinates;
+                            ent.RandomOffset(0.25f);
+                        }
                     }
                 }
             }

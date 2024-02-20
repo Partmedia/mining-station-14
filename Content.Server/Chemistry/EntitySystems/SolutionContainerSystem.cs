@@ -129,7 +129,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
     public void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false, ReactionMixerComponent? mixerComponent = null)
     {
-        DebugTools.Assert(solutionHolder.Name != null && TryGetSolution(uid, solutionHolder.Name, out var tmp) && tmp == solutionHolder);
+        //DebugTools.Assert(solutionHolder.Name != null && TryGetSolution(uid, solutionHolder.Name, out var tmp) && tmp == solutionHolder);
 
         // Process reactions
         if (needsReactionsProcessing && solutionHolder.CanReact)

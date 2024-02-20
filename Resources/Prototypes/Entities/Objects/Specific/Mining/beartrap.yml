@@ -1,0 +1,26 @@
+- type: entity
+  name: beartrap
+  parent: Mousetrap
+  id: Beartrap
+  description: Useful for catching big rodents sneaking up on  you in the shadows.
+  components:
+    - type: Sprite
+      sprite: Mining/Entities/Objects/Specific/beartrap.rsi
+      layers:
+        - state: beartrap
+    - type: DamageUserOnTrigger
+      damage:
+        types:
+          Blunt: 50 # base damage, scales based on mass
+    - type: Item
+      sprite: Objects/Devices/beartrap.rsi
+      size: 20
+    - type: MultiHandedItem
+    - type: Appearance
+      visuals:
+        - type: GenericEnumVisualizer
+          key: enum.MousetrapVisuals.Visual
+          layer: 0
+          states:
+            enum.MousetrapVisuals.Armed: beartraparmed
+            enum.MousetrapVisuals.Unarmed: beartrap

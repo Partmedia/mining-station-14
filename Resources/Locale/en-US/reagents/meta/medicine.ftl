@@ -99,3 +99,15 @@ reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine
 
 reagent-name-sigynate = sigynate
 reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soothing trauma caused by acids.  Tastes sweet!
+
+reagent-name-calomel = calomel
+reagent-desc-calomel = A powerful purgative that flushes out all other toxins in the body but is quite toxic itself and can cause intense strain on the body.
+
+reagent-name-frozackamol = frozackamol
+reagent-desc-frozackamol = A highly controlled burn medicine that rapidly cools and mends burnt tissue - highly toxic and can cause internal freeze-burns.
+
+reagent-name-pyrothylnitrate = pyrothyl nitrate
+reagent-desc-pyrothylnitrate = A medicine commonly used by miner's in artic-like conditions - exceedingly powerful and can prevent frostbite but highly toxic and can cause internal burns.
+
+reagent-name-renephelone = renephelone
+reagent-desc-renephelone = An experimental medication that effectively temporarily replaces the recipients bloodstream with a powerful multi-purpose purgative - a breakthrough in advanced medication but still very dangerous.

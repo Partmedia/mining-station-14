@@ -22,6 +22,12 @@ using System.Threading.Tasks;
 using Content.Shared.Database;
 using Robust.Shared.Asynchronous;
 
+using System.Net.Http;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using System.Text;
+
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
@@ -69,6 +75,18 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         public int RoundId { get; private set; }
 
+        private readonly HttpClient _httpClient = new();
+
+        /// <summary>
+        /// Returns true if the round's map is eligible to be updated.
+        /// </summary>
+        /// <returns></returns>
+        public bool CanUpdateMap()
+        {
+            return RunLevel == GameRunLevel.PreRoundLobby &&
+                   _roundStartTime - RoundPreloadTime > _gameTiming.CurTime;
+        }
+
         /// <summary>
         ///     Loads all the maps for the given round.
         /// </summary>
@@ -77,11 +95,13 @@ namespace Content.Server.GameTicking
         /// </remarks>
         private void LoadMaps()
         {
+            if (_mapManager.MapExists(DefaultMap))
+                return;
+
             AddGamePresetRules();
 
             DefaultMap = _mapManager.CreateMap();
             _mapManager.AddUninitializedMap(DefaultMap);
-            var startTime = _gameTiming.RealTime;
 
             var maps = new List<GameMapPrototype>();
 
@@ -121,9 +141,6 @@ namespace Content.Server.GameTicking
 
                 LoadGameMap(map, toLoad, null);
             }
-
-            var timeSpan = _gameTiming.RealTime - startTime;
-            _sawmill.Info($"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
 
@@ -170,6 +187,7 @@ namespace Content.Server.GameTicking
 
             SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
+            // Just in case it hasn't been loaded previously we'll try loading it.
             LoadMaps();
 
             // map has been selected so update the lobby info text
@@ -255,6 +273,7 @@ namespace Content.Server.GameTicking
             _roundStartFailCount = 0;
 #endif
             _startingRound = false;
+            ReportRound(Loc.GetString("round-started"));
         }
 
         private void RefreshLateJoinAllowed()
@@ -289,6 +308,7 @@ namespace Content.Server.GameTicking
             // Let things add text here.
             var textEv = new RoundEndTextAppendEvent();
             RaiseLocalEvent(textEv);
+            ReportRound(textEv.Summary.Trim());
 
             var roundEndText = $"{text}\n{textEv.Text}";
 
@@ -352,6 +372,30 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
                 listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong,
                 new SoundCollectionSpecifier("RoundEnd").GetSound()));
+        }
+
+        private async Task ReportRound(String message)
+        {
+            Logger.InfoS("discord", message);
+            String _webhookUrl = _configurationManager.GetCVar(CCVars.DiscordRoundEndWebook);
+            if (_webhookUrl == string.Empty)
+                return;
+
+            var payload = new WebhookPayload{ Content = message };
+            var ser_payload = JsonSerializer.Serialize(payload);
+            var content = new StringContent(ser_payload, Encoding.UTF8, "application/json");
+            var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true", content);
+            var reply = await request.Content.ReadAsStringAsync();
+            if (!request.IsSuccessStatusCode)
+            {
+                Logger.ErrorS("mining", $"Discord returned bad status code when posting message: {request.StatusCode}\nResponse: {reply}");
+            }
+        }
+
+        private struct WebhookPayload
+        {
+            [JsonPropertyName("content")]
+            public String Content { get; set; }
         }
 
         public void RestartRound()
@@ -487,14 +531,23 @@ namespace Content.Server.GameTicking
                 RoundLengthMetric.Inc(frameTime);
             }
 
-            if (RunLevel != GameRunLevel.PreRoundLobby || Paused ||
-                _roundStartTime > _gameTiming.CurTime ||
+            if (RunLevel != GameRunLevel.PreRoundLobby ||
+                Paused ||
+                _roundStartTime - RoundPreloadTime > _gameTiming.CurTime ||
                 _roundStartCountdownHasNotStartedYetDueToNoPlayers)
             {
                 return;
             }
 
-            StartRound();
+            if (_roundStartTime < _gameTiming.CurTime)
+            {
+                StartRound();
+            }
+            // Preload maps so we can start faster
+            else if (_roundStartTime - RoundPreloadTime < _gameTiming.CurTime)
+            {
+                LoadMaps();
+            }
         }
 
         public TimeSpan RoundDuration()
@@ -698,6 +751,12 @@ namespace Content.Server.GameTicking
 
             Text += text;
             _doNewLine = true;
+        }
+
+        public string Summary = string.Empty;
+        public void AddSummary(string summary)
+        {
+            Summary += summary + " ";
         }
     }
 }

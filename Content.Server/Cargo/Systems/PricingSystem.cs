@@ -177,8 +177,11 @@ public sealed class PricingSystem : EntitySystem
     public double GetMaterialPrice(MaterialComponent component)
     {
         double price = 0;
+        int total = component.Materials.Sum(x => x.Value);
         foreach (var (id, quantity) in component.Materials)
         {
+            try
+            {
             var prot = _prototypeManager.Index<MaterialPrototype>(id);
             var mprice = prot.Price;
 #if RL
@@ -189,7 +192,13 @@ public sealed class PricingSystem : EntitySystem
             if (!RL.nil(ret))
                 mprice = RL.cfloat(ret);
 #endif
-            price += mprice * quantity;
+            float purity = (float)quantity / total;
+            price += mprice * quantity * purity;
+            }
+            catch (UnknownPrototypeException e)
+            {
+                Logger.Warning($"Unable to find prototype for entity {id}");
+            }
         }
         return price*component.Quality;
     }

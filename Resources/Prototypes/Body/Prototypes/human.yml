@@ -1,15 +1,21 @@
-﻿- type: body
+- type: body
   id: Human
   name: "human"
   root: torso
+  species: human
   slots:
     head:
       part: HeadHuman
       connections:
       - torso
       organs:
-        brain: OrganHumanBrain
-        eyes: OrganHumanEyes
+        brain:
+          organ: OrganHumanBrain
+          type: Brain
+        eyes: 
+          organ: OrganHumanEyes
+          type: Eye
+          internal: false
     torso:
       part: TorsoHuman
       connections:
@@ -18,11 +24,21 @@
       - left leg
       - right leg
       organs:
-        heart: OrganHumanHeart
-        lungs: OrganHumanLungs
-        stomach: OrganHumanStomach
-        liver: OrganHumanLiver
-        kidneys: OrganHumanKidneys
+        heart:
+          organ: OrganHumanHeart
+          type: Heart
+        lungs:
+          organ: OrganHumanLungs
+          type: Lung
+        stomach:
+          organ: OrganHumanStomach
+          type: Stomach
+        liver:
+          organ: OrganHumanLiver
+          type: Liver
+        kidneys: 
+          organ: OrganHumanKidneys
+          type: Kidney
     right arm:
       part: RightArmHuman
       connections:

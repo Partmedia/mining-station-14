@@ -86,6 +86,39 @@
     Purr:
       collection: FelinidPurrs
 
+- type: emoteSounds
+  id: MaleFox
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: FoxScreams
+    Laugh:
+      collection: MaleLaugh
+    Growl:
+      collection: FoxGrowls
+    Howl:
+      collection: FoxHowl
+    Bark:
+      collection: FoxBark
+
+- type: emoteSounds
+  id: FemaleFox
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: FoxScreams
+    Laugh:
+      collection: FemaleLaugh
+    Growl:
+      collection: FoxGrowls
+    Howl:
+      collection: FoxHowl
+    Bark:
+      collection: FoxBark
+
+
 # body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes

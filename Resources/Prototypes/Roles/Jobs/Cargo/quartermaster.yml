@@ -25,6 +25,7 @@
     shoes: ClothingShoesColorBrown
     id: QuartermasterPDA
     ears: ClothingHeadsetCommand
+    belt: BoxFolderClipboard
     pocket1: AppraisalTool
   innerclothingskirt: ClothingUniformJumpskirtQM
   satchel: ClothingBackpackSatchelFilled

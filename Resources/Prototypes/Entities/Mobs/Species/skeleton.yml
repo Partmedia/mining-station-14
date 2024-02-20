@@ -5,6 +5,49 @@
   id: BaseMobSkeletonPerson
   abstract: true
   components:
+  - type: Surgery
+    openedDamage:
+      types:
+        Blunt: 5
+    necrosisDamage:
+      types:
+        Cellular: 5
+    incisorShockDamage:
+      types:
+        Asphyxiation: 0
+    smallClampShockDamage:
+      types:
+        Asphyxiation: 0
+    largeClampShockDamage:
+      types:
+        Asphyxiation: 0
+    sawShockDamage:
+      types:
+        Asphyxiation: 25
+    drillShockDamage:
+      types:
+        Asphyxiation: 25
+    sutureShockDamage:
+      types:
+        Asphyxiation: 10
+    hardSutureShockDamage:
+      types:
+        Asphyxiation: 15
+    cauterizerShockDamage:
+      types:
+        Asphyxiation: 15
+    manipulatorShockDamage:
+      types:
+        Asphyxiation: 10
+    retractorShockDamage:
+      types:
+        Asphyxiation: 10
+    cellularRejectionDamage:
+      types:
+        Cellular: 5
+    compatibleSpecies:
+      - skeleton
+      - universal
   - type: HumanoidAppearance
     species: Skeleton
   - type: Icon
@@ -12,6 +55,7 @@
     state: full
   - type: Body
     prototype: Skeleton
+    species: skeleton
     requiredLegs: 2
     gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable

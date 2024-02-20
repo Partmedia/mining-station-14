@@ -1,4 +1,4 @@
-﻿- type: construction
+- type: construction
   name: baseball bat
   id: bat
   graph: WoodenBat
@@ -20,6 +20,17 @@
   category: construction-category-tools
   description: "Homemade handcuffs crafted from spare cables."
   icon: { sprite: Objects/Misc/cablecuffs.rsi, state: cuff }
+  objectType: Item
+
+- type: construction
+  name: makeshift tourniquet
+  id: makeshiftourniquet
+  graph: makeshifttourniquet
+  startNode: start
+  targetNode: clothtourniquet
+  category: construction-category-tools
+  description: "A tourniquet quickly made up from cloth"
+  icon: { sprite: Objects/Specific/Medical/Surgery/tourniquet.rsi, state: clothtourniquet }
   objectType: Item
 
 - type: construction

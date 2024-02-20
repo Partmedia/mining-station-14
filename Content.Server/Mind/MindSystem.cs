@@ -2,10 +2,12 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
+using Content.Server.MiningCredits;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Interaction.Events;
+using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -169,5 +171,17 @@ public sealed class MindSystem : EntitySystem
         {
             args.BlockSuicideAttempt(true);
         }
+    }
+}
+
+public sealed class MindTransferEvent : EntityEventArgs
+{
+    public EntityUid NewEntity { get; }
+    public EntityUid OldEntity { get; }
+
+    public MindTransferEvent(EntityUid newEntity, EntityUid oldEntity)
+    {
+        NewEntity = newEntity;
+        OldEntity = oldEntity;
     }
 }
