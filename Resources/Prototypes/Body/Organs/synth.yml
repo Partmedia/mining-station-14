@@ -11,6 +11,8 @@
     sprite: Mobs/Species/Bionic/organs.rsi
   - type: Organ
     species: universal
+    integrity: 50 #tougher than normal organs
+    maxIntegrity: 50
   - type: Food
   - type: Extractable
     grindableSolutionName: organ

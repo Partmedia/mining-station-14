@@ -54,6 +54,9 @@
     damageContainer: Biological
   - type: BodyPart
     species: universal
+    integrity: 75 #bionics are general a lot tougher
+    maxIntegrity: 75
+    hitChance: 1
   - type: ContainerContainer
     containers:
       bodypart: !type:Container

@@ -272,7 +272,7 @@ namespace Content.Shared.Damage
                                 if (organDamage > damageValue)
                                     organDamage = (int)Math.Round((double)damageValue);
                                 damageValue -= organDamage;
-                            }
+                            
 
                             List<OrganComponent> partOrgans = new List<OrganComponent> { };
                             foreach (KeyValuePair<string, OrganSlot> organSlot in hitPart.Organs)
@@ -291,26 +291,27 @@ namespace Content.Shared.Damage
                                 organHitRanges.Add(range);
                             }
 
-                            if (organHitChanceTotal > 0)
-                            {
-                                if (organHitPartIndex < 0)
+                                if (organHitChanceTotal > 0)
                                 {
-                                    var organHitNum = _random.Next(1, organHitChanceTotal + 1);
-                                    organHitPartIndex = 0;
-                                    for (var i = 0; i < organHitRanges.Count(); i++)
+                                    if (organHitPartIndex < 0)
                                     {
-                                        //select part that the number falls in range of
-                                        if (organHitNum >= organHitRanges[i][0] && organHitNum <= organHitRanges[i][1])
+                                        var organHitNum = _random.Next(1, organHitChanceTotal + 1);
+                                        organHitPartIndex = 0;
+                                        for (var i = 0; i < organHitRanges.Count(); i++)
                                         {
-                                            organHitPartIndex = i;
-                                            break;
+                                            //select part that the number falls in range of
+                                            if (organHitNum >= organHitRanges[i][0] && organHitNum <= organHitRanges[i][1])
+                                            {
+                                                organHitPartIndex = i;
+                                                break;
+                                            }
                                         }
                                     }
+
+                                    var hitOrgan = partOrgans[organHitPartIndex];
+
+                                    _body.ChangeOrganIntegrity(hitOrgan.Owner, hitOrgan, organDamage);
                                 }
-
-                                var hitOrgan = partOrgans[organHitPartIndex];
-
-                                _body.ChangeOrganIntegrity(hitOrgan.Owner, hitOrgan, organDamage);
                             }
                         }
 

@@ -59,6 +59,9 @@
     damageContainer: Biological
   - type: BodyPart
     species: vox
+    integrity: 50
+    maxIntegrity: 50
+    hitChance: 1
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -90,6 +93,9 @@
       incisable: true
       container: true
       endoSkeleton: true
+      integrity: 100
+      maxIntegrity: 100
+      hitChance: 5
 
 - type: entity
   id: HeadVox

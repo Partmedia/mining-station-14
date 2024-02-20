@@ -14,9 +14,6 @@ public partial class SharedBodySystem
 
     public void ChangePartIntegrity(EntityUid uid, BodyPartComponent part, FixedPoint2 damage, bool isRoot)
     {
-        Logger.Debug(damage.ToString());
-        Logger.Debug(part.Integrity.ToString());
-
         if (part.Integrity - damage <= 0)
         {
             part.Integrity = 0;
@@ -31,8 +28,6 @@ public partial class SharedBodySystem
         {
             part.Integrity -= (float) damage;
         }
-
-        Logger.Debug(part.Integrity.ToString());
     }
 
     public void ChangeOrganIntegrity(EntityUid uid, OrganComponent organ, FixedPoint2 damage)

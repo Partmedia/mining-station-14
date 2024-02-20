@@ -32,10 +32,10 @@ public sealed class OrganComponent : Component
 
     //when integrity reaches zero, remove the organ
     [DataField("integrity")]
-    public float Integrity = 50;
+    public float Integrity = 25;
 
     [DataField("maxIntegrity")]
-    public float MaxIntegrity = 50;
+    public float MaxIntegrity = 25;
 
     [DataField("healingTime")]
     public float HealingTime = 30;
