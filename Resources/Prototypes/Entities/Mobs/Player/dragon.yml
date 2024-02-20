@@ -8,6 +8,8 @@
     - type: BiopressHarvest
       id: Creature
       totalReagentUnits: 150
+    - type: Body
+      prototype: BossAnimal
     - type: HTN
       rootTask: XenoCompound
     - type: Faction

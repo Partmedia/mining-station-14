@@ -85,6 +85,57 @@
     container: true
     integrity: 50
     maxIntegrity: 50
+    hitChance: 5
+  - type: Damageable
+    damageContainer: Biological
+
+# "boss" animal parts - for until I sprite and tailor actual parts for mobs and animals
+- type: entity
+  id: LegsBossAnimal
+  name: "animal legs"
+  parent: PartAnimal
+  components:
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: "l_leg_icon"
+  - type: BodyPart
+    partType: Leg
+    integrity: 125
+    maxIntegrity: 125
     hitChance: 1
+  - type: MovementSpeedModifier
+
+- type: entity
+  id: FeetBossAnimal
+  name: "animal feet"
+  parent: PartAnimal
+  components:
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: "l_foot_icon"
+  - type: BodyPart
+    partType: Foot
+    integrity: 125
+    maxIntegrity: 125
+    hitChance: 1
+
+- type: entity
+  id: TorsoBossAnimal
+  name: "animal torso"
+  parent: PartAnimal
+  components:
+  - type: Sprite
+    netsync: true
+    sprite: Mobs/Species/Reptilian/parts.rsi
+    state: "torso_m"
+  - type: BodyPart
+    partType: Torso
+    incisable: true
+    container: true
+    integrity: 250
+    maxIntegrity: 250
+    hitChance: 5
   - type: Damageable
     damageContainer: Biological

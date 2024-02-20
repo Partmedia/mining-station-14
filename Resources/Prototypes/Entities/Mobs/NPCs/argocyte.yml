@@ -363,6 +363,8 @@
   - type: BiopressHarvest
     id: ArgoCreature
     totalReagentUnits: 70
+  - type: Body
+    prototype: BossAnimal
   - type: Sprite
     sprite: Mobs/Aliens/Argocyte/argocyte_large.rsi
     layers:
@@ -402,6 +404,8 @@
   id: MobArgocyteLeviathing
   name: leviathing
   components:
+  - type: Body
+    prototype: BossAnimal
   - type: BiopressHarvest
     id: ArgoCreature
     totalReagentUnits: 90
