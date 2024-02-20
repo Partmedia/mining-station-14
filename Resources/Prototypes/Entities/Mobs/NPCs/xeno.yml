@@ -129,6 +129,8 @@
   - type: BiopressHarvest
     id: SlimeCreature
     totalReagentUnits: 75
+  - type: Body
+    prototype: BossAnimal
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/praetorian.rsi
@@ -217,6 +219,8 @@
   - type: BiopressHarvest
     id: SlimeCreature
     totalReagentUnits: 100
+  - type: Body
+    prototype: BossAnimal
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/queen.rsi
@@ -269,6 +273,8 @@
   - type: BiopressHarvest
     id: SlimeCreature
     totalReagentUnits: 65
+  - type: Body
+    prototype: BossAnimal
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/ravager.rsi
