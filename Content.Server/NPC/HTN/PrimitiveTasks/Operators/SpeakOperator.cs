@@ -12,8 +12,8 @@ public sealed partial class SpeakOperator : HTNOperator
     /// <summary>
     /// Whether to hide message from chat window and logs.
     /// </summary>
-    [DataField]
-    public bool Hidden;
+    // [DataField]
+    // public bool Hidden;
 
     public override void Initialize(IEntitySystemManager sysManager)
     {

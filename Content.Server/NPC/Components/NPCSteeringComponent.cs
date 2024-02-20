@@ -1,4 +1,3 @@
-using System.Numerics;
 using System.Threading;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.DoAfter;
