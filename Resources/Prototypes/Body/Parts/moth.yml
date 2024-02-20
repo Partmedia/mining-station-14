@@ -59,6 +59,9 @@
   - type: BodyPart
     exoSkeleton: true
     species: moth
+    integrity: 50
+    maxIntegrity: 50
+    hitChance: 1
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -89,6 +92,9 @@
     container: true
     endoSkeleton: true
     exoSkeleton: true
+    integrity: 100
+    maxIntegrity: 100
+    hitChance: 5
 
 - type: entity
   id: HeadMoth

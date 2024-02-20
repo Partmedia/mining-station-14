@@ -58,6 +58,9 @@
     incisable: false #wood all the way through, no incisions needed just a saw
     endoSkeleton: false
     species: diona
+    integrity: 75 #tougher
+    maxIntegrity: 75
+    hitChance: 1
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -89,6 +92,9 @@
   - type: BodyPart
     partType: Torso
     container: true
+    integrity: 150
+    maxIntegrity: 150
+    hitChance: 5
 
 - type: entity
   id: HeadDiona

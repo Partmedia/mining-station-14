@@ -59,6 +59,9 @@
     endoSkeleton: false
     exoSkeleton: true
     species: skeleton
+    integrity: 40 #rattle rattle
+    maxIntegrity: 40
+    hitChance: 1
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -85,6 +88,9 @@
     - type: BodyPart
       partType: Torso
       container: true
+      integrity: 50 #rattle rattle
+      maxIntegrity: 50
+      hitChance: 5
 
 - type: entity
   id: HeadSkeleton

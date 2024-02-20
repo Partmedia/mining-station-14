@@ -17,6 +17,9 @@
     damageContainer: Biological
   - type: BodyPart
     species: animal
+    integrity: 50
+    maxIntegrity: 50
+    hitChance: 1
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -80,5 +83,8 @@
     partType: Torso
     incisable: true
     container: true
+    integrity: 50
+    maxIntegrity: 50
+    hitChance: 1
   - type: Damageable
     damageContainer: Biological

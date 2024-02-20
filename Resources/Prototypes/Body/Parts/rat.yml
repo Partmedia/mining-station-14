@@ -15,5 +15,8 @@
     partType: Torso
     incisable: true
     container: true
+    integrity: 30
+    maxIntegrity: 30
+    hitChance: 1
   - type: Damageable
     damageContainer: Biological

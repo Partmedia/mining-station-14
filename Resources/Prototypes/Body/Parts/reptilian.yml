@@ -58,6 +58,9 @@
     damageContainer: Biological
   - type: BodyPart
     species: reptilian
+    integrity: 55 #lizards are a little tougher
+    maxIntegrity: 55
+    hitChance: 1
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -87,6 +90,9 @@
     incisable: true
     container: true
     endoSkeleton: true
+    integrity: 110
+    maxIntegrity: 110
+    hitChance: 5
 
 - type: entity
   id: HeadReptilian

@@ -54,6 +54,9 @@
     damageContainer: Biological
   - type: BodyPart
     species: universal
+    integrity: 75 #synth bodies are a little tougher
+    maxIntegrity: 75
+    hitChance: 1
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -85,6 +88,9 @@
     incisable: true
     container: true
     endoSkeleton: true
+    integrity: 150
+    maxIntegrity: 150
+    hitChance: 5
 
 - type: entity
   id: HeadSynth
