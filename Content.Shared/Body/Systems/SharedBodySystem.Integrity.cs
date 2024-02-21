@@ -10,6 +10,40 @@ public partial class SharedBodySystem
         base.Update(frameTime);
 
         //healing
+        foreach (var part in EntityManager.EntityQuery<BodyPartComponent>(false))
+        {
+            part.HealingTimer += frameTime;
+
+            if (part.HealingTimer >= part.HealingTime)
+            {
+                part.HealingTimer = 0;
+                if (part.Integrity < part.MaxIntegrity && part.ParentSlot is not null)
+                {
+                    if (part.Integrity + part.SelfHealingAmount > part.MaxIntegrity)
+                        part.Integrity = part.MaxIntegrity;
+                    else
+                        part.Integrity += part.SelfHealingAmount;
+                }
+            }
+                    
+        }
+
+        foreach (var organ in EntityManager.EntityQuery<OrganComponent>(false))
+        {
+            organ.HealingTimer += frameTime;
+
+            if (organ.HealingTimer >= organ.HealingTime)
+            {
+                organ.HealingTimer = 0;
+                if (organ.Integrity < organ.MaxIntegrity && organ.ParentSlot is not null)
+                {
+                    if (organ.Integrity + organ.SelfHealingAmount > organ.MaxIntegrity)
+                        organ.Integrity = organ.MaxIntegrity;
+                    else
+                        organ.Integrity += organ.SelfHealingAmount;
+                }
+            }
+        }
     }
 
     public void ChangePartIntegrity(EntityUid uid, BodyPartComponent part, FixedPoint2 damage, bool isRoot)

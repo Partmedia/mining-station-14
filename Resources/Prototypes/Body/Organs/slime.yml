@@ -14,6 +14,9 @@
     - type: Organ
       organType: Brain
       species: slime
+      integrity: 100 #slime cores are in the torso and are far more likely to get hit than a head-brain, so making it extra robust to compensate
+      maxIntegrity: 100
+      selfHealingAmount: 10
     - type: Brain
     - type: Stomach
       toxinThreshold: 200 #make this a bit more resilient due to the multiple functions
