@@ -24,6 +24,11 @@ namespace Content.Client.HealthAnalyzer.UI
         {
             var text = new StringBuilder();
             var text2 = new StringBuilder();
+            var text3 = new StringBuilder();
+            var text4 = new StringBuilder();
+
+            //TODO organ and part integrity
+
             var entities = IoCManager.Resolve<IEntityManager>();
 
             if (msg.TargetEntity != null && entities.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
@@ -89,7 +94,7 @@ namespace Content.Client.HealthAnalyzer.UI
                 Diagnostics.Text = text.ToString();
 
                 //TODO LOC
-                text2.Append("\nOrgan Conditions\n");
+                text2.Append("\nOrgan Function Conditions\n");
 
                 foreach (KeyValuePair<string, string> entry in msg.OrganConditions)
                 {
@@ -98,7 +103,23 @@ namespace Content.Client.HealthAnalyzer.UI
 
                 OrganStatus.Text = text2.ToString();
 
-                SetSize = (550, 800);
+                //TODO LOC
+                text3.Append("\nBody Part Integrity\n");
+                //TODO organ and part integrity
+                foreach (KeyValuePair<string, float> entry in msg.PartIntegrity)
+                {
+                    text3.Append(String.Format("\n{0}: {1:F1}%\n", entry.Key, entry.Value));
+                }
+                PartIntegrity.Text = text3.ToString();
+                //TODO LOC
+                text4.Append("\nOrgan Integrity\n");
+                foreach (KeyValuePair<string, float> entry in msg.OrganIntegrity)
+                {
+                    text4.Append(String.Format("\n{0}: {1:F1}%\n", entry.Key, entry.Value));
+                }
+                OrganIntegrity.Text = text4.ToString();
+
+                SetSize = (900, 600);
             }
             else
             {

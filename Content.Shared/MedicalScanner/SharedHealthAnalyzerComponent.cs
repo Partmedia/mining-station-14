@@ -13,14 +13,19 @@ namespace Content.Shared.MedicalScanner
             public readonly EntityUid? TargetEntity;
             public float Temperature;
             public Dictionary<string, string> OrganConditions;
+            //TODO Part and Organ Integrity
+            public Dictionary<string, float> PartIntegrity;
+            public Dictionary<string, float> OrganIntegrity;
             public float BloodLevel;
             public bool Sedated;
 
-            public HealthAnalyzerScannedUserMessage(EntityUid? targetEntity, float temperature, Dictionary<string,string> organConditions, bool sedated, float bloodLevel)
+            public HealthAnalyzerScannedUserMessage(EntityUid? targetEntity, float temperature, Dictionary<string,string> organConditions, Dictionary<string, float> partIntegrity, Dictionary<string, float> organIntegrity, bool sedated, float bloodLevel)
             {
                 TargetEntity = targetEntity;
                 Temperature = temperature;
                 OrganConditions = organConditions;
+                PartIntegrity = partIntegrity;
+                OrganIntegrity = organIntegrity;
                 Sedated = sedated;
                 BloodLevel = bloodLevel;
             }
