@@ -13,5 +13,17 @@
                 Name="OrganStatus"
                 Text="{Loc health-analyzer-window-no-patient-data-text}"/>
         </BoxContainer>
+        <Control MinSize="32 0"/>
+        <BoxContainer Orientation="Vertical">
+            <Label
+                Name="PartIntegrity"
+                Text="{Loc health-analyzer-window-no-patient-data-text}"/>
+        </BoxContainer>
+        <Control MinSize="32 0"/>
+        <BoxContainer Orientation="Vertical">
+            <Label
+                Name="OrganIntegrity"
+                Text="{Loc health-analyzer-window-no-patient-data-text}"/>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

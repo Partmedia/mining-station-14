@@ -18,6 +18,8 @@ using Content.Shared.Body.Components;
 using Content.Server.Surgery;
 using Content.Shared.Body.Organ;
 using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
+using Content.Shared.Body.Systems;
+using Content.Shared.Body.Part;
 
 namespace Content.Server.Medical
 {
@@ -28,6 +30,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly SharedBodySystem _body = default!;
 
         public override void Initialize()
         {
@@ -194,8 +197,46 @@ namespace Content.Server.Medical
 
             var organFunctionConditions = GetOrganFunctions(target.Value);
 
+            //TODO put this in a function, I guess...
+            Dictionary<string, float> organIntegrity = new Dictionary<string, float>();
+            Dictionary<string, float> partIntegrity = new Dictionary<string, float>();
+
+            if (TryComp<BodyComponent>(target, out var body) && body.Root is not null && body.Root.Child is not null && TryComp<BodyPartComponent>(body.Root.Child.Value, out var rootPart))
+            {
+                //TODO physical conditions of parts and organs
+                var bodyPartSlots = _body.GetAllBodyPartSlots(body.Root.Child.Value, rootPart);
+                List<BodyPartComponent> parts = new List<BodyPartComponent> { };
+                foreach (var slot in bodyPartSlots)
+                {
+                    if (slot.Child != null && TryComp<BodyPartComponent>(slot.Child.Value, out var part))
+                    { //TODO && !part.Wearable
+                        parts.Add(part);
+                        //TODO in the future, bodies may multiple (non-symmetric) parts (and organs) - find a way to distinguish them
+                        if (part.Symmetry != BodyPartSymmetry.None)
+                            partIntegrity[part.Symmetry.ToString() + " "+part.PartType.ToString()] = part.Integrity/part.MaxIntegrity*100;
+                        else
+                            partIntegrity[part.PartType.ToString()] = part.Integrity / part.MaxIntegrity * 100;
+                    }
+                }
+                parts.Add(rootPart);
+                partIntegrity[rootPart.PartType.ToString()] = rootPart.Integrity / rootPart.MaxIntegrity * 100;
+
+                List<OrganComponent> organs = new List<OrganComponent> { };
+                foreach (var part in parts)
+                {
+                    foreach (KeyValuePair<string, OrganSlot> organSlot in part.Organs)
+                    {
+                        if (organSlot.Value.Child is not null && TryComp<OrganComponent>(organSlot.Value.Child.Value, out var organ))
+                        {
+                            organs.Add(organ);
+                            organIntegrity[organ.OrganType.ToString()] = organ.Integrity / organ.MaxIntegrity * 100; 
+                        }
+                    }
+                }
+            }
+
             OpenUserInterface(user, healthAnalyzer);
-            healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, surgery != null ? surgery.Sedated : false,
+            healthAnalyzer.UserInterface?.SendMessage(new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, partIntegrity, organIntegrity, surgery != null ? surgery.Sedated : false,
                 bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN));
         }
 

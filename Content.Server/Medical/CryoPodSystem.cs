@@ -33,6 +33,10 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Server.Surgery;
+using Content.Shared.Body.Systems;
+using Content.Shared.Body.Part;
+using Content.Shared.Body.Organ;
+using Content.Shared.Body.Components;
 
 namespace Content.Server.Medical;
 
@@ -52,6 +56,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
     [Dependency] private readonly HealthAnalyzerSystem _healthAnalyzerSystem = default!;
+    [Dependency] private readonly SharedBodySystem _body = default!;
 
     public override void Initialize()
     {
@@ -181,10 +186,49 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         TryComp<SurgeryComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var surgery);
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
             organFunctionConditions = _healthAnalyzerSystem.GetOrganFunctions(cryoPodComponent.BodyContainer.ContainedEntity.Value);
+
+        //TODO put this in a function, I guess...
+        Dictionary<string, float> organIntegrity = new Dictionary<string, float>();
+        Dictionary<string, float> partIntegrity = new Dictionary<string, float>();
+
+        if (TryComp<BodyComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var body) && body.Root is not null && body.Root.Child is not null && TryComp<BodyPartComponent>(body.Root.Child.Value, out var rootPart))
+        {
+            //TODO physical conditions of parts and organs
+            var bodyPartSlots = _body.GetAllBodyPartSlots(body.Root.Child.Value, rootPart);
+            List<BodyPartComponent> parts = new List<BodyPartComponent> { };
+            foreach (var slot in bodyPartSlots)
+            {
+                if (slot.Child != null && TryComp<BodyPartComponent>(slot.Child.Value, out var part))
+                { //TODO && !part.Wearable
+                    parts.Add(part);
+                    //TODO in the future, bodies may multiple (non-symmetric) parts (and organs) - find a way to distinguish them
+                    if (part.Symmetry != BodyPartSymmetry.None)
+                        partIntegrity[part.Symmetry.ToString() + " " + part.PartType.ToString()] = part.Integrity;
+                    else
+                        partIntegrity[part.PartType.ToString()] = part.Integrity;
+                }
+            }
+            parts.Add(rootPart);
+            partIntegrity[rootPart.PartType.ToString()] = rootPart.Integrity;
+
+            List<OrganComponent> organs = new List<OrganComponent> { };
+            foreach (var part in parts)
+            {
+                foreach (KeyValuePair<string, OrganSlot> organSlot in part.Organs)
+                {
+                    if (organSlot.Value.Child is not null && TryComp<OrganComponent>(organSlot.Value.Child.Value, out var organ))
+                    {
+                        organs.Add(organ);
+                        organIntegrity[organ.OrganType.ToString()] = organ.Integrity;
+                    }
+                }
+            }
+        }
+
         _userInterfaceSystem.TrySendUiMessage(
             uid,
             SharedHealthAnalyzerComponent.HealthAnalyzerUiKey.Key,
-            new SharedHealthAnalyzerComponent.HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, surgery != null ? surgery.Sedated : false, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
+            new SharedHealthAnalyzerComponent.HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity, temp != null ? temp.CurrentTemperature : 0, organFunctionConditions, partIntegrity, organIntegrity, surgery != null ? surgery.Sedated : false, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)
