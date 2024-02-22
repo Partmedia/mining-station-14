@@ -174,16 +174,8 @@ public sealed class BodySystem : SharedBodySystem
                     }
                     else
                     {
-                        cont.Remove(ent, EntityManager, force: true);
-                        if (body.Root != null && ent == body.Root.Child)
-                        {
-                            QueueDel(ent);
-                        }
-                        else
-                        {
-                            Transform(ent).Coordinates = coordinates;
-                            ent.RandomOffset(0.25f);
-                        }
+                        Transform(ent).Coordinates = coordinates;
+                        ent.RandomOffset(0.25f);
                     }
                 }
             }

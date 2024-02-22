@@ -238,6 +238,12 @@ public partial class SharedBodySystem
         if (partId == null || !Resolve(partId.Value, ref body, false))
             return new HashSet<EntityUid>();
 
+        EntityUid? rootPart = null;
+        if (body.Root is not null && body.Root.Child is not null)
+        {
+            rootPart = body.Root.Child;
+        }
+
         var parts = GetBodyChildren(partId, body).ToArray();
         var gibs = new HashSet<EntityUid>(parts.Length);
 
@@ -254,6 +260,9 @@ public partial class SharedBodySystem
                 DropOrgan(organ.Id, organ.Component);
                 gibs.Add(organ.Id);
             }
+
+            if (rootPart is not null && part.Id == rootPart.Value)
+                QueueDel(part.Id);
         }
 
         return gibs;

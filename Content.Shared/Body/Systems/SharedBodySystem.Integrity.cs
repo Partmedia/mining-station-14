@@ -2,9 +2,12 @@ namespace Content.Shared.Body.Systems;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.FixedPoint;
+using Content.Shared.Mobs.Systems;
 
 public partial class SharedBodySystem
 {
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -17,7 +20,7 @@ public partial class SharedBodySystem
             if (part.HealingTimer >= part.HealingTime)
             {
                 part.HealingTimer = 0;
-                if (part.Integrity < part.MaxIntegrity && part.ParentSlot is not null)
+                if (part.Integrity < part.MaxIntegrity && part.ParentSlot is not null && part.Body is not null && !_mobState.IsDead(part.Body.Value))
                 {
                     if (part.Integrity + part.SelfHealingAmount > part.MaxIntegrity)
                         part.Integrity = part.MaxIntegrity;
@@ -35,7 +38,7 @@ public partial class SharedBodySystem
             if (organ.HealingTimer >= organ.HealingTime)
             {
                 organ.HealingTimer = 0;
-                if (organ.Integrity < organ.MaxIntegrity && organ.ParentSlot is not null)
+                if (organ.Integrity < organ.MaxIntegrity && organ.ParentSlot is not null && organ.Body is not null && !_mobState.IsDead(organ.Body.Value))
                 {
                     if (organ.Integrity + organ.SelfHealingAmount > organ.MaxIntegrity)
                         organ.Integrity = organ.MaxIntegrity;
