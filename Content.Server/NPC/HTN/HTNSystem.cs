@@ -202,28 +202,6 @@ public sealed class HTNSystem : EntitySystem
                     {
                         StartupTask(comp.Plan.Tasks[comp.Plan.Index], comp.Blackboard, comp.Plan.Effects[comp.Plan.Index]);
                     }
-
-                    // Send debug info
-                    foreach (var session in _subscribers)
-                    {
-                        var text = new StringBuilder();
-
-                        if (comp.Plan != null)
-                        {
-                            text.AppendLine($"BTR: {string.Join(", ", comp.Plan.BranchTraversalRecord)}");
-                            text.AppendLine($"tasks:");
-                            var root = _prototypeManager.Index<HTNCompoundTask>(comp.RootTask);
-                            var btr = new List<int>();
-                            var level = -1;
-                            AppendDebugText(root, text, comp.Plan.BranchTraversalRecord, btr, ref level);
-                        }
-
-                        RaiseNetworkEvent(new HTNMessage()
-                        {
-                            Uid = comp.Owner,
-                            Text = text.ToString(),
-                        }, session.ConnectedClient);
-                    }
                 }
 
                 comp.PlanningJob = null;
@@ -235,7 +213,30 @@ public sealed class HTNSystem : EntitySystem
         }
     }
 
-    private void AppendDebugText(HTNTask task, StringBuilder text, List<int> planBtr, List<int> btr, ref int level)
+    private void HTNDebug(HTNComponent comp)
+    {
+        var text = new StringBuilder();
+        if (comp.Plan != null)
+        {
+            text.AppendLine($"BTR: {string.Join(", ", comp.Plan.BranchTraversalRecord)}, accum {comp.PlanAccumulator}");
+            text.AppendLine($"tasks:");
+            var root = _prototypeManager.Index<HTNCompoundTask>(comp.RootTask);
+            var btr = new List<int>();
+            var level = -1;
+            AppendDebugText(root, text, comp.Plan.BranchTraversalRecord, btr, ref level, comp.Plan);
+        }
+
+        foreach (var session in _subscribers)
+        {
+            RaiseNetworkEvent(new HTNMessage()
+            {
+                Uid = comp.Owner,
+                Text = text.ToString(),
+            }, session.ConnectedClient);
+        }
+    }
+
+    private void AppendDebugText(HTNTask task, StringBuilder text, List<int> planBtr, List<int> btr, ref int level, HTNPlan plan)
     {
         // If it's the selected BTR then highlight.
         for (var i = 0; i < btr.Count; i++)
@@ -247,6 +248,12 @@ public sealed class HTNSystem : EntitySystem
 
         if (task is HTNPrimitiveTask primitive)
         {
+            // Highlight current task
+            if (plan.CurrentTask == primitive && btr.SequenceEqual(plan.BranchTraversalRecord))
+            {
+                // Still results in false positive if current branch contains multiple of the same task...
+                text.Append("> ");
+            }
             text.AppendLine(primitive.ID);
             return;
         }
@@ -264,7 +271,7 @@ public sealed class HTNSystem : EntitySystem
 
                 foreach (var sub in branch.Tasks)
                 {
-                    AppendDebugText(sub, text, planBtr, btr, ref level);
+                    AppendDebugText(sub, text, planBtr, btr, ref level, plan);
                 }
 
                 btr.RemoveAt(btr.Count - 1);
@@ -330,6 +337,8 @@ public sealed class HTNSystem : EntitySystem
                     throw new InvalidOperationException();
             }
         }
+
+        HTNDebug(component);
     }
 
     /// <summary>
