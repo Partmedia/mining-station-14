@@ -59,10 +59,6 @@
     bloodMaxVolume: 300
     bloodReagent: Cryoxadone
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
     soundHit:
