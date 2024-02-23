@@ -223,9 +223,9 @@ namespace Content.Server.StationEvents
     }
 
     [UsedImplicitly]
-    public sealed class MiningEventSchedulerSystem : GameRuleSystem
+    public sealed class MiningEventScheduler : GameRuleSystem
     {
-        public override string Prototype => "MiningEventSchedulerSystem";
+        public override string Prototype => "MiningEventScheduler";
 
         /// <summary>
         /// How long until the next check for an event runs
