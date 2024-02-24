@@ -315,8 +315,6 @@ namespace Content.Server.StationEvents
         private bool OldSupercond;
         private int KillCount;
 
-        private string OldPool = "";
-
         public override void Added()
         {
             OldPool = _configurationManager.GetCVar(CCVars.GameMapPool);

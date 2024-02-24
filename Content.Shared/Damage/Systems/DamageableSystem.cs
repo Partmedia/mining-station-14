@@ -224,7 +224,7 @@ namespace Content.Shared.Damage
                             List<BodyPartComponent> bodyParts = new List<BodyPartComponent> { };
                             foreach (var slot in bodyPartSlots)
                             {
-                                if (slot.Child != null && TryComp<BodyPartComponent>(slot.Child.Value, out var part)) //TODO && !part.Wearable
+                                if ((slot.Wearable is null || !slot.Wearable.Value) && slot.Child != null && TryComp<BodyPartComponent>(slot.Child.Value, out var part))
                                     bodyParts.Add(part);
                             }
                             bodyParts.Add(rootPart);

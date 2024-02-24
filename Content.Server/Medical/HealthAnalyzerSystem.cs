@@ -208,8 +208,8 @@ namespace Content.Server.Medical
                 List<BodyPartComponent> parts = new List<BodyPartComponent> { };
                 foreach (var slot in bodyPartSlots)
                 {
-                    if (slot.Child != null && TryComp<BodyPartComponent>(slot.Child.Value, out var part))
-                    { //TODO && !part.Wearable
+                    if ((slot.Wearable is null || !slot.Wearable.Value) && slot.Child != null && TryComp<BodyPartComponent>(slot.Child.Value, out var part))
+                    {
                         parts.Add(part);
                         //TODO in the future, bodies may multiple (non-symmetric) parts (and organs) - find a way to distinguish them
                         if (part.Symmetry != BodyPartSymmetry.None)
