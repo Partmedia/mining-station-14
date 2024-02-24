@@ -63,24 +63,8 @@
     # Unarmed combat
     - tasks:
         - id: PickMeleeTargetPrimitive
-        - id: MeleeAttackTargetCompound
-
-# Tries to melee attack our target.
-- type: htnCompound
-  id: MeleeAttackTargetCompound
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: CombatTarget
-  branches:
-    # Keep hitting them if they're in range
-    - tasks:
-        - id: MeleeAttackTargetPrimitive
-
-    # Move to melee range and hit them
-    - tasks:
         - id: MoveToCombatTargetPrimitive
         - id: MeleeAttackTargetPrimitive
-
 
 - type: htnPrimitive
   id: PickMeleeTargetPrimitive
@@ -101,6 +85,9 @@
 # Moves the owner into range of the combat target.
 - type: htnPrimitive
   id: MoveToCombatTargetPrimitive
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: CombatTarget
   operator: !type:MoveToOperator
     pathfindInPlanning: true
     removeKeyOnFinish: false
