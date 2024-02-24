@@ -147,6 +147,8 @@ public sealed class MoveToOperator : HTNOperator
 
             comp.CurrentPath = result.Path;
         }
+
+        blackboard.SetValue(NPCBlackboard.MoveToLeft, 3f);
     }
 
     public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
@@ -174,6 +176,20 @@ public sealed class MoveToOperator : HTNOperator
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+
+        if (blackboard.TryGetValue<float>(NPCBlackboard.MoveToLeft, out var left, _entManager))
+        {
+            left -= frameTime;
+            if (left < 0)
+            {
+                blackboard.Remove<float>(NPCBlackboard.MoveToLeft);
+                return HTNOperatorStatus.Failed;
+            }
+            else
+            {
+                blackboard.SetValue(NPCBlackboard.MoveToLeft, left);
+            }
+        }
 
         if (!_entManager.TryGetComponent<NPCSteeringComponent>(owner, out var steering))
             return HTNOperatorStatus.Failed;
