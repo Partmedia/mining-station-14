@@ -228,6 +228,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     public const string VisionRadius = "VisionRadius";
 
     public const string MoveToLeft = "MoveToLeft";
+    public const string LastAttacker = "LastAttacker";
 
     public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
     {

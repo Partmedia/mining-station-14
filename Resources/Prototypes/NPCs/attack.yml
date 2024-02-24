@@ -60,11 +60,22 @@
 - type: htnCompound
   id: MeleeCombatCompound
   branches:
+    # Fight our aggressor
+    - tasks:
+        - id: SwitchToAttackerPrimitive
+        - id: MeleeAttackTargetPrimitive
     # Unarmed combat
     - tasks:
         - id: PickMeleeTargetPrimitive
         - id: MoveToCombatTargetPrimitive
         - id: MeleeAttackTargetPrimitive
+
+- type: htnPrimitive
+  id: SwitchToAttackerPrimitive
+  operator: !type:SwitchToAttackerOperator
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: LastAttacker
 
 - type: htnPrimitive
   id: PickMeleeTargetPrimitive
