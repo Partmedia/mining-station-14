@@ -178,12 +178,6 @@ public sealed class MoveToOperator : HTNOperator
         if (!_entManager.TryGetComponent<NPCSteeringComponent>(owner, out var steering))
             return HTNOperatorStatus.Failed;
 
-        // Random chance of breaking out to check for new target
-        if (_random.Next() < 0.05)
-        {
-            return HTNOperatorStatus.Finished;
-        }
-
         return steering.Status switch
         {
             SteeringStatus.InRange => HTNOperatorStatus.Finished,

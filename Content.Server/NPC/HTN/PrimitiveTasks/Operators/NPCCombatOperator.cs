@@ -86,7 +86,6 @@ public abstract class NPCCombatOperator : HTNOperator
         {
             if (mobQuery.TryGetComponent(target, out var mobState) &&
                 mobState.CurrentState > MobState.Alive ||
-                target == existingTarget ||
                 target == owner)
             {
                 continue;

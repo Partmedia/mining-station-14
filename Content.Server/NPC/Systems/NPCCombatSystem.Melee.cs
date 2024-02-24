@@ -11,7 +11,15 @@ namespace Content.Server.NPC.Systems;
 
 public sealed partial class NPCCombatSystem
 {
-    private const float TargetMeleeLostRange = 14f;
+    /// <summary>
+    /// If target gets farther than this, mark unreachable (and go back to HTN).
+    /// </summary>
+    private const float TargetMeleeLostRange = 3f;
+
+    /// <summary>
+    /// Time of missing before giving up.
+    /// </summary>
+    private TimeSpan GiveUpTime = new TimeSpan(0, 0, 2);
 
     private void InitializeMelee()
     {
@@ -84,6 +92,8 @@ public sealed partial class NPCCombatSystem
 
         // TODO: Cleanup later, just looking for parity for now.
         component.Weapon = uid;
+
+        component.LastHit = _timing.CurTime;
     }
 
     private void UpdateMelee(float frameTime)
@@ -136,6 +146,12 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
+        if (curTime > component.LastHit + GiveUpTime)
+        {
+            component.Status = CombatStatus.GiveUp;
+            return;
+        }
+
         if (TryComp<NPCSteeringComponent>(uid, out var steering) &&
             steering.Status == SteeringStatus.NoPath)
         {
@@ -168,5 +184,7 @@ public sealed partial class NPCCombatSystem
         {
             _melee.AttemptLightAttack(uid, component.Weapon, weapon, component.Target);
         }
+
+        component.LastHit = curTime;
     }
 }

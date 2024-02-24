@@ -22,6 +22,12 @@ public sealed class NPCMeleeCombatComponent : Component
 
     [ViewVariables]
     public CombatStatus Status = CombatStatus.Normal;
+
+    /// <summary>
+    /// Time that we last hit the enemy. If this gets too long, give up (and go back to HTN).
+    /// </summary>
+    [ViewVariables]
+    public TimeSpan LastHit;
 }
 
 public enum CombatStatus : byte
@@ -50,6 +56,11 @@ public enum CombatStatus : byte
     /// Set if the weapon we were assigned is no longer valid.
     /// </summary>
     NoWeapon,
+
+    /// <summary>
+    /// Set LastHit timer elapses.
+    /// </summary>
+    GiveUp,
 
     /// <summary>
     /// No dramas.

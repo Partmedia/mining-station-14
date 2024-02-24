@@ -91,11 +91,6 @@ public sealed class MeleeOperator : HTNOperator
             }
         }
 
-        if (status != HTNOperatorStatus.Continuing)
-        {
-            _entManager.RemoveComponent<NPCMeleeCombatComponent>(owner);
-        }
-
         return status;
     }
 }
