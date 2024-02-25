@@ -75,7 +75,7 @@ namespace Content.Client.Changelog
         {
             return Task.Run(() =>
             {
-                var yamlData = _resource.ContentFileReadYaml(new ResourcePath("/Changelog/MiningChangelog.yml"));
+                var yamlData = _resource.ContentFileReadYaml(new ResourcePath("/Changelog/DungeonChangelog.yml"));
 
                 if (yamlData.Documents.Count == 0)
                     return new List<ChangelogEntry>();
