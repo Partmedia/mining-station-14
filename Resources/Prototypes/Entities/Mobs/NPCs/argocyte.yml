@@ -70,6 +70,9 @@
   name: slurva
   description: A pathetic creature, incapable of doing much.
   components:
+  - type: Body
+    prototype: SmallAnimal
+    requiredLegs: 1
   - type: BiopressHarvest
     id: ArgoCreature
     totalReagentUnits: 10
@@ -100,6 +103,9 @@
   id: MobArgocyteBarrier
   name: barrier
   components:
+  - type: Body
+    prototype: SmallAnimal
+    requiredLegs: 1
   - type: Sprite
     layers:
     - state: barrier
@@ -135,6 +141,9 @@
   name: skitter
   description: A devious little alien... Make sure they don't run off with your rations!
   components:
+  - type: Body
+    prototype: SmallAnimal
+    requiredLegs: 1
   - type: BiopressHarvest
     id: ArgoCreature
     totalReagentUnits: 30
@@ -173,6 +182,9 @@
   name: swiper
   description: Where did that stack of steel go?
   components:
+  - type: Body
+    prototype: SmallAnimal
+    requiredLegs: 1
   - type: Sprite
     layers:
     - state: swiper

@@ -28,6 +28,9 @@
       state: regalrat
   - type: Physics
     bodyType: KinematicController
+  - type: Body
+    prototype: SmallAnimal
+    requiredLegs: 1
   - type: Fixtures
     fixtures:
     - shape:
@@ -54,9 +57,6 @@
       types:
         Slash: 12
         Piercing: 8
-  - type: Body
-    prototype: Rat
-    requiredLegs: 1 # TODO: More than 1 leg
   - type: Hunger # probably should be prototyped
     thresholds:
       Overfed: 200
@@ -243,7 +243,7 @@
         Slash: 5
         Piercing: 3
   - type: Body
-    prototype: Rat
+    prototype: BossAnimal
     requiredLegs: 1 # TODO: More than 1 leg
   - type: Hunger # probably should be prototyped
     thresholds:

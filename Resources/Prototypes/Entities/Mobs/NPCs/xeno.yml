@@ -131,6 +131,7 @@
     totalReagentUnits: 75
   - type: Body
     prototype: BossAnimal
+    requiredLegs: 1
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/praetorian.rsi
@@ -221,6 +222,7 @@
     totalReagentUnits: 100
   - type: Body
     prototype: BossAnimal
+    requiredLegs: 1
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/queen.rsi
@@ -275,6 +277,7 @@
     totalReagentUnits: 65
   - type: Body
     prototype: BossAnimal
+    requiredLegs: 1
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/ravager.rsi

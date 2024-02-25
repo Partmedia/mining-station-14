@@ -77,3 +77,39 @@
       - feet
     feet:
       part: FeetBossAnimal
+
+- type: body
+  id: SmallAnimal
+  name: "animal"
+  species: animal
+  root: torso
+  slots:
+    torso:
+      part: TorsoBossAnimal
+      connections:
+      - legs
+      organs:
+        brain:
+          organ: OrganHumanBrain
+          type: Brain
+        eyes: 
+          organ: OrganHumanEyes
+          type: Eye
+          internal: false
+        lungs:
+          organ: OrganAnimalLungs
+          type: Lung
+        stomach:
+          organ: OrganAnimalStomach
+          type: Stomach
+        liver:
+          organ: OrganAnimalLiver
+          type: Liver
+        heart:
+          organ: OrganAnimalHeart
+          type: Heart
+        kidneys:
+          organ: OrganAnimalKidneys
+          type: Kidney
+    legs:
+      part: LegsSmallAnimal
