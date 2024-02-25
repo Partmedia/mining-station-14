@@ -55,48 +55,53 @@ public class WarperSystem : EntitySystem
         _chatSystem.DispatchStationAnnouncement(uid, announcement, sender);
     }
 
+    private void GenerateDungeon(EntityUid uid, WarperComponent component)
+    {
+        // Destination is next level
+        dungeonLevel++;
+        var dMap = _mapManager.CreateMap();
+        var map = _map.LoadMap(dMap, "/Mining/Maps/Templates/dungeon.yml");
+        var gravity = _entMan.EnsureComponent<GravityComponent>(map.First());
+        gravity.Enabled = true;
+        _entMan.Dirty(gravity);
+
+        // create destination back up on current map
+        var upDest = _entMan.SpawnEntity("WarpPoint", Transform(uid).Coordinates);
+        if (TryComp<WarpPointComponent>(upDest, out var upWarp))
+        {
+            upWarp.ID = $"dlvl{dungeonLevel - 1}down";
+        }
+        component.ID = $"dlvl{dungeonLevel}up";
+
+        // find stairs up, create warp destination
+        foreach (var warper in EntityManager.EntityQuery<WarperComponent>())
+        {
+            // find ladder going up
+            if (Transform(warper.Owner).MapID == dMap && !warper.Dungeon)
+            {
+                // link back upstairs
+                warper.ID = $"dlvl{dungeonLevel - 1}down";
+
+                // Create destination downstairs
+                var downDest = _entMan.SpawnEntity("WarpPoint", Transform(warper.Owner).Coordinates);
+                if (TryComp<WarpPointComponent>(downDest, out var downWarp))
+                {
+                    downWarp.ID = $"dlvl{dungeonLevel}up";
+                    downWarp.Location = $"Dungeon Level {dungeonLevel:00}";
+                }
+            }
+        }
+
+        RandomAnnounce(uid, dungeonLevel);
+    }
+
     private void OnActivate(EntityUid uid, WarperComponent component, ActivateInWorldEvent args)
     {
         if (component.Dungeon)
         {
-            // Destination is next level
-            dungeonLevel++;
-            var dMap = _mapManager.CreateMap();
-            var map = _map.LoadMap(dMap, "/Mining/Maps/Templates/dungeon.yml");
-            var gravity = _entMan.EnsureComponent<GravityComponent>(map.First());
-            gravity.Enabled = true;
-            _entMan.Dirty(gravity);
-
-            // create destination back up on current map
-            var upDest = _entMan.SpawnEntity("WarpPoint", Transform(uid).Coordinates);
-            if (TryComp<WarpPointComponent>(upDest, out var upWarp))
-            {
-                upWarp.ID = $"dlvl{dungeonLevel - 1}down";
-            }
-            component.ID = $"dlvl{dungeonLevel}up";
-
-            // find stairs up, create warp destination
-            foreach (var warper in EntityManager.EntityQuery<WarperComponent>())
-            {
-                // find ladder going up
-                if (Transform(warper.Owner).MapID == dMap && !warper.Dungeon)
-                {
-                    // link back upstairs
-                    warper.ID = $"dlvl{dungeonLevel - 1}down";
-
-                    // Create destination downstairs
-                    var downDest = _entMan.SpawnEntity("WarpPoint", Transform(warper.Owner).Coordinates);
-                    if (TryComp<WarpPointComponent>(downDest, out var downWarp))
-                    {
-                        downWarp.ID = $"dlvl{dungeonLevel}up";
-                        downWarp.Location = $"Dungeon Level {dungeonLevel:00}";
-                    }
-                }
-            }
-
             // don't generate again
             component.Dungeon = false;
-            RandomAnnounce(uid, dungeonLevel);
+            GenerateDungeon(uid, component);
         }
 
         DoWarp(args.Target, args.User, args.User, component);
