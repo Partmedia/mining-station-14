@@ -57,6 +57,8 @@
   - type: BodyPart
     partType: Leg
   - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 2.5
 
 - type: entity
   id: FeetAnimal
@@ -105,8 +107,8 @@
     maxIntegrity: 125
     hitChance: 1
   - type: MovementSpeedModifier
-    baseWalkSpeed : 0.5
-    baseSprintSpeed : 0.5
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 3
 
 - type: entity
   id: FeetBossAnimal
