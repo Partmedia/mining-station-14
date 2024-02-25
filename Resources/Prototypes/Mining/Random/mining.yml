@@ -1,7 +1,18 @@
 - type: entity
-  name: mining treasure spawner
-  id: MiningTreasureSpawner
+  id: MiningRandomSpawner
+  name: mining spawner
   parent: MarkerBase
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+  - type: RandomSpawner
+
+- type: entity
+  id: MiningTreasureSpawner
+  name: mining treasure
+  parent: MiningRandomSpawner
   components:
     - type: Sprite
       layers:
@@ -9,7 +20,6 @@
         - sprite: Objects/Materials/ingots.rsi
           state: gold_3
     - type: RandomSpawner
-      chance: 1.0
       prototypes:
         - AdvancedCapacitorStockPart 
         - AdvancedMatterBinStockPart 
@@ -72,3 +82,53 @@
         - ClothingBeltSheathFilled
         - ClothingOuterHardsuitWizard
         - MusicianPDA
+
+- type: entity
+  id: MiningMonsterSpawner
+  name: mining monsters
+  parent: MiningRandomSpawner
+  components:
+    - type: RandomSpawner
+      prototypes:
+        - MobBearSpace
+        - MobCarp
+        - MobPurpleSnake
+        - MobGiantSpiderAngry
+        - MobTick
+        - MobTick # extra ticks
+      rareChance: 0.06
+      rarePrototypes:
+        - MobXeno
+
+- type: entity
+  id: MiningShaftSpawner
+  name: mining shaft stuff
+  parent: MiningRandomSpawner
+  components:
+    - type: RandomSpawner
+      chance: 0.2
+      prototypes:
+        - CrateFilledSpawner
+        - RandomInstruments
+        - Pickaxe
+        - MineCart
+        - Flare
+        - MiningDrill
+        - Electromagnet
+        - WeaponProtoKineticAccelerator
+        - EmergencyOxygenTank
+
+- type: entity
+  id: MiningVaultSpawner
+  name: mining vault
+  parent: MiningRandomSpawner
+  components:
+    - type: RandomSpawner
+      prototypes:
+        - LandMineExplosive
+        - CrateFilledSpawner
+        - MaintenanceFluffSpawner
+        - MiningTreasureSpawner
+      rareChance: 0.03
+      rarePrototypes:
+        - WeaponTurretSyndicate

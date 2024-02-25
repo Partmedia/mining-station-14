@@ -1,0 +1,84 @@
+- type: entity
+  id: DungeonWeaponSpawner
+  name: dungeon weapons
+  parent: MiningRandomSpawner
+  components:
+    - type: RandomSpawner
+      prototypes:
+        - CombatKnife
+        - WeaponLaserCarbine
+        - WeaponPistolHandmade
+        - WeaponMakeshiftLaser
+        - WeaponPistolMk58
+        - WeaponSubMachineGunVector
+        - WeaponSubMachineGunWt550
+        - WeaponShotgunDoubleBarreled
+        - WeaponRevolverDeckard
+        - WeaponRevolverInspector
+        - WeaponRevolverPython
+        - WeaponRevolverPirate
+        - Claymore
+
+- type: entity
+  id: DungeonArmorSpawner
+  name: dungeon armor
+  parent: MiningRandomSpawner
+  components:
+    - type: RandomSpawner
+      prototypes:
+        - ClothingOuterArmorBulletproof
+        - ClothingOuterArmorReflective
+        - ClothingOuterVestDetective
+        - ClothingOuterVestDetective
+        - ClothingOuterVestWebMerc
+        - ClothingOuterHardsuitSecurity
+        - MakeshiftShield
+        - RiotBulletShield
+        - RiotShield
+        - WoodenBuckler
+        - ClockworkShield
+        - MirrorShield
+        - RiotLaserShield
+
+- type: entity
+  id: DungeonLootSpawner
+  name: dungeon loot
+  parent: MiningRandomSpawner
+  components:
+    - type: RandomSpawner
+      prototypes:
+        - MedkitFilled
+        - MedkitBurnFilled
+        - MedkitBruteFilled
+        - MedkitAdvancedFilled
+        - EmergencyMedipen
+        - CrateMedicalSurgery
+        - CrateMedicalDefib
+        - Hypopen
+        - Torch
+        - PowerCellMedium
+        - PowerCellHigh
+      rareChance: 0.1
+      rarePrototypes:
+        - MobXeno
+        - WeaponStaffHealing
+        - WeaponStaffPolymorphDoor
+        - WeaponWandPolymorphDoor
+        - WeaponWandFireball
+        - KnockSpellbook
+        - BlinkBook
+        - ForceWallSpellbook
+
+- type: entity
+  id: DungeonLootSpawnerSpawner
+  name: dungeon loot meta-spawner
+  parent: MiningRandomSpawner
+  components:
+    - type: RandomSpawner
+      prototypes:
+        - CrateFilledSpawner
+        - RandomFoodSingle
+        - RandomSpawner
+      rareChance: 0.6 # prefer dungeon loot
+      rarePrototypes:
+        - DungeonLootSpawner
