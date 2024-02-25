@@ -421,7 +421,7 @@ namespace Content.Server.Surgery
                         surgery.ClampedTimes.Remove(entity);
             }
 
-            //SetBleedStatus(uid, surgery, bodyPartSlots, organSlots);
+            SetBleedStatus(uid, surgery, bodyPartSlots, organSlots);
         }
 
         /// <summary>
@@ -608,19 +608,13 @@ namespace Content.Server.Surgery
         {
             //SetBodyStatusFromChange();
             //SetBodyStatusFromChange();
-            var bodyPartSlots = GetAllBodyPartSlots(uid);
-            var organSlots = GetOpenPartOrganSlots(bodyPartSlots);
-            SetBleedStatus(uid, component, bodyPartSlots, organSlots);
             UpdateUiState(uid);
         }
 
         private void OnBodyPartRemoved(EntityUid uid, SurgeryComponent component, ref BodyPartRemovedEvent args)
         {
             //SetBodyStatusFromChange(uid, );
-            //SetBodyStatusFromChange();
-            var bodyPartSlots = GetAllBodyPartSlots(uid);
-            var organSlots = GetOpenPartOrganSlots(bodyPartSlots);
-            SetBleedStatus(uid, component, bodyPartSlots, organSlots);
+            //SetBodyStatusFromChange();         
             UpdateUiState(uid);
         }
 
@@ -1184,7 +1178,7 @@ namespace Content.Server.Surgery
             return true;
         }
 
-        private async Task<bool> SawPart(EntityUid user, SurgeryToolComponent tool, EntityUid target, BodyPartComponent bodyPart, HandsComponent userHands, bool timeOverride)
+        private async Task<bool> SawPart(EntityUid user, SurgeryComponent component,SurgeryToolComponent tool, EntityUid target, BodyPartComponent bodyPart, HandsComponent userHands, bool timeOverride)
         {
 
             //we always check for an exo first
@@ -1194,7 +1188,10 @@ namespace Content.Server.Surgery
             //if has a closed exoskeleton, open it up - exo should be opened before removing or opening parts
             if (bodyPart.ExoSkeleton && !bodyPart.ExoOpened)
             {
-                return await OpenExo(user, tool, target, bodyPart, userHands, timeOverride);
+                if (!InventoryBlocking(target,component,user))
+                    return await OpenExo(user, tool, target, bodyPart, userHands, timeOverride);
+                else
+                    return false;
             }
             //if its not incised, has no exo or an open exo, is not a root part, then remove the part from its slot
             else if (!bodyPart.Incised && (!bodyPart.ExoSkeleton || bodyPart.ExoOpened) && bodyPart.ParentSlot is not null && !bodyPart.ParentSlot.IsRoot)
@@ -1209,8 +1206,10 @@ namespace Content.Server.Surgery
                     _popupSystem.PopupEntity(Loc.GetString("surgery-no-retractor"), user, user);
                     return false;
                 }
-
-                return await OpenEndo(user, tool, target, bodyPart, userHands, timeOverride);
+                if (!InventoryBlocking(target,component,user))
+                    return await OpenEndo(user, tool, target, bodyPart, userHands, timeOverride);
+                else
+                    return false;
             }
             else
             {
@@ -1238,19 +1237,21 @@ namespace Content.Server.Surgery
             return false;
         }
 
+        private bool InventoryBlocking(EntityUid uid, SurgeryComponent component, EntityUid user)
+        {
+            if (CheckBlockingInventory(uid, component))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("surgery-blocked"), user, user);
+                return true;
+            }
+            return false;
+        }
+
         private async void OnSurgeryButtonPressed(EntityUid uid, SurgeryComponent component, SurgerySlotButtonPressed args)
         {
             if (args.Session.AttachedEntity is not { Valid: true } user ||
                 !TryComp<HandsComponent>(user, out var userHands))
-                return;
-
-            //TODO check if patient is standing
-
-            if (CheckBlockingInventory(uid,component))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("surgery-blocked"), user, user);
-                return;
-            }
+                return;      
 
             //check for surgical tool in active hand   
             if (userHands.ActiveHandEntity != null && TryComp<SurgeryToolComponent>(userHands.ActiveHandEntity, out var tool))
@@ -1269,7 +1270,7 @@ namespace Content.Server.Surgery
                 var utilityCounter = 0;
 
                 //retractor - used to open an organ container part after it has been incised (used as an attachment to the part)
-                if (tool.Retractor)
+                if (tool.Retractor && !InventoryBlocking(uid,component,user))
                 {
                     if (args.Slot.Child != null && TryComp<BodyPartComponent>(args.Slot.Child, out var part))
                     {
@@ -1286,7 +1287,7 @@ namespace Content.Server.Surgery
                 }
 
                 //incisor - incisors part if incisable (or removes organ if used with a manipulator)
-                if (tool.Incisor && (timeOverride || (!timeOverride && utilityCounter == 0)))
+                if (tool.Incisor && (timeOverride || (!timeOverride && utilityCounter == 0)) && !InventoryBlocking(uid,component,user))
                 {
                     if (args.Slot.Child != null && TryComp<BodyPartComponent>(args.Slot.Child, out var part))
                     {
@@ -1300,7 +1301,7 @@ namespace Content.Server.Surgery
                 {
                     if (args.Slot.Child != null && TryComp<BodyPartComponent>(args.Slot.Child, out var part))
                     {
-                        timeOverride = await SawPart(user, tool, uid, part, userHands, timeOverride); //will either remove a part or open a skeleton depending on status of selected part - will not detach root parts (but will open their skeletons)
+                        timeOverride = await SawPart(user, component, tool, uid, part, userHands, timeOverride); //will either remove a part or open a skeleton depending on status of selected part - will not detach root parts (but will open their skeletons)
                         utilityCounter++;
                     }
                 }
@@ -1320,7 +1321,7 @@ namespace Content.Server.Surgery
                 }
 
                 //hard suture - used to close skeletons (exo or endo)
-                if (tool.HardSuture && (timeOverride || (!timeOverride && utilityCounter == 0)))
+                if (tool.HardSuture && (timeOverride || (!timeOverride && utilityCounter == 0)) && !InventoryBlocking(uid,component,user))
                 {
                     if (args.Slot.Child != null && TryComp<BodyPartComponent>(args.Slot.Child, out var part))
                     {
@@ -1330,7 +1331,7 @@ namespace Content.Server.Surgery
                 }
 
                 //suture - used to close incisions and re-attach organs
-                if (tool.Suture && (timeOverride || (!timeOverride && utilityCounter == 0)))
+                if (tool.Suture && (timeOverride || (!timeOverride && utilityCounter == 0)) && !InventoryBlocking(uid,component,user))
                 {
                     if (args.Slot.Child != null && TryComp<BodyPartComponent>(args.Slot.Child, out var part))
                     {
