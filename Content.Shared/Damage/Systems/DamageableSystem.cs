@@ -321,7 +321,7 @@ namespace Content.Shared.Damage
                                 isRoot = true;
 
                             //if the not part is not root and the damage type is slash, roll for a crit hit
-                            if (!isRoot && criticalDamages.Contains(damageType))
+                            if (!isRoot && criticalDamages.Contains(damageType) && damageValue > 0)
                             {
                                 //roll from 1 to max integrity, if the result is greater than the part's current integrity,
                                 //apply integrity damage equal to current integrity
