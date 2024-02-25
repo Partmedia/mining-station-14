@@ -364,6 +364,7 @@
     totalReagentUnits: 70
   - type: Body
     prototype: BossAnimal
+    requiredLegs: 1
   - type: Sprite
     sprite: Mobs/Aliens/Argocyte/argocyte_large.rsi
     layers:
@@ -405,6 +406,7 @@
   components:
   - type: Body
     prototype: BossAnimal
+    requiredLegs: 1
   - type: BiopressHarvest
     id: ArgoCreature
     totalReagentUnits: 90

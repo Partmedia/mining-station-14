@@ -105,6 +105,8 @@
     maxIntegrity: 125
     hitChance: 1
   - type: MovementSpeedModifier
+    baseWalkSpeed : 0.5
+    baseSprintSpeed : 0.5
 
 - type: entity
   id: FeetBossAnimal
