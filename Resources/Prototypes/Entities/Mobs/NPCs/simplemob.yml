@@ -113,6 +113,7 @@
     - Pacified
   - type: Body
     prototype: Animal
+    requiredLegs: 1
   - type: InjectableSolution
     solution: chemicals
   - type: Examiner
