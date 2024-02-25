@@ -18,6 +18,21 @@ public sealed class RLMapGen : EntitySystem
         SubscribeLocalEvent<MapGridComponent, MapInitEvent>(OnMapInit, before: new []{typeof(ConditionalSpawnerSystem)});
     }
 
+    public string GetTemplate(int dlvl)
+    {
+        if (_rl.Available())
+        {
+            var fn = RL.readstr("map-template");
+            var form = RL.list2(fn, RL.num(dlvl));
+            var ret = RL.eval(form);
+            if (!RL.nil(ret))
+                return RL.cstr(ret);
+            else
+                Logger.ErrorS("RLMapGen", "MAP-TEMPLATE returned NIL, using default dungeon template");
+        }
+        return "/Mining/Maps/Templates/dungeon.yml"; // fallback
+    }
+
     private void OnMapInit(EntityUid uid, MapGridComponent comp, MapInitEvent args)
     {
         ProcGen(comp);

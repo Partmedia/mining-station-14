@@ -27,6 +27,7 @@ public class WarperSystem : EntitySystem
     [Dependency] private readonly WarpPointSystem _warpPointSystem = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly RLMapGen _procgen = default!;
 
     public int dungeonLevel = 0;
 
@@ -60,7 +61,7 @@ public class WarperSystem : EntitySystem
         // Destination is next level
         dungeonLevel++;
         var dMap = _mapManager.CreateMap();
-        var map = _map.LoadMap(dMap, "/Mining/Maps/Templates/dungeon.yml");
+        var map = _map.LoadMap(dMap, _procgen.GetTemplate(dungeonLevel));
         var gravity = _entMan.EnsureComponent<GravityComponent>(map.First());
         gravity.Enabled = true;
         _entMan.Dirty(gravity);
