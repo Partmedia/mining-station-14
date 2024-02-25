@@ -24,7 +24,7 @@
   id: LadderTop
   name: ladder
   suffix: top
-  description: The top of a ladder. Use it to go down.
+  description: They go down.
   components:
   - type: Sprite
     offset: 0, 0.5
@@ -38,7 +38,7 @@
   id: LadderBottom
   name: ladder
   suffix: bottom
-  description: The bottom of a ladder. Use it to go up.
+  description: They go up.
   components:
   - type: Sprite
     offset: 0, 0.5
