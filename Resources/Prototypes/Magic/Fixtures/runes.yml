@@ -31,6 +31,8 @@
           layer:
             - SlipLayer
     - type: Physics
+    - type: TriggerOnCollide
+      fixtureID: rune
 
 - type: entity
   parent: CollideRune
@@ -54,8 +56,6 @@
   id: ExplosionRune
   name: "explosion rune"
   components:
-    - type: TriggerOnCollide
-      fixtureID: rune
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Cryo
@@ -73,12 +73,11 @@
   id: StunRune
   name: "stun rune"
   components:
-    - type: TriggerOnCollide
-      fixtureID: rune
     - type: DeleteOnTrigger
     - type: StunOnCollide
       stunAmount: 5
-      knockdownAmount: 3
+      knockdownAmount: 10
+      fixture: rune
     - type: Sprite
       sprite: Structures/Magic/Cult/trap.rsi
       layers:
@@ -90,8 +89,6 @@
   id: IgniteRune
   name: "ignite rune"
   components:
-    - type: TriggerOnCollide
-      fixtureID: rune
     - type: DeleteOnTrigger
     - type: IgniteOnCollide
       fireStacks: 10
@@ -126,7 +123,7 @@
       maxIntensity: 4
 
 - type: entity
-  parent: ActivateRune
+  parent: CollideRune
   id: FlashRune
   name: "flash rune"
   components:

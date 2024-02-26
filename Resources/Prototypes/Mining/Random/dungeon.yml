@@ -82,3 +82,16 @@
       rareChance: 0.6 # prefer dungeon loot
       rarePrototypes:
         - DungeonLootSpawner
+
+- type: entity
+  id: DungeonTrapSpawner
+  name: dungeon trap spawner
+  parent: MiningRandomSpawner
+  components:
+    - type: RandomSpawner
+      offset: 0
+      prototypes:
+        - ExplosionRune
+        - FlashRune
+        - IgniteRune
+        - StunRune
