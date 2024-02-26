@@ -38,7 +38,7 @@
       layer:
       - MobLayer
   - type: Stamina
-    critThreshold: 150
+    excess: 150
   - type: DamageStateVisuals
     states:
       Alive:
