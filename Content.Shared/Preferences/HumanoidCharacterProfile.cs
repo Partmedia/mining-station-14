@@ -402,9 +402,10 @@ namespace Content.Shared.Preferences
             name = name.Trim();
 
             var configManager = IoCManager.Resolve<IConfigurationManager>();
+
             if (configManager.GetCVar(CCVars.RestrictedNames))
             {
-                name = Regex.Replace(name, @"[^A-Z,a-z,0-9, -]", string.Empty);
+                name = Regex.Replace(name, @"[^a-z0-9çàáéêíóôúãõ -]", string.Empty, RegexOptions.IgnoreCase);
             }
 
             if (configManager.GetCVar(CCVars.ICNameCase))
