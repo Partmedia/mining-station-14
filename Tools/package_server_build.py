@@ -57,6 +57,7 @@ SERVER_IGNORED_RESOURCES = {
     "Fonts",
     "Audio",
     "Shaders",
+    "Mining"
 }
 
 # Assembly names to copy from content.
@@ -205,6 +206,10 @@ def copy_resources(target, zipf):
 
     do_resource_copy(target, "Resources", zipf, ignore_set)
     do_resource_copy(target, p("RobustToolbox", "Resources"), zipf, ignore_set)
+
+    # special case since we've ignored all of Mining
+    copy_dir_into_zip("Resources/Mining/Maps", "Resources/Mining/Maps", zipf)
+    copy_dir_into_zip("Resources/Mining/RL/start", "Resources/Mining/RL", zipf)
 
 
 def do_resource_copy(target, source, zipf, ignore_set):

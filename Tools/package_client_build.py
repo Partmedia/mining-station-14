@@ -39,6 +39,8 @@ SHARED_IGNORED_RESOURCES = {
 
 CLIENT_IGNORED_RESOURCES = {
     "Maps",
+    "Mining",
+    "ConfigPresets",
     "emotes.xml",
     "Groups",
     "engineCommandPerms.yml"
@@ -61,12 +63,7 @@ def main() -> None:
     args = parser.parse_args()
     skip_build = args.skip_build
 
-    if os.path.exists("release"):
-        pass
-    #    print(Fore.BLUE + Style.DIM +
-    #          "Cleaning old release packages (release/)..." + Style.RESET_ALL)
-    #    shutil.rmtree("release")
-    else:
+    if not os.path.exists("release"):
         os.mkdir("release")
 
     if not skip_build:
@@ -117,6 +114,9 @@ def copy_resources(zipf):
 
     do_resource_copy("Resources", zipf, ignore_set)
 
+    # special case since we've ignored all of Mining
+    copy_dir_into_zip("Resources/Mining/Audio", "Mining/Audio", zipf)
+
 
 def do_resource_copy(source, zipf, ignore_set):
     for filename in os.listdir(source):
@@ -154,8 +154,6 @@ def copy_dir_into_zip(directory, basepath, zipf):
         for filename in files:
             zippath = p(basepath, relpath, filename)
             filepath = p(root, filename)
-            if filepath.startswith("Resources/Mining/Maps") or filepath.startswith("Resources/Mining/RL") or '.git' in filepath or filepath.endswith('.swp') or filepath.endswith('~'):
-                continue
 
             if verbose:
                 message = "{dim}{diskroot}{sep}{zipfile}{dim} -> {ziproot}{sep}{zipfile}".format(
