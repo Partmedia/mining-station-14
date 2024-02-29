@@ -49,7 +49,7 @@ public partial class SharedBodySystem
         }
     }
 
-    public void ChangePartIntegrity(EntityUid uid, BodyPartComponent part, FixedPoint2 damage, bool isRoot)
+    public bool ChangePartIntegrity(EntityUid uid, BodyPartComponent part, FixedPoint2 damage, bool isRoot)
     {
         if (part.Integrity - damage <= 0)
         {
@@ -59,12 +59,14 @@ public partial class SharedBodySystem
             if (!isRoot)
             {
                 DropPart(uid, part);
+                return true;
             }
 
         } else
         {
             part.Integrity -= (float) damage;
         }
+        return false;
     }
 
     public void ChangeOrganIntegrity(EntityUid uid, OrganComponent organ, FixedPoint2 damage)

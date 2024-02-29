@@ -12,6 +12,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Body.Systems;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Organ;
+using Content.Shared.Popups;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Damage
@@ -23,6 +24,7 @@ namespace Content.Shared.Damage
         [Dependency] private readonly SharedBodySystem _body = default!;
         [Dependency] private readonly INetManager _netMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -326,20 +328,15 @@ namespace Content.Shared.Damage
                                 //roll from 1 to max integrity, if the result is greater than the part's current integrity,
                                 //apply integrity damage equal to current integrity
                                 var critHit = _random.Next(1, (int) Math.Round((double) hitPart.MaxIntegrity) + 1);
-
                                 if (critHit > hitPart.Integrity - damageValue)
                                 {
-                                    _body.ChangePartIntegrity(hitPart.Owner, hitPart, hitPart.Integrity, isRoot);
-                                }
-                                //otherwise, apply integrity damage as normal
-                                else
-                                {
-                                    _body.ChangePartIntegrity(hitPart.Owner, hitPart, damageValue, isRoot);
+                                    damageValue = hitPart.Integrity;
                                 }
                             }
-                            else
+
+                            if (_body.ChangePartIntegrity(hitPart.Owner, hitPart, damageValue, isRoot) && uid != null && origin != null)
                             {
-                                _body.ChangePartIntegrity(hitPart.Owner, hitPart, damageValue, isRoot);
+                                _popup.PopupEntity(Loc.GetString("part-hit-removed", ("part", hitPart.Owner), ("origin", origin.Value)), uid.Value, uid.Value, PopupType.Large);
                             }
                         }
                     }

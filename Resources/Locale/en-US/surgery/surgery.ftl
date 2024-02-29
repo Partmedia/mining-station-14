@@ -34,3 +34,5 @@ surgery-warn-species-incompatible = You feel feverish.
 organ-healthy = It is healthy.
 organ-warning = It is damaged.
 organ-critical = It is critically damaged.
+
+part-hit-removed = {CAPITALIZE(THE($origin))} cleanly slices off your {$part}!
