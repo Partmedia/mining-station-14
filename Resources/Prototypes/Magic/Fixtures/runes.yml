@@ -91,7 +91,7 @@
   components:
     - type: DeleteOnTrigger
     - type: IgniteOnCollide
-      fireStacks: 10
+      fireStacks: 5
     - type: Sprite
       sprite: Structures/Magic/Cult/trap.rsi
       layers:
