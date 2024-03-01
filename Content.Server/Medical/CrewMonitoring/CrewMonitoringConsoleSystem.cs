@@ -1,11 +1,9 @@
 using System.Linq;
-using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
 using Content.Server.UserInterface;
 using Content.Shared.Medical.CrewMonitoring;
 using Robust.Shared.Map;
-using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.CrewMonitoring
@@ -15,14 +13,33 @@ namespace Content.Server.Medical.CrewMonitoring
         [Dependency] private readonly SuitSensorSystem _sensors = default!;
         [Dependency] private readonly SharedTransformSystem _xform = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
+
+        private const float UpdateRate = 3f;
+        private float _updateDif;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<CrewMonitoringConsoleComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<CrewMonitoringConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-            SubscribeLocalEvent<CrewMonitoringConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            // check update rate
+            _updateDif += frameTime;
+            if (_updateDif < UpdateRate)
+                return;
+            _updateDif = 0f;
+
+            var consoles = EntityManager.EntityQuery<CrewMonitoringConsoleComponent>();
+            foreach (var console in consoles)
+            {
+                UpdateTimeouts(console.Owner, console);
+                UpdateUserInterface(console.Owner, console);
+            }
         }
 
         private void OnRemove(EntityUid uid, CrewMonitoringConsoleComponent component, ComponentRemove args)
@@ -32,22 +49,12 @@ namespace Content.Server.Medical.CrewMonitoring
 
         private void OnPacketReceived(EntityUid uid, CrewMonitoringConsoleComponent component, DeviceNetworkPacketEvent args)
         {
-            var payload = args.Data;
-            // check command
-            if (!payload.TryGetValue(DeviceNetworkConstants.Command, out string? command))
-                return;
-            if (command != DeviceNetworkConstants.CmdUpdatedState)
-                return;
-            if (!payload.TryGetValue(SuitSensorConstants.NET_STATUS_COLLECTION, out Dictionary<string, SuitSensorStatus>? sensorStatus))
+            var suitSensor = _sensors.PacketToSuitSensor(args.Data);
+            if (suitSensor == null)
                 return;
 
-            component.ConnectedSensors = sensorStatus;
-            UpdateUserInterface(uid, component);
-        }
-
-        private void OnUIOpened(EntityUid uid, CrewMonitoringConsoleComponent component, BoundUIOpenedEvent args)
-        {
-            UpdateUserInterface(uid, component);
+            suitSensor.Timestamp = _gameTiming.CurTime;
+            component.ConnectedSensors[args.SenderAddress] = suitSensor;
         }
 
         private void UpdateUserInterface(EntityUid uid, CrewMonitoringConsoleComponent? component = null)
@@ -64,6 +71,20 @@ namespace Content.Server.Medical.CrewMonitoring
             var allSensors = component.ConnectedSensors.Values.ToList();
             var uiState = new CrewMonitoringState(allSensors, xform.WorldPosition, component.Snap, component.Precision);
             ui.SetState(uiState);
+        }
+
+        private void UpdateTimeouts(EntityUid uid, CrewMonitoringConsoleComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            foreach (var (address, sensor) in component.ConnectedSensors)
+            {
+                // if too many time passed - sensor just dropped connection
+                var dif = _gameTiming.CurTime - sensor.Timestamp;
+                if (dif.Seconds > component.SensorTimeout)
+                    component.ConnectedSensors.Remove(address);
+            }
         }
     }
 }

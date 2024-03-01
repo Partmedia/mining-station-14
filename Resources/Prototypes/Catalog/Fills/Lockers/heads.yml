@@ -23,7 +23,6 @@
       - id: AppraisalTool
       - id: BoxFolderBase
       - id: HandheldCrewMonitor
-      - id: CrewMonitoringServerMachineCircuitboard
       - id: IDComputerCircuitboard
       - id: ClothingOuterCoatMscoat
 
