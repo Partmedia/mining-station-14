@@ -67,7 +67,6 @@
         - WeaponWandFireball
         - KnockSpellbook
         - BlinkBook
-        - ForceWallSpellbook
 
 - type: entity
   id: DungeonLootSpawnerSpawner
