@@ -4,3 +4,10 @@ Entries:
   - { type: Add, message: Welcome to Dungeon Dig 14! }
   id: 2552
   time: '2024-03-02T11:00:00-08:00'
+
+Entries:
+- author: Mining Station 14 Team
+  changes:
+  - { type: Tweak, message: Update dungeon loot spawns. }
+  id: 2553
+  time: '2024-03-03T12:39:53-08:00'
