@@ -315,6 +315,12 @@ namespace Content.Server.StationEvents
         private bool OldSupercond;
         private int KillCount;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        }
+
         public override void Added()
         {
             OldPool = _configurationManager.GetCVar(CCVars.GameMapPool);
@@ -342,12 +348,9 @@ namespace Content.Server.StationEvents
             if (!RuleStarted)
                 return;
 
-            if (_dungeon.dungeonLevel > 0)
-            {
-                string depth = Loc.GetString("dungeon-level", ("depth", _dungeon.dungeonLevel));
-                ev.AddLine(depth);
-                ev.AddSummary(depth);
-            }
+            string depth = Loc.GetString("dungeon-level", ("depth", _dungeon.dungeonLevel));
+            ev.AddLine(depth);
+            ev.AddSummary(depth);
 
             string killcount = Loc.GetString("dungeon-kill-count", ("count", KillCount));
             ev.AddLine(killcount);
