@@ -1,7 +1,5 @@
 round-started = A round has started on {$server}!
 
-dungeon-level = The team reached a maximum dungeon level of {$depth}.
-
 financial-summary = Financial Summary
 cargo-balance = Cargo balance: {$amount}
 initial-loan = Initial loan: {$amount}

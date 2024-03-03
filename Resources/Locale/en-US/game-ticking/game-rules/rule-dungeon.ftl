@@ -2,4 +2,4 @@ dungeon-intro = NanoTrasen deep space scanners show that a powerful artifact lie
 
 dungeon-enter-announce = Good luck, team! Find us The Artifact!
 
-dungeon-kill-count = {$count} monsters were vanquished.
+dungeon-report = The team of {$players} reached a maximum dungeon level of {$depth} and vanquished {$count} monsters.

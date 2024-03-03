@@ -27,34 +27,13 @@ using Content.Server.Warps;
 
 namespace Content.Server.StationEvents
 {
-    [UsedImplicitly]
-    public sealed class MiningProfitManager : GameRuleSystem
+    public abstract class PlayerTrackingGameRule : GameRuleSystem
     {
-        public override string Prototype => "MiningProfitManager";
-
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
-        [Dependency] private readonly StationSystem _station = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly PricingSystem _pricingSystem = default!;
-
-        private IReadOnlyList<string> 音乐 = new List<string>{
-            "/Mining/Audio/16tons.ogg",
-            "/Mining/Audio/big_john.ogg",
-            "/Mining/Audio/working.ogg"
-        };
-
-        private int startValue = 0;
-
-        private SortedSet<string> players = new SortedSet<string>();
+        protected SortedSet<string> players = new SortedSet<string>();
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
-            SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-
             SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
             SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
         }
@@ -62,15 +41,6 @@ namespace Content.Server.StationEvents
         public override void Started()
         {
             players = new SortedSet<string>();
-            _soundSystem.DispatchGlobalEventMusic(RandomExtensions.Pick(_random, 音乐));
-        }
-
-        private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
-        {
-            if (!RuleAdded)
-                return;
-            startValue = stationPrice();
-            Logger.InfoS("mining", $"Initial value: {startValue}");
         }
 
         private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
@@ -96,6 +66,52 @@ namespace Content.Server.StationEvents
             var data = ev.Player.Data.ContentData();
             if (data != null)
                 players.Add(data.Name);
+        }
+
+        protected string ListPlayers(SortedSet<string> players)
+        {
+            return string.Join(", ", players);
+        }
+    }
+
+    [UsedImplicitly]
+    public sealed class MiningProfitManager : PlayerTrackingGameRule
+    {
+        public override string Prototype => "MiningProfitManager";
+
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
+        [Dependency] private readonly StationSystem _station = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly PricingSystem _pricingSystem = default!;
+
+        private IReadOnlyList<string> 音乐 = new List<string>{
+            "/Mining/Audio/16tons.ogg",
+            "/Mining/Audio/big_john.ogg",
+            "/Mining/Audio/working.ogg"
+        };
+
+        private int startValue = 0;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        }
+
+        public override void Started()
+        {
+            _soundSystem.DispatchGlobalEventMusic(RandomExtensions.Pick(_random, 音乐));
+        }
+
+        private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
+        {
+            if (!RuleAdded)
+                return;
+            startValue = stationPrice();
+            Logger.InfoS("mining", $"Initial value: {startValue}");
         }
 
         public override void Ended()
@@ -210,11 +226,6 @@ namespace Content.Server.StationEvents
             return profitStrings;
         }
 
-        private String ListPlayers(SortedSet<String> players)
-        {
-            return String.Join(", ", players);
-        }
-
         private void LogProfit(int profit, SortedSet<String> players)
         {
             var endText = String.Format("The team of {0} made a profit of {1} spacebucks.", ListPlayers(players), profit);
@@ -303,7 +314,7 @@ namespace Content.Server.StationEvents
     }
 
     [UsedImplicitly]
-    public sealed class DungeonRuleSystem : GameRuleSystem
+    public sealed class DungeonRuleSystem : PlayerTrackingGameRule
     {
         public override string Prototype => "DungeonRuleSystem";
 
@@ -348,13 +359,12 @@ namespace Content.Server.StationEvents
             if (!RuleStarted)
                 return;
 
-            string depth = Loc.GetString("dungeon-level", ("depth", _dungeon.dungeonLevel));
+            string depth = Loc.GetString("dungeon-report",
+                    ("players", ListPlayers(players)),
+                    ("depth", _dungeon.dungeonLevel),
+                    ("count", KillCount));
             ev.AddLine(depth);
             ev.AddSummary(depth);
-
-            string killcount = Loc.GetString("dungeon-kill-count", ("count", KillCount));
-            ev.AddLine(killcount);
-            ev.AddSummary(killcount);
         }
 
         public override void Ended()
