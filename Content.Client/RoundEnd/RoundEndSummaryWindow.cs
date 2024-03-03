@@ -50,6 +50,7 @@ namespace Content.Client.RoundEnd
             {
                 VerticalExpand = true
             };
+            roundEndSummaryContainerScrollbox.HScrollEnabled = false;
             var roundEndSummaryContainer = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical
