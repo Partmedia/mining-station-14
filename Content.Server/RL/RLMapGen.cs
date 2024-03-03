@@ -20,6 +20,7 @@ public sealed class RLMapGen : EntitySystem
 
     public string GetTemplate(int dlvl)
     {
+#if RL
         if (_rl.Available())
         {
             var fn = RL.readstr("map-template");
@@ -30,6 +31,7 @@ public sealed class RLMapGen : EntitySystem
             else
                 Logger.ErrorS("RLMapGen", "MAP-TEMPLATE returned NIL, using default dungeon template");
         }
+#endif
         return "/Mining/Maps/Templates/dungeon.yml"; // fallback
     }
 
