@@ -49,15 +49,20 @@
       prototypes:
         - MedkitFilled
         - MedkitBurnFilled
+        - MedkitToxinFilled
         - MedkitBruteFilled
         - MedkitAdvancedFilled
         - EmergencyMedipen
         - CrateMedicalSurgery
         - CrateMedicalDefib
         - Hypopen
+        - CyberPen
+        - EnergyDagger
         - Torch
         - PowerCellMedium
         - PowerCellHigh
+        - BoxFlare
+        - CrateBasicChemBottles
       rareChance: 0.1
       rarePrototypes:
         - MobXeno
@@ -78,6 +83,7 @@
         - CrateFilledSpawner
         - RandomFoodSingle
         - RandomSpawner
+        - RandomMedicine
       rareChance: 0.6 # prefer dungeon loot
       rarePrototypes:
         - DungeonLootSpawner
