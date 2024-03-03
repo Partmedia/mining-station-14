@@ -1,4 +1,4 @@
-round-started = Um round começou na Estação Mineira 14!
+round-started = Um round começou na {$server}!
 
 financial-summary = Resumo Financeiro
 cargo-balance = Saldo da cargo: {$amount}

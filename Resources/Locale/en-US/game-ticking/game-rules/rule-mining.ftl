@@ -1,4 +1,4 @@
-round-started = A round has started on Mining Station 14!
+round-started = A round has started on {$server}!
 
 dungeon-level = The team reached a maximum dungeon level of {$depth}.
 

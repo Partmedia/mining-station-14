@@ -21,6 +21,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Database;
 using Robust.Shared.Asynchronous;
+using Robust.Shared;
 
 using System.Net.Http;
 using System.Text.Json.Nodes;
@@ -273,7 +274,7 @@ namespace Content.Server.GameTicking
             _roundStartFailCount = 0;
 #endif
             _startingRound = false;
-            ReportRound(Loc.GetString("round-started"));
+            ReportRound(Loc.GetString("round-started", ("server", _configurationManager.GetCVar(CVars.GameHostName))));
         }
 
         private void RefreshLateJoinAllowed()
