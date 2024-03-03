@@ -103,6 +103,7 @@ namespace Content.Server.StationEvents
 
         public override void Started()
         {
+            base.Started();
             _soundSystem.DispatchGlobalEventMusic(RandomExtensions.Pick(_random, 音乐));
         }
 
@@ -330,6 +331,7 @@ namespace Content.Server.StationEvents
         {
             base.Initialize();
             SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+            SubscribeLocalEvent<HTNComponent, MobStateChangedEvent>(OnMobDied);
         }
 
         public override void Added()
@@ -342,6 +344,7 @@ namespace Content.Server.StationEvents
 
         public override void Started()
         {
+            base.Started();
             _chatManager.DispatchServerAnnouncement(Loc.GetString("dungeon-intro"));
             KillCount = 0;
         }
