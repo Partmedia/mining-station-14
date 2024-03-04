@@ -574,6 +574,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                     AdminLogger.Add(LogType.MeleeHit,
                         $"{ToPrettyString(user):user} melee attacked {ToPrettyString(entity):target} using {ToPrettyString(component.Owner):used} and dealt {damageResult.Total:damage} damage");
                 }
+
+                _autoadmin.CheckCombat(user, entity, damageResult.Total.Float());
             }
         }
 
