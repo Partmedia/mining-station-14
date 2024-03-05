@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckAmuletOfYendor
+  name: Amulet of Yendor
+  description: This mysterious talisman is the object of your quest. It is said to possess powers which mere mortals can scarcely comprehend, let alone utilize.
+  components:
+  - type: Sprite
+    sprite: Mining/Clothing/Mining/amulet.rsi
+  - type: Clothing
+    sprite: Mining/Clothing/Mining/amulet.rsi
