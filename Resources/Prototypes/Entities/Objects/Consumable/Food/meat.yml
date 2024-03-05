@@ -857,7 +857,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: raw bear cutlet
   parent: FoodMeatBase
@@ -879,7 +881,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: raw penguin cutlet
   parent: FoodMeatBase
@@ -899,7 +903,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: raw chicken cutlet
   parent: FoodMeatBase
@@ -919,7 +925,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: raw duck cutlet
   parent: FoodMeatBase
@@ -939,7 +947,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: raw lizard cutlet
   parent: FoodMeatBase
@@ -962,7 +972,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: raw spider cutlet
   parent: FoodMeatBase
@@ -985,7 +997,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: raw xeno cutlet
   parent: FoodMeatBase
@@ -1012,7 +1026,9 @@
         reagents:
         - ReagentId: SulfuricAcid
           Quantity: 20
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: raw killer tomato cutlet
   parent: FoodMeatBase
@@ -1025,7 +1041,9 @@
   - type: Sprite
     state: salami-slice
     color: red
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: salami slice
   parent: FoodMeatBase
@@ -1046,7 +1064,9 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
-
+  - type: StaticPrice
+    price: 65
+    
 # Cooked
 
 - type: entity
@@ -1069,7 +1089,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: bear cutlet
   parent: FoodMeatBase
@@ -1093,7 +1115,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: penguin cutlet
   parent: FoodMeatBase
@@ -1115,7 +1139,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: chicken cutlet
   parent: FoodMeatBase
@@ -1137,7 +1163,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: duck cutlet
   parent: FoodMeatBase
@@ -1159,7 +1187,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: lizard cutlet
   parent: FoodMeatBase
@@ -1182,7 +1212,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: spider cutlet
   parent: FoodMeatBase
@@ -1207,7 +1239,9 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
-
+  - type: StaticPrice
+    price: 65
+    
 - type: entity
   name: xeno cutlet
   parent: FoodMeatBase
@@ -1232,3 +1266,6 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+  - type: StaticPrice
+    price: 65
+    
