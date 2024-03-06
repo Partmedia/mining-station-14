@@ -201,7 +201,7 @@ namespace Content.Server.Atmos.Miasma
             if (!IsRotting(component))
                 return;
 
-            var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * (float)(_timing.CurTime - component.TimeOfDeath).TotalSeconds;
+            var molsToDump = 0;
             var transform = Transform(uid);
             var indices = _transformSystem.GetGridOrMapTilePosition(uid, transform);
             var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
