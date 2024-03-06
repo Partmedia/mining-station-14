@@ -9,3 +9,10 @@ Entries:
   - { type: Tweak, message: Update dungeon loot spawns. }
   id: 2553
   time: '2024-03-03T12:39:53-08:00'
+- author: Mining Station 14 Team
+  changes:
+  - { type: Tweak, message: Butchering corpses no longer produces miasma. }
+  - { type: Tweak, message: Update dungeon loot spawns. }
+  - { type: Tweak, message: Adjust prices. }
+  id: 2554
+  time: '2024-03-05T22:58:30-08:00'
