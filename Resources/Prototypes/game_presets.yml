@@ -136,3 +136,13 @@
   description: Recover a powerful artifact hidden deep within the asteroid.
   rules:
     - DungeonRuleSystem
+
+- type: gamePreset
+  id: MiningDungeon
+  name: Mining Dungeon
+  description: Recover a powerful artifact hidden deep within the asteroid.
+  showInVote: true
+  rules:
+    - MiningProfitManager
+    - MiningEventScheduler
+    - DungeonRuleSystem

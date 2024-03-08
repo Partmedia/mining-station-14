@@ -2,7 +2,7 @@
   id: MiningScience
   mapName: 'Mining Science'
   mapPath: /Mining/Maps/miningscience.yml
-  minPlayers: 5
+  minPlayers: 10
   maxPlayers: 25
   stations:
     Mining:
@@ -15,10 +15,19 @@
       availableJobs:
         Quartermaster: [ 1, 1 ]
         SalvageSpecialist: [ -1, -1 ]
-        StationEngineer: [ 1, 1 ]
+        StationEngineer: [ 3, 3 ]
         ChiefEngineer: [ 1, 1 ]
-        MedicalDoctor: [ 1, 1 ]
+        MedicalDoctor: [ 2, 2 ]
         ChiefMedicalOfficer: [ 1, 1 ]
         Scientist: [ 1, 1 ]
         ResearchDirector: [ 1, 1 ]
         CorpSec: [ 1, 1 ]
+        # dungeon RP jobs
+        Bartender: [ 1, 1 ]
+        Chaplain: [ 1, 1 ]
+        Chef: [ 1, 1 ]
+        Chemist: [ 1, 1 ]
+        Clown: [ 1, 1 ]
+        Lawyer: [ 1, 1 ]
+        Mime: [ 1, 1 ]
+        Musician: [ 1, 1 ]

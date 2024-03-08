@@ -3,7 +3,7 @@
   mapName: 'Bunker'
   mapPath: /Mining/Maps/bunker.yml
   minPlayers: 0
-  maxPlayers: 15
+  maxPlayers: 12
   fallback: true
   stations:
     Bunker:
