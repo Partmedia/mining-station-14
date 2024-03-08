@@ -78,6 +78,9 @@
         - PowerCellHigh
         - BoxFlare
         - CrateBasicChemBottles
+        - lantern
+        - FlashlightLantern
+        - Gauze
       rareChance: 0.1
       rarePrototypes:
         - MobXeno
