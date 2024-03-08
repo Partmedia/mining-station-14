@@ -16,3 +16,9 @@ Entries:
   - { type: Tweak, message: Adjust prices. }
   id: 2554
   time: '2024-03-05T22:58:30-08:00'
+- author: Mining Station 14 Team
+  changes:
+  - { type: Fix, message: Fix atmos in all dungeon maps. }
+  - { type: Tweak, message: Update dungeon loot spawns. }
+  id: 2555
+  time: '2024-03-07T22:31:41-08:00'
