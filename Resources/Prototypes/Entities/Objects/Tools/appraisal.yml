@@ -14,4 +14,4 @@
     - type: UseDelay
       delay: 1
     - type: StaticPrice
-      price: 120
+      price: 0
