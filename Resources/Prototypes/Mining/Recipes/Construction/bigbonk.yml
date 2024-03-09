@@ -1,0 +1,10 @@
+- type: construction
+  name: big bonk
+  id: BigBonk
+  graph: BigBonk
+  startNode: start
+  targetNode: big bonk
+  category: construction-category-weapons
+  description: The best that the Honkmother can offer.
+  icon: { sprite: Mining/Objects/Weapons/Melee/bigbonk.rsi, state: icon }
+  objectType: Item
