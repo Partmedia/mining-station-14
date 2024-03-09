@@ -22,3 +22,10 @@ Entries:
   - { type: Tweak, message: Update dungeon loot spawns. }
   id: 2555
   time: '2024-03-07T22:31:41-08:00'
+- author: Mining Station 14 Team
+  changes:
+  - { type: Add, message: Add craftable artifact clown hammer. }
+  - { type: Add, message: Skeletons are now playble round-start species. }
+  - { type: Tweak, message: Adjust cargo catalog. }
+  id: 2556
+  time: '2024-03-09T14:17:59-08:00'
