@@ -733,3 +733,12 @@
   product: ClothingOuterWinterCoat
   category: Misc
   group: market
+
+- type: cargoProduct
+  id: SheetShieldedUranium1C
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: shieldeduranium_3
+  product: SheetShieldedUranium1
+  category: Engineering
+  group: market
