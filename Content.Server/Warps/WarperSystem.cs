@@ -56,13 +56,28 @@ public class WarperSystem : EntitySystem
         _chatSystem.DispatchStationAnnouncement(uid, announcement, sender);
     }
 
-    private void GenerateDungeon(EntityUid uid, WarperComponent component)
+    private bool GenerateDungeon(EntityUid uid, WarperComponent component)
     {
         // Destination is next level
-        dungeonLevel++;
-        var dMap = _mapManager.CreateMap();
-        var map = _map.LoadMap(dMap, _procgen.GetTemplate(dungeonLevel));
-        var gravity = _entMan.EnsureComponent<GravityComponent>(map.First());
+        int lvl = dungeonLevel + 1;
+        MapId mapIdDown = _mapManager.CreateMap();
+        string path = _procgen.GetTemplate(lvl);
+
+        // Map generator relies on the global dungeonLevel, so temporarily set it here
+        dungeonLevel = lvl;
+        if (!_map.TryLoad(mapIdDown, path, out var maps))
+        {
+            Logger.ErrorS("warper", $"Could not load map {path} for dungeon level {lvl}");
+            dungeonLevel = lvl - 1;
+            return false;
+        }
+
+        // Back it out
+        dungeonLevel = lvl - 1;
+
+        // Prepare map
+        var map = maps.First();
+        var gravity = _entMan.EnsureComponent<GravityComponent>(map);
         gravity.Enabled = true;
         _entMan.Dirty(gravity);
 
@@ -70,39 +85,63 @@ public class WarperSystem : EntitySystem
         var upDest = _entMan.SpawnEntity("WarpPoint", Transform(uid).Coordinates);
         if (TryComp<WarpPointComponent>(upDest, out var upWarp))
         {
-            upWarp.ID = $"dlvl{dungeonLevel - 1}down";
+            upWarp.ID = $"dlvl{lvl - 1}down";
         }
-        component.ID = $"dlvl{dungeonLevel}up";
+        else
+        {
+            Logger.ErrorS("warper", "Could not find WarpPointComponent when setting return destination");
+            return false;
+        }
 
-        // find stairs up, create warp destination
+        // find stairs up in new map
+        WarperComponent? warperBackUp = FindStairsUp(mapIdDown);
+        if (warperBackUp == null)
+        {
+            Logger.ErrorS("warper", "Could not find stairs going back up");
+            return false;
+        }
+
+        // link back upstairs
+        warperBackUp.ID = $"dlvl{lvl - 1}down";
+
+        // Create destination downstairs
+        var downDest = _entMan.SpawnEntity("WarpPoint", Transform(warperBackUp.Owner).Coordinates);
+        if (TryComp<WarpPointComponent>(downDest, out var downWarp))
+        {
+            downWarp.ID = $"dlvl{lvl}up";
+            downWarp.Location = $"Dungeon Level {lvl:00}";
+        }
+        else
+        {
+            Logger.ErrorS("warper", "Could not find WarpPointComponent when setting destination downstairs");
+            return false;
+        }
+
+        component.ID = $"dlvl{lvl}up";
+        dungeonLevel = lvl;
+        RandomAnnounce(uid, dungeonLevel);
+        return true;
+    }
+
+    private WarperComponent? FindStairsUp(MapId id)
+    {
         foreach (var warper in EntityManager.EntityQuery<WarperComponent>())
         {
-            // find ladder going up
-            if (Transform(warper.Owner).MapID == dMap && !warper.Dungeon)
+            // if it's not going down assume it's going up
+            if (Transform(warper.Owner).MapID == id && !warper.Dungeon)
             {
-                // link back upstairs
-                warper.ID = $"dlvl{dungeonLevel - 1}down";
-
-                // Create destination downstairs
-                var downDest = _entMan.SpawnEntity("WarpPoint", Transform(warper.Owner).Coordinates);
-                if (TryComp<WarpPointComponent>(downDest, out var downWarp))
-                {
-                    downWarp.ID = $"dlvl{dungeonLevel}up";
-                    downWarp.Location = $"Dungeon Level {dungeonLevel:00}";
-                }
+                return warper;
             }
         }
-
-        RandomAnnounce(uid, dungeonLevel);
+        return null;
     }
 
     private void OnActivate(EntityUid uid, WarperComponent component, ActivateInWorldEvent args)
     {
-        if (component.Dungeon)
+        if (component.Dungeon && GenerateDungeon(uid, component))
         {
             // don't generate again
             component.Dungeon = false;
-            GenerateDungeon(uid, component);
         }
 
         DoWarp(args.Target, args.User, args.User, component);
