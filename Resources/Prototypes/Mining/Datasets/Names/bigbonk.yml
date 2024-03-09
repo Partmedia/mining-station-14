@@ -1,0 +1,47 @@
+﻿- type: dataset
+  id: bigbonk_prefix
+  values:
+  - Whimsy
+  - Gag
+  - Jester's
+  - Chuckle
+  - Prankster's
+  - Clownish
+  - Fool's
+  - Mirthful
+  - Giggle
+  - Zany
+  - Hoaxer's
+  - Trickster's
+  - Hilarious
+  - Jest
+  - Silly
+  - Laughing
+  - Clown's
+  - Comical
+  - Buffoon's
+  - Slapstick
+
+- type: dataset
+  id: bigbonk_suffix
+  values:
+  - Smasher
+  - Crusher
+  - Basher
+  - Pounder
+  - Whacker
+  - Thumper
+  - Mallet
+  - Walloper
+  - Bludgeon
+  - Bonker
+  - Clobber
+  - Sledge
+  - Thwacker
+  - Pummeler
+  - Pounder
+  - Thwack
+  - Whammy
+  - Smiter
+  - Smacker
+  - Thud

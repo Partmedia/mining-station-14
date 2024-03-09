@@ -1,0 +1,28 @@
+- type: constructionGraph
+  id: BigBonk
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: big bonk
+      steps:
+      - tag: DragonFlesh
+        icon:
+          sprite: Objects/Consumable/Food/meat.rsi
+          state: dragon
+        name: dragon flesh
+        doAfter: 2
+      - tag: BikeHorn
+        icon:
+            sprite: Objects/Fun/bikehorn.rsi
+            state: icon
+        name: bike horn
+        doAfter: 2
+      - tag: BaseBallBat
+        icon:
+            sprite: Objects/Weapons/Melee/baseball_bat.rsi
+            state: icon
+        name: baseball bat
+        doAfter: 2
+  - node: big bonk
+    entity: BigBonk

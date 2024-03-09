@@ -1,0 +1,41 @@
+- type: entity
+  name: bigbonk
+  parent: BaseItem
+  id: BigBonk
+  description: The Biggest of bonks in all the galaxy.
+  components:
+  - type: Sprite
+    sprite: Mining/Objects/Weapons/Melee/bigbonk.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+    soundHit:
+      path: /Audio/Items/bikehorn.ogg
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 14
+  - type: Item
+    size: 15
+  - type: Instrument
+    program: 1
+    bank: 1
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+  - type: RandomMetadata
+    nameSegments:
+    - bigbonk_prefix
+    - bigbonk_suffix
+  - type: Construction
+    graph: BigBonk
+    node: big bonk
