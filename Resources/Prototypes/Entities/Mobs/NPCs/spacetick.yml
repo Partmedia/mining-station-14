@@ -98,9 +98,5 @@
   parent: MobTick
   suffix: "Salvage Ruleset"
   components:
-  - type: GhostTakeoverAvailable
-    name: space tick on salvage wreck
-    description: |
-      Defend the loot inside the salvage wreck!
   - type: SalvageMobRestrictions
 
