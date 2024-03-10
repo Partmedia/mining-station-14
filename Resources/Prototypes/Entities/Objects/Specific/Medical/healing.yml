@@ -36,6 +36,7 @@
         Cold: -5
         Shock: -5
         Caustic: -1.5
+        Radiation: -1
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
     healingEndSound:
