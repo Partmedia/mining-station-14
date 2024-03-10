@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package RL;
+
+option csharp_namespace = "Content.Server.RLRpc";
+
+service RLService {
+    rpc GetTemplate(TemplateRequest) returns (TemplateResponse);
+    rpc MapGen(MapGenRequest) returns (MapGenResponse);
+}
+
+message TemplateRequest {
+    uint32 level = 1;
+}
+
+message TemplateResponse {
+    string path = 1;
+}
+
+message MapGenRequest {
+    uint32 width = 1;
+    uint32 height = 2;
+    repeated TileRequest mapData = 3;
+    int32 dungeonLevel = 4;
+}
+
+message TileRequest {
+    uint32 request = 1;
+    uint32 x = 2;
+    uint32 y = 3;
+}
+
+message MapGenResponse {
+    repeated SpawnEntity entities = 1;
+    repeated SetTile tiles = 2;
+    repeated AddDecal decals = 3;
+}
+
+message SpawnEntity {
+    string entity = 1;
+    float x = 2;
+    float y = 3;
+}
+
+message SetTile {
+    string tile = 1;
+    uint32 x = 2;
+    uint32 y = 3;
+}
+
+message AddDecal {
+    string decal = 1;
+    float x = 2;
+    float y = 3;
+}

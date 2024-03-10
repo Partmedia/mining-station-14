@@ -71,8 +71,10 @@ SERVER_CONTENT_ASSEMBLIES = [
 
 # Extra assemblies to copy on the server, with a startswith
 SERVER_EXTRA_ASSEMBLIES = [
-    "Npgsql.",
+    "Google",
+    "Grpc",
     "Microsoft",
+    "Npgsql.",
 ]
 
 SERVER_NOT_EXTRA_ASSEMBLIES = [

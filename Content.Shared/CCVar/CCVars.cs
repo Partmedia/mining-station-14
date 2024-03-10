@@ -301,6 +301,14 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.initial_balance", 2000, CVar.SERVERONLY);
 
         /*
+         * RL RPC
+         */
+        public static readonly CVarDef<string> RLEndpoint =
+            CVarDef.Create("rl.endpoint", string.Empty, CVar.SERVERONLY);
+        public static readonly CVarDef<int> RLTimeout =
+            CVarDef.Create("rl.timeout", 3, CVar.SERVERONLY);
+
+        /*
          * Discord
          */
 

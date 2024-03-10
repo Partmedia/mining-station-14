@@ -1,13 +1,27 @@
+#if RL
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Log;
+#else
+using Grpc.Net.Client;
+
+using Content.Server.RLRpc;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
+#endif
 
 public class RLSystem : EntitySystem
 {
+#if RL
     private string entryPoint = "Resources/Mining/RL/init.lisp";
 
     private bool available = false;
+#else
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+
+    private GrpcChannel? Channel;
+#endif
 
     public override void Initialize()
     {
@@ -34,13 +48,21 @@ public class RLSystem : EntitySystem
             Logger.ErrorS("RL", "Failed to start; could not find libRL");
         }
 #else
-        Logger.WarningS("RL", "Not available in this build");
+        var endpoint = _cfg.GetCVar(CCVars.RLEndpoint);
+        if (endpoint == string.Empty)
+            return;
+
+        Channel = GrpcChannel.ForAddress(endpoint);
 #endif
     }
 
     public bool Available()
     {
+#if RL
         return available;
+#else
+        return Channel is not null;
+#endif
     }
 
     public string Reload()
@@ -57,8 +79,24 @@ public class RLSystem : EntitySystem
         base.Shutdown();
 #if RL
         RL.cl_shutdown();
+#else
+        if (Channel is not null)
+            Channel.Dispose();
 #endif
     }
+
+#if RL
+#else
+    public RLService.RLServiceClient Client()
+    {
+        return new RLService.RLServiceClient(Channel);
+    }
+
+    public DateTime Deadline()
+    {
+        return DateTime.UtcNow.AddSeconds(_cfg.GetCVar(CCVars.RLTimeout));
+    }
+#endif
 }
 
 #if RL
