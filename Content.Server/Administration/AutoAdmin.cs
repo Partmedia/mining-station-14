@@ -90,9 +90,15 @@ public sealed class AutoAdmin : EntitySystem, IAutoAdmin
         if (!record.ContainsKey(id))
             record.Add(id, new AutoAdminRecord());
 
-        score *= AgeFactor();
+        if (score > 0)
+            score *= AgeFactor();
 
-        record[id].Score = MathF.Max(record[id].Score + score, 0f);
+        record[id].Score = record[id].Score + score;
+        if (record[id].Score <= 0)
+        {
+            record[id].State = AutoAdminState.None;
+            record[id].Score = 0;
+        }
     }
 
     private float AgeFactor()
