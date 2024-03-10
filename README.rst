@@ -1,7 +1,6 @@
-Mining Station 14
-=================
-You and your friends racked up too much poker debt and must now mine to make
-your way back.
+Mining Station / Dungeon Dig 14
+===============================
+This is the combined source repository for Mining Station and Dungeon Dig 14.
 
 Play
 ----
@@ -11,37 +10,42 @@ and connect to the **Mining Station 14** server from the launcher.
 
 Compiling
 ---------
-You will need to download and install:
+1. Download and install:
 
-- Git
-- .NET 7 SDK
+   - Git
+   - .NET 7 SDK
 
-After cloning this repository, run::
+2. Clone this repository.
+
+3. Inside the newly cloned respository, run::
 
     git submodule update --init --recursive
 
-Note that unlike upstream Space Station 14, this will not run automatically.
+   Note that unlike upstream Space Station 14, this will not run automatically.
 
-.. Note:: Unless you are Mining Station 14 staff, **this command will fail to
-   clone Mining Station 14 resources, including maps**. You will still be able
-   to run the server and create maps without Mining Station 14 resources.
-
-Compile Mining Station 14 using the command::
+4. Compile Mining Station 14 using the command::
 
     dotnet build
 
-To start the server::
+5. To start the server::
 
     dotnet run --project Content.Server
 
-To start the client::
+   To start the client::
 
     dotnet run --project Content.Client
+
+Dungeons Not Included
+---------------------
+This repository contains all of the client and server source code, assets, and
+data necessary to develop and run the game. However, it does not include the
+maps, asteroids, and dungeons. You are more than welcome to start your own
+server using this code, as long as you follow the terms of our license.
+However, you will have to develop your own maps.
 
 License
 -------
 Unless otherwise specified, source code for Mining Station 14 is available
 under the `MIT License <LICENSE.TXT>`_. Notable exceptions are for:
 
-- Sprites, whose licenses are noted in their *meta.json* descriptions; and the
-- Mining Station 14 resources, which are not available to the general public at this time.
+- Sprites, whose licenses are noted in their *meta.json* descriptions
