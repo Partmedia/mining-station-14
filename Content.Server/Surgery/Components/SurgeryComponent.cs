@@ -46,7 +46,9 @@ namespace Content.Server.Surgery
         public DamageSpecifier NecrosisDamage = default!; //if necrosis starts happening, give them time to work it out before they incur too much cellular damage
 
         public float ClampLastChecked = 0f;
-        public float ClampCheckInterval = 1f;
+        //TODO unfortunately I think I made a mistake here, this interval was for starting the necrosis timer but ended up being the only reason damage was not instantly accrued... oops
+        //setting it to five minutes now, meaning they have up to 15 minutes of clamps time and then only take damage every 5 after that - no supercancer
+        public float ClampCheckInterval = 30f; 
 
         /// <summary>
         ///     Update whenever a part or skeleton is opened or closed
