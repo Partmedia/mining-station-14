@@ -90,7 +90,17 @@ namespace Content.Server.GameTicking
                 if (job == null)
                     continue;
 
-                SpawnPlayer(_playerManager.GetSessionByUserId(player), profiles[player], station, job, false);
+                // There are funky issues that can happen when spawning players (e.g. both taller +
+                // smaller selected). Catch future issues to prevent breaking round start for all
+                // players if there's just one issue.
+                try
+                {
+                    SpawnPlayer(_playerManager.GetSessionByUserId(player), profiles[player], station, job, false);
+                }
+                catch (Exception e)
+                {
+                    Logger.ErrorS("spawner", $"Failed to spawn {player}: {e}");
+                }
             }
 
             RefreshLateJoinAllowed();
