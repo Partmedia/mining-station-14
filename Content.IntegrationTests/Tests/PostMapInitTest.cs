@@ -311,7 +311,7 @@ namespace Content.IntegrationTests.Tests
 
                         // ReSharper disable once RedundantLogicalConditionalExpressionOperand
                         if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath, StringComparison.Ordinal) ||
-                            gameMaps.Contains(map))
+                            gameMaps.Contains(map.ToString()))
                         {
                             continue;
                         }

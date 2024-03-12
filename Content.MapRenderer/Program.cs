@@ -118,7 +118,7 @@ namespace Content.MapRenderer
 
                 foreach (var mapPrototype in mapPrototypes)
                 {
-                    if (arguments.Maps.Contains(mapPrototype.MapPath.Filename))
+                    if (arguments.Maps.Contains(mapPrototype.MapPath))
                     {
                         ids.Add(mapPrototype.ID);
                         Console.WriteLine($"Found map: {mapPrototype.MapName}");
