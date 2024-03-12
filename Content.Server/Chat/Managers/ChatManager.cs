@@ -16,6 +16,10 @@ using Robust.Shared.Player;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 
+// patron stuff
+using Robust.Shared.ContentPack;
+using YamlDotNet.RepresentationModel;
+
 namespace Content.Server.Chat.Managers
 {
     /// <summary>
@@ -23,14 +27,6 @@ namespace Content.Server.Chat.Managers
     /// </summary>
     internal sealed class ChatManager : IChatManager
     {
-        private static readonly Dictionary<string, string> PatronOocColors = new()
-        {
-            // I had plans for multiple colors and those went nowhere so...
-            { "nuclear_operative", "#aa00ff" },
-            { "syndicate_agent", "#aa00ff" },
-            { "revolutionary", "#aa00ff" }
-        };
-
         [Dependency] private readonly IReplayRecordingManager _replay = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
@@ -39,6 +35,9 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly INetConfigurationManager _netConfigManager = default!;
+        [Dependency] private readonly IResourceManager _resourceManager = default!;
+
+        private Dictionary<string, string> Patrons = new();
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -54,6 +53,40 @@ namespace Content.Server.Chat.Managers
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
             _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
+
+            UpdatePatrons();
+        }
+
+        // Copied from client patrons
+        private sealed class PatronEntry
+        {
+            public string Name { get; }
+            public string Tier { get; }
+
+            public PatronEntry(string name, string tier)
+            {
+                Name = name;
+                Tier = tier;
+            }
+        }
+
+        private void UpdatePatrons()
+        {
+            foreach (var p in LoadPatrons())
+            {
+                Patrons[p.Name] = "#aa00ff";
+            }
+        }
+
+        // Copied from client patrons
+        private IEnumerable<PatronEntry> LoadPatrons()
+        {
+            var yamlStream = _resourceManager.ContentFileReadYaml(new ResourcePath("/Credits/Patrons.yml"));
+            var sequence = (YamlSequenceNode) yamlStream.Documents[0].RootNode;
+
+            return sequence
+                .Cast<YamlMappingNode>()
+                .Select(m => new PatronEntry(m["Name"].AsString(), m["Tier"].AsString()));
         }
 
         private void OnOocEnabledChanged(bool val)
@@ -169,17 +202,8 @@ namespace Content.Server.Chat.Managers
                 var prefs = _preferencesManager.GetPreferences(player.UserId);
                 colorOverride = prefs.AdminOOCColor;
             }
-#if RL
-            var fn = RL.readstr("patron");
-            var arg = RL.str(player.ConnectedClient.UserData.UserName);
-            var form = RL.list2(fn, arg);
-            var ret = RL.eval(form);
-            if (!RL.nil(ret))
-            {
-                string patronColor = RL.cstr(ret);
+            if (Patrons.TryGetValue(player.ConnectedClient.UserData.UserName, out var patronColor))
                 wrappedMessage = Loc.GetString("chat-manager-send-ooc-patron-wrap-message", ("patronColor", patronColor),("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
-            }
-#endif
 
             ChatMessageToAll(ChatChannel.OOC, message, wrappedMessage, EntityUid.Invalid, hideChat: false, recordReplay: true, colorOverride);
             _mommiLink.SendOOCMessage(player.Name, message);
