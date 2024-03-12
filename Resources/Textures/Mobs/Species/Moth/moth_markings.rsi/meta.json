@@ -4,7 +4,8 @@
     "x": 45,
     "y": 34
   },
-  "copyright": "CC-BY-SA-3.0",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TGStation",
   "states": [
     {
       "name": "burnt_off_chest",
