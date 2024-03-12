@@ -26,6 +26,7 @@ public class RLSystem : EntitySystem
     public override void Initialize()
     {
 #if RL
+        Logger.InfoS("RL", "Built with RL-ECL");
         try
         {
             base.Initialize();
@@ -48,9 +49,13 @@ public class RLSystem : EntitySystem
             Logger.ErrorS("RL", "Failed to start; could not find libRL");
         }
 #else
+        Logger.InfoS("RL", "Built with RL-gRPC");
         var endpoint = _cfg.GetCVar(CCVars.RLEndpoint);
         if (endpoint == string.Empty)
+        {
+            Logger.WarningS("RL", "Disabling RL because CVar rl.endpoint is not set");
             return;
+        }
 
         Channel = GrpcChannel.ForAddress(endpoint);
 #endif
