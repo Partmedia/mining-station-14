@@ -292,7 +292,11 @@ def copy_content_assemblies(target, zipf):
         zipf.write(".", target)
 
     for x in files:
-        zipf.write(p(source_dir, x), p(target, x))
+        try:
+            zipf.write(p(source_dir, x), p(target, x))
+        except FileNotFoundError:
+            # ignore missing files (libRL.so)
+            pass
 
 
 if __name__ == '__main__':
