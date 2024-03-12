@@ -140,8 +140,6 @@
     safe: false
   - type: StandingState
   - type: Alerts
-  - type: NameIdentifier
-    group: GenericNumber
   - type: SlowOnDamage
     speedModifierThresholds:
       60: 0.7
