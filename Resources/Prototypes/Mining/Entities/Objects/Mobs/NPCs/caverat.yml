@@ -59,8 +59,8 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Blunt: 5 #Swapped from Slash, for dulled claws from digging
-        Slash: 3 #Still mildly sharp, though
+        Blunt: 4 #Swapped from Slash, for dulled claws from digging. Also reduced overall damage
+        Pierce: 2
   - type: Body
     prototype: BossAnimal
     requiredLegs: 1 # TODO: More than 1 leg
