@@ -96,6 +96,7 @@
         - MobGiantSpiderAngry
         - MobTick
         - MobTick # extra ticks
+        - MobCaveRat
       rareChance: 0.06
       rarePrototypes:
         - MobXeno

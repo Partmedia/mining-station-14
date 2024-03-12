@@ -1,5 +1,5 @@
 - type: entity
-  name: Cave Rat
+  name: giant rat
   id: MobCaveRat
   parent: SimpleMobBase
   description: One of the dungeon's most common dwellers.
@@ -48,7 +48,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      60: Critical
       100: Dead
   - type: Stamina
     excess: 80
@@ -118,4 +117,7 @@
   - type: NoSlip
   - type: MobPrice
     price: 500 # rat wealth
-
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatRat
+      amount: 3
