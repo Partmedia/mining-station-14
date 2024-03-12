@@ -1,0 +1,80 @@
+name: Validator
+
+on:
+  push:
+  pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
+
+jobs:
+  lint-yaml:
+    name: Lint YAML
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup submodule
+        run: |
+          git submodule update --init --recursive
+      - name: Pull engine updates
+        uses: space-wizards/submodule-dependency@v0.1.5
+      - name: Update Engine Submodules
+        run: |
+          cd RobustToolbox/
+          git submodule update --init --recursive
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.100
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors= /m
+      - name: Run Linter
+        run: dotnet run --project Content.YAMLLinter/Content.YAMLLinter.csproj --no-build
+  validate-maps:
+    name: Validate maps
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Submodule
+      run: git submodule update --init
+    - name: Pull engine updates
+      uses: space-wizards/submodule-dependency@v0.1.5
+    - uses: PaulRitter/yaml-schema-validator@v1
+      with:
+        schema: RobustToolbox/Schemas/mapfile.yml
+        path_pattern: .*Resources/Maps/.*
+        validators_path: RobustToolbox/Schemas/mapfile_validators.py
+        validators_requirements: RobustToolbox/Schemas/mapfile_requirements.txt
+  validate-rga:
+    name: Validate attributions
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Submodule
+      run: git submodule update --init
+    - name: Pull engine updates
+      uses: space-wizards/submodule-dependency@v0.1.5
+    - uses: PaulRitter/yaml-schema-validator@v1
+      with:
+        schema: RobustToolbox/Schemas/rga.yml
+        path_pattern: .*attributions.ya?ml$
+        validators_path: RobustToolbox/Schemas/rga_validators.py
+        validators_requirements: RobustToolbox/Schemas/rga_requirements.txt
+  validate-rsi:
+    name: Validate RSIs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Submodule
+        run: git submodule update --init
+      - name: Pull engine updates
+        uses: space-wizards/submodule-dependency@v0.1.5
+      - name: Install Python dependencies
+        run: |
+          pip3 install --ignore-installed --user pillow jsonschema
+      - name: Validate RSIs
+        run: |
+          python3 RobustToolbox/Schemas/validate_rsis.py Resources/

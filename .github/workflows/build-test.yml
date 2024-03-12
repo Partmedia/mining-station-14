@@ -1,8 +1,7 @@
-name: Build & Test Debug
+name: Build & Test Release
 
 on:
   push:
-    branches: [ master ]
     paths:
       - '**.cs'
       - '**.csproj'
@@ -59,7 +58,7 @@ jobs:
       run: dotnet restore
 
     - name: Build Project
-      run: dotnet build --configuration Debug --no-restore /p:WarningsAsErrors=nullable /m
+      run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
 
     - name: Run Content.Tests
       run: dotnet test --no-build Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0
