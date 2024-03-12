@@ -1,0 +1,121 @@
+- type: entity
+  name: Cave Rat
+  id: MobCaveRat
+  parent: SimpleMobBase
+  description: One of the dungeon's most common dwellers.
+  components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 3
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 4 #more powerful legs than normal rats, to dig easier
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      35 : 0.8
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: Faction
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: SmallMobs
+    scale: 1.6, 1.6
+    sprite: Mobs/Animals/mouse.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mouse-3
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      density: 60 #Twice the bulk of a rat
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Critical
+      100: Dead
+  - type: Stamina
+    excess: 80
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Blunt: 5 #Swapped from Slash, for dulled claws from digging
+        Slash: 3 #Still mildly sharp, though
+  - type: Body
+    prototype: BossAnimal
+    requiredLegs: 1 # TODO: More than 1 leg
+  - type: Hunger # probably should be prototyped
+    thresholds:
+      Overfed: 200
+      Okay: 150
+      Peckish: 100
+      Starving: 50
+      Dead: 0
+    baseDecayRate: 0.01666666666
+  - type: Thirst
+    thresholds:
+      OverHydrated: 600
+      Okay: 450
+      Thirsty: 300
+      Parched: 150
+      Dead: 0
+    baseDecayRate: 0.1
+  - type: Appearance
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: mouse-3
+      Critical:
+        Base: dead-3
+      Dead:
+        Base: splat-3
+  - type: Puller
+    needsHands: false
+  - type: DiseaseCarrier
+    carrierDiseases:
+    - VentCough
+    - AMIV
+    - SpaceCold
+    - SpaceFlu
+    - BirdFlew
+    - VanAusdallsRobovirus
+    - BleedersBite
+    - Plague
+    - TongueTwister
+  - type: Vocal
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
+    wilhelmProbability: 0.001
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: NoSlip
+  - type: MobPrice
+    price: 500 # rat wealth
+
