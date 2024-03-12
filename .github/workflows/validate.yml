@@ -2,8 +2,10 @@ name: Validator
 
 on:
   push:
+    branches-ignore: [ ms/server ]
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
+    branches: [ ms/1.2 ]
 
 jobs:
   lint-yaml:
