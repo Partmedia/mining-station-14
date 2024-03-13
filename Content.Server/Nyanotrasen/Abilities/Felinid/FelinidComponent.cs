@@ -19,7 +19,7 @@ namespace Content.Server.Abilities.Felinid
         {
             UseDelay = TimeSpan.FromMinutes(1),
             Charges = 1,
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("Objects/Specific/Species/felinid.rsi/icon.png")),
+            Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Specific/Species/felinid.rsi"), "icon"),
             DisplayName = "hairball-action",
             Description = "hairball-action-desc",
             Priority = -1,

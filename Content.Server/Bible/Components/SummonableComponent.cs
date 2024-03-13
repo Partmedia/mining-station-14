@@ -30,7 +30,7 @@ namespace Content.Server.Bible.Components
         [DataField("summonAction")]
         public InstantAction SummonAction = new()
         {
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("Clothing/Head/Hats/witch.rsi/icon.png")),
+            Icon = new SpriteSpecifier.Rsi(new ResourcePath("Clothing/Head/Hats/witch.rsi"), "icon"),
             DisplayName = "bible-summon-verb",
             Description = "bible-summon-verb-desc",
             Event = new SummonActionEvent(),
