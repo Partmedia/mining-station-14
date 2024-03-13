@@ -43,8 +43,11 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
         _combat = combatSys;
         _hands = hands;
 
-        _gunSight = StaticIoC.ResC.GetTexture("/Textures/Interface/Misc/crosshair_pointers.rsi/gun_sight.png");
-        _meleeSight = StaticIoC.ResC.GetTexture("/Textures/Interface/Misc/crosshair_pointers.rsi/melee_sight.png");
+        var spriteSys = _entMan.EntitySysManager.GetEntitySystem<SpriteSystem>();
+        _gunSight = spriteSys.Frame0(new SpriteSpecifier.Rsi(
+                    new ResourcePath("/Textures/Interface/Misc/crosshair_pointers.rsi"), "gun_sight"));
+        _meleeSight = spriteSys.Frame0(new SpriteSpecifier.Rsi(
+                    new ResourcePath("/Textures/Interface/Misc/crosshair_pointers.rsi"), "melee_sight"));
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
