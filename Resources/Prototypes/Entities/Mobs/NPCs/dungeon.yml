@@ -5,16 +5,11 @@
   description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage.
   components:
   - type: Body
+    prototype: FlyingAnimal
     requiredLegs: 0
   - type: MovementSpeedModifier
     baseWalkSpeed: 5.5
     baseSprintSpeed: 5.5
-  - type: DamageOnHighSpeedImpact
-    damage:
-      types:
-        Blunt: 5
-    soundHit:
-      path: /Audio/Effects/hit_kick.ogg
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:
@@ -56,6 +51,11 @@
   - type: MobState
     allowedStates:
       - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      400: Dead
   - type: HeatResistance
   - type: CombatMode
   - type: Internals
@@ -63,7 +63,6 @@
   - type: Speech
   - type: TypingIndicator
     proto: guardian
-  - type: Pullable
   - type: MeleeWeapon
     hidden: true
     angle: 30
@@ -73,7 +72,6 @@
       types:
         Blunt: 20
   - type: Actions
-  - type: Guardian
   - type: InteractionPopup
     interactSuccessString: petting-success-holo
     interactFailureString: petting-failure-holo
