@@ -11,9 +11,6 @@
   - type: Insulated
   - type: DiseaseProtection
     protection: 1
-  - type: CombatMode
-  - type: InputMover
-  - type: MobMover
   - type: HTN
     rootTask: XenoCompound
     blackboard:
@@ -63,7 +60,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      130: Critical
+      180: Critical
       200: Dead
   - type: Stamina
     excess: 200
@@ -90,7 +87,6 @@
       types:
         Piercing: 5
         Slash: 10
-  - type: Appearance
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -118,8 +114,6 @@
       - DoorBumpOpener
       - FootstepSound
   - type: NoSlip
-  - type: Perishable #Ummmm the acid kills a lot of the bacteria or something
-    molsPerSecondPerUnitMass: 0.0005
 
 - type: entity
   name: Praetorian
@@ -139,11 +133,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
-  - type: MobState
-    allowedStates:
-      - Alive
-      - Critical
-      - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -327,6 +316,9 @@
   parent: MobXeno
   id: MobXenoRunner
   components:
+  - type: Body
+    prototype: BossAnimal
+    requiredLegs: 0
   - type: BiopressHarvest
     id: SlimeCreature
     totalReagentUnits: 40

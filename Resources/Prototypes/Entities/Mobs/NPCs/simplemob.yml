@@ -9,9 +9,6 @@
     interfaces:
       - key: enum.SurgeryUiKey.Key
         type: SurgeryBoundUserInterface
-  - type: BiopressHarvest
-    id: Creature
-    totalReagentUnits: 50
   - type: LagCompensation
   - type: Tag
     tags:
@@ -68,6 +65,7 @@
       - MobLayer
   - type: SolutionContainerManager
   - type: Bloodstream
+    bloodMaxVolume: 150
     bloodlossDamage:
       types:
         Bloodloss:
@@ -111,9 +109,6 @@
     - ForcedSleep
     - TemporaryBlindness
     - Pacified
-  - type: Body
-    prototype: Animal
-    requiredLegs: 1
   - type: InjectableSolution
     solution: chemicals
   - type: Examiner
@@ -140,10 +135,6 @@
     safe: false
   - type: StandingState
   - type: Alerts
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      60: 0.7
-      80: 0.5
   - type: MobPrice
     price: 100 
     deathPenalty: 1 # we cannot sell living space mobs so...
@@ -152,12 +143,29 @@
 - type: entity
   save: false
   abstract: true
+  id: SimpleFlyingSpaceMob
+  parent: SimpleSpaceMobBase
+  components:
+  - type: NoSlip
+  - type: MovementAlwaysTouching
+  - type: MovementIgnoreGravity
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 80
+        mask:
+          - FlyingMobMask
+        layer:
+          - FlyingMobLayer
+
+- type: entity
+  save: false
+  abstract: true
   id: SimpleMobBase # for air breathers
   parent: SimpleSpaceMobBase
-  suffix: AI
   components:
-  - type: InputMover
-  - type: MobMover
   - type: Hunger
     thresholds: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
       Overfed: 100
@@ -214,9 +222,10 @@
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
-  - type: Bloodstream
-    bloodMaxVolume: 150
-  - type: MobPrice
-    price: 150
-  - type: Appearance
   - type: FloatingVisuals
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 50
+  - type: Body
+    prototype: Animal
+    requiredLegs: 1

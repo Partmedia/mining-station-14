@@ -1,16 +1,13 @@
 - type: entity
   name: space carp
   id: BaseMobCarp
-  parent: SimpleSpaceMobBase
+  parent: SimpleFlyingSpaceMob
   description: It's a space carp.
   abstract: true
   components:
     - type: BiopressHarvest
       id: Creature
       totalReagentUnits: 25
-    - type: InputMover
-    - type: MobMover
-    - type: MovementIgnoreGravity
     - type: HTN
       rootTask: SimpleHostileCompound
       blackboard:
@@ -28,23 +25,8 @@
       layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: base
-    - type: CombatMode
-    - type: Physics
-    - type: Fixtures
-      fixtures:
-        - shape:
-            !type:PhysShapeCircle
-            radius: 0.40
-          density: 80
-          mask:
-            - FlyingMobMask
-          layer:
-            - FlyingMobLayer
-    - type: MobState
     - type: Stamina
       excess: 100
-    - type: MovementAlwaysTouching
-    - type: Appearance
     - type: DamageStateVisuals
       states:
         Alive:
@@ -69,7 +51,6 @@
           Slash: 4
     - type: TypingIndicator
       proto: alien
-    - type: NoSlip
     - type: Tag
       tags:
         - Carp
@@ -105,6 +86,9 @@
       sprite: Mobs/Aliens/Carps/magic.rsi
     - type: TypingIndicator
       proto: guardian
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 4
+      baseSprintSpeed: 4
 
 - type: entity
   name: holocarp
@@ -127,6 +111,9 @@
             - Opaque
     - type: TypingIndicator
       proto: robot
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 4
+      baseSprintSpeed: 4
 
 - type: entity
   id: MobCarpSalvage
