@@ -41,7 +41,7 @@ namespace Content.Server.RoundEnd
         /// Countdown to use where there is no station alert countdown to be found.
         /// </summary>
         public TimeSpan DefaultCountdownDuration { get; set; } = TimeSpan.FromMinutes(5);
-        public TimeSpan DefaultRestartRoundDuration { get; set; } = TimeSpan.FromMinutes(2);
+        public TimeSpan DefaultRestartRoundDuration { get; set; } = TimeSpan.FromSeconds(30);
 
         private CancellationTokenSource? _countdownWarningTokenSource = null; // timer for shuttle warning
         private CancellationTokenSource? _countdownTokenSource = null; // timer for shuttle arriving
