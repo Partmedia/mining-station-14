@@ -20,5 +20,7 @@
     shoes: ClothingShoesBootsSalvage
     id: SalvagePDA
     ears: ClothingHeadsetCargo
+    pocket1: SurvivalKnife
+    pocket2: lantern
   satchel: ClothingBackpackSatchelSalvageFilled
   duffelbag: ClothingBackpackDuffelSalvageFilled

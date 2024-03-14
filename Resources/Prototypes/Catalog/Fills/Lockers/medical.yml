@@ -11,9 +11,13 @@
         amount: 1
       - id: EpinephrineChemistryBottle
         amount: 3
+      - id: DexalinPlusChemistryBottle
+      # med kit refills
       - id: Brutepack
         amount: 2
       - id: Ointment
+        amount: 2
+      - id: Gauze
         amount: 2
 
 - type: entity
