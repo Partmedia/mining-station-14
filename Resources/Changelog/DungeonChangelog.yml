@@ -35,3 +35,11 @@ Entries:
   - { type: Tweak, message: Ointment now heals a small amount of radiation damage. }
   id: 2557
   time: '2024-03-10T16:02:30+08:00'
+- author: Mining Station 14 Team
+  changes:
+  - { type: Add, message: Add dungeon uplink. }
+  - { type: Remove, message: The cargo shuttle is no longer available in Dungeon mode. }
+  - { type: Tweak, message: Improve round-start items and spawns. }
+  - { type: Tweak, message: Lockers and crates are no longer airtight. }
+  id: 2558
+  time: '2024-03-14T14:54:49-07:00'
