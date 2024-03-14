@@ -16,8 +16,8 @@
       availableJobs:
         # standard mining station
         Quartermaster: [ 1, 1 ]
-        StationEngineer: [ 1, 1 ]
-        MedicalDoctor: [ 1, 1 ]
+        StationEngineer: [ 1, 2 ]
+        MedicalDoctor: [ 1, 2 ]
         SalvageSpecialist: [ -1, -1 ]
         # dungeon RP jobs
         Bartender: [ 1, 1 ]
