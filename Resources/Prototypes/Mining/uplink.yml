@@ -1,0 +1,34 @@
+- type: storePreset
+  id: StorePresetDungeonUplink
+  storeName: DungeonUplink
+  categories:
+  - UplinkWeapons
+  - UplinkAmmo
+  - DungeonUplinkMeds
+  currencyWhitelist:
+  - Telecrystal
+
+- type: entity
+  id: DungeonUplink
+  name: uplink
+  description: Order items that you can use in the dungeon!
+  parent: BaseUplinkRadio
+  suffix: Dungeon
+  components:
+  - type: Store
+    preset: StorePresetDungeonUplink
+
+- type: storeCategory
+  id: DungeonUplinkMeds
+  name: Medicine
+  priority: 10
+
+- type: listing
+  id: UplinkGauze
+  name: gauze
+  description: Fix yourself up!
+  productEntity: Gauze
+  cost:
+    Telecrystal: 1
+  categories:
+  - DungeonUplinkMeds

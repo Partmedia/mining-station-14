@@ -81,9 +81,14 @@
         - lantern
         - FlashlightLantern
         - Gauze
+        - Telecrystal1
+        - Telecrystal1
+        - Telecrystal1
+        - Telecrystal1
+        - Telecrystal1
+        - Telecrystal1
       rareChance: 0.1
       rarePrototypes:
-        - MobXeno
         - WeaponStaffHealing
         - WeaponStaffPolymorphDoor
         - WeaponWandPolymorphDoor
@@ -91,6 +96,7 @@
         - KnockSpellbook
         - BlinkBook
         - DungeonWeaponSpawner
+        - DungeonUplink
 
 - type: entity
   id: DungeonLootSpawnerSpawner
