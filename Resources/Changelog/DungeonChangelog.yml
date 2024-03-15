@@ -38,8 +38,9 @@ Entries:
 - author: Mining Station 14 Team
   changes:
   - { type: Add, message: Add dungeon uplink. }
+  - { type: Add, message: Add bone armor and spears. }
   - { type: Remove, message: The cargo shuttle is no longer available in Dungeon mode. }
   - { type: Tweak, message: Improve round-start items and spawns. }
   - { type: Tweak, message: Lockers and crates are no longer airtight. }
   id: 2558
-  time: '2024-03-14T14:54:49-07:00'
+  time: '2024-03-14T20:05:32-07:00'
