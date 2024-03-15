@@ -103,7 +103,7 @@
       amount: 5
     - id: MaterialBones1 #I assume Xenos have bones, at least
       amount: 1
-      prob: 0.3
+      prob: 0.6
   - type: TypingIndicator
     proto: alien
   - type: Temperature

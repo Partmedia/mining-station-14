@@ -96,6 +96,10 @@
     damage:
       types:
         Piercing: 7
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 21
   - type: Destructible
     thresholds:
     - trigger:
