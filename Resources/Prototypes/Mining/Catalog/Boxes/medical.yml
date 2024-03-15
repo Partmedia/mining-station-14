@@ -1,0 +1,15 @@
+- type: entity
+  name: bloodpack box
+  parent: BoxCardboard
+  id: BoxBloodpack
+  description: A box full of bloodpacks.
+  components:
+  - type: StorageFill
+    contents:
+      - id: Bloodpack
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: blood
+
