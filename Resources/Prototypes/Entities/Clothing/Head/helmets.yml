@@ -300,3 +300,18 @@
         Slash: 0.95
         Heat: 0.90
         Radiation: 0.75
+
+#Bone Helmet
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetBone
+  name: bone helmet
+  description: Cool-looking helmet made of skull of your enemies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/bone_helmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/bone_helmet.rsi
+  - type: Construction
+    graph: BoneHelmet
+    node: helmet

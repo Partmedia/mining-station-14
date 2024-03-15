@@ -228,3 +228,32 @@
     state: cotton
   - type: Stack
     count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBones
+  name: bones
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Bones
+  - type: Sprite
+    state: bones_3
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        stackLayers:
+          - bones
+          - bones_2
+          - bones_3
+
+
+- type: entity
+  parent: MaterialBones
+  id: MaterialBones1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: bones
+  - type: Stack
+    count: 1

@@ -20,3 +20,20 @@
               doAfter: 1
     - node: spear
       entity: Spear
+
+- type: constructionGraph
+  id: SpearBone
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: spear
+          steps:
+            - material: Bones
+              amount: 4
+              doAfter: 2
+            - material: Cloth
+              amount: 3
+              doAfter: 1
+    - node: spear
+      entity: SpearBone

@@ -55,6 +55,9 @@
     - id: MaterialHideBear
       amount: 1
       prob: 0.3
+    - id: MaterialBones1
+      amount: 1
+      prob: 0.3
   - type: Bloodstream
     bloodMaxVolume: 300
     bloodReagent: Cryoxadone

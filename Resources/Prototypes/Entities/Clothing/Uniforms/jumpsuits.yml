@@ -961,3 +961,14 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGladiator
+  name: gladiator uniform
+  description: Made for true gladiators (or Ash Walkers).
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi

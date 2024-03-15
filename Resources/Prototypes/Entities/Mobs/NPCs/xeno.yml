@@ -98,10 +98,12 @@
         Base: dead
   - type: Puller
   - type: Butcherable
-    butcheringType: Spike
     spawned:
     - id: FoodMeatXeno
       amount: 5
+    - id: MaterialBones1 #I assume Xenos have bones, at least
+      amount: 1
+      prob: 0.3
   - type: TypingIndicator
     proto: alien
   - type: Temperature
@@ -484,6 +486,9 @@
     spawned:
     - id: FoodMeatXeno
       amount: 1
+    - id: MaterialBones1
+      amount: 1
+      prob: 0.1
 
 - type: entity
   name: space adder
