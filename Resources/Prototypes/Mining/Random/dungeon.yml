@@ -69,6 +69,7 @@
         - MedkitAdvancedFilled
         - EmergencyMedipen
         - BoxEmergencyMedipens
+        - BoxBloodpack
         - CrateMedicalSurgery
         - CrateMedicalDefib
         - Hypopen
