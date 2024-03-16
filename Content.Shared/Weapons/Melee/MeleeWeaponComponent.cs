@@ -95,7 +95,7 @@ public sealed class MeleeWeaponComponent : Component
     /// Nearest edge range to hit an entity.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("range")]
-    public float Range = 1.5f;
+    public float Range = 1.2f;
 
     /// <summary>
     /// Total width of the angle for wide attacks.
