@@ -27,14 +27,14 @@ public abstract class ClothingSystem : EntitySystem
     protected virtual void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
         component.InSlot = args.Slot;
-        if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, "HidesHair"))
+        if (args.Slot == "head" || args.Slot == "neck" && _tagSystem.HasTag(args.Equipment, "HidesHair"))
             _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, false);
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
         component.InSlot = null;
-        if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, "HidesHair"))
+        if (args.Slot == "head" || args.Slot == "neck" && _tagSystem.HasTag(args.Equipment, "HidesHair"))
             _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, true);
     }
 

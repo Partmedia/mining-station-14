@@ -160,14 +160,24 @@
       state: bearpelt_glow
       shader: unshaded
   - type: Item
-    sprite: Clothing/Head/Misc/hides.rsi
+    sprite: Clothing/Neck/Misc/hides.rsi
     heldPrefix: bear
   - type: Clothing
     netsync: false
-    sprite: Clothing/Head/Misc/hides.rsi
+    sprite: Clothing/Neck/Misc/hides.rsi
     equippedPrefix: bear
     slots:
-      - HEAD
+      - neck
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+
   - type: PointLight
     radius: 1.2
     energy: 1.5
