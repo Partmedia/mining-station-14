@@ -32,6 +32,22 @@
 
 - type: entity
   parent: Telecrystal
+  id: Telecrystal2
+  suffix: 2 TC
+  components:
+  - type: Stack
+    count: 2
+
+- type: entity
+  parent: Telecrystal
+  id: Telecrystal3
+  suffix: 3 TC
+  components:
+  - type: Stack
+    count: 3
+
+- type: entity
+  parent: Telecrystal
   id: Telecrystal5
   suffix: 5 TC
   components:
