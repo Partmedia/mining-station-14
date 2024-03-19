@@ -29,6 +29,7 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 ## Graphics menu
 
 ui-options-show-held-item = Mostrar item segurado próximo ao cursor?
+ui-options-show-combat-mode-indicators = Mostrar indicadores de modo de combate próximo ao cursor?
 ui-options-vsync = VSync
 ui-options-fullscreen = Tela cheia
 ui-options-lighting-label = Qualidade de Iluminação:

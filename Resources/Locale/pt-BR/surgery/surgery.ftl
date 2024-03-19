@@ -36,3 +36,4 @@ organ-healthy = Está saudável.
 organ-warning = Está danificado.
 organ-critical = Está severamente danificado.
 
+part-hit-removed = {CAPITALIZE(THE($origin))} corta fora de uma vez só seu/sua {$part}!
