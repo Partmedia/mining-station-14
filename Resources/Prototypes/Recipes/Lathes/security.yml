@@ -183,6 +183,13 @@
     Steel: 300
 
 - type: latheRecipe
+  id: MagazineMagnumSubMachineGun
+  result: MagazineMagnumSubMachineGun
+  completetime: 5
+  materials:
+    Steel: 350
+
+- type: latheRecipe
   id: MagazinePistolSubMachineGunTopMounted
   result: MagazinePistolSubMachineGunTopMounted
   completetime: 5
