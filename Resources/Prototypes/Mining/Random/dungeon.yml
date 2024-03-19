@@ -64,14 +64,19 @@
     - type: RandomSpawner
       prototypes:
         - MedkitFilled
+        - MedkitFilled
         - MedkitBurnFilled
         - MedkitToxinFilled
         - MedkitBruteFilled
         - MedkitAdvancedFilled
         - EmergencyMedipen
         - BoxEmergencyMedipens
+        - BoxEmergencyMedipens
+        - BoxBloodpack
         - BoxBloodpack
         - CrateMedicalSurgery
+        - CrateMedicalSurgery
+        - CrateMedicalDefib
         - CrateMedicalDefib
         - Hypopen
         - CyberPen
@@ -83,6 +88,7 @@
         - CrateBasicChemBottles
         - lantern
         - FlashlightLantern
+        - Gauze
         - Gauze
         - Telecrystal1
         - Telecrystal1
