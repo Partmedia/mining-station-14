@@ -106,6 +106,7 @@
         - BlinkBook
         - DungeonWeaponSpawner
         - DungeonUplink
+        - DungeonUplink
 
 - type: entity
   id: DungeonLootSpawnerSpawner
