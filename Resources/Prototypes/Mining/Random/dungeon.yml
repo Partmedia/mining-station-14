@@ -90,6 +90,12 @@
         - Telecrystal1
         - Telecrystal1
         - Telecrystal1
+        - Telecrystal2
+        - Telecrystal2
+        - Telecrystal2
+        - Telecrystal3
+        - Telecrystal3
+        - Telecrystal5
       rareChance: 0.1
       rarePrototypes:
         - WeaponStaffHealing
