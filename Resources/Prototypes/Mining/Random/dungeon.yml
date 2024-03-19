@@ -7,17 +7,29 @@
       prototypes:
         - CombatKnife
         - WeaponLaserCarbine
+        - WeaponLaserCarbine
         - WeaponPistolHandmade
         - WeaponMakeshiftLaser
         - WeaponPistolMk58
+        - WeaponPistolMk58
+        - WeaponPistolMk58
         - WeaponSubMachineGunVector
         - WeaponSubMachineGunWt550
+        - WeaponSubMachineGunWt550
+        - WeaponSubMachineGunWt550
         - WeaponShotgunDoubleBarreled
+        - WeaponShotgunKammerer
+        - WeaponShotgunKammerer
+        - WeaponShotgunEnforcer
+        - WeaponShotgunEnforcer
         - WeaponRevolverDeckard
         - WeaponRevolverInspector
         - WeaponRevolverPython
         - WeaponRevolverPirate
         - WeaponPlasmaRifle
+        - WeaponPlasmaRifle
+        - WeaponPlasmaRifle
+        - Claymore
         - Claymore
 
 - type: entity
