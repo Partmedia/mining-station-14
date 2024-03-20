@@ -201,7 +201,7 @@
   result: MagazineBoxPistol
   completetime: 5
   materials:
-    Steel: 650
+    Steel: 450
 
 - type: latheRecipe
   id: MagazineBoxPistolRubber
@@ -216,7 +216,7 @@
   result: MagazineBoxMagnum
   completetime: 5
   materials:
-    Steel: 1250
+    Steel: 550
 
 - type: latheRecipe
   id: MagazineBoxMagnumRubber
@@ -260,7 +260,7 @@
   result: MagazineBoxLightRifle
   completetime: 5
   materials:
-    Steel: 1800
+    Steel: 800
 
 - type: latheRecipe
   id: MagazineBoxLightRifleRubber
