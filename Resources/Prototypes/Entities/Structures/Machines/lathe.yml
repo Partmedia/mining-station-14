@@ -95,7 +95,11 @@
       - Pickaxe
       - BaseChemistryEmptyJug
       - MagazinePistolSubMachineGunTopMounted
+      - MagazineMagnumSubMachineGun
       - MagazinePlasmaRifleFilled
+      - MagazineBoxPistol
+      - MagazineBoxMagnum
+      - MagazineBoxLightRifle
       - PlasmaShell
       - ShellShotgun
       - HandheldCrewMonitor
