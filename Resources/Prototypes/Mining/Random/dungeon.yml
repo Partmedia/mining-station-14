@@ -46,6 +46,9 @@
       - MagazineMagnumSubMachineGun
       - SpeedLoaderMagnum
       - BoxLethalshot
+      - MagazineBoxPistol
+      - MagazineBoxMagnum
+      - MagazineBoxLightRifle
 
 - type: entity
   id: DungeonArmorSpawner
