@@ -11,6 +11,9 @@ namespace Content.Server.Ghost.Components
     {
         public TimeSpan TimeOfDeath { get; set; } = TimeSpan.Zero;
 
+        [DataField("respawnTime")]
+        public float RespawnTime = 1200f;
+
         [DataField("booRadius")]
         public float BooRadius = 3;
 

@@ -194,6 +194,12 @@ namespace Content.Client.Ghost
             RaiseNetworkEvent(msg);
         }
 
+        public void GhostRespawn()
+        {
+            var msg = new GhostRespawnRequest();
+            RaiseNetworkEvent(msg);
+        }
+
         public void OpenGhostRoles()
         {
             _console.RemoteExecuteCommand(null, "ghostroles");

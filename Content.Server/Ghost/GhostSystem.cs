@@ -65,6 +65,28 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
         }
 
+        public override void Update(float frameTime)
+        {
+            foreach (var ghost in EntityManager.EntityQuery<GhostComponent, SharedGhostComponent>(true))
+            {
+                var elapsedSinceDeath = _gameTiming.CurTime - ghost.Item1.TimeOfDeath;
+                var timeRemaining = (float)Math.Round(ghost.Item1.RespawnTime - (float)elapsedSinceDeath.TotalSeconds);
+
+                if (!EntityManager.TryGetComponent(ghost.Item1.Owner, out ActorComponent? actor))
+                    SetCanGhostRespawn(ghost.Item2, false, 0);
+
+                var autoClonerAvailable = true;
+
+                if (autoClonerAvailable && timeRemaining <= 0)
+                    SetCanGhostRespawn(ghost.Item2, true, 0);
+                else if (timeRemaining > 0)
+                    SetCanGhostRespawn(ghost.Item2, false, timeRemaining);
+                else
+                    SetCanGhostRespawn(ghost.Item2, false, 0);
+
+            }
+        }
+
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
             if (args.Handled)
