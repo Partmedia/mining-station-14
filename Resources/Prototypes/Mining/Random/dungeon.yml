@@ -51,6 +51,7 @@
       - MagazineBoxPistol
       - MagazineBoxMagnum
       - MagazineBoxLightRifle
+      - MagazineBoxAntiMateriel
 
 - type: entity
   id: DungeonArmorSpawner
@@ -135,6 +136,7 @@
         - DungeonWeaponSpawner
         - DungeonUplink
         - DungeonUplink
+        - WeaponSniperHristov
 
 - type: entity
   id: DungeonLootSpawnerSpawner
