@@ -244,6 +244,9 @@ namespace Content.Server.Ghost
                 !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
                 return;
 
+            if (!ghost.CanGhostRespawn)
+                return;
+
             var mind = actor.PlayerSession.ContentData()!.Mind;
             if (mind is null)
                 return;
