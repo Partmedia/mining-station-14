@@ -23,6 +23,8 @@ using Robust.Shared.Enums;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
+using Content.Server.Cloning;
+using Content.Server.Cloning.Components;
 
 namespace Content.Server.Ghost
 {
@@ -70,12 +72,18 @@ namespace Content.Server.Ghost
             foreach (var ghost in EntityManager.EntityQuery<GhostComponent, SharedGhostComponent>(true))
             {
                 var elapsedSinceDeath = _gameTiming.CurTime - ghost.Item1.TimeOfDeath;
-                var timeRemaining = (float)Math.Round(ghost.Item1.RespawnTime - (float)elapsedSinceDeath.TotalSeconds);
+                var timeRemaining = ghost.Item1.RespawnTime - (float)elapsedSinceDeath.TotalSeconds;
 
                 if (!EntityManager.TryGetComponent(ghost.Item1.Owner, out ActorComponent? actor))
                     SetCanGhostRespawn(ghost.Item2, false, 0);
 
-                var autoClonerAvailable = true;
+                var autoClonerAvailable = false;
+
+                foreach (var autoCloner in EntityManager.EntityQuery<AutoCloningPodComponent>(true))
+                {
+                    if (!EntityManager.TryGetComponent(autoCloner.Owner, out ActiveCloningPodComponent? active))
+                        autoClonerAvailable = true;
+                }
 
                 if (autoClonerAvailable && timeRemaining <= 0)
                     SetCanGhostRespawn(ghost.Item2, true, 0);

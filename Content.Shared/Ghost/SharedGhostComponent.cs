@@ -55,7 +55,6 @@ namespace Content.Shared.Ghost
             get => _ghostRespawnTimer;
             set
             {
-                if (_ghostRespawnTimer == value) return;
                 _ghostRespawnTimer = value;
                 Dirty();
             }

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: CloningPod
   parent: BaseMachinePowered
   name: cloning pod
@@ -76,4 +76,45 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
+      clonepod-bodyContainer: !type:ContainerSlot
+
+
+- type: entity
+  id: AutoCloningPod
+  parent: BaseMachinePowered
+  name: auto cloning pod
+  description: An Advanced Automatic Cloning Pod.
+  components:
+  - type: AutoCloningPod
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/cloning.rsi
+    snapCardinals: true
+    layers:
+      - state: pod_0
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.45,0.25,0.45"
+      density: 190
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: Appearance
+    visuals:
+      - type: GenericEnumVisualizer
+        key: enum.CloningPodVisuals.Status
+        layer: 0
+        states:
+          enum.CloningPodStatus.Cloning: pod_1
+          enum.CloningPodStatus.NoMind: pod_e
+          enum.CloningPodStatus.Gore: pod_g
+          enum.CloningPodStatus.Idle: pod_0
+  - type: Climbable
+  - type: ContainerContainer
+    containers:
       clonepod-bodyContainer: !type:ContainerSlot

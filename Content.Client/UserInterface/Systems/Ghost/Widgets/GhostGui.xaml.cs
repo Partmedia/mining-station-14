@@ -53,11 +53,11 @@ public sealed partial class GhostGui : UIWidget
             }
         }
 
-        GhostRespawnButton.Disabled = !canGhostRespawn ?? true;
+        GhostRespawnButton.Disabled = (!canGhostRespawn ?? true) || (ghostRespawnTime is not null && ghostRespawnTime.Value > 0);
 
         if (ghostRespawnTime is not null && ghostRespawnTime.Value > 0)
-            GhostRespawnButton.Text = "Can Respawn in " + ghostRespawnTime.Value + "s";//TODO loc
-        else if (!(!canGhostRespawn ?? true) && ghostRespawnTime is not null && ghostRespawnTime.Value <= 0)
+            GhostRespawnButton.Text = "Can Respawn in " + (int)Math.Round(ghostRespawnTime.Value) + "s";//TODO loc
+        else if ((!canGhostRespawn ?? true) && (ghostRespawnTime is not null && ghostRespawnTime.Value <= 0))
             GhostRespawnButton.Text = "Waiting for Spawn";//TODO loc
         else
             GhostRespawnButton.Text = "Respawn";
