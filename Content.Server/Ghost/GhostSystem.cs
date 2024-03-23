@@ -241,15 +241,17 @@ namespace Content.Server.Ghost
         {
             if (args.SenderSession.AttachedEntity is not { Valid: true } attached ||
                 !EntityManager.TryGetComponent(attached, out GhostComponent? ghost) ||
-                !EntityManager.TryGetComponent(attached, out MindComponent? mind) ||
-                mind is null || mind.Mind is null ||
                 !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
+                return;
+
+            var mind = actor.PlayerSession.ContentData()!.Mind;
+            if (mind is null)
                 return;
 
             foreach (var autoCloner in EntityManager.EntityQuery<AutoCloningPodComponent>(true))
             {
                 if (!EntityManager.TryGetComponent(autoCloner.Owner, out ActiveCloningPodComponent? active)) {
-                    if (_autocloning.TryCloning(autoCloner.Owner, actor.PlayerSession, mind.Mind, autoCloner))
+                    if (_autocloning.TryCloning(autoCloner.Owner, actor.PlayerSession, mind, autoCloner))
                         break;
                 }
             }
