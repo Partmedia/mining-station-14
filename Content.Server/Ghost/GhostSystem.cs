@@ -23,6 +23,8 @@ using Robust.Shared.Enums;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
+using Content.Server.Cloning;
+using Content.Server.Cloning.Components;
 
 namespace Content.Server.Ghost
 {
@@ -39,6 +41,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly AutoCloningSystem _autocloning = default!;
 
         public override void Initialize()
         {
@@ -57,12 +60,41 @@ namespace Content.Server.Ghost
 
             SubscribeNetworkEvent<GhostWarpsRequestEvent>(OnGhostWarpsRequest);
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
+            SubscribeNetworkEvent<GhostRespawnRequest>(OnGhostRespawnRequest);
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
+        }
+
+        public override void Update(float frameTime)
+        {
+            foreach (var ghost in EntityManager.EntityQuery<GhostComponent, SharedGhostComponent>(true))
+            {
+                var elapsedSinceDeath = _gameTiming.CurTime - ghost.Item1.TimeOfDeath;
+                var timeRemaining = ghost.Item1.RespawnTime - (float)elapsedSinceDeath.TotalSeconds;
+
+                if (!EntityManager.TryGetComponent(ghost.Item1.Owner, out ActorComponent? actor))
+                    SetCanGhostRespawn(ghost.Item2, false, 0);
+
+                var autoClonerAvailable = false;
+
+                foreach (var autoCloner in EntityManager.EntityQuery<AutoCloningPodComponent>(true))
+                {
+                    if (!EntityManager.TryGetComponent(autoCloner.Owner, out ActiveCloningPodComponent? active))
+                        autoClonerAvailable = true;
+                }
+
+                if (autoClonerAvailable && timeRemaining <= 0)
+                    SetCanGhostRespawn(ghost.Item2, true, 0);
+                else if (timeRemaining > 0)
+                    SetCanGhostRespawn(ghost.Item2, false, timeRemaining);
+                else
+                    SetCanGhostRespawn(ghost.Item2, false, 0);
+
+            }
         }
 
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
@@ -203,6 +235,29 @@ namespace Content.Server.Ghost
             }
 
             actor.PlayerSession.ContentData()!.Mind?.UnVisit();
+        }
+
+        private void OnGhostRespawnRequest(GhostRespawnRequest msg, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession.AttachedEntity is not { Valid: true } attached ||
+                !EntityManager.TryGetComponent(attached, out GhostComponent? ghost) ||
+                !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
+                return;
+
+            if (!ghost.CanGhostRespawn)
+                return;
+
+            var mind = actor.PlayerSession.ContentData()!.Mind;
+            if (mind is null)
+                return;
+
+            foreach (var autoCloner in EntityManager.EntityQuery<AutoCloningPodComponent>(true))
+            {
+                if (!EntityManager.TryGetComponent(autoCloner.Owner, out ActiveCloningPodComponent? active)) {
+                    if (_autocloning.TryCloning(autoCloner.Owner, actor.PlayerSession, mind, autoCloner))
+                        break;
+                }
+            }
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)

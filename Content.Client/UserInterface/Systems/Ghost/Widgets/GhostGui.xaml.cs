@@ -14,6 +14,7 @@ public sealed partial class GhostGui : UIWidget
     public event Action? RequestWarpsPressed;
     public event Action? ReturnToBodyPressed;
     public event Action? GhostRolesPressed;
+    public event Action? GhostRespawnPressed;
 
     public GhostGui()
     {
@@ -26,6 +27,7 @@ public sealed partial class GhostGui : UIWidget
         GhostWarpButton.OnPressed += _ => RequestWarpsPressed?.Invoke();
         ReturnToBodyButton.OnPressed += _ => ReturnToBodyPressed?.Invoke();
         GhostRolesButton.OnPressed += _ => GhostRolesPressed?.Invoke();
+        GhostRespawnButton.OnPressed += _ => GhostRespawnPressed?.Invoke();
     }
 
     public void Hide()
@@ -34,7 +36,7 @@ public sealed partial class GhostGui : UIWidget
         Visible = false;
     }
 
-    public void Update(int? roles, bool? canReturnToBody)
+    public void Update(int? roles, bool? canReturnToBody, bool? canGhostRespawn, float? ghostRespawnTime)
     {
         ReturnToBodyButton.Disabled = !canReturnToBody ?? true;
 
@@ -50,6 +52,15 @@ public sealed partial class GhostGui : UIWidget
                 GhostRolesButton.StyleClasses.Remove(StyleBase.ButtonCaution);
             }
         }
+
+        GhostRespawnButton.Disabled = (!canGhostRespawn ?? true) || (ghostRespawnTime is not null && ghostRespawnTime.Value > 0);
+
+        if (ghostRespawnTime is not null && ghostRespawnTime.Value > 0)
+            GhostRespawnButton.Text = "Can Respawn in " + (int)Math.Round(ghostRespawnTime.Value) + "s";//TODO loc
+        else if ((!canGhostRespawn ?? true) && (ghostRespawnTime is not null && ghostRespawnTime.Value <= 0))
+            GhostRespawnButton.Text = "Waiting for Spawn";//TODO loc
+        else
+            GhostRespawnButton.Text = "Respawn";
 
         TargetWindow.Populate();
     }

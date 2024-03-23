@@ -32,6 +32,12 @@ namespace Content.Shared.Ghost
         {
             component.CanReturnToBody = value;
         }
+
+        public void SetCanGhostRespawn(SharedGhostComponent component, bool value, float timer)
+        {
+            component.CanGhostRespawn = value;
+            component.GhostRespawnTimer = timer;
+        }
     }
 
     /// <summary>
@@ -109,6 +115,14 @@ namespace Content.Shared.Ghost
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class GhostReturnToBodyRequest : EntityEventArgs
+    {
+    }
+
+    /// <summary>
+    /// A client to server request for their ghost to respawn
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class GhostRespawnRequest : EntityEventArgs
     {
     }
 
