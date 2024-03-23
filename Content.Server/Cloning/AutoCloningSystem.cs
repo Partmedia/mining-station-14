@@ -123,8 +123,8 @@ namespace Content.Server.Cloning
             if (HasComp<ActiveCloningPodComponent>(uid))
                 return false;
 
-            if (mind.OwnedEntity != null && !_mobStateSystem.IsDead(mind.OwnedEntity.Value))
-                return false; // Body controlled by mind is not dead
+            //if (mind.OwnedEntity != null && !_mobStateSystem.IsDead(mind.OwnedEntity.Value))
+            //    return false; // Body controlled by mind is not dead
 
             var mob = SpawnAutoClonedPlayer(clonePod, player);
 

@@ -12,7 +12,7 @@ namespace Content.Server.Ghost.Components
         public TimeSpan TimeOfDeath { get; set; } = TimeSpan.Zero;
 
         [DataField("respawnTime")]
-        public float RespawnTime = 10f;
+        public float RespawnTime = 600f;
 
         [DataField("booRadius")]
         public float BooRadius = 3;
