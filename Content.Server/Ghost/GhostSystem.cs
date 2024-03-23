@@ -41,6 +41,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly AutoCloningSystem _autocloning = default!;
 
         public override void Initialize()
         {
@@ -59,6 +60,7 @@ namespace Content.Server.Ghost
 
             SubscribeNetworkEvent<GhostWarpsRequestEvent>(OnGhostWarpsRequest);
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
+            SubscribeNetworkEvent<GhostRespawnRequest>(OnGhostRespawnRequest);
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
@@ -233,6 +235,24 @@ namespace Content.Server.Ghost
             }
 
             actor.PlayerSession.ContentData()!.Mind?.UnVisit();
+        }
+
+        private void OnGhostRespawnRequest(GhostRespawnRequest msg, EntitySessionEventArgs args)
+        {
+            if (args.SenderSession.AttachedEntity is not { Valid: true } attached ||
+                !EntityManager.TryGetComponent(attached, out GhostComponent? ghost) ||
+                !EntityManager.TryGetComponent(attached, out MindComponent? mind) ||
+                mind is null || mind.Mind is null ||
+                !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
+                return;
+
+            foreach (var autoCloner in EntityManager.EntityQuery<AutoCloningPodComponent>(true))
+            {
+                if (!EntityManager.TryGetComponent(autoCloner.Owner, out ActiveCloningPodComponent? active)) {
+                    if (_autocloning.TryCloning(autoCloner.Owner, actor.PlayerSession, mind.Mind, autoCloner))
+                        break;
+                }
+            }
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
