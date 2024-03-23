@@ -19,7 +19,7 @@
     - Back
   - type: AmmoCounter
   - type: Gun
-    fireRate: 1
+    fireRate: 0.6
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
