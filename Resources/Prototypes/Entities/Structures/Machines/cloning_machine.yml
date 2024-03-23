@@ -81,7 +81,7 @@
 
 - type: entity
   id: AutoCloningPod
-  parent: BaseStructure
+  parent: BaseMachinePowered
   name: auto cloning pod
   description: An Advanced Automatic Cloning Pod.
   components:
