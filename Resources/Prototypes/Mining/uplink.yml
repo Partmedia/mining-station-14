@@ -275,6 +275,6 @@
   description: Trust me. This is cheap. The caves are dark. You want it.
   productEntity: Floodlight
   cost:
-    Telecrystal: 3
+    Telecrystal: 4
   categories:
   - DungeonUplinkUtil
