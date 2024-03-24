@@ -19,7 +19,7 @@
     - Back
   - type: AmmoCounter
   - type: Gun
-    fireRate: 2
+    fireRate: 1
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -48,7 +48,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
   - type: Gun
-    fireRate: 1.5
+    fireRate: 2
 
 - type: entity
   name: Hristov
@@ -66,6 +66,8 @@
       - CartridgeAntiMateriel
     capacity: 5
     proto: CartridgeAntiMateriel
+  - type: Gun
+    fireRate: 1.5
 
 - type: entity
   name: musket
