@@ -258,3 +258,13 @@
     Telecrystal: 2
   categories:
   - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkHydroponicsToolClippers
+  name: clippers
+  description: The art of pruning and stem cutting requires patience.
+  productEntity: HydroponicsToolClippers
+  cost:
+    Telecrystal: 5
+  categories:
+  - DungeonUplinkUtil
