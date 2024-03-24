@@ -21,6 +21,16 @@
     - neck
   - type: StaticPrice
     price: 100
+  - type: Butcherable
+    spawned:
+    - id: MaterialCloth1
+      amount: 2
+    - id: MaterialCloth1
+      amount: 1
+      prob: 0.6
+    - id: MaterialCloth1 #chance to drop 4 cloth
+      amount: 1
+      prob: 0.6
 
 - type: entity
   id: BedsheetBlack
