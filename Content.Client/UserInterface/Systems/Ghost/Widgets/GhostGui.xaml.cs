@@ -62,7 +62,8 @@ public sealed partial class GhostGui : UIWidget
         else
             GhostRespawnButton.Text = "Respawn";
 
-        TargetWindow.Populate();
+        if (!TargetWindow.IsOpen)
+            TargetWindow.Populate();
     }
 
     protected override void Dispose(bool disposing)
