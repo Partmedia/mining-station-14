@@ -32,3 +32,113 @@
     Telecrystal: 1
   categories:
   - DungeonUplinkMeds
+
+- type: listing
+  id: UplinkBloodpack
+  name: bloodpack
+  description: You really never imagined you would need so many spaceman to donate blood just so you can do some dungeon crawling, right?
+  productEntity: Bloodpack
+  cost:
+    Telecrystal: 1
+  categories:
+  - DungeonUplinkMeds
+
+- type: listing
+  id: UplinkDexalinPlusChemistryBottle
+  name: dexalin plus
+  description: The best bloodloss and airloss medicine. Make sure you actually need it before you buy.
+  productEntity: DexalinPlusChemistryBottle
+  cost:
+    Telecrystal: 2
+  categories:
+  - DungeonUplinkMeds
+
+- type: listing
+  id: UplinkDrill
+  name: surgical drill
+  description: Fix you up good, just make sure you don't lose your head
+  productEntity: Drill
+  cost:
+    Telecrystal: 2
+  categories:
+  - DungeonUplinkMeds
+
+- type: listing
+  id: UplinkCrateMedicalSurgery
+  name: medical surgery crate
+  description: Everything you might need for a fair price
+  productEntity: CrateMedicalSurgery
+  cost:
+    Telecrystal: 3
+  categories:
+  - DungeonUplinkMeds
+
+- type: listing
+  id: UplinkDefibrillator
+  name: defibrillator
+  description: Be careful, the patient was already shocked
+  productEntity: Defibrillator
+  cost:
+    Telecrystal: 3
+  categories:
+  - DungeonUplinkMeds
+
+- type: listing
+  id: UplinkMedkitBurnFilled
+  name: Burn Medkit
+  description: Comes with the excellent treatment for serious burns silver sulfadiazine ointment that also prevents burn wounds from infection.
+  productEntity: MedkitBurnFilled
+  cost:
+    Telecrystal: 3
+  categories:
+  - DungeonUplinkMeds
+
+- type: listing
+  id: UplinkMedkitBruteFilled
+  name: Brute Medkit
+  description: You never thought bandaids were all you really need to bring your old friend back to life, did you?
+  productEntity: MedkitBruteFilled
+  cost:
+    Telecrystal: 3
+  categories:
+  - DungeonUplinkMeds
+
+- type: listing
+  id: UplinkMedkitToxinFilled
+  name: Toxin Medkit
+  description: "I know what you're thinking: Damned ticks."
+  productEntity: MedkitToxinFilled
+  cost:
+    Telecrystal: 3
+  categories:
+  - DungeonUplinkMeds
+
+- type: listing
+  id: UplinkMedkitRadiationFilled
+  name: Radiation Medkit
+  description: How the hell did you managed to get radiation burns? Well I hope that's not too expensive for you.
+  productEntity: MedkitRadiationFilled
+  cost:
+    Telecrystal: 4
+  categories:
+  - DungeonUplinkMeds
+
+- type: listing
+  id: UplinkCrateBasicChemBottles
+  name: chemistry starter kit
+  description: It's not much but it can make a big difference if you know the right recipes
+  productEntity: CrateBasicChemBottles
+  cost:
+    Telecrystal: 2
+  categories:
+  - DungeonUplinkMeds
+
+- type: listing
+  id: UplinkBoxEmergencyMedipens
+  name: emergency medipen box
+  description: A box fast epinephrine and tranex shot that will change the course of your life
+  productEntity: BoxEmergencyMedipens
+  cost:
+    Telecrystal: 4
+  categories:
+  - DungeonUplinkMeds
