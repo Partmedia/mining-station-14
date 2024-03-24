@@ -182,7 +182,7 @@
 - type: listing
   id: UplinkOreProcessorMachineCircuitboard
   name: ore processor machine circuitboard
-  description: Just for the tools of course.
+  description: Miss the previous station much?
   productEntity: OreProcessorMachineCircuitboard
   cost:
     Telecrystal: 5
