@@ -242,7 +242,7 @@
 - type: listing
   id: UplinkHopper
   name: hopper
-  description: Dispeses your ore in a very orderly fashion.
+  description: Dispenses your ore in a very orderly fashion.
   productEntity: Hopper
   cost:
     Telecrystal: 3
