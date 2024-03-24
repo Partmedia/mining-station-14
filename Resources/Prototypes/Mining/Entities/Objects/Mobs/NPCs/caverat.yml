@@ -48,7 +48,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      80: Dead
   - type: Stamina
     excess: 80
   - type: MeleeWeapon
@@ -123,4 +123,7 @@
       amount: 3
     - id: MaterialBones1
       amount: 1
-      prob: 0.1
+      prob: 0.95
+    - id: MaterialBones1
+      amount: 1
+      prob: 0.5

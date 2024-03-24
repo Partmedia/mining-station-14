@@ -57,6 +57,11 @@
       prob: 0.3
     - id: MaterialBones1
       amount: 1
+    - id: MaterialBones1
+      amount: 1
+      prob: 0.85
+    - id: MaterialBones1
+      amount: 1
       prob: 0.5
   - type: Bloodstream
     bloodMaxVolume: 300

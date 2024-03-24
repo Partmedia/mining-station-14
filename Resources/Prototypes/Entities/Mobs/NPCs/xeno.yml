@@ -102,6 +102,11 @@
     - id: FoodMeatXeno
       amount: 5
     - id: MaterialBones1 #I assume Xenos have bones, at least
+      amount: 2
+    - id: MaterialBones1
+      amount: 1
+      prob: 0.85
+    - id: MaterialBones1
       amount: 1
       prob: 0.6
   - type: TypingIndicator
@@ -486,9 +491,12 @@
     spawned:
     - id: FoodMeatXeno
       amount: 1
+        - id: MaterialBones1
+      amount: 1
+      prob: 0.85
     - id: MaterialBones1
       amount: 1
-      prob: 0.1
+      prob: 0.35
 
 - type: entity
   name: space adder

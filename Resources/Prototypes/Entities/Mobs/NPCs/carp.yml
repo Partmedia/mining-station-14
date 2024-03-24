@@ -41,7 +41,9 @@
           amount: 2
         - id: MaterialBones1
           amount: 1
-          prob: 0.15
+        - id: MaterialBones1
+          amount: 1
+          prob: 0.10
     - type: MeleeWeapon
       hidden: true
       angle: 0
