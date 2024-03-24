@@ -15,11 +15,14 @@
         - WeaponPistolMk58
         - WeaponSubMachineGunVector
         - WeaponSubMachineGunVector
+        - WeaponSubMachineGunVector
+        - WeaponSubMachineGunWt550
         - WeaponSubMachineGunWt550
         - WeaponSubMachineGunWt550
         - WeaponShotgunDoubleBarreled
         - WeaponShotgunKammerer
         - WeaponShotgunKammerer
+        - WeaponShotgunEnforcer
         - WeaponShotgunEnforcer
         - WeaponShotgunEnforcer
         - WeaponRevolverDeckard
@@ -30,6 +33,7 @@
         - WeaponPlasmaRifle
         - WeaponPlasmaRifle
         - WeaponSniperMosin
+        - WeaponRifleAk
         - WeaponRifleAk
         - Claymore
         - Claymore
