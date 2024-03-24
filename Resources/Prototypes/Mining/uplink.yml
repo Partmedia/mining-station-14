@@ -168,3 +168,73 @@
     Telecrystal: 4
   categories:
   - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkToolboxSyndicateFilled
+  name: toolbox
+  description: Just for the tools of course.
+  productEntity: ToolboxSyndicateFilled
+  cost:
+    Telecrystal: 3
+  categories:
+  - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkOreProcessorMachineCircuitboard
+  name: ore processor machine circuitboard
+  description: Just for the tools of course.
+  productEntity: OreProcessorMachineCircuitboard
+  cost:
+    Telecrystal: 5
+  categories:
+  - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkAutolatheMachineCircuitboard
+  name: autolathe machine circuitboard
+  description: What else could you possibly want?
+  productEntity: AutolatheMachineCircuitboard
+  cost:
+    Telecrystal: 8
+  categories:
+  - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkMicroManipulatorStockPart
+  name: micromanipulator stock part
+  description: Semiconductors this far away in the galaxy couldn't be cheap.
+  productEntity: MicroManipulatorStockPart
+  cost:
+    Telecrystal: 3
+  categories:
+  - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkMatterBinStockPart
+  name: matter bin stock part
+  description: You have to sign and fax us a document assuring us you won't build an atomic bomb.
+  productEntity: MatterBinStockPart
+  cost:
+    Telecrystal: 3
+  categories:
+  - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkCapacitorStockPart
+  name: matter bin stock part
+  description: Charge a small one up and hand it to your partner. Shocking!
+  productEntity: CapacitorStockPart
+  cost:
+    Telecrystal: 3
+  categories:
+  - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkMicroLaserStockPart
+  name: micro laser stock part
+  description: Leverages optical crystals which tend to have relatively high nonlinearities and are suitable for periodic polling.
+  productEntity: MicroLaserStockPart
+  cost:
+    Telecrystal: 3
+  categories:
+  - DungeonUplinkUtil
