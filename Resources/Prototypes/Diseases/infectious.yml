@@ -223,6 +223,9 @@
       snoughMessage: disease-yawn
       snoughSound:
         collection: Yawns
+  cures:
+    - !type:DiseaseJustWaitCure
+      maxLength: 240
 
 - type: disease
   id: BleedersBite
