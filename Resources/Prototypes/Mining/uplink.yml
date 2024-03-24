@@ -5,6 +5,7 @@
   - UplinkWeapons
   - UplinkAmmo
   - DungeonUplinkMeds
+  - DungeonUplinkUtil
   currencyWhitelist:
   - Telecrystal
 
