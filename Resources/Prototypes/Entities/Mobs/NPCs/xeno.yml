@@ -491,7 +491,7 @@
     spawned:
     - id: FoodMeatXeno
       amount: 1
-        - id: MaterialBones1
+    - id: MaterialBones1
       amount: 1
       prob: 0.85
     - id: MaterialBones1
