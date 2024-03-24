@@ -9,6 +9,10 @@ build: noRL
 rlbuild: libRL
 	${DOTNET_BUILD}
 
+fast: build fastserver fastclient
+
+rlfast: rlbuild fastserver fastclient
+
 libRL:
 	cd Content.Server/RL/libRL && make
 
@@ -18,8 +22,14 @@ RL:
 client:
 	cd ./bin/Content.Client && ../../linklibs && ./Content.Client
 
+fastclient:
+	cd ./bin/Content.Client && ../../linklibs && ./Content.Client --connect-address localhost:1211 --connect && pkill -TERM Content.Server
+
 server:
 	cd ./bin/Content.Server && ./Content.Server --config-file ../../devel_config.toml
+
+fastserver:
+	cd ./bin/Content.Server && ./Content.Server --config-file ../../fast_config.toml &
 
 lint: noRL
 	${DOTNET_BUILD} Content.YAMLLinter
