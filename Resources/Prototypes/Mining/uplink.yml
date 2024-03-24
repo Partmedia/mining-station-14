@@ -85,7 +85,7 @@
 
 - type: listing
   id: UplinkMedkitBurnFilled
-  name: Burn Medkit
+  name: burn medkit
   description: Comes with the excellent treatment for serious burns silver sulfadiazine ointment that also prevents burn wounds from infection.
   productEntity: MedkitBurnFilled
   cost:
@@ -95,7 +95,7 @@
 
 - type: listing
   id: UplinkMedkitBruteFilled
-  name: Brute Medkit
+  name: brute medkit
   description: You never thought bandaids were all you really need to bring your old friend back to life, did you?
   productEntity: MedkitBruteFilled
   cost:
@@ -105,7 +105,7 @@
 
 - type: listing
   id: UplinkMedkitToxinFilled
-  name: Toxin Medkit
+  name: toxin medkit
   description: "I know what you're thinking: Damned ticks."
   productEntity: MedkitToxinFilled
   cost:
@@ -115,7 +115,7 @@
 
 - type: listing
   id: UplinkMedkitRadiationFilled
-  name: Radiation Medkit
+  name: radiation medkit
   description: How the hell did you managed to get radiation burns? Well I hope that's not too expensive for you.
   productEntity: MedkitRadiationFilled
   cost:
