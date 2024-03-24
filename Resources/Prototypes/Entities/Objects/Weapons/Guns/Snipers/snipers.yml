@@ -19,7 +19,7 @@
     - Back
   - type: AmmoCounter
   - type: Gun
-    fireRate: 0.6
+    fireRate: 2
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -47,6 +47,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+  - type: Gun
+    fireRate: 1.5
 
 - type: entity
   name: Hristov
