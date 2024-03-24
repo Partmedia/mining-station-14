@@ -142,3 +142,28 @@
     Telecrystal: 4
   categories:
   - DungeonUplinkMeds
+
+- type: storeCategory
+  id: DungeonUplinkUtil
+  name: Utilitaries
+  priority: 10
+
+- type: listing
+  id: UplinkPowerCellRecharger
+  name: power cell recharger
+  description: Let's shed some light into this!
+  productEntity: PowerCellRecharger
+  cost:
+    Telecrystal: 4
+  categories:
+  - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkWeaponCapacitorRecharger
+  name: weapon recharger
+  description: Make that laser go pew pew!
+  productEntity: WeaponCapacitorRecharger
+  cost:
+    Telecrystal: 4
+  categories:
+  - DungeonUplinkUtil
