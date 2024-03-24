@@ -268,3 +268,13 @@
     Telecrystal: 5
   categories:
   - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkFloodlight
+  name: floodlight
+  description: Trust me. This is cheap. The caves are dark. You want it.
+  productEntity: Floodlight
+  cost:
+    Telecrystal: 3
+  categories:
+  - DungeonUplinkUtil
