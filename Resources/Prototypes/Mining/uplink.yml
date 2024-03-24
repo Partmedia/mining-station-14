@@ -57,7 +57,7 @@
 - type: listing
   id: UplinkDrill
   name: surgical drill
-  description: Fix you up good, just make sure you don't lose your head
+  description: Fix you up good, just make sure you don't lose your head.
   productEntity: Drill
   cost:
     Telecrystal: 2
@@ -67,7 +67,7 @@
 - type: listing
   id: UplinkCrateMedicalSurgery
   name: medical surgery crate
-  description: Everything you might need for a fair price
+  description: Everything you might need to operate for a fair price.
   productEntity: CrateMedicalSurgery
   cost:
     Telecrystal: 3
@@ -77,7 +77,7 @@
 - type: listing
   id: UplinkDefibrillator
   name: defibrillator
-  description: Be careful, the patient was already shocked
+  description: Be careful, the patient was already shocked.
   productEntity: Defibrillator
   cost:
     Telecrystal: 3
@@ -107,7 +107,7 @@
 - type: listing
   id: UplinkMedkitToxinFilled
   name: toxin medkit
-  description: "I know what you're thinking: Damned ticks."
+  description: "I know what you're thinking: Damn ticks."
   productEntity: MedkitToxinFilled
   cost:
     Telecrystal: 3
@@ -127,7 +127,7 @@
 - type: listing
   id: UplinkCrateBasicChemBottles
   name: chemistry starter kit
-  description: It's not much but it can make a big difference if you know the right recipes
+  description: It's not much but it can make a big difference if you know the right recipes.
   productEntity: CrateBasicChemBottles
   cost:
     Telecrystal: 2
@@ -137,7 +137,7 @@
 - type: listing
   id: UplinkBoxEmergencyMedipens
   name: emergency medipen box
-  description: A box fast epinephrine and tranex shot that will change the course of your life
+  description: A box of 8 fast epinephrine and tranex shots that will change the course of your life.
   productEntity: BoxEmergencyMedipens
   cost:
     Telecrystal: 4
