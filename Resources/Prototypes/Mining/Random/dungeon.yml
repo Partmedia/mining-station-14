@@ -31,7 +31,7 @@
         - WeaponRifleAk
         - WeaponRifleAk
         - Claymore
-        - Claymore
+        - Katana
 
 - type: entity
   id: DungeonAmmoSpawner
