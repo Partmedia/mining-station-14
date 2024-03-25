@@ -12,6 +12,9 @@
       - id: EpinephrineChemistryBottle
         amount: 3
       - id: DexalinPlusChemistryBottle
+      # Meant for dungeon dig but added here anyway
+      - id: Defibrillator
+        amount: 1
       # med kit refills
       - id: Brutepack
         amount: 2
