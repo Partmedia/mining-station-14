@@ -1,4 +1,4 @@
-.PHONY: build client server lint deploy noRL
+.PHONY: build client server lint deploy noRL cl
 
 DOTNET_FLAGS+= -c Release -v quiet -maxcpucount:5 /property:WarningLevel=0 /p:WarningsAsErrors=nullable
 DOTNET_BUILD=dotnet build ${DOTNET_FLAGS}
@@ -52,3 +52,6 @@ deploy: package
 
 noRL:
 	rm -f Content.Server/RL/libRL/libRL.so
+
+cl:
+	sbcl --load autocl.lisp --quit
