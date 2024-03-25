@@ -768,4 +768,10 @@ entities:
   - pos: 1.5,-3.5
     parent: 46
     type: Transform
+- uid: 75
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: 0.5,1.5
+    parent: 46
+    type: Transform
 ...
