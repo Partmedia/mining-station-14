@@ -90,7 +90,7 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
-    attackRate: 1
+    attackRate: 1.5
     hidden: true
     damage:
       types:
