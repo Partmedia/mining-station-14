@@ -44,3 +44,57 @@ Entries:
   - { type: Tweak, message: Lockers and crates are no longer airtight. }
   id: 2558
   time: '2024-03-14T20:05:32-07:00'
+- author: Mining Station 14 Team
+  changes:
+  - { type: Add, message: "Adjusts the closet to match just enough items for the clothing" }
+  - { type: Add, message: "Buffs katana attack rate and adds them to dungeon" }
+  - { type: Add, message: "Buffs E-sword to match katana damage" }
+  - { type: Add, message: "Buffs e-sword and e-dagger to be significantly better than knife" }
+  - { type: Add, message: "Buffs the energy dagger attack rate to be the same as combat knife" }
+  - { type: Add, message: "Makes defibs rarer since there's one in the locker now" }
+  - { type: Add, message: "Uplinks are as rare as other rare items again" }
+  - { type: Add, message: "Adds several clothing to the black clothing wardrobe" }
+  - { type: Add, message: "Adds defib in medical locker" }
+  - { type: Add, message: "Update arrivals with auto cloners" }
+  - { type: Add, message: "Makes Amirmir heal with time" }
+  - { type: Add, message: "A clipper in the uplink." }
+  - { type: Add, message: "Engineering uplink entries" }
+  - { type: Add, message: "Actually intended firerate numbers, not making vintage weapons fast" }
+  - { type: Add, message: "Actually increases sniper/mosin firerate" }
+  - { type: Add, message: "Reduces some repeating weapons" }
+  - { type: Add, message: "Rat & Bone rebalance" }
+  - { type: Add, message: "Made bedsheets butcherable" }
+  - { type: Add, message: "Adds rechargers to uplink" }
+  - { type: Add, message: "Makes automatic guns more common" }
+  - { type: Add, message: "Make 5, 3 and 2 TC more common instead of mostly 1 TC" }
+  - { type: Add, message: "Adds medkits, defib, bloodpacks, medical drill, surgery crate, dexalin plus and basic chem kit to uplink" }
+  - { type: Add, message: "Adds bandolier along as \"Armor\"" }
+  - { type: Add, message: "Adds Hristov as a rare loot and ammo for it" }
+  - { type: Add, message: "Buffs Mosin/Sniper rifles a bit allowing to fire every 0.6 seconds" }
+  - { type: Add, message: "Add respawns and auto cloner" }
+  - { type: Add, message: "Adds more 12 gauge ammo" }
+  - { type: Add, message: "Adds a gray duffelbag to dungeon for the purpose of carrying stuff" }
+  - { type: Add, message: "Adds the AK to dungeon armory loot" }
+  - { type: Add, message: "Adds ammo boxes to dungeon ammo spawner" }
+  - { type: Add, message: "Adds synthetic organs crate to dungeon loot" }
+  - { type: Add, message: "Adjusts steel prices for new ammo" }
+  - { type: Add, message: "Adds vector magazine at the right lathe and also some ammo boxes" }
+  - { type: Add, message: "Adds Mosin rifle to armories" }
+  - { type: Add, message: "Syringes for the doctors" }
+  - { type: Add, message: "More brute medicine, can't get enough of these" }
+  - { type: Add, message: "Adds lathe recipe for Vector magazines" }
+  - { type: Add, message: "Favors some weapons that you can print ammo for, and doubles claymore chance." }
+  - { type: Add, message: "Doubles some very useful items to make sure new TCs don't dillute them" }
+  - { type: Add, message: "Doubles the chance of getting a Uplink" }
+  - { type: Add, message: "Adds more small amount telecrystals to the loot pool" }
+  - { type: Add, message: "Adds new prototype entities for varied small TC amounts" }
+  - { type: Add, message: "Moved bear hide to neck slot" }
+  - { type: Add, message: "Add scaf armor" }
+  - { type: Add, message: "Reduce default melee range" }
+  - { type: Add, message: "Add bloodpack box" }
+  - { type: Add, message: "Buffed bone drops & spear damage" }
+  - { type: Add, message: "Damage & Protection Buff" }
+  - { type: Add, message: "Add medipen box spawn" }
+  - { type: Add, message: "Update: removed flat blunt reduction from skeletons" }
+  id: 2559
+  time: '2024-03-25T12:25:55.215684-07:00'
