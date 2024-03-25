@@ -278,3 +278,43 @@
     Telecrystal: 4
   categories:
   - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkWallmountGeneratorAPUElectronics
+  name: wallmount generator APU electronics
+  description: Probably a tiny thermonuclear generator, but who knows what's inside. Rated 3kW.
+  productEntity: WallmountGeneratorAPUElectronics
+  cost:
+    Telecrystal: 5
+  categories:
+  - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkWallmountSubstationElectronics
+  name: wallmount substation electronics
+  description: Big copper coil transformers and fat impedance-matching capacitors for transferring Hv power to Mv.
+  productEntity: WallmountSubstationElectronics
+  cost:
+    Telecrystal: 4
+  categories:
+  - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkAPCElectronics
+  name: apc electronics
+  description: Now you can turn this switch on and light up all those machines, finally. But at wat cost?
+  productEntity: APCElectronics
+  cost:
+    Telecrystal: 4
+  categories:
+  - DungeonUplinkUtil
+
+- type: listing
+  id: UplinkClothingNeckBodycam
+  name: bodycam
+  description: Wonder why it's so cheap? It's imported from space china.
+  productEntity: ClothingNeckBodycam
+  cost:
+    Telecrystal: 1
+  categories:
+  - DungeonUplinkUtil
