@@ -144,6 +144,22 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingUniformJumpsuitSalvageSpecialist
+        amount: 8
+      - id: ClothingShoesBootsSalvage
+        amount: 8
+      - id: ClothingUniformJumpsuitMedicalDoctor
+        amount: 2
+      - id: ClothingUniformJumpskirtMedicalDoctor
+        amount: 2
+      - id: ClothingShoesColorWhite
+        amount: 4
+      - id: ClothingUniformJumpsuitEngineering
+        amount: 1
+      - id: ClothingUniformJumpskirtEngineering
+        amount: 1
+      - id: ClothingShoesBootsWork
+        amount: 2
       - id: ClothingUniformJumpsuitColorBlack
         amount: 1
       - id: ClothingUniformJumpskirtColorBlack
