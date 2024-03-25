@@ -146,7 +146,7 @@
 
 - type: storeCategory
   id: DungeonUplinkUtil
-  name: Utilitaries
+  name: Utility
   priority: 10
 
 - type: listing
