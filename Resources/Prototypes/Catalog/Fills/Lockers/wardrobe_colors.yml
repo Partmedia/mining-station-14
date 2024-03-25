@@ -143,7 +143,7 @@
   parent: WardrobeBlack
   components:
   - type: EntityStorage
-    capacity: 33
+    capacity: 36
   - type: StorageFill
     contents:
       - id: ClothingUniformJumpsuitSalvageSpecialist
@@ -168,6 +168,10 @@
         amount: 1
       - id: ClothingShoesColorBlack
         amount: 2
+      - id: ClothingUniformJumpsuitJesterAlt
+        amount: 1
+      - id: ClothingShoesJester
+        amount: 1
       - id: HatBandBlack
         amount: 1
       - id: HatBandSkull
