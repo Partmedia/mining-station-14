@@ -142,6 +142,8 @@
   suffix: Filled
   parent: WardrobeBlack
   components:
+  - type: EntityStorage
+    capacity: 33
   - type: StorageFill
     contents:
       - id: ClothingUniformJumpsuitSalvageSpecialist
