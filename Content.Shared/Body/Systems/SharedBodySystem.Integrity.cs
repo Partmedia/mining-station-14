@@ -62,6 +62,9 @@ public partial class SharedBodySystem
                 return true;
             }
 
+        } else if (part.Integrity - damage >= part.MaxIntegrity)
+        {
+            part.Integrity = part.MaxIntegrity;
         } else
         {
             part.Integrity -= (float) damage;
@@ -77,6 +80,10 @@ public partial class SharedBodySystem
 
             //destroy organ
             DeleteOrgan(uid,organ);
+        }
+        else if (organ.Integrity - damage >= organ.MaxIntegrity)
+        {
+            organ.Integrity = organ.MaxIntegrity;
         }
         else
         {
