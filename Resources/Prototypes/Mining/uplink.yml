@@ -221,7 +221,7 @@
 
 - type: listing
   id: UplinkCapacitorStockPart
-  name: matter bin stock part
+  name: capacitor stock part
   description: Charge a small one up and hand it to your partner. Shocking!
   productEntity: CapacitorStockPart
   cost:
