@@ -98,3 +98,12 @@ Entries:
   - { type: Add, message: "Update: removed flat blunt reduction from skeletons" }
   id: 2559
   time: '2024-03-25T12:25:55.215684-07:00'
+- author: Mining Station 14 Team
+  changes:
+  - { type: Fix, message: "Healing items can no longer make body parts and organs exceed their maximum integrity" }
+  - { type: Fix, message: "At least 5 slash damage is required to cause instant dismemberment now" }
+  - { type: Fix, message: "Minor adjustment to respawn time tracking" }
+  - { type: Add, message: "Adds bruise packs to both loot and uplink" }
+  - { type: Fix, message: "Fixes capacitor in the uplink labeled as matter bin" }
+  id: 2560
+  time: '2024-03-27T14:43:42.536442-07:00'
