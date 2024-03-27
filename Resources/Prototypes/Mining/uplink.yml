@@ -35,6 +35,16 @@
   - DungeonUplinkMeds
 
 - type: listing
+  id: UplinkBrutepack
+  name: bruise pack
+  description: The best gel packs and adhesive bandages around.
+  productEntity: Brutepack
+  cost:
+    Telecrystal: 1
+  categories:
+  - DungeonUplinkMeds
+
+- type: listing
   id: UplinkBloodpack
   name: bloodpack
   description: You really never imagined you would need so many spaceman to donate blood just so you can do some dungeon crawling, right?
