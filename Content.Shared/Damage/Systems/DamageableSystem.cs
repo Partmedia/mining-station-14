@@ -210,6 +210,9 @@ namespace Content.Shared.Damage
                     var hitPartIndex = -1;
                     var organHitPartIndex = -1;
 
+                    //min slash to crit - should be in a component, I'll do it later maybe
+                    var minCritDamage = 5;
+
                     //check if damage brute (blunt, piercing, slash)
                     foreach (KeyValuePair<string, FixedPoint2> entry in delta.DamageDict)
                     {
@@ -323,7 +326,7 @@ namespace Content.Shared.Damage
                                 isRoot = true;
 
                             //if the not part is not root and the damage type is slash, roll for a crit hit
-                            if (!isRoot && criticalDamages.Contains(damageType) && damageValue > 0)
+                            if (!isRoot && criticalDamages.Contains(damageType) && damageValue > minCritDamage)
                             {
                                 //roll from 1 to max integrity, if the result is greater than the part's current integrity,
                                 //apply integrity damage equal to current integrity
