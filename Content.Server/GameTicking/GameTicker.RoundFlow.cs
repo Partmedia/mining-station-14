@@ -573,7 +573,7 @@ namespace Content.Server.GameTicking
 
             foreach (var proto in _prototypeManager.EnumeratePrototypes<RoundAnnouncementPrototype>())
             {
-                if (!proto.GamePresets.Contains(Preset.ID)) continue;
+                if (Preset == null || !proto.GamePresets.Contains(Preset.ID)) continue;
 
                 if (proto.Message != null)
                     _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
