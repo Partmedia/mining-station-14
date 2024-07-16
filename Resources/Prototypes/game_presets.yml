@@ -129,6 +129,7 @@
   rules:
     - MiningProfitManager
     - MiningEventScheduler
+  supportedMaps: MiningMapPool
 
 - type: gamePreset
   id: Dungeon
@@ -136,6 +137,7 @@
   description: Recover a powerful artifact hidden deep within the asteroid.
   rules:
     - DungeonRuleSystem
+  supportedMaps: DungeonMapPool
 
 - type: gamePreset
   id: MiningDungeon
@@ -146,3 +148,4 @@
     - MiningProfitManager
     - MiningEventScheduler
     - DungeonRuleSystem
+  supportedMaps: MiningMapPool
