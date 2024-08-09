@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.InteropServices;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
@@ -34,6 +35,19 @@ public sealed class ServerUpdateManager
     {
         _watchdog.UpdateReceived += WatchdogOnUpdateReceived;
         _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
+        try
+        {
+            PosixSignalRegistration.Create(PosixSignal.SIGHUP, (ctx) => {
+                ctx.Cancel = true;
+                Logger.Info("Received SIGHUP; restarting on round end");
+                WatchdogOnUpdateReceived();
+            });
+            Logger.Info("Registered SIGHUP handler");
+        }
+        catch (PlatformNotSupportedException e)
+        {
+            Logger.Info("SIGHUP update handler is not supported on this platform");
+        }
     }
 
     public void Update()
