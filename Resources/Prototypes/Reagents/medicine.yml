@@ -1058,9 +1058,9 @@
 
 - type: reagent
   id: PyrothylNitrate
-  name: reagent-name-pyrothylnitrate
+  name: reagent-name-pyrothyl-nitrate
   group: Medicine
-  desc: reagent-desc-pyrothylnitrate
+  desc: reagent-desc-pyrothyl-nitrate
   physicalDesc: reagent-physical-desc-blazing
   flavor: medicine
   color: "#F13C0C"
