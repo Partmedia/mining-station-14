@@ -153,3 +153,20 @@ Entries:
   - { type: Fix, message: "Fix surgical clamps that are also sutures, i.e. cables, from not being usable as sutures if there is already a clamp attached" }
   id: 2564
   time: '2024-05-04T21:42:06.042562-07:00'
+- author: Mining Station 14 Team
+  changes:
+  - { type: Tweak, message: "Adjust ammo box sizes and capacity" }
+  - { type: Tweak, message: "Cooked Cuban carp is now non-toxic" }
+  - { type: Tweak, message: "Lights now run 4x longer" }
+  - { type: Tweak, message: "Adjust some autolathe recipes" }
+  - { type: Tweak, message: "Increase healing item effectiveness" }
+  - { type: Tweak, message: "Start surgery when interacting with a surgical tool" }
+  - { type: Fix, message: "Fix uplink double-spending" }
+  - { type: Add, message: "The mining and dungeon game modes are now votable" }
+  - { type: Add, message: "A mech drill can now be built and installed for the Ripley" }
+  - { type: Tweak, message: "Dead bodies can no longer be sold and Morgues are now free to use" }
+  - { type: Add, message: "Radiation Storms have returned" }
+  - { type: Add, message: "Radiation Storm Rods are purchasable from cargo and can be used draw radiation pulses to it" }
+  - { type: Tweak, message: "Disable restart sounds" }
+  id: 2565
+  time: '2025-01-04T17:14:46.192633-06:00'
