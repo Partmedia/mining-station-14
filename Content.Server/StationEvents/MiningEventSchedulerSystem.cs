@@ -25,6 +25,8 @@ using Content.Server.Mind.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.Warps;
 
+using Microsoft.Data.Sqlite;
+
 namespace Content.Server.StationEvents
 {
     public abstract class PlayerTrackingGameRule : GameRuleSystem
@@ -230,6 +232,41 @@ namespace Content.Server.StationEvents
         private void LogProfit(int profit, SortedSet<String> players)
         {
             var endText = String.Format("The team of {0} made a profit of {1} spacebucks.", ListPlayers(players), profit);
+
+            var dbpath = _configurationManager.GetCVar(CCVars.LeaderboardDbPath);
+            if (dbpath.Length > 0)
+            {
+                var time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                var server = _configurationManager.GetCVar(CCVars.ServerId);
+                var amountPerPlayer = profit / players.Count;
+
+                try {
+                    using (var con = new SqliteConnection($"Data Source={dbpath}"))
+                    {
+                        con.Open();
+
+                        foreach (var player in players)
+                        {
+                            var query = con.CreateCommand();
+                            query.CommandText = "INSERT INTO profits VALUES ($time, $player, $server, $amount)";
+                            query.Parameters.AddWithValue("$time", time);
+                            query.Parameters.AddWithValue("$player", player);
+                            query.Parameters.AddWithValue("$server", server);
+                            query.Parameters.AddWithValue("$amount", amountPerPlayer);
+                            query.ExecuteNonQuery();
+                        }
+
+                        Logger.InfoS("mining", "logged profits to db: " + endText);
+                        return; // to avoid backup profit recording
+                    }
+                }
+                catch (SqliteException e)
+                {
+                    Logger.ErrorS("mining", $"failed to record profits: {e}");
+                }
+            }
+
+            // Backup profit recording
             Logger.InfoS("mining", "profit:{0}", endText);
         }
     }

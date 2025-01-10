@@ -1549,5 +1549,8 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ConfigPresetDebug =
             CVarDef.Create("config.preset_debug", true, CVar.SERVERONLY);
+
+        public static readonly CVarDef<string> LeaderboardDbPath =
+            CVarDef.Create("leaderboard.db", "", CVar.SERVERONLY);
     }
 }
