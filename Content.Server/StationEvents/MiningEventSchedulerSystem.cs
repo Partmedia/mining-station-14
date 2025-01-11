@@ -172,7 +172,8 @@ namespace Content.Server.StationEvents
                     profit -= powerCosts;
                 }
 
-                var profitStrings = ListPlayerProfit(profit);
+                var profits = CalculatePerPlayerProfit(profit);
+                var profitStrings = ListPlayerProfit(profits);
 
                 ev.AddLine(Loc.GetString("cargo-balance", ("amount", bankComponent.Balance)));
                 ev.AddLine(Loc.GetString("initial-loan", ("amount", -bankComponent.InitialBalance)));
@@ -189,15 +190,14 @@ namespace Content.Server.StationEvents
                 ev.AddLine(profitStrings.Item1);
 
                 ev.AddSummary(Loc.GetString("team-profit", ("team", ListPlayers(profitStrings.Item2)), ("profit", profit)));
-                LogProfit(profit, profitStrings.Item2);
+                LogProfit(profits);
             }
         }
 
-        private (string, SortedSet<String>) ListPlayerProfit(int profit)
+        private Dictionary<string, int> CalculatePerPlayerProfit(int profit)
         {
+            // Calculate number of credits for each player
             Dictionary<string, int> playerCreds = new Dictionary<string, int>();
-            var totalCreds = 0f;
-
             foreach (var credit in EntityManager.EntityQuery<MiningCreditComponent>())
             {
                 if (credit.PlayerName is not null)
@@ -211,53 +211,62 @@ namespace Content.Server.StationEvents
                 }
             }
 
+            // Calculate total number of credits awarded
+            var totalCreds = 0f;
             foreach (KeyValuePair<string, int> entry in playerCreds)
                 totalCreds += entry.Value;
 
+            // Multiply per-player credits by this number to get per-player profit
             var profitUnit = totalCreds != 0f ? profit / totalCreds : 0;
+
+            Dictionary<string, int> playerProfits = new Dictionary<string, int>();
+            foreach (KeyValuePair<string, int> entry in playerCreds)
+            {
+                playerProfits[entry.Key] = (int)Math.Round(profitUnit*entry.Value);
+            }
+
+            return playerProfits;
+        }
+
+        private (string, SortedSet<String>) ListPlayerProfit(Dictionary<string, int> playerCreds)
+        {
             var profitString = "";
             var reportStrings = new SortedSet<String>();
 
             foreach (KeyValuePair<string,int> entry in playerCreds)
             {
-                profitString += String.Format("{0} {1}\n", entry.Key ,Math.Round(profitUnit*entry.Value)); //for round end summary
-                reportStrings.Add(String.Format("{0}({1})", entry.Key, Math.Round(profitUnit * entry.Value))); //for log
+                profitString += String.Format("{0} {1}\n", entry.Key, entry.Value); //for round end summary
+                reportStrings.Add(String.Format("{0}({1})", entry.Key, entry.Value)); //for log
             }
 
             var profitStrings = (profitString, reportStrings);
-
             return profitStrings;
         }
 
-        private void LogProfit(int profit, SortedSet<String> players)
+        private void LogProfit(Dictionary<string, int> profits)
         {
-            var endText = String.Format("The team of {0} made a profit of {1} spacebucks.", ListPlayers(players), profit);
-
             var dbpath = _configurationManager.GetCVar(CCVars.LeaderboardDbPath);
             if (dbpath.Length > 0)
             {
                 var time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                 var server = _configurationManager.GetCVar(CCVars.ServerId);
-                var amountPerPlayer = profit / players.Count;
 
                 try {
                     using (var con = new SqliteConnection($"Data Source={dbpath}"))
                     {
                         con.Open();
 
-                        foreach (var player in players)
+                        foreach (var player in profits)
                         {
                             var query = con.CreateCommand();
                             query.CommandText = "INSERT INTO profits VALUES ($time, $player, $server, $amount)";
                             query.Parameters.AddWithValue("$time", time);
-                            query.Parameters.AddWithValue("$player", player);
+                            query.Parameters.AddWithValue("$player", player.Key);
                             query.Parameters.AddWithValue("$server", server);
-                            query.Parameters.AddWithValue("$amount", amountPerPlayer);
+                            query.Parameters.AddWithValue("$amount", player.Value);
                             query.ExecuteNonQuery();
                         }
-
-                        Logger.InfoS("mining", "logged profits to db: " + endText);
-                        return; // to avoid backup profit recording
+                        Logger.InfoS("mining", "saved profits to db");
                     }
                 }
                 catch (SqliteException e)
@@ -265,9 +274,6 @@ namespace Content.Server.StationEvents
                     Logger.ErrorS("mining", $"failed to record profits: {e}");
                 }
             }
-
-            // Backup profit recording
-            Logger.InfoS("mining", "profit:{0}", endText);
         }
     }
 
