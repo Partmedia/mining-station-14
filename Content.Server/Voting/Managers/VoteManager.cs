@@ -83,14 +83,6 @@ namespace Content.Server.Voting.Managers
 
                 DirtyCanCallVote(e.Session);
             }
-            else if (e.NewStatus == SessionStatus.Disconnected)
-            {
-                // Clear votes from disconnected players.
-                foreach (var voteReg in _votes.Values)
-                {
-                    CastVote(voteReg, e.Session, null);
-                }
-            }
         }
 
         private void CastVote(VoteReg v, IPlayerSession player, int? option)
@@ -98,7 +90,7 @@ namespace Content.Server.Voting.Managers
             if (!IsValidOption(v, option))
                 throw new ArgumentOutOfRangeException(nameof(option), "Invalid vote option ID");
 
-            if (v.CastVotes.TryGetValue(player, out var existingOption))
+            if (v.CastVotes.TryGetValue(player.UserId, out var existingOption))
             {
                 v.Entries[existingOption].Votes -= 1;
             }
@@ -106,11 +98,11 @@ namespace Content.Server.Voting.Managers
             if (option != null)
             {
                 v.Entries[option.Value].Votes += 1;
-                v.CastVotes[player] = option.Value;
+                v.CastVotes[player.UserId] = option.Value;
             }
             else
             {
-                v.CastVotes.Remove(player);
+                v.CastVotes.Remove(player.UserId);
             }
 
             v.VotesDirty.Add(player);
@@ -239,7 +231,7 @@ namespace Content.Server.Voting.Managers
                 msg.EndTime = v.EndTime;
             }
 
-            if (v.CastVotes.TryGetValue(player, out var cast))
+            if (v.CastVotes.TryGetValue(player.UserId, out var cast))
             {
                 // Only send info for your vote IF IT CHANGED.
                 // Otherwise there would be a reconciliation b*g causing the UI to jump back and forth.
@@ -419,7 +411,7 @@ namespace Content.Server.Voting.Managers
         private sealed class VoteReg
         {
             public readonly int Id;
-            public readonly Dictionary<IPlayerSession, int> CastVotes = new();
+            public readonly Dictionary<NetUserId, int> CastVotes = new();
             public readonly VoteEntry[] Entries;
             public readonly string Title;
             public readonly string InitiatorText;

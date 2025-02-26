@@ -43,7 +43,7 @@ namespace Content.Server.Voting.Managers
 
         private void CreateRestartVote(IPlayerSession? initiator)
         {
-            var alone = _playerManager.PlayerCount == 1 && initiator != null;
+            var alone = false;
             var options = new VoteOptions
             {
                 Title = Loc.GetString("ui-vote-restart-title"),
