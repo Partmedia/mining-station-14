@@ -201,8 +201,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             await _db.AddAdminLogs(copy);
         });
 
-        _sawmill.Debug($"Saving {copy.Count} admin logs.");
-
         if (_metricsEnabled)
         {
             LogsSent.Inc(copy.Count);
