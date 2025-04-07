@@ -44,9 +44,9 @@
   onlyWhitelisted: true
   points:
     HeadSide:
-      points: 0
+      points: 1
       required: true
-      defaultMarkings: [ "ArachnidCheliceraeBasic" ]
+      defaultMarkings: [ ArachnidCheliceraeBasic ]
     Tail:
       points: 1
       required: true

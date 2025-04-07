@@ -13,6 +13,11 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Arachnid # spooder
+  - type: Hunger
+    starvationDamage:
+      types:
+        Heat: 0.5
+        Asphyxiation: 0.5 
   - type: Icon
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: full
@@ -26,23 +31,28 @@
     sounds:
       Male: Arachnid
       Female: Arachnid
-      Unsexed: Arachnid # no universal form
+      Unsexed: Arachnid
   - type: Bloodstream
     bloodReagent: SpiderBlood
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.7
     baseSprintSpeed : 4.5
+  - type: ThermalRegulator
+    normalBodyTemperature: 310.15
+    implicitHeatRegulation: 0
+    sweatHeatRegulation: 5
+    shiveringHeatRegulation: 150
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
     currentTemperature: 310.15
-    specificHeat: 46
+    specificHeat: 250
     coldDamage:
       types:
-        Cold : 0.2 #per second, scales with temperature & other constants
+        Cold : 0.6 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 0.1 #per second, scales with temperature & other constants
+        Heat : 0.7 #per second, scales with temperature & other constants
   - type: Barotrauma
     damage:
       types:
@@ -79,7 +89,7 @@
   parent: MobHumanDummy
   id: MobArachnidDummy
   noSpawn: true
-  description: A dummy arachnid meant to be used in character setup. # Hey! It's not dumb :(
+  description: A dummy arachnid meant to be used in character setup. # Hey! It's not dumb ::0(
   components:
   - type: Inventory
     templateId: arachnid
