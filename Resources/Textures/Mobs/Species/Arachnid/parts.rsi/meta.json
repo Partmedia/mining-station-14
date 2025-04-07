@@ -10,6 +10,48 @@
     {
       "name": "full"
     },
+	{
+      "name": "head_icon"
+    },
+	{
+      "name": "head_incised_icon"
+    },
+	{
+      "name": "head_opened_icon"
+    },
+	{
+      "name": "l_arm_icon"
+    },
+	{
+      "name": "l_foot_icon"
+    },
+	{
+      "name": "l_hand_icon"
+    },
+	{
+      "name": "l_leg_icon"
+    },
+	{
+      "name": "r_foot_icon"
+    },
+	{
+      "name": "r_hand_icon"
+    },
+	{
+      "name": "r_leg_icon"
+    },
+	{
+      "name": "r_arm_icon"
+    },
+	{
+      "name": "torso_icon"
+    },
+	{
+      "name": "torso_incised_icon"
+    },
+	{
+      "name": "torso_opened_icon"
+    },
     {
       "name": "head_f",
       "directions": 4

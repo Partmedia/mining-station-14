@@ -3,10 +3,14 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: BiopressHarvest
+    id: Creature
+    totalReagentUnits: 0.3
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Arachnid/organs.rsi
   - type: Organ
+    species: arachnid
   - type: Food
   - type: Extractable
     grindableSolutionName: organ
@@ -25,6 +29,8 @@
   description: "Gross. This is hard to stomach."
   noSpawn: true
   components:
+  - type: Organ
+    organType: Stomach
   - type: Stomach
     maxVolume: 50
     updateInterval: 1.5
@@ -40,7 +46,13 @@
   components:
   - type: Sprite
     state: heart-on
+  - type: Heart
+  - type: CirculatoryPump
+    notWorkingDamage:
+      types:
+        Asphyxiation: 30
   - type: Organ
+    organType: Heart
   - type: Metabolizer
     updateFrequency: 1.5
     maxReagents: 2
@@ -80,6 +92,8 @@
       - state: kidney-l
       - state: kidney-r
   - type: Organ
+    organType: Kidney
+    species: arachnid
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
   - type: Metabolizer
     updateFrequency: 1.5
@@ -98,6 +112,9 @@
       - state: eyeball-l
       - state: eyeball-r
   - type: Organ
+    organType: Eye
+    species: arachnid
+  - type: EyeSight
 
 - type: entity
   id: OrganArachnidTongue

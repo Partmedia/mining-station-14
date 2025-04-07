@@ -131,7 +131,7 @@
   name: "left arachnid arm"
   parent: PartArachnid
   components:
-    - type: BiopressHarvest
+  - type: BiopressHarvest
     id: Creature
     totalReagentUnits: 3.5
   - type: Sprite

@@ -1,79 +1,39 @@
 - type: entity
   save: false
   name: Urist McWeb
-  parent: BaseMobOrganic
-  id: BaseMobArachnid
-  abstract: true
+  parent: BaseMobArachnid
+  id: MobArachnid
   components:
-  # The important nessessities
-  - type: Body
-    prototype: Arachnid
-    requiredLegs: 2
-  - type: Perishable
-  - type: Damageable
-    damageContainer: Biological
-    damageModifierSet: Arachnid # spooder
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: full
-  - type: Hunger
-    baseDecayRate: 0.05 # Probably faster than humans?
-  - type: Thirst
-  - type: DiseaseCarrier
-    diseaseResist: 0.1
-  # Damage and speed
-  - type: Bloodstream
-    bloodReagent: SpiderBlood
-  - type: Temperature
-    heatDamageThreshold: 400
-    coldDamageThreshold: 285
-    currentTemperature: 310.15
-    specificHeat: 46
-    coldDamage:
-      types:
-        Cold : 0.2 #per second, scales with temperature & other constants
-    heatDamage:
-      types:
-        Heat : 0.1 #per second, scales with temperature & other constants
-  - type: Barotrauma
+  - type: CombatMode
+    disarm: null
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
+  - type: Mind
+    showExamineInfo: true
+  - type: Input
+    context: "human"
+  - type: MobMover
+  - type: InputMover
+  - type: Respirator
     damage:
       types:
-        Blunt: 0.20 #per second, scales with pressure and other constants.
-  - type: SlowOnDamage
-    speedModifierThresholds: # This is an ouch, but it does make up for their extra speed
-      65: 0.6
-      80: 0.4
-  # Misc
-  - type: Speech
-    speechSounds: Arachnid
-  - type: Inventory
-    templateId: arachnid
-  - type: MeleeWeapon
-    hidden: true
-    soundHit:
-      path: /Audio/Weapons/pierce.ogg
-    angle: 30
-    animation: WeaponArcClaw
-    attackRate: 1.5
-    damage:
+        Asphyxiation: 2 # Make sure you have O2 on you at all times
+    damageRecovery:
       types:
-        Slash: 3
-        Poison: 1
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
-      - id: FoodMeatSpider
-        amount: 5
-
-- type: entity
-  save: false
-  name: Urist McFluff
-  parent: MobHumanDummy
-  id: MobArachnidDummy
-  noSpawn: true
-  description: A dummy arachnid meant to be used in character setup. # Hey! It's not dumb :(
-  components:
-  - type: Inventory
-    templateId: arachnid
-
-#88w88
+        Asphyxiation: -0.5 # Recovery will suck without chems
+  - type: Alerts
+  - type: Actions
+  - type: Eye
+  - type: CameraRecoil
+  - type: Examiner
+  - type: Vocal
+    maleScream: /Audio/Voice/Arachnid/arachnid_scream.ogg
+    femaleScream: /Audio/Voice/Arachnid/arachnid_scream.ogg
+    unsexedScream: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: CanHostGuardian
+  - type: Faction
+    factions:
+    - NanoTrasen
