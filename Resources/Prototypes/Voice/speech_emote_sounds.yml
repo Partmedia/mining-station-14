@@ -172,6 +172,6 @@
     variation: 0.125
   sounds:
     Scream:
-      path: /Audio/Voice/Moth/arachnid_scream.ogg
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
     arachnid_laugh:
-      path: /Audio/Voice/Moth/arachnid_laugh.ogg
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg

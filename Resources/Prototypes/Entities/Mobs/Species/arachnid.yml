@@ -22,6 +22,11 @@
   - type: DiseaseCarrier
     diseaseResist: 0.1
   # Damage and speed
+  - type: Vocal
+    sounds:
+      Male: Arachnid
+      Female: Arachnid
+      Unsexed: Arachnid # no universal form
   - type: Bloodstream
     bloodReagent: SpiderBlood
   - type: MovementSpeedModifier
