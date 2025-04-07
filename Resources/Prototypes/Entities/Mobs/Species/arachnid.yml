@@ -70,7 +70,7 @@
 
 - type: entity
   save: false
-  name: Urist McFluff
+  name: Urist McWeb
   parent: MobHumanDummy
   id: MobArachnidDummy
   noSpawn: true

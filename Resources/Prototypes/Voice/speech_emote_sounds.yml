@@ -164,3 +164,14 @@
   sounds:
     Scream:
       path: /Audio/Voice/Moth/scream_moth.ogg
+      
+
+- type: emoteSounds
+  id: Arachnid
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Moth/arachnid_scream.ogg
+    arachnid_laugh:
+      path: /Audio/Voice/Moth/arachnid_laugh.ogg
