@@ -8,6 +8,7 @@ using Content.Shared.Examine;
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Spawners.Components;
@@ -54,6 +55,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly TagSystem TagSystem = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedProjectileSystem Projectiles = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -374,9 +376,14 @@ public abstract partial class SharedGunSystem : EntitySystem
             Audio.PlayPvs(cartridge.EjectSound, entity, AudioParams.Default.WithVariation(0.05f).WithVolume(-1f));
         }
 
-        // Reduce entity spam from cartridges for Dungeon Dig 14.
-        var despawn = EnsureComp<TimedDespawnComponent>(entity);
-        despawn.Lifetime = 15f * 60; // 15 minutes
+        // Make spent cartridges unpickable and automatically despawn when ejected.
+        if (TryComp<CartridgeAmmoComponent>(entity, out var cartridge2) && cartridge2.Spent)
+        {
+            var despawn = EnsureComp<TimedDespawnComponent>(entity);
+            despawn.Lifetime = 15f * 60; // 15 minutes
+
+            _entManager.RemoveComponent<ItemComponent>(entity);
+        }
     }
 
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
