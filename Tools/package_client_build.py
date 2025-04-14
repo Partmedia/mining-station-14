@@ -86,7 +86,7 @@ def build(skip_build: bool) -> None:
 
     if not skip_build:
         subprocess.run([
-            "dotnet",
+            os.getenv("DOTNET_ROOT") + "/dotnet",
             "build",
             p("Content.Client", "Content.Client.csproj"),
             "-c", "Release",

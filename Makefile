@@ -38,7 +38,7 @@ lint: noRL
 test:
 	cd RobustToolbox/bin/UnitTesting && ../../../linklibs
 	cd bin/Content.Tests && ../../linklibs
-	dotnet test ${DOTNET_FLAGS}
+	${DOTNET_ROOT}/dotnet test ${DOTNET_FLAGS}
 
 package: noRL
 	python3 Tools/package_server_build.py --hybrid-acz ${PACKAGE_BUILD_ARGS}

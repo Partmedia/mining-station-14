@@ -161,7 +161,7 @@ def build_platform(platform: PlatformReg, skip_build: bool, hybrid_acz: bool) ->
 
     if not skip_build:
         subprocess.run([
-            "dotnet",
+            os.getenv("DOTNET_ROOT") + "/dotnet",
             "build",
             p("Content.Server", "Content.Server.csproj"),
             "-c", "Release",
@@ -190,7 +190,8 @@ def build_platform(platform: PlatformReg, skip_build: bool, hybrid_acz: bool) ->
 def publish_client_server(runtime: str, target_os: str) -> None:
     # Runs dotnet publish on client and server.
     base = [
-        "dotnet", "publish",
+        os.getenv("DOTNET_ROOT") + "/dotnet",
+        "publish",
         "--runtime", runtime,
         "--no-self-contained",
         "-c", "Release",
