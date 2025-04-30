@@ -26,7 +26,7 @@
   result: Wrench
   completetime: 2
   materials:
-    Steel: 200
+    Steel: 300
 
 - type: latheRecipe
   id: CableStack
@@ -54,7 +54,7 @@
   result: Crowbar
   completetime: 2
   materials:
-    Steel: 200
+    Steel: 300
 
 - type: latheRecipe
   id: Pickaxe
