@@ -9,4 +9,4 @@ station-power-costs = Счёт за электричество: {$energy} кВт
 station-profit = Станция смогла заработать {$profit} космобаксов.
 team-profit = Команда, состоящая из {$team} смогла заработать {$profit} космобаксов.
 
-power-tracker-examine = Purchasing {$power} kW (total of {$totalEnergy} kWHr costing {$totalPrice}).
+power-tracker-examine = Покупка {$power} кВт (всего {$totalEnergy} кВтч на сумму {$totalPrice}).
