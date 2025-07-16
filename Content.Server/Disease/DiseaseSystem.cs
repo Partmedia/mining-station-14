@@ -377,7 +377,7 @@ namespace Content.Server.Disease
         /// to not be guaranteed you are looking
         /// for TryInfect.
         /// </summary>
-        public void TryAddDisease(EntityUid host, DiseasePrototype addedDisease, DiseaseCarrierComponent? target = null)
+        public void TryAddDisease(EntityUid host, DiseasePrototype? addedDisease, DiseaseCarrierComponent? target = null)
         {
             if (!Resolve(host, ref target, false))
                 return;
