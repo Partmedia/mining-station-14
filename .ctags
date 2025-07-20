@@ -1,0 +1,3 @@
+--langdef=ss14yaml
+--langmap=ss14yaml:.yml
+--regex-ss14yaml=/id: (.*)/\1/id/
