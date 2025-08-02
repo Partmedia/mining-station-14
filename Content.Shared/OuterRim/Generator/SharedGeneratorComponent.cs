@@ -17,6 +17,9 @@ public sealed class SharedGeneratorComponent : Component
     [DataField("fuelMaterial"), ViewVariables(VVAccess.ReadWrite)]
     public string FuelMaterial = "Plasma";
 
+    [DataField("fuelEnergy"), ViewVariables(VVAccess.ReadWrite)]
+    public float FuelEnergy = 600e3f; // Plasma: 600 kJ/sheet
+
     [DataField("maxFuelRate"), ViewVariables(VVAccess.ReadWrite)]
     public float MaxFuelRate = 30f/(15*60); // Fuel consumption at full throttle (sheets/second)
 
@@ -25,6 +28,9 @@ public sealed class SharedGeneratorComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float Upgrade = 1f;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool AutoThrottleEnabled = true;
 }
 
 /// <summary>
@@ -41,12 +47,24 @@ public sealed class SetTargetPowerMessage : BoundUserInterfaceMessage
     }
 }
 
+[Serializable, NetSerializable]
+public sealed class SetAutoThrottleMessage : BoundUserInterfaceMessage
+{
+    public bool On;
+
+    public SetAutoThrottleMessage(bool on)
+    {
+        On = on;
+    }
+}
+
 /// <summary>
 /// Contains network state for SharedGeneratorComponent.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class GeneratorComponentBuiState : BoundUserInterfaceState
 {
+    public bool AutoThrottle;
     public float RemainingFuel;
     public float TargetPower;
     public float Efficiency;
@@ -54,6 +72,7 @@ public sealed class GeneratorComponentBuiState : BoundUserInterfaceState
 
     public GeneratorComponentBuiState(SharedGeneratorComponent component)
     {
+        AutoThrottle = component.AutoThrottleEnabled;
         RemainingFuel = component.RemainingFuel;
         TargetPower = component.TargetPower;
         Efficiency = component.Efficiency;

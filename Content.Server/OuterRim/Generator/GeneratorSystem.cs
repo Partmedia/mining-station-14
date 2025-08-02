@@ -26,6 +26,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     {
         SubscribeLocalEvent<SharedGeneratorComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<SharedGeneratorComponent, SetTargetPowerMessage>(OnTargetPowerSet);
+        SubscribeLocalEvent<SharedGeneratorComponent, SetAutoThrottleMessage>(OnAutoThrottleSet);
 
         SubscribeLocalEvent<SharedGeneratorComponent, RefreshPartsEvent>(OnRefreshParts);
         SubscribeLocalEvent<SharedGeneratorComponent, UpgradeExamineEvent>(OnUpgradeExamine);
@@ -45,6 +46,12 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     private void OnTargetPowerSet(EntityUid uid, SharedGeneratorComponent component, SetTargetPowerMessage args)
     {
         component.TargetPower = args.TargetPower;
+        component.AutoThrottleEnabled = false;
+    }
+
+    private void OnAutoThrottleSet(EntityUid uid, SharedGeneratorComponent component, SetAutoThrottleMessage args)
+    {
+        component.AutoThrottleEnabled = args.On;
     }
 
     private void OnInteractUsing(EntityUid uid, SharedGeneratorComponent component, InteractUsingEvent args)
@@ -68,17 +75,26 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         {
             supplier.Enabled = !(gen.RemainingFuel <= 0.0f || xform.Anchored == false);
 
-            var fuelRate = gen.TargetPower * gen.MaxFuelRate * gen.Upgrade;
-            gen.RemainingFuel = MathF.Max(gen.RemainingFuel - (fuelRate * frameTime), 0.0f);
-
-            // Plasma: 600 kJ/sheet
-            var energyIn = fuelRate * 600000f;
-
             if (supplier.Enabled)
             {
-                supplier.MaxSupply = energyIn * CalcFuelEfficiency(gen.TargetPower);
+                if (gen.AutoThrottleEnabled)
+                {
+                    // Set max power to capacity of generator, then calculate throttle position based on ramped power.
+                    var (_, _, maxPower) = CalcFuelPower(gen, 1);
+                    supplier.MaxSupply = maxPower;
+                    gen.TargetPower = CalcThrottlePos(gen, supplier.SupplyRampPosition);
+                }
+
+                var (fuelRate, energyIn, power) = CalcFuelPower(gen, gen.TargetPower);
+                if (!gen.AutoThrottleEnabled)
+                {
+                    // Set max power to maximum allowed by current throttle position.
+                    supplier.MaxSupply = power;
+                }
+
                 gen.Output = supplier.SupplyRampPosition;
                 gen.Efficiency = gen.Output / energyIn;
+                gen.RemainingFuel = MathF.Max(gen.RemainingFuel - (fuelRate * frameTime), 0.0f);
 
                 // Release wasted energy as heat
                 var environment = _atmosphereSystem.GetContainingMixture(gen.Owner, true, true);
@@ -99,16 +115,34 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         }
     }
 
+    private (float, float, float) CalcFuelPower(SharedGeneratorComponent gen, float throttle)
+    {
+        float fuelRate = throttle * gen.MaxFuelRate * gen.Upgrade;
+        float energyIn = fuelRate * gen.FuelEnergy;
+        float power = energyIn * CalcFuelEfficiency(throttle);
+        return (fuelRate, energyIn, power);
+    }
+
+    /**
+     * Calculate throttle position to generate power. Inverse of CalcFuelPower.
+     */
+    private float CalcThrottlePos(SharedGeneratorComponent gen, float power)
+    {
+        var c = power / (gen.MaxFuelRate * gen.Upgrade * gen.FuelEnergy);
+        var t = (MathF.Sqrt(50*c+1)-1)/5;
+        return Math.Clamp(t, 0, 1);
+    }
+
+    private static float CalcFuelEfficiency(float targetPower)
+    {
+        return (float)(targetPower/2 + 0.2);
+    }
+
     private void UpdateUi(SharedGeneratorComponent comp)
     {
         if (!_uiSystem.IsUiOpen(comp.Owner, GeneratorComponentUiKey.Key))
             return;
 
         _uiSystem.TrySetUiState(comp.Owner, GeneratorComponentUiKey.Key, new GeneratorComponentBuiState(comp));
-    }
-
-    private static float CalcFuelEfficiency(float targetPower)
-    {
-        return (float)(targetPower/2 + 0.2);
     }
 }

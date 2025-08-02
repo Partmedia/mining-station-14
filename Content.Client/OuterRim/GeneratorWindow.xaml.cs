@@ -20,6 +20,11 @@ public sealed partial class GeneratorWindow : FancyWindow
         {
             bui.SetTargetPower(args.Value);
         };
+
+        AutoThrottle.OnToggled += (args) =>
+        {
+            bui.SetAutoThrottle(AutoThrottle.Pressed);
+        };
     }
 
 
@@ -28,6 +33,7 @@ public sealed partial class GeneratorWindow : FancyWindow
     public void Update(GeneratorComponentBuiState state)
     {
         // ReSharper disable once CompareOfFloatsByEqualityOperator
+        AutoThrottle.Pressed = state.AutoThrottle;
         if (_lastState?.TargetPower != state.TargetPower)
             TargetPower.SetValueWithoutEvent(state.TargetPower);
         Output.Text = (state.Output/1000).ToString("F1") + " kW";

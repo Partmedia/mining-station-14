@@ -36,4 +36,9 @@ public sealed class GeneratorBoundUserInterface : BoundUserInterface
     {
         SendMessage(new SetTargetPowerMessage(target));
     }
+
+    public void SetAutoThrottle(bool enabled)
+    {
+        SendMessage(new SetAutoThrottleMessage(enabled));
+    }
 }
