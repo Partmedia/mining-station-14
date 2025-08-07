@@ -1,6 +1,6 @@
 .PHONY: build client server lint deploy noRL cl
 
-DOTNET_FLAGS+= -c Release -v quiet -maxcpucount:5 /property:WarningLevel=0 /p:WarningsAsErrors=nullable
+DOTNET_FLAGS+= -c Release -v quiet -maxcpucount:5 /p:WarningsAsErrors=nullable
 DOTNET_BUILD=${DOTNET_ROOT}/dotnet build ${DOTNET_FLAGS}
 
 build: noRL
