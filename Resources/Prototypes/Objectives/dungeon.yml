@@ -1,0 +1,8 @@
+- type: objective
+  id: AmuletYendorObjective
+  issuer: NanoTrasen
+  conditions:
+    - !type:UntrackedCondition
+      title: get-amulet-title
+      description: get-amulet-description
+      prototype: ClothingNeckAmuletOfYendor

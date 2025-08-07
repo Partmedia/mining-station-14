@@ -8,6 +8,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost;
+using Content.Server.Objectives;
 using Content.Server.Players;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -364,6 +365,7 @@ namespace Content.Server.StationEvents
 
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly WarperSystem _dungeon = default!;
 
         private bool OldSupercond;
@@ -374,6 +376,8 @@ namespace Content.Server.StationEvents
             base.Initialize();
             SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
             SubscribeLocalEvent<HTNComponent, MobStateChangedEvent>(OnMobDied);
+            SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
+            SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
         }
 
         public override void Added()
@@ -387,6 +391,34 @@ namespace Content.Server.StationEvents
             base.Started();
             _chatManager.DispatchServerAnnouncement(Loc.GetString("dungeon-intro"));
             KillCount = 0;
+        }
+
+        private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
+        {
+            if (!RuleAdded)
+                return;
+
+            if (!_prototypeManager.TryIndex<ObjectivePrototype>("AmuletYendorObjective", out var objective))
+                return;
+
+            foreach (var player in ev.Players)
+            {
+                var mind = player.Data.ContentData()?.Mind;
+                mind.TryAddObjective(objective);
+            }
+        }
+
+        private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
+        {
+            if (!RuleAdded)
+                return;
+
+            if (!_prototypeManager.TryIndex<ObjectivePrototype>("AmuletYendorObjective", out var objective))
+                return;
+
+            var player = ev.Player;
+            var mind = player.Data.ContentData()?.Mind;
+            mind.TryAddObjective(objective);
         }
 
         private void OnMobDied(EntityUid mobUid, HTNComponent component, MobStateChangedEvent args)
