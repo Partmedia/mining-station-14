@@ -106,6 +106,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         _window.SubText.Text = job;
         _window.Objectives.RemoveAllChildren();
 
+        bool gotOne = false;
         foreach (var (groupId, conditions) in objectives)
         {
             var objectiveControl = new CharacterObjectiveControl
@@ -137,7 +138,11 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
             objectiveControl.AddChild(briefingControl);
             _window.Objectives.AddChild(objectiveControl);
+
+            gotOne = true;
         }
+
+        _window.Placeholder.Visible = !gotOne;
 
         _window.SpriteView.Sprite = sprite;
         _window.NameLabel.Text = entityName;
