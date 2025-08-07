@@ -11,8 +11,8 @@ namespace Content.Server.Objectives.Conditions;
 public sealed class UntrackedCondition : IObjectiveCondition, ISerializationHooks
 {
     private Mind.Mind? _mind;
-    [DataField("title")] string TitleString;
-    [DataField("description")] string DescriptionString;
+    [DataField("title")] string TitleString = string.Empty;
+    [DataField("description")] string DescriptionString = string.Empty;
     [DataField("prototype")] private string _prototypeId = string.Empty;
 
     public IObjectiveCondition GetAssigned(Mind.Mind mind)
