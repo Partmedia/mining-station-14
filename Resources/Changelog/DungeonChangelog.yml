@@ -170,3 +170,11 @@ Entries:
   - { type: Tweak, message: "Disable restart sounds" }
   id: 2565
   time: '2025-01-04T17:14:46.192633-06:00'
+- author: Mining Station 14 Team
+  changes:
+  - { type: Add, message: "Add auto throttle to plasma generator" }
+  - { type: Tweak, message: "Adjust Pill player minimum" }
+  - { type: Tweak, message: "Adjust prices" }
+  - { type: Fix, message: "Added missing translations" }
+  id: 2566
+  time: '2025-08-06T17:09:58.486658-07:00'
