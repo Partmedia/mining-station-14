@@ -404,7 +404,8 @@ namespace Content.Server.StationEvents
             foreach (var player in ev.Players)
             {
                 var mind = player.Data.ContentData()?.Mind;
-                mind.TryAddObjective(objective);
+                if (mind != null)
+                    mind.TryAddObjective(objective);
             }
         }
 
@@ -418,7 +419,8 @@ namespace Content.Server.StationEvents
 
             var player = ev.Player;
             var mind = player.Data.ContentData()?.Mind;
-            mind.TryAddObjective(objective);
+            if (mind != null)
+                mind.TryAddObjective(objective);
         }
 
         private void OnMobDied(EntityUid mobUid, HTNComponent component, MobStateChangedEvent args)
